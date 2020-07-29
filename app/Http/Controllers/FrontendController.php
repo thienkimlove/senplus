@@ -40,4 +40,9 @@ class FrontendController extends Controller
 
         return view('index');
     }
+
+    public function test()
+    {
+        return view('welcome');
+    }
 }

@@ -63,8 +63,8 @@
             }
         </style>
 
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-        <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+
     </head>
     <body>
         <div class="flex-center full-height">
@@ -80,54 +80,6 @@
     <script>
         let ctx = document.getElementById('myChart').getContext('2d');
 
-        drawArrow = function(context, fromx, fromy, tox, toy) {
-            var headlen = 10;
-            var dx = tox - fromx;
-            var dy = toy - fromy;
-            var angle = Math.atan2(dy, dx);
-            context.moveTo(fromx, fromy);
-            context.lineTo(tox, toy);
-            context.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
-            context.moveTo(tox, toy);
-            context.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
-        }
-
-        let utils = Samples.utils;
-
-        utils.srand(110);
-
-        function getLineColor(ctx) {
-            return utils.color(ctx.datasetIndex);
-        }
-
-        function alternatePointStyles(ctx) {
-            var index = ctx.dataIndex;
-            return index % 2 === 0 ? 'circle' : 'rect';
-        }
-
-        function makeHalfAsOpaque(ctx) {
-            return utils.transparentize(getLineColor(ctx));
-        }
-
-        function make20PercentOpaque(ctx) {
-            return utils.transparentize(getLineColor(ctx), 0.8);
-        }
-
-        function adjustRadiusBasedOnData(ctx) {
-            var v = ctx.dataset.data[ctx.dataIndex];
-            return v < 10 ? 5
-                : v < 25 ? 7
-                    : v < 50 ? 9
-                        : v < 75 ? 11
-                            : 15;
-        }
-
-        let options2 = {
-            responsive: true,
-            legend: {
-                position: 'bottom'
-            }
-        };
 
         let chart = new Chart(ctx, {
             // The type of chart we want to create
@@ -135,47 +87,31 @@
 
             // The data for our dataset
             data: {
-                labels: ['Clan', 'Adhocracy', 'Market', 'Hierarchy'],
+                labels: ['Flexibility and Desertion', 'Clan', 'External Focus and Integration', 'Adhocracy','Stability and Control', 'Market','Internal Focus and Integration', 'Hierarchy'],
                 datasets: [
                     {
                         label: 'Current',
                         //backgroundColor: 'green',
                         borderColor: 'green',
-                        data: [32.50, 25, 17.78, 24.72]
+                        data: [null, 32.50, null, 25, null, 17.78, null, 24.72]
                     },
                     {
                         label: 'Preferred',
                         //backgroundColor: 'pink',
                         borderColor: 'pink',
-                        data: [30, 36.67, 16.39, 16.94]
+                        data: [null, 30, null, 36.67, null, 16.39, null,16.94]
                     }
-                ]
+                ],
             },
 
             // Configuration options go here
-            options: options2,
-            // plugins: [{
-            //     beforeDraw: function (chart, options) {
-            //         var ctx = chart.chart.ctx;
-            //         var yaxis = chart.scales['scale'];
-            //         console.log(yaxis);
-            //         var paddingX = 100;
-            //         var paddingY = 40;
-            //
-            //         ctx.save();
-            //         ctx.beginPath();
-            //         ctx.strokeStyle = '#0000ff';
-            //         ctx.lineWidth = 0.75;
-            //
-            //         drawArrow(ctx, yaxis.xCenter, yaxis.yCenter, yaxis.xCenter - yaxis.drawingArea - paddingX, yaxis.yCenter);
-            //         drawArrow(ctx, yaxis.xCenter, yaxis.yCenter, yaxis.xCenter + yaxis.drawingArea + paddingX, yaxis.yCenter);
-            //         drawArrow(ctx, yaxis.xCenter, yaxis.yCenter, yaxis.xCenter, yaxis.yCenter - yaxis.drawingArea - paddingY);
-            //         drawArrow(ctx, yaxis.xCenter, yaxis.yCenter, yaxis.xCenter, yaxis.yCenter + yaxis.drawingArea + paddingY);
-            //
-            //         ctx.stroke();
-            //         ctx.restore();
-            //     },
-            // }],
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'bottom'
+                },
+                spanGaps: true,
+            }
 
         });
     </script>
