@@ -80,6 +80,18 @@
     <script>
         let ctx = document.getElementById('myChart').getContext('2d');
 
+        drawArrow = function(context, fromx, fromy, tox, toy) {
+            var headlen = 10;
+            var dx = tox - fromx;
+            var dy = toy - fromy;
+            var angle = Math.atan2(dy, dx);
+            context.moveTo(fromx, fromy);
+            context.lineTo(tox, toy);
+            context.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
+            context.moveTo(tox, toy);
+            context.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
+        }
+
 
         let chart = new Chart(ctx, {
             // The type of chart we want to create
@@ -111,7 +123,28 @@
                     position: 'bottom'
                 },
                 spanGaps: true,
-            }
+            },
+            plugins: [{
+                beforeDraw: function(chart, options) {
+                    var ctx = chart.chart.ctx;
+                    var yaxis = chart.scales['scale'];
+                    var paddingX = 0;
+                    var paddingY = 0;
+
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.strokeStyle = '#000000';
+                    ctx.lineWidth = 1.75;
+
+                    drawArrow(ctx, yaxis.xCenter, yaxis.yCenter, yaxis.xCenter - yaxis.drawingArea - paddingX, yaxis.yCenter);
+                    drawArrow(ctx, yaxis.xCenter, yaxis.yCenter, yaxis.xCenter + yaxis.drawingArea + paddingX, yaxis.yCenter);
+                    drawArrow(ctx, yaxis.xCenter, yaxis.yCenter, yaxis.xCenter, yaxis.yCenter - yaxis.drawingArea - paddingY);
+                    drawArrow(ctx, yaxis.xCenter, yaxis.yCenter, yaxis.xCenter, yaxis.yCenter + yaxis.drawingArea + paddingY);
+
+                    ctx.stroke();
+                    ctx.restore();
+                }
+            }]
 
         });
     </script>
