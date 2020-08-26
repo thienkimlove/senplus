@@ -1,0 +1,94 @@
+#kt_header {
+  border-top: 2px solid #3ba32a;
+}
+
+.mx-auto {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.py128 {
+  padding-top: 128px !important;
+  padding-bottom: 128px !important;
+}
+
+.ta-center {
+  text-align: center !important;
+}
+
+.mw12 {
+  width: 97.2307692rem !important;
+}
+
+.flex-jc-sb {
+  display: flex;
+  justify-content: space-between;
+}
+
+.product-hero-background {
+  background-color: #ffcf10;
+  background-image: url("https://cdn.sstatic.net/img/home/illo-hero-full.svg?v=e2018a5f9272");
+  background-repeat: no-repeat;
+  background-position: top center;
+}
+
+.p-slope-left {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 2vw), 0 100%);
+}
+
+.p-ff-roboto-slab-bold {
+  font-family: "Open Sans", serif;
+  font-weight: 700;
+  font-size: 55px;
+  color: #000000;
+}
+
+.fs-title {
+  font-family: "Open Sans", serif;
+  font-size: 20px;
+  color: #000000;
+}
+
+.wmx4 {
+  max-width: 32.4102564rem !important;
+}
+
+.fs-body2 {
+  font-size: 1.15384615rem !important;
+}
+
+.grid {
+  display: flex;
+}
+
+.ai-center {
+  align-items: center !important;
+}
+
+.jc-center {
+  justify-content: center !important;
+}
+
+.ml8 {
+  margin-left: 8px !important;
+}
+
+.px24 {
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+}
+
+.px50 {
+  padding-left: 50px !important;
+  padding-right: 50px !important;
+}
+
+.px41 {
+  padding-left: 41px !important;
+  padding-right: 41px !important;
+}
+
+.py12 {
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
+}

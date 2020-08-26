@@ -13,5 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'FrontendController@index');
-Route::get('/test', 'FrontendController@test');
+Route::get('/', 'FrontendController@index')->name('frontend.index');
+Route::get('login', 'FrontendController@login')->name('frontend.login');
+Route::post('login', 'FrontendController@postLogin')->name('frontend.post_login');
+Route::get('home', 'FrontendController@home')->name('frontend.home');
+Route::get('logout', 'FrontendController@logout')->name('frontend.logout');
