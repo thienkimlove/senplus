@@ -11,7 +11,7 @@
     <title>SenPlus | Nền tảng khảo sát online</title>
 
     <!--begin::Fonts -->
-    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+    <script src="{{ url('frontend/js/webfont.js') }}"></script>
     <script>
         WebFont.load({
             google: {

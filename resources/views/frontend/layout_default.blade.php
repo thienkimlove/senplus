@@ -8,7 +8,7 @@
     <meta name="description" content="SenPlus, nền tảng khảo sát online. Cung cấp giải pháp cho doanh nghiệp và cá nhân. Được phát triển bởi SenPlus">
     <meta name="author" content="SenPlus">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+    <script src="{{ url('frontend/js/webfont.js') }}"></script>
     <script>
         WebFont.load({
             google: {
