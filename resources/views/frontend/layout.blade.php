@@ -109,6 +109,10 @@
             </div>
             <!-- end:: Header -->
 
+            @if (session('general_message'))
+                <div class="alert alert-info">{{session('general_message')}}</div>
+            @endif
+
             <!-- begin:: Main Content -->
             @yield('content')
             <!-- begin:: Main Content -->
@@ -135,6 +139,8 @@
     <!-- end:: Page -->
     <script src="{{ url('heroic/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ url('heroic/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+    @yield('after_scripts')
 </body>
 
 

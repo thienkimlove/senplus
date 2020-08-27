@@ -18,3 +18,8 @@ Route::get('login', 'FrontendController@login')->name('frontend.login');
 Route::post('login', 'FrontendController@postLogin')->name('frontend.post_login');
 Route::get('home', 'FrontendController@home')->name('frontend.home');
 Route::get('logout', 'FrontendController@logout')->name('frontend.logout');
+
+
+Route::get('question', 'FrontendController@question')->name('frontend.question');
+Route::post('answer', 'FrontendController@answer')->name('frontend.answer');
+Route::get('result', 'FrontendController@result')->name('frontend.result');

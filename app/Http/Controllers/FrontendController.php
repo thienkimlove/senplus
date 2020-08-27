@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Helpers;
+use App\Models\Answer;
+use App\Models\Question;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -76,13 +78,112 @@ class FrontendController extends Controller
         }
         //$account = User::where('email', Helpers::getCookieLogin())->first();
 
-        return view('frontend.home', compact( 'page'));
+        $survey = Helpers::getSurveyForLoginUser();
+
+        return view('frontend.home', compact( 'page', 'survey'));
     }
 
     public function logout()
     {
         Helpers::deleteCookieLogin();
         return redirect(route('frontend.index'));
+    }
+
+    /*
+     * Survey
+     *
+     */
+
+
+    public function question(Request $request)
+    {
+        $page = 'question';
+        $round = $request->input('round', 1);
+        $order = $request->input('order', 1);
+
+        $question = Helpers::getQuestion($round, $order);
+
+        if (!$question) {
+            $request->session()->flash('general_message', 'Câu hỏi không tồn tại!');
+            return redirect(route('frontend.home'));
+        }
+
+        return view('frontend.question', compact( 'page', 'question'));
+    }
+
+    public function answer(Request $request)
+    {
+        $questionId = $request->input('question_id');
+
+        if (!$questionId) {
+            $request->session()->flash('general_message', 'Câu hỏi không tồn tại!');
+            return redirect(route('frontend.home'));
+        }
+
+        $question = Question::find($questionId);
+
+        if (!$question) {
+            $request->session()->flash('general_message', 'Câu hỏi không tồn tại!');
+            return redirect(route('frontend.home'));
+        }
+
+        $user = Helpers::getCurrentUser();
+
+        if (!$user) {
+            $request->session()->flash('general_message', 'Không xác định được người dùng!');
+            return redirect(route('frontend.home'));
+        }
+
+        $countExistedAnswer = Answer::where('user_id', $user->id)
+            ->where('question_id', $question->id)
+            ->count();
+
+        if ($countExistedAnswer > 0) {
+            $request->session()->flash('general_message', 'Đã thực hiện trả lời!');
+            return redirect(route('frontend.home'));
+        }
+
+        Answer::create([
+            'user_id' => $user->id,
+            'question_id' => $question->id,
+            'option1' => $request->input('option1', 0),
+            'option2' => $request->input('option2', 0),
+            'option3' => $request->input('option3', 0),
+            'option4' => $request->input('option4', 0),
+        ]);
+
+        if ($question->order == 6) {
+            if ($question->round == 1) {
+                return redirect(route('frontend.question').'?round=2');
+            } else {
+                return redirect(route('frontend.result'));
+            }
+        }
+
+        return redirect(route('frontend.question').'?round='.($question->round).'&order='.($question->order + 1));
+
+    }
+
+    public function result(Request $request)
+    {
+
+        $user = Helpers::getCurrentUser();
+
+        if (!$user) {
+            $request->session()->flash('general_message', 'Không xác định được người dùng!');
+            return redirect(route('frontend.home'));
+        }
+
+        $answerYet = Answer::where('user_id', $user->id)->count();
+
+        if ($answerYet == 0) {
+            $request->session()->flash('general_message', 'Chưa có câu trả lời!');
+            return redirect(route('frontend.home'));
+        }
+
+        $result = Helpers::getResultForUser();
+
+        return view('frontend.result', compact('result'));
     }
 
 

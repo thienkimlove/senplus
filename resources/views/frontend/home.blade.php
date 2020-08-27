@@ -35,10 +35,33 @@
             </div>
             <div class="kt-portlet__body">
                 <div class="tab-content">
-                    <div class="tab-pane active" id="kt_widget5_tab1_content" aria-expanded="true">
-                        <div class="kt-widget5">
-                            <p>Bạn chưa nhận được yêu cầu khảo sát nào!</p>
-                        </div>
+                    <div class="kt-widget5">
+                        @if ($survey)
+                            <div class="kt-widget5__item">
+                                <div class="kt-widget5__content">
+                                    <div class="kt-widget5__pic">
+                                        <img class="kt-widget7__img" src="{{ url('frontend/images/product27.jpg') }}" alt="survey_image_title">
+                                    </div>
+                                    <div class="kt-widget5__section">
+                                        <a href="{{ route('frontend.question') }}" target="_blank" class="kt-widget5__title">
+                                            {{ $survey['name'] }}
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="kt-widget5__content">
+                                    <div class="kt-widget5__stats">
+                                        <!-- <span class="kt-widget5__number">19,200</span>
+                                        <span class="kt-widget5__sales">lượt xem</span> -->
+                                    </div>
+                                    <div class="kt-widget5__stats">
+                                        <!-- <span class="kt-widget5__number">1046</span>
+                                        <span class="kt-widget5__votes">lượt khảo sát</span> -->
+                                    </div>
+                                </div>
+                            </div>
+                        @else
+                            <p>Bạn không có yêu cầu khảo sát nào!</p>
+                        @endif
                     </div>
                     <div class="tab-pane" id="kt_widget5_tab2_content">
                         <div class="kt-widget5">
