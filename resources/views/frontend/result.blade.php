@@ -74,7 +74,7 @@
 
             // The data for our dataset
             data: {
-                labels: ['Y1', mapOption["1"], 'X1', mapOption[2], 'Y2', mapOption[3], 'X2', mapOption[4]],
+                labels: ['Y1', mapOption["option1"], 'X1', mapOption["option2"], 'Y2', mapOption["option3"], 'X2', mapOption["option4"]],
                 datasets: [
                     {
                         label: mapRound[1],
