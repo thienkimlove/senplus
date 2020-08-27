@@ -52,8 +52,9 @@
 
                         <div class="kt-widget5__item">
                             <div class="kt-widget5__content">
+
                                 <div class="kt-widget5__section">
-                                    <input type="checkbox" name="random" value="1">
+                                  Tự động tạo  <input type="checkbox" name="random" value="1">
                                 </div>
                             </div>
                         </div>
