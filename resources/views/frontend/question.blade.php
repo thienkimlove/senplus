@@ -10,7 +10,7 @@
             <div class="kt-portlet__head">
                 <div class="kt-portlet__head-label">
                     <h3 class="kt-portlet__head-title">
-                        Vòng {{ $question->round }}
+                        Vòng {{ \App\Helpers::mapRound()[$question->round] }}
                     </h3>
                 </div>
 
@@ -19,6 +19,13 @@
                 <div class="kt-portlet__body">
                 <div class="tab-content">
                     <div class="kt-widget5">
+                        <div class="kt-widget5__item">
+                            <div class="kt-widget5__content">
+                                <div class="kt-widget5__section">
+                                   Câu hỏi <span style="font-weight: bold;">{{ \App\Helpers::mapOrder()[$question->order] }}</span>
+                                </div>
+                            </div>
+                        </div>
                         <div class="kt-widget5__item">
                             <div class="kt-widget5__content">
                                 <div class="kt-widget5__section">
@@ -35,12 +42,22 @@
                                     <div class="kt-widget5__section">
                                         {{ $question->{$opt} }}
                                     </div>
-                                    <div class="kt-widget5__stats">
+                                    <div class="kt-widget5__stats"></div>
+                                    <div class="kt-widget5__info">
                                         <input type="number" name="{{ $opt }}" />
                                     </div>
                                 </div>
                             </div>
                         @endforeach
+
+                        <div class="kt-widget5__item">
+                            <div class="kt-widget5__content">
+                                <div class="kt-widget5__section">
+                                    <input type="checkbox" name="random" value="1">
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="kt-widget5__item">
                             <div class="kt-widget5__content">
                                 <div class="kt-widget5__section">

@@ -143,6 +143,11 @@ class FrontendController extends Controller
             return redirect(route('frontend.home'));
         }
 
+        if ($request->input('random') == 1) {
+            Helpers::generateAnswerForUser();
+            return redirect(route('frontend.result'));
+        }
+
         Answer::create([
             'user_id' => $user->id,
             'question_id' => $question->id,

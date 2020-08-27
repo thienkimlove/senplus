@@ -167,6 +167,30 @@ class Helpers
         return $arAverage;
     }
 
+    public static function generateAnswerForUser()
+    {
+        $user = self::getCurrentUser();
+
+        if ($user) {
+            if ($user->company_id) {
+                $questions = Question::where('company_id', $user->company_id)->get();
+            } else {
+                $questions = Question::whereNull('company_id')->get();
+            }
+
+            foreach ($questions as $question) {
+                Answer::create([
+                    'user_id' => $user->id,
+                    'question_id' => $question->id,
+                    'option1' => rand(1, 40),
+                    'option2' => rand(1, 40),
+                    'option3' => rand(1, 40),
+                    'option4' => rand(1, 40),
+                ]);
+            }
+        }
+    }
+
     public static function getQuestion($round, $order)
     {
         $user = self::getCurrentUser();
