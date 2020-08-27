@@ -23,4 +23,7 @@ Route::group([
 
     Route::crud('question', 'QuestionCrudController');
     Route::crud('answer', 'AnswerCrudController');
+
+    Route::get('custom-user/{id}/clear', 'CustomUserCrudController@clear');
+
 }); // this should be the absolute last line of this file

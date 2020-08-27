@@ -8,11 +8,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Answer;
 use App\Models\Company;
 use App\Models\Department;
 use App\Models\Position;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Backpack\PermissionManager\app\Http\Controllers\UserCrudController;
+use Illuminate\Support\Facades\DB;
 
 class CustomUserCrudController extends UserCrudController
 {
@@ -62,6 +64,8 @@ class CustomUserCrudController extends UserCrudController
         CRUD::removeColumn('permissions');
         CRUD::removeFilter('role');
         CRUD::removeFilter('permissions');
+
+        CRUD::addButtonFromView('line', 'clear_result', 'clear_result', 'end');
 
 
     }
@@ -138,5 +142,12 @@ class CustomUserCrudController extends UserCrudController
                 }),
             ]
         ]);
+    }
+
+    public function clear($id)
+    {
+        Answer::where('user_id', $id)->delete();
+
+        return redirect(url('admin/custom-user'));
     }
 }
