@@ -53,30 +53,10 @@
         let mapOption = JSON.parse(' @json(\App\Helpers::mapOption()) ');
         let mapRound = JSON.parse(' @json(\App\Helpers::mapRound()) ');
 
-
-        function getArrayValue(object, position) {
-
-            $.each(object, function( index, value ) {
-                if (parseInt(index, 10) === position) {
-                    return value;
-                }
-            });
-            return null;
-        }
-
-        function getArrayDeepValue(object, position, opt) {
-
-            $.each(object, function( index, value ) {
-                if (parseInt(index, 10) === position) {
-                    $.each(value, function( index2, value2 ) {
-                        if (index2 === opt) {
-                            return value2;
-                        }
-                    });
-                }
-            });
-            return null;
-        }
+        console.log(mapOption[1]);
+        console.log(mapOption["1"]);
+        console.log(result[2]['option1']);
+        console.log(result["2"]['option1']);
 
         drawArrow = function(context, fromx, fromy, tox, toy) {
             var headlen = 10;
@@ -91,29 +71,25 @@
         }
 
 
-        console.log(getArrayDeepValue(result, 2, 'option1'));
-        console.log(getArrayValue(mapOption, 1));
-
-
         let chart = new Chart(ctx, {
             // The type of chart we want to create
             type: 'radar',
 
             // The data for our dataset
             data: {
-                labels: ['Y1', getArrayValue(mapOption, 1), 'X1', getArrayValue(mapOption, 2), 'Y2', getArrayValue(mapOption, 3), 'X2', getArrayValue(mapOption, 4)],
+                labels: ['Y1', mapOption["1"], 'X1', mapOption[2], 'Y2', mapOption[3], 'X2', mapOption[4]],
                 datasets: [
                     {
                         label: mapRound[1],
                         //backgroundColor: 'green',
                         borderColor: 'green',
-                        data: [null, getArrayDeepValue(result, 1, 'option1'), null, getArrayDeepValue(result, 1, 'option2'), null, getArrayDeepValue(result, 1, 'option3'), null, getArrayDeepValue(result, 1, 'option4')]
+                        data: [null, result[1]['option1'], null, result[1]['option2'], null, result[1]['option3'], null, result[1]['option4']]
                     },
                     {
                         label: mapRound[2],
                         //backgroundColor: 'pink',
                         borderColor: 'pink',
-                        data: [null, getArrayDeepValue(result, 2, 'option1'), null, getArrayDeepValue(result, 2, 'option2'), null, getArrayDeepValue(result, 2, 'option3'), null, getArrayDeepValue(result, 2, 'option4')]
+                        data: [null, result[2]['option1'], null, result[2]['option2'], null, result[2]['option3'], null, result[2]['option4']]
                     }
                 ],
             },
