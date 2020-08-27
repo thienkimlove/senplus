@@ -64,7 +64,6 @@
                                 <div class="kt-header__topbar-user">
                                     <span class="kt-header__topbar-welcome kt-hidden-mobile">Xin chào,</span>
                                     <span class="kt-header__topbar-username kt-hidden-mobile">{{ \App\Helpers::getCookieLogin() }}</span>
-                                    <img class="kt-hidden" alt="Pic" src="url()" />
 
                                     <!--use below badge element instead the user avatar to display username's first letter(remove kt-hidden class to display it) -->
                                     <span class="kt-badge kt-badge--username kt-badge--unified-success kt-badge--lg kt-badge--rounded kt-badge--bold">{{Str::limit(\App\Helpers::getCookieLogin(), 1, '')}}</span>
