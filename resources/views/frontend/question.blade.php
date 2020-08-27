@@ -24,7 +24,7 @@
                                 <div class="kt-widget5__section">
                                     {{ $question->name }}
                                     <input type="hidden" name="question_id" value="{{ $question->id }}">
-                                    {{ csrf_token() }}
+                                    {{ csrf_field() }}
                                 </div>
                             </div>
                         </div>
