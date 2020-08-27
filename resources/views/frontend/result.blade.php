@@ -57,7 +57,7 @@
         function getArrayValue(object, position) {
 
             $.each(object, function( index, value ) {
-                if (parseInt(index) === position) {
+                if (parseInt(index, 10) === position) {
                     return value;
                 }
             });
@@ -67,7 +67,7 @@
         function getArrayDeepValue(object, position, opt) {
 
             $.each(object, function( index, value ) {
-                if (parseInt(index) === position) {
+                if (parseInt(index, 10) === position) {
                     $.each(value, function( index2, value2 ) {
                         if (index2 === opt) {
                             return value2;
