@@ -53,10 +53,7 @@
         let mapOption = JSON.parse(' @json(\App\Helpers::mapOption()) ');
         let mapRound = JSON.parse(' @json(\App\Helpers::mapRound()) ');
 
-        console.log(mapOption[1]);
-        console.log(mapOption["1"]);
-        console.log(result[2]['option1']);
-        console.log(result["2"]['option1']);
+        console.log(mapOption);
 
         drawArrow = function(context, fromx, fromy, tox, toy) {
             var headlen = 10;
