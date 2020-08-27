@@ -21,30 +21,25 @@
                     <div class="kt-widget5">
                         <div class="kt-widget5__item">
                             <div class="kt-widget5__content">
-                                <div class="kt-widget5__title">
-                                    Câu hỏi thứ {{ $question->order }}
+
+                                <div class="kt-widget5__section">
+                                    {{ $question->name }}
+                                    <input type="hidden" name="question_id" value="{{ $question->id }}">
+                                    {{ csrf_token() }}
+                                </div>
+                            </div>
+                            @foreach(['option1', 'option2', 'option3', 'option4'] as $opt)
+                            <div class="kt-widget5__content">
+                                <div class="kt-widget5__section">
+                                    <span class="kt-widget5__info">{{ $question->{$opt} }}</span>
                                 </div>
                                 <div class="kt-widget5__section">
-
-                                    {{ $question->name }}
-
-                                    <input type="hidden" name="question_id" value="{{ $question->id }}">
-
-                                    {{ csrf_token() }}
-
+                                    <span class="kt-widget5__info">
+                                        <input type="number" name="{{ $opt }}" />
+                                    </span>
                                 </div>
                             </div>
-                            <div class="kt-widget5__content">
-                                @foreach(['option1', 'option2', 'option3', 'option4'] as $opt)
-                                    <div class="kt-widget5__stats">
-                                        <span class="kt-widget5__info">{{ $question->{$opt} }}</span>
-                                        <span class="kt-widget5__info">
-                                            <input type="number" name="{{ $opt }}" />
-                                        </span>
-                                    </div>
-                                @endforeach
-
-                            </div>
+                            @endforeach
                             <div class="kt-widget5__content">
                                 <div class="kt-widget5__section">
                                     <input class="kt-mycart__button" type="submit" value="Tiếp Theo" />
