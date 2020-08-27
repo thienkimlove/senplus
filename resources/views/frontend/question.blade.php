@@ -19,7 +19,6 @@
                 <div class="kt-portlet__body">
                 <div class="tab-content">
                     <div class="kt-widget5">
-
                         <div class="kt-widget5__item">
                             <div class="kt-widget5__content">
                                 <div class="kt-widget5__section">
@@ -36,7 +35,7 @@
                                     <div class="kt-widget5__section">
                                         {{ $question->{$opt} }}
                                     </div>
-                                    <div class="kt-widget5__sales">
+                                    <div class="kt-widget5__stats">
                                         <input type="number" name="{{ $opt }}" />
                                     </div>
                                 </div>
