@@ -19,27 +19,30 @@
                 <div class="kt-portlet__body">
                 <div class="tab-content">
                     <div class="kt-widget5">
+
                         <div class="kt-widget5__item">
                             <div class="kt-widget5__content">
-
                                 <div class="kt-widget5__section">
                                     {{ $question->name }}
                                     <input type="hidden" name="question_id" value="{{ $question->id }}">
                                     {{ csrf_token() }}
                                 </div>
                             </div>
-                            @foreach(['option1', 'option2', 'option3', 'option4'] as $opt)
-                            <div class="kt-widget5__content">
-                                <div class="kt-widget5__section">
-                                    <span class="kt-widget5__info">{{ $question->{$opt} }}</span>
-                                </div>
-                                <div class="kt-widget5__section">
-                                    <span class="kt-widget5__info">
+                        </div>
+
+                        @foreach(['option1', 'option2', 'option3', 'option4'] as $opt)
+                            <div class="kt-widget5__item">
+                                <div class="kt-widget5__content">
+                                    <div class="kt-widget5__section">
+                                        {{ $question->{$opt} }}
+                                    </div>
+                                    <div class="kt-widget5__sales">
                                         <input type="number" name="{{ $opt }}" />
-                                    </span>
+                                    </div>
                                 </div>
                             </div>
-                            @endforeach
+                        @endforeach
+                        <div class="kt-widget5__item">
                             <div class="kt-widget5__content">
                                 <div class="kt-widget5__section">
                                     <input class="kt-mycart__button" type="submit" value="Tiếp Theo" />
