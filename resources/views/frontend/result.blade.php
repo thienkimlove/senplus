@@ -91,6 +91,10 @@
         }
 
 
+        console.log(getArrayDeepValue(result, 2, 'option1'));
+        console.log(getArrayValue(mapOption, 1));
+
+
         let chart = new Chart(ctx, {
             // The type of chart we want to create
             type: 'radar',
