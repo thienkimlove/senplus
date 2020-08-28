@@ -40,7 +40,7 @@ class CheckIfAdmin
             return response(trans('backpack::base.unauthorized'), 401);
         } else {
             backpack_auth()->logout();
-            return redirect()->guest(backpack_url('login'));
+            return response(trans('backpack::base.unauthorized'), 401);
         }
     }
 
