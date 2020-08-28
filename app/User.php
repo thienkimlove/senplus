@@ -49,6 +49,23 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $appends = [
+        'display_role'
+    ];
+
+    public function getDisplayRoleAttribute()
+    {
+        if ($this->hasRole('admin')) {
+            return 'Admin SenPlus';
+        }
+
+        if ($this->hasRole('editor')) {
+            return 'Editor SenPlus';
+        }
+
+        return  'Người Dùng';
+    }
+
 
     public function company()
     {

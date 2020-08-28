@@ -29,6 +29,10 @@ class CustomUserCrudController extends UserCrudController
         parent::setupListOperation();
         CRUD::addColumns([
             [
+                'name' => 'display_role',
+                'label' => 'Vai Trò'
+            ],
+            [
                 // any type of relationship
                 'name'         => 'company', // name of relationship method in the model
                 'type'         => 'relationship',
