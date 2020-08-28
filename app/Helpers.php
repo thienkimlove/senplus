@@ -258,4 +258,16 @@ class Helpers
             return ['type' => 'company', 'name' => 'Bộ câu hỏi cho doanh nghiệp '.$user->company->name];
         }
     }
+
+
+    public static function currentUserIsAdmin()
+    {
+        $user = self::getCurrentUser();
+
+        if (!$user) {
+            return false;
+        }
+
+        return $user->hasRole('admin');
+    }
 }
