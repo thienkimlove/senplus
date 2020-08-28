@@ -10,32 +10,9 @@ namespace App;
 
 use App\Models\Answer;
 use App\Models\Question;
-use Illuminate\Support\Facades\Cookie;
 
 class Helpers
 {
-    public const COOKIE_MINUTES = 100;
-    public const COOKIE_NAME = "send_plus";
-    public const DOMAIN_SYSTEM = "bosana.vn";
-
-    public const SESSION_NAME = "sen_plus_frontend";
-
-
-    public static function setCookieLogin($email)
-    {
-        Cookie::queue(Cookie::make(self::COOKIE_NAME, $email, self::COOKIE_MINUTES, '/', '.' . self::DOMAIN_SYSTEM));
-    }
-
-
-    public static function deleteCookieLogin()
-    {
-        Cookie::queue(Cookie::make(self::COOKIE_NAME, '', self::COOKIE_MINUTES, '/', '.' . self::DOMAIN_SYSTEM));
-    }
-
-    public static function getCookieLogin()
-    {
-        return Cookie::get(self::COOKIE_NAME);
-    }
 
     public static function log($msg)
     {
@@ -49,19 +26,8 @@ class Helpers
 
     public static function getCurrentUser()
     {
-        $currentUserEmail = self::getCookieLogin();
 
-        if (!$currentUserEmail) {
-            return null;
-        }
-
-        $user = User::where('email', $currentUserEmail)->first();
-
-        if (!$user) {
-            return null;
-        }
-
-        return $user;
+        return auth()->user();
     }
 
 
