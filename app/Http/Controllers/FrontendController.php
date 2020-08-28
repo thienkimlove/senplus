@@ -74,7 +74,7 @@ class FrontendController extends Controller
     public function home()
     {
         $page = 'home';
-        if (auth()->check()) {
+        if (!auth()->check()) {
             return redirect(route('frontend.login'));
         }
 
