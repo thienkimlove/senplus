@@ -65,8 +65,6 @@
                                     <span class="kt-header__topbar-welcome kt-hidden-mobile">Xin chào,</span>
                                     <span class="kt-header__topbar-username kt-hidden-mobile">{{ session()->get(\App\Helpers::SESSION_NAME)->name }}</span>
 
-                                    <!--use below badge element instead the user avatar to display username's first letter(remove kt-hidden class to display it) -->
-                                    <span class="kt-badge kt-badge--username kt-badge--unified-success kt-badge--lg kt-badge--rounded kt-badge--bold">{{ session()->get(\App\Helpers::SESSION_NAME)->name }}</span>
                                 </div>
                             </div>
                             <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-top-unround dropdown-menu-xl">
