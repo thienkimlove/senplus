@@ -27,7 +27,7 @@ class Helpers
     public static function getCurrentFrontendUser()
     {
 
-        return auth('frontend')->user();
+        return auth()->user();
     }
 
 
