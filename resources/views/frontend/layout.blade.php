@@ -48,14 +48,14 @@
                     <div class="kt-header-menu-wrapper" id="kt_header_menu_wrapper">
                         <div id="kt_header_menu" class="kt-header-menu kt-header-menu-mobile  kt-header-menu--layout-default ">
                             <ul class="kt-menu__nav ">
-                                <li class="kt-menu__item  kt-menu__item--rel"><a href="{{ (\App\Helpers::getCookieLogin()) ? route('frontend.home') : route('frontend.index') }}" class="kt-menu__link"><span class="kt-menu__link-text">Trang chủ</span></a></li>
+                                <li class="kt-menu__item  kt-menu__item--rel"><a href="{{ session()->has(\App\Helpers::SESSION_NAME) ? route('frontend.home') : route('frontend.index') }}" class="kt-menu__link"><span class="kt-menu__link-text">Trang chủ</span></a></li>
                                 <li class="kt-menu__item  kt-menu__item--rel"><a href="{{ route('frontend.home') }}" class="kt-menu__link"><span class="kt-menu__link-text">Thành viên</span></a></li>
                             </ul>
                         </div>
                     </div>
                     <!-- end:: Header Menu -->
 
-                    @if (\App\Helpers::getCookieLogin())
+                    @if (session()->has(\App\Helpers::SESSION_NAME))
                     <!-- begin:: Header Topbar -->
                     <div class="kt-header__topbar">
                         <!--begin: User Bar -->
@@ -63,10 +63,10 @@
                             <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="0px,0px">
                                 <div class="kt-header__topbar-user">
                                     <span class="kt-header__topbar-welcome kt-hidden-mobile">Xin chào,</span>
-                                    <span class="kt-header__topbar-username kt-hidden-mobile">{{ \App\Helpers::getCookieLogin() }}</span>
+                                    <span class="kt-header__topbar-username kt-hidden-mobile">{{ session()->get(\App\Helpers::SESSION_NAME)->name }}</span>
 
                                     <!--use below badge element instead the user avatar to display username's first letter(remove kt-hidden class to display it) -->
-                                    <span class="kt-badge kt-badge--username kt-badge--unified-success kt-badge--lg kt-badge--rounded kt-badge--bold">{{Str::limit(\App\Helpers::getCookieLogin(), 1, '')}}</span>
+                                    <span class="kt-badge kt-badge--username kt-badge--unified-success kt-badge--lg kt-badge--rounded kt-badge--bold">{{ session()->get(\App\Helpers::SESSION_NAME)->name }}</span>
                                 </div>
                             </div>
                             <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-top-unround dropdown-menu-xl">

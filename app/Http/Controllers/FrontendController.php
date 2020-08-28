@@ -16,7 +16,7 @@ class FrontendController extends Controller
 
     public function login()
     {
-        if (Helpers::getCookieLogin()) {
+        if (session()->has(Helpers::SESSION_NAME)) {
             return redirect(route('frontend.home'));
         }
         return view('frontend.login');
@@ -59,7 +59,8 @@ class FrontendController extends Controller
                 ->withInput($request->except('password'));
         }
 
-        Helpers::setCookieLogin($user->email);
+        session()->put(Helpers::SESSION_NAME, $user);
+
         return redirect(route('frontend.home'));
     }
 
@@ -73,10 +74,9 @@ class FrontendController extends Controller
     public function home()
     {
         $page = 'home';
-        if (!Helpers::getCookieLogin()) {
+        if (!session()->has(Helpers::SESSION_NAME)) {
             return redirect(route('frontend.login'));
         }
-        //$account = User::where('email', Helpers::getCookieLogin())->first();
 
         $survey = Helpers::getSurveyForLoginUser();
 
@@ -85,7 +85,7 @@ class FrontendController extends Controller
 
     public function logout()
     {
-        Helpers::deleteCookieLogin();
+        session()->forget(Helpers::SESSION_NAME);
         return redirect(route('frontend.index'));
     }
 

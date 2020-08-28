@@ -18,6 +18,8 @@ class Helpers
     public const COOKIE_NAME = "send_plus";
     public const DOMAIN_SYSTEM = "bosana.vn";
 
+    public const SESSION_NAME = "sen_plus_frontend";
+
 
     public static function setCookieLogin($email)
     {
