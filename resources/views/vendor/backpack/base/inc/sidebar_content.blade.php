@@ -3,6 +3,7 @@
 
 
 
+@if (backpack_user()->hasRole('admin') || backpack_user()->hasRole('editor'))
 
 
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('company') }}'><i class='nav-icon la la-centercode'></i> <span>Doanh Nghiệp</span></a></li>
@@ -18,8 +19,10 @@
 
 {{--<li class='nav-item'><a class='nav-link' href='{{ backpack_url('answer') }}'><i class='nav-icon la la-question'></i> Answers</a></li>--}}
 
+@endif
 
-@role('admin')
+
+@if (backpack_user()->hasRole('admin'))
 
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('setting') }}'><i class='nav-icon fa fa-cog'></i> Thiết Lập</a></li>
 
@@ -34,4 +37,4 @@
         <li class="nav-item"><a class="nav-link" href="{{ backpack_url('permission') }}"><i class="nav-icon la la-key"></i> <span>Permissions</span></a></li>
     </ul>
 </li>
-@endrole
+@endif
