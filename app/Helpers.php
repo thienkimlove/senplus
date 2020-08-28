@@ -270,4 +270,9 @@ class Helpers
 
         return $user->hasRole('admin');
     }
+
+    public static function haveAnswer($userId)
+    {
+        return (Answer::where('user_id', $userId)->count() > 0);
+    }
 }

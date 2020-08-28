@@ -1,3 +1,4 @@
+@if (\App\Helpers::haveAnswer($entry->getKey()))
 <a  href="javascript:void(0)" onclick="clearResult(this)" data-url="{{ url($crud->route.'/'.$entry->getKey().'/clear') }}" class="btn btn-xs btn-default" data-button-type="clear"><i class="fa fa-balance-scale"></i>Xóa kết quả</a>
 
 <script>
@@ -13,3 +14,4 @@
         }
     }
 </script>
+@endif
