@@ -40,7 +40,7 @@ class GenerateQuestion extends Command
     {
         $optionStr = 'Ví như một vị bác sĩ lâu năm kinh nghiệm';
 
-        for ($i = 1; $i <7; $i ++) {
+        for ($i = 2; $i <7; $i ++) {
             Question::create([
                 'name' => $optionStr,
                 'option1' => $optionStr,
@@ -49,7 +49,7 @@ class GenerateQuestion extends Command
                 'option4' => $optionStr,
                 'round' => 1,
                 'order' => $i,
-                'company_id' => 1
+                'company_id' => 2
             ]);
         }
 
@@ -62,7 +62,7 @@ class GenerateQuestion extends Command
                 'option4' => $optionStr,
                 'round' => 2,
                 'order' => $i,
-                'company_id' => 1
+                'company_id' => 2
             ]);
         }
     }

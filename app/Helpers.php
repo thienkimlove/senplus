@@ -224,6 +224,11 @@ class Helpers
         if (!$user->company_id) {
             // ca nhan
             $generalQuestionIds = Question::whereNull('company_id')->pluck('id')->all();
+
+            if (!$generalQuestionIds) {
+                return [];
+            }
+
             $countAnswerForGeneral = Answer::where('user_id', $user->id)
                 ->whereIn('question_id', $generalQuestionIds)
                 ->count();
@@ -238,6 +243,10 @@ class Helpers
         $companyQuestionIds = Question::where('company_id', $user->company_id)
             ->pluck('id')
             ->all();
+
+        if (!$companyQuestionIds) {
+            return [];
+        }
 
         $countAnswerForCompany = Answer::where('user_id', $user->id)
             ->whereIn('question_id', $companyQuestionIds)
