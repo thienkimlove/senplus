@@ -16,7 +16,7 @@ class FrontendController extends Controller
 
     public function login()
     {
-        if (auth()->check()) {
+        if (auth('frontend')->check()) {
             return redirect(route('frontend.home'));
         }
         return view('frontend.login');
@@ -59,7 +59,7 @@ class FrontendController extends Controller
                 ->withInput($request->except('password'));
         }
 
-        auth()->login($user);
+        auth('frontend')->login($user);
 
         return redirect(route('frontend.home'));
     }
@@ -74,7 +74,7 @@ class FrontendController extends Controller
     public function home()
     {
         $page = 'home';
-        if (!auth()->check()) {
+        if (!auth('frontend')->check()) {
             return redirect(route('frontend.login'));
         }
 
@@ -85,7 +85,7 @@ class FrontendController extends Controller
 
     public function logout()
     {
-        auth()->logout();
+        auth('frontend')->logout();
         return redirect(route('frontend.index'));
     }
 
