@@ -151,10 +151,10 @@ class FrontendController extends Controller
         Answer::create([
             'user_id' => $user->id,
             'question_id' => $question->id,
-            'option1' => $request->input('option1', 0),
-            'option2' => $request->input('option2', 0),
-            'option3' => $request->input('option3', 0),
-            'option4' => $request->input('option4', 0),
+            'option1' => $request->input('option1') ? $request->input('option1') : 0,
+            'option2' => $request->input('option2') ? $request->input('option2') : 0,
+            'option3' => $request->input('option3') ? $request->input('option3') : 0,
+            'option4' => $request->input('option4') ? $request->input('option4') : 0,
         ]);
 
         if ($question->order == 6) {
