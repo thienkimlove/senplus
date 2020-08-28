@@ -24,7 +24,7 @@ class Helpers
         @file_put_contents(storage_path('logs/debug.log'), $message . "\n", FILE_APPEND);
     }
 
-    public static function getCurrentUser()
+    public static function getCurrentFrontendUser()
     {
 
         return auth()->user();
@@ -65,7 +65,7 @@ class Helpers
 
     public static function getResultForUser()
     {
-        $user = self::getCurrentUser();
+        $user = self::getCurrentFrontendUser();
 
         if (!$user) {
             return [];
@@ -137,7 +137,7 @@ class Helpers
 
     public static function generateAnswerForUser()
     {
-        $user = self::getCurrentUser();
+        $user = self::getCurrentFrontendUser();
 
         if ($user) {
             if ($user->company_id) {
@@ -161,7 +161,7 @@ class Helpers
 
     public static function getQuestion($round, $order)
     {
-        $user = self::getCurrentUser();
+        $user = self::getCurrentFrontendUser();
 
         if (!$user) {
             return null;
@@ -183,7 +183,7 @@ class Helpers
     public static function getSurveyForLoginUser()
     {
 
-        $user = self::getCurrentUser();
+        $user = self::getCurrentFrontendUser();
 
         if (!$user) {
             return [];
@@ -228,9 +228,9 @@ class Helpers
     }
 
 
-    public static function currentUserIsAdmin()
+    public static function currentFrontendUserIsAdmin()
     {
-        $user = self::getCurrentUser();
+        $user = self::getCurrentFrontendUser();
 
         if (!$user) {
             return false;

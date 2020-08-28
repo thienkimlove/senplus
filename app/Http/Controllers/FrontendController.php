@@ -127,7 +127,7 @@ class FrontendController extends Controller
             return redirect(route('frontend.home'));
         }
 
-        $user = Helpers::getCurrentUser();
+        $user = Helpers::getCurrentFrontendUser();
 
         if (!$user) {
             $request->session()->flash('general_message', 'Không xác định được người dùng!');
@@ -172,7 +172,7 @@ class FrontendController extends Controller
     public function result(Request $request)
     {
 
-        $user = Helpers::getCurrentUser();
+        $user = Helpers::getCurrentFrontendUser();
 
         if (!$user) {
             $request->session()->flash('general_message', 'Không xác định được người dùng!');

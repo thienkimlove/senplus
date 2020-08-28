@@ -50,7 +50,7 @@
                             </div>
                         @endforeach
 
-                        @if (\App\Helpers::currentUserIsAdmin())
+                        @if (\App\Helpers::currentFrontendUserIsAdmin())
                             <div class="kt-widget5__item">
                                 <div class="kt-widget5__content">
 
