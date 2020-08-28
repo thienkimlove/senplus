@@ -48,14 +48,14 @@
                     <div class="kt-header-menu-wrapper" id="kt_header_menu_wrapper">
                         <div id="kt_header_menu" class="kt-header-menu kt-header-menu-mobile  kt-header-menu--layout-default ">
                             <ul class="kt-menu__nav ">
-                                <li class="kt-menu__item  kt-menu__item--rel"><a href="{{ session()->has(\App\Helpers::SESSION_NAME) ? route('frontend.home') : route('frontend.index') }}" class="kt-menu__link"><span class="kt-menu__link-text">Trang chủ</span></a></li>
+                                <li class="kt-menu__item  kt-menu__item--rel"><a href="{{ auth()->check() ? route('frontend.home') : route('frontend.index') }}" class="kt-menu__link"><span class="kt-menu__link-text">Trang chủ</span></a></li>
                                 <li class="kt-menu__item  kt-menu__item--rel"><a href="{{ route('frontend.home') }}" class="kt-menu__link"><span class="kt-menu__link-text">Thành viên</span></a></li>
                             </ul>
                         </div>
                     </div>
                     <!-- end:: Header Menu -->
 
-                    @if (session()->has(\App\Helpers::SESSION_NAME))
+                    @if (auth()->check())
                     <!-- begin:: Header Topbar -->
                     <div class="kt-header__topbar">
                         <!--begin: User Bar -->
@@ -63,10 +63,10 @@
                             <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="0px,0px">
                                 <div class="kt-header__topbar-user">
                                     <span class="kt-header__topbar-welcome kt-hidden-mobile">Xin chào,</span>
-                                    <span class="kt-header__topbar-username kt-hidden-mobile">{{ session()->get(\App\Helpers::SESSION_NAME)->name }}</span>
+                                    <span class="kt-header__topbar-username kt-hidden-mobile">{{ auth()->user()->name }}</span>
 
                                     <!--use below badge element instead the user avatar to display username's first letter(remove kt-hidden class to display it) -->
-                                    <span class="kt-badge kt-badge--username kt-badge--unified-success kt-badge--lg kt-badge--rounded kt-badge--bold">{{ \Illuminate\Support\Str::limit(session()->get(\App\Helpers::SESSION_NAME)->name, 1, '') }}</span>
+                                    <span class="kt-badge kt-badge--username kt-badge--unified-success kt-badge--lg kt-badge--rounded kt-badge--bold">{{ \Illuminate\Support\Str::limit(auth()->user()->name, 1, '') }}</span>
                                 </div>
                             </div>
                             <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-top-unround dropdown-menu-xl">
@@ -75,10 +75,10 @@
                                 <div class="kt-user-card kt-user-card--skin-dark kt-notification-item-padding-x" style="background-image: url({{ url('frontend/images/bg-1.jpg') }})">
                                     <div class="kt-user-card__avatar">
                                         <!--use below badge element instead the user avatar to display username's first letter(remove kt-hidden class to display it) -->
-                                        <span class="kt-badge kt-badge--lg kt-badge--rounded kt-badge--bold kt-font-success">{{Str::limit(\App\Helpers::getCookieLogin(), 1, '')}}</span>
+                                        <span class="kt-badge kt-badge--lg kt-badge--rounded kt-badge--bold kt-font-success">{{Str::limit(auth()->user()->name, 1, '')}}</span>
                                     </div>
                                     <div class="kt-user-card__name">
-                                        {{ \App\Helpers::getCookieLogin() }}
+                                        {{ auth()->user()->name }}
                                     </div>
                                     <div class="kt-user-card__badge">
                                         <span class="btn btn-success btn-sm btn-bold btn-font-md">{{(now()->hour < 13) ? 'Chào buổi sáng' : (now()->hour < 18) ? 'Chào buổi chiều' : 'Chào buổi tối'}}</span>

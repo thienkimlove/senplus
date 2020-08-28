@@ -16,7 +16,7 @@ class FrontendController extends Controller
 
     public function login()
     {
-        if (session()->has(Helpers::SESSION_NAME)) {
+        if (auth()->check()) {
             return redirect(route('frontend.home'));
         }
         return view('frontend.login');
@@ -59,7 +59,7 @@ class FrontendController extends Controller
                 ->withInput($request->except('password'));
         }
 
-        session()->put(Helpers::SESSION_NAME, $user);
+        auth()->login($user);
 
         return redirect(route('frontend.home'));
     }
@@ -74,7 +74,7 @@ class FrontendController extends Controller
     public function home()
     {
         $page = 'home';
-        if (!session()->has(Helpers::SESSION_NAME)) {
+        if (auth()->check()) {
             return redirect(route('frontend.login'));
         }
 
@@ -85,7 +85,7 @@ class FrontendController extends Controller
 
     public function logout()
     {
-        session()->forget(Helpers::SESSION_NAME);
+        auth()->logout();
         return redirect(route('frontend.index'));
     }
 

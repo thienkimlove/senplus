@@ -3,7 +3,7 @@
 @section('content')
 
 
-@if (session()->has(\App\Helpers::SESSION_NAME))
+@if (auth()->user())
     <script>window.location = "/home";</script>
 @else
 <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
