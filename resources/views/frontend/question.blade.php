@@ -80,9 +80,9 @@
 
                 this.state = {
 
-                    series: [{{ $round1Percent }},{{ $round2Percent }}],
+                    series: [{{ $roundPercent }},{{ 100-$roundPercent }}],
                     options: {
-                        labels: ['1st Qtr', '2nd Qtr'],
+                        labels: ['Đã hoàn thành', 'Chưa hoàn thành'],
                         colors: ['#9c5137', '#657558'],
                         chart: {
                             type: 'donut',

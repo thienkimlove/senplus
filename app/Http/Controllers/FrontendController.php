@@ -103,7 +103,7 @@ class FrontendController extends Controller
         $round = $request->input('round', 1);
         $order = $request->input('order', 1);
 
-        list($question, $round1Percent, $round2Percent, $answer) = Helpers::getQuestion($round, $order);
+        list($question, $roundPercent, $answer) = Helpers::getQuestion($round, $order);
 
         if (!$question) {
             $request->session()->flash('general_message', 'Câu hỏi không tồn tại!');
@@ -111,7 +111,7 @@ class FrontendController extends Controller
         }
 
 
-        return view('frontend.question', compact( 'page', 'question', 'round1Percent', 'round2Percent', 'answer'));
+        return view('frontend.question', compact( 'page', 'question','roundPercent', 'answer'));
     }
 
     public function back(Request $request)

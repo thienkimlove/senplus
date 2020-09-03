@@ -177,8 +177,7 @@ class Helpers
             return [null, 0, 0, null];
         }
 
-        $round1AnswerPercent = 0;
-        $round2AnswerPercent = 0;
+        $roundAnswerPercent = 0;
 
         if (!$user->company_id) {
             $question = Question::whereNull('company_id')
@@ -186,32 +185,27 @@ class Helpers
                 ->where('order', $order)
                 ->first();
 
-            $questionRound1Ids = Question::whereNull('company_id')->where('round', 1)->pluck('id')->all();
-            $questionRound2Ids = Question::whereNull('company_id')->where('round', 2)->pluck('id')->all();
+            $questionIds = Question::whereNull('company_id')->pluck('id')->all();
         } else {
             $question = Question::where('company_id', $user->company_id)
                 ->where('round', $round)
                 ->where('order', $order)
                 ->first();
 
-            $questionRound1Ids = Question::where('company_id', $user->company_id)->where('round', 1)->pluck('id')->all();
-            $questionRound2Ids = Question::where('company_id', $user->company_id)->where('round', 2)->pluck('id')->all();
+            $questionIds = Question::where('company_id', $user->company_id)->pluck('id')->all();
+
         }
 
-        $answerRound1 = Answer::where('user_id', $user->id)->whereIn('question_id', $questionRound1Ids)->count();
-        $answerRound2 = Answer::where('user_id', $user->id)->whereIn('question_id', $questionRound2Ids)->count();
+        $answerRound = Answer::where('user_id', $user->id)->whereIn('question_id', $questionIds)->count();
 
-        if ($answerRound1 > 0) {
-            $round1AnswerPercent = round($answerRound1/6, 2)*100;
+        if ($answerRound > 0) {
+            $roundAnswerPercent = round($answerRound/12, 2)*100;
         }
 
-        if ($answerRound2 > 0) {
-            $round2AnswerPercent = round($answerRound2/6, 2)*100;
-        }
 
         $answer = Answer::where('user_id', $user->id)->where('question_id', $question->id)->first();
 
-        return [$question, $round1AnswerPercent, $round2AnswerPercent, $answer];
+        return [$question, $roundAnswerPercent, $answer];
     }
 
     public static function getSurveyForLoginUser()
