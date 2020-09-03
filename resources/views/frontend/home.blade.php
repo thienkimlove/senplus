@@ -10,7 +10,7 @@
                 <div class="fixCen flex-between">
 
                     @if (\App\Helpers::haveResult())
-                        <div class="myBtn btnTest" title="Test"><a href="{{ route('frontend.result') }}">Xem kết quả</a></div>
+                        <a href="{{ route('frontend.result') }}">Xem kết quả</a>
                     @endif
 
                     {{--<div class="myBtn btnTest" title="Test">Test</div>--}}
