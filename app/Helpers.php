@@ -61,6 +61,17 @@ class Helpers
         ];
     }
 
+    public static function haveResult()
+    {
+        $user = self::getCurrentFrontendUser();
+
+        if (!$user) {
+            return false;
+        }
+
+        return (Answer::where('user_id', $user->id)->count() > 0);
+    }
+
 
 
     public static function getResultForUser()
