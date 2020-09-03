@@ -44,8 +44,8 @@ class Helpers
     public static function mapRound()
     {
         return [
-            1 => 'Đánh giá 2018 - 2020',
-            2 => 'Cần thiết 2020 - 2022',
+            1 => 'Đánh giá hiện tại',
+            2 => 'Mong muốn',
         ];
     }
 
@@ -162,22 +162,45 @@ class Helpers
     public static function getQuestion($round, $order)
     {
         $user = self::getCurrentFrontendUser();
-
         if (!$user) {
-            return null;
+            return [null, 0, 0, null];
         }
 
+        $round1AnswerPercent = 0;
+        $round2AnswerPercent = 0;
+
         if (!$user->company_id) {
-            return Question::whereNull('company_id')
+            $question = Question::whereNull('company_id')
                 ->where('round', $round)
                 ->where('order', $order)
                 ->first();
+
+            $questionRound1Ids = Question::whereNull('company_id')->where('round', 1)->pluck('id')->all();
+            $questionRound2Ids = Question::whereNull('company_id')->where('round', 2)->pluck('id')->all();
+        } else {
+            $question = Question::where('company_id', $user->company_id)
+                ->where('round', $round)
+                ->where('order', $order)
+                ->first();
+
+            $questionRound1Ids = Question::where('company_id', $user->company_id)->where('round', 1)->pluck('id')->all();
+            $questionRound2Ids = Question::where('company_id', $user->company_id)->where('round', 2)->pluck('id')->all();
         }
 
-        return Question::where('company_id', $user->company_id)
-            ->where('round', $round)
-            ->where('order', $order)
-            ->first();
+        $answerRound1 = Answer::where('user_id', $user->id)->whereIn('question_id', $questionRound1Ids)->count();
+        $answerRound2 = Answer::where('user_id', $user->id)->whereIn('question_id', $questionRound2Ids)->count();
+
+        if ($answerRound1 > 0) {
+            $round1AnswerPercent = round($answerRound1/6, 2)*100;
+        }
+
+        if ($answerRound2 > 0) {
+            $round2AnswerPercent = round($answerRound2/6, 2)*100;
+        }
+
+        $answer = Answer::where('user_id', $user->id)->where('question_id', $question->id)->first();
+
+        return [$question, $round1AnswerPercent, $round2AnswerPercent, $answer];
     }
 
     public static function getSurveyForLoginUser()

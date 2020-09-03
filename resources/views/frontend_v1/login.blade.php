@@ -1,4 +1,4 @@
-@extends('frontend.layout_default')
+@extends('frontend_v1.layout_default')
 
 @section('content')
 <div class="kt-login__signin">

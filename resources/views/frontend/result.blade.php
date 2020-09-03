@@ -1,46 +1,78 @@
 @extends('frontend.layout')
 
-
 @section('content')
-<div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
-<div class="row justify-content-md-center">
-    <div class="col-xl-8">
-        <!--begin:: Widgets/Survey List-->
-        <div class="kt-portlet kt-portlet--height-fluid">
-            <div class="kt-portlet__head">
-                <div class="kt-portlet__head-label">
-                    <h3 class="kt-portlet__head-title">
-                        Kết Quả
-                    </h3>
-                </div>
+    <div id="root">
+        <div class="Root_1Kcx">
 
-            </div>
+            @include('frontend.partials.header')
 
-            <div class="kt-portlet__body">
-                <div class="tab-content">
-                    <div class="kt-widget5">
-                        <div class="kt-widget5__item">
-                            <div class="kt-widget5__content">
-
-                                <div class="kt-widget5__section">
-
-                                    <canvas id="myChart" style="width: 100%; height: auto"></canvas>
-
-                                </div>
+            <main>
+                <div class="fixCen flex-between">
+                    <div class="myBtn btnTest" title="Nhận kết quả">Nhận kết quả</div>
+                    <div class="showTurn"><h2 class="title">Tóm tắt hồ sơ css group</h2></div>
+                    <div class="selectGroup mt50" style="display: none">
+                        <h3 class="title">Bộ lọc dữ liệu</h3>
+                        <form action="" id="filerSelect">
+                            <div class="objectTest">
+                                <div class="title">Đối tượng khảo sát</div>
+                                <div class="input-group"><input type="checkbox"> CEO</div>
+                                <div class="input-group"><input type="checkbox"> Quản lý cấp cao</div>
+                                <div class="input-group"><input type="checkbox"> Quản lý cấp trung</div>
+                                <div class="input-group"><input type="checkbox"> Nhân viên</div>
+                                <div class="input-group"><input type="checkbox"> Khối nội chính</div>
+                                <div class="input-group"><input type="checkbox"> Khối kinh doanh</div>
+                                <div class="input-group"><input type="checkbox"> Tập thể</div>
                             </div>
+                            <div class="typeOfChart">
+                                <div class="title">Loại biểu đồ</div>
+                                <div class="input-group"><input type="checkbox"> Đăc điểm nổi trội</div>
+                                <div class="input-group"><input type="checkbox"> Phong cách lãnh đạo</div>
+                                <div class="input-group"><input type="checkbox"> Quản lý nhân viên</div>
+                                <div class="input-group"><input type="checkbox"> Sự gắn kết</div>
+                                <div class="input-group"><input type="checkbox"> Chiến lược</div>
+                                <div class="input-group"><input type="checkbox"> Tiêu chí thành công</div>
+                                <div class="input-group"><input type="checkbox"> Loại hình VHDN</div>
+                            </div>
+                            <button class="btnFilter myBtn">Xem</button>
+                        </form>
+                    </div>
+                    <div class="leftSide mt50 leftSideResult">
+                        <table class="tableResult">
+                            <thead>
+                            <tr>
+                                <th>Loại hình <br>VHDN</th>
+                                <th>Đánh giá <br>(hiện tại)</th>
+                                <th>Mong muốn <br>(tuong lai)</th>
+                                <th>Chênh lệch</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach(['option1', 'option2', 'option3', 'option4'] as $index => $opt)
+                                <tr>
+                                    <td>{{ \App\Helpers::mapOption()[$opt] }}</td>
+                                    <td>{{ $result[1][$opt] }}</td>
+                                    <td>{{ $result[2][$opt] }}</td>
+                                    <td>{{ $result[1][$opt] - $result[2][$opt] }}</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="rightSide mt50 rightSideResult">
+                        <h3 class="title">Loại hình Văn hóa doanh nghiệp</h3>
+                        <div class="contain mt50">
+                            <canvas id="myChart" style="width: 100%; height: auto"></canvas>
 
                         </div>
                     </div>
-
+                    <div class="bottom mt50 flex-between">
+                        <a href="javascript:void(0)" class="myBtn btnBack" title="Quay lại" onclick="window.history.back()">Quay lại</a>
+                    </div>
                 </div>
-            </div>
+            </main>
 
         </div>
-
-        <!--end:: Widgets/Survey List-->
     </div>
-</div>
-</div>
 @endsection
 
 @section('after_scripts')

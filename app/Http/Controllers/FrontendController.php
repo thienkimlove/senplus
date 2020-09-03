@@ -19,7 +19,9 @@ class FrontendController extends Controller
         if (auth()->check()) {
             return redirect(route('frontend.home'));
         }
-        return view('frontend.login');
+        //return view('frontend.login');
+        // now login and index in same page.
+        return redirect(route('frontend.index'));
     }
 
     public function postLogin(Request $request)
@@ -38,7 +40,7 @@ class FrontendController extends Controller
         $validator = Validator::make($data , $rules, $messages);
         // if the validator fails, redirect back to the form
         if ($validator->fails()) {
-            return redirect(route('frontend.login'))
+            return redirect(route('frontend.index'))
                 ->withErrors($validator)
                 ->withInput($request->except('password'));
         }
@@ -47,25 +49,27 @@ class FrontendController extends Controller
 
         if (!$user) {
             $validator->getMessageBag()->add('email', 'Tài khoản không tồn tại!');
-            return redirect(route('frontend.login'))
+            return redirect(route('frontend.index'))
                 ->withErrors($validator)
                 ->withInput($request->except('password'));
         }
 
         if (!Hash::check($data['password'], $user->getAuthPassword())) {
             $validator->getMessageBag()->add('password', 'Mật khẩu không đúng xin thử lại!');
-            return redirect(route('frontend.login'))
+            return redirect(route('frontend.index'))
                 ->withErrors($validator)
                 ->withInput($request->except('password'));
         }
 
         auth()->login($user);
-
         return redirect(route('frontend.home'));
     }
 
     public function index()
     {
+        if (auth()->check()) {
+            return redirect(route('frontend.home'));
+        }
         $page = 'index';
         return view('frontend.index', compact('page'));
 
@@ -75,11 +79,9 @@ class FrontendController extends Controller
     {
         $page = 'home';
         if (!auth()->check()) {
-            return redirect(route('frontend.login'));
+            return redirect(route('frontend.index'));
         }
-
         $survey = Helpers::getSurveyForLoginUser();
-
         return view('frontend.home', compact( 'page', 'survey'));
     }
 
@@ -101,14 +103,40 @@ class FrontendController extends Controller
         $round = $request->input('round', 1);
         $order = $request->input('order', 1);
 
-        $question = Helpers::getQuestion($round, $order);
+        list($question, $round1Percent, $round2Percent, $answer) = Helpers::getQuestion($round, $order);
 
         if (!$question) {
             $request->session()->flash('general_message', 'Câu hỏi không tồn tại!');
             return redirect(route('frontend.home'));
         }
 
-        return view('frontend.question', compact( 'page', 'question'));
+
+        return view('frontend.question', compact( 'page', 'question', 'round1Percent', 'round2Percent', 'answer'));
+    }
+
+    public function back(Request $request)
+    {
+        $questionId = $request->input('question_id');
+
+        if (!$questionId) {
+            $request->session()->flash('general_message', 'Câu hỏi không tồn tại!');
+            return redirect(route('frontend.home'));
+        }
+        $question = Question::find($questionId);
+
+        if (!$question) {
+            $request->session()->flash('general_message', 'Câu hỏi không tồn tại!');
+            return redirect(route('frontend.home'));
+        }
+
+        if ($question->round == 1 && $question->order == 1) {
+            return redirect(route('frontend.question'));
+        }
+        if ($question->round == 2 && $question->order == 1) {
+            return redirect(route('frontend.question').'?order=6');
+        }
+
+        return redirect(route('frontend.question').'?round='.$question->round.'&order='.($question->order - 1));
     }
 
     public function answer(Request $request)
@@ -134,29 +162,33 @@ class FrontendController extends Controller
             return redirect(route('frontend.home'));
         }
 
-        $countExistedAnswer = Answer::where('user_id', $user->id)
+        $existedAnswer = Answer::where('user_id', $user->id)
             ->where('question_id', $question->id)
-            ->count();
+            ->first();
 
-        if ($countExistedAnswer > 0) {
-            $request->session()->flash('general_message', 'Đã thực hiện trả lời!');
-            return redirect(route('frontend.home'));
-        }
 
         if ($request->input('random') == 1) {
             Helpers::generateAnswerForUser();
             return redirect(route('frontend.result'));
         }
 
-        Answer::create([
-            'user_id' => $user->id,
-            'question_id' => $question->id,
-            'option1' => $request->input('option1') ? $request->input('option1') : 0,
-            'option2' => $request->input('option2') ? $request->input('option2') : 0,
-            'option3' => $request->input('option3') ? $request->input('option3') : 0,
-            'option4' => $request->input('option4') ? $request->input('option4') : 0,
-        ]);
-
+        if ($existedAnswer) {
+            $existedAnswer->update([
+                'option1' => $request->input('option1') ? $request->input('option1') : 0,
+                'option2' => $request->input('option2') ? $request->input('option2') : 0,
+                'option3' => $request->input('option3') ? $request->input('option3') : 0,
+                'option4' => $request->input('option4') ? $request->input('option4') : 0,
+            ]);
+        } else {
+            Answer::create([
+                'user_id' => $user->id,
+                'question_id' => $question->id,
+                'option1' => $request->input('option1') ? $request->input('option1') : 0,
+                'option2' => $request->input('option2') ? $request->input('option2') : 0,
+                'option3' => $request->input('option3') ? $request->input('option3') : 0,
+                'option4' => $request->input('option4') ? $request->input('option4') : 0,
+            ]);
+        }
         if ($question->order == 6) {
             if ($question->round == 1) {
                 return redirect(route('frontend.question').'?round=2');

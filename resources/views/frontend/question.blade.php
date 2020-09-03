@@ -1,82 +1,171 @@
 @extends('frontend.layout')
 
-
 @section('content')
-<div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
-<div class="row justify-content-md-center">
-    <div class="col-xl-8">
-        <!--begin:: Widgets/Survey List-->
-        <div class="kt-portlet kt-portlet--height-fluid">
-            <div class="kt-portlet__head">
-                <div class="kt-portlet__head-label">
-                    <h3 class="kt-portlet__head-title">
-                        Vòng {{ \App\Helpers::mapRound()[$question->round] }}
-                    </h3>
-                </div>
+    <div id="root">
+        <div class="Root_1Kcx">
+            @include('frontend.partials.header')
 
-            </div>
-            <form action="{{ route('frontend.answer') }}" method="POST">
-                <div class="kt-portlet__body">
-                <div class="tab-content">
-                    <div class="kt-widget5">
-                        <div class="kt-widget5__item">
-                            <div class="kt-widget5__content">
-                                <div class="kt-widget5__section">
-                                   Câu hỏi <span style="font-weight: bold;">{{ \App\Helpers::mapOrder()[$question->order] }}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="kt-widget5__item">
-                            <div class="kt-widget5__content">
-                                <div class="kt-widget5__section">
-                                    {{ $question->name }}
+            <main>
+                <div class="fixCen flex-between">
+                    {{--<div class="myBtn btnTest" title="Test">Test</div>--}}
+                    <div class="showTurn"><h2 class="title">Vòng {{$question->round}} - {{ \App\Helpers::mapRound()[$question->round] }}</h2></div>
+                    <div class="leftSide mt50 leftSideCircleChart">
+
+                        <form id="answerSubmitForm" action="{{ route('frontend.answer') }}" method="POST">
+                            {{ csrf_field() }}
+                            <div class="content mt50">
+                                <div class="ques flex-between">
+                                    <div class="txt">{{ $question['name'] }}</div>
                                     <input type="hidden" name="question_id" value="{{ $question->id }}">
-                                    {{ csrf_field() }}
                                 </div>
-                            </div>
-                        </div>
 
-                        @foreach(['option1', 'option2', 'option3', 'option4'] as $opt)
-                            <div class="kt-widget5__item">
-                                <div class="kt-widget5__content">
-                                    <div class="kt-widget5__section">
-                                        {{ $question->{$opt} }}
+                                @foreach(['option1', 'option2', 'option3', 'option4'] as $index => $opt)
+                                    <div class="ques flex-between">
+                                        <div class="stt">{{ $index+1 }}</div>
+                                        <div class="txt">{{ $question->{$opt} }}</div>
+                                        <input type="number" value="{{ $answer? $answer->{$opt} : "" }}" id="value_{{$opt}}" name="{{ $opt }}" min="0" max="100" />
                                     </div>
-                                    <div class="kt-widget5__stats"></div>
-                                    <div class="kt-widget5__info">
-                                        <input type="number" name="{{ $opt }}" />
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
+                                @endforeach
 
-                        @if (\App\Helpers::currentFrontendUserIsAdmin())
-                            <div class="kt-widget5__item">
-                                <div class="kt-widget5__content">
-
-                                    <div class="kt-widget5__section">
-                                      Tự động tạo  <input type="checkbox" name="random" value="1">
-                                    </div>
+                                <div class="ques flex-between pr">
+                                    <div class="txt">TOTAL</div>
+                                    <input readonly="readonly" type="number" id="total">
+                                    <div style="display: none" id="total_warning" class="warningTxt pa showWarning">Tổng số không > 100</div>
                                 </div>
-                            </div>
-                        @endif
 
-                        <div class="kt-widget5__item">
-                            <div class="kt-widget5__content">
-                                <div class="kt-widget5__section">
-                                    <input class="kt-mycart__button" type="submit" value="Tiếp Theo" />
+                                @if (\App\Helpers::currentFrontendUserIsAdmin())
+                                <div class="ques flex-between pr">
+                                    <div class="txt">Tự động tạo</div>
+                                    <input type="checkbox" name="random" value="1">
                                 </div>
+                                @endif
+
                             </div>
-                        </div>
+
+                        </form>
+                    </div>
+                    <div class="rightSide mt50 rightSideCircleChart">
+                        <div id="circleChart"></div>
+                    </div>
+                    <div class="bottom mt50 flex-between">
+                        <a id="back_step" href="javascript:void(0)" class="myBtn btnBack" title="Quay lại">Quay lại</a>
+                        <a id="next_step" href="javascript:void(0)" class="myBtn btnNext" title="Tiếp tục">Tiếp tục</a>
                     </div>
 
+                    <form id="backQuestionForm" method="POST" action="{{ route('frontend.back') }}">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="question_id" value="{{ $question->id }}">
+                    </form>
                 </div>
-            </div>
-            </form>
-        </div>
+            </main>
 
-        <!--end:: Widgets/Survey List-->
+        </div>
     </div>
-</div>
-</div>
 @endsection
+
+@section('after_scripts')
+    <script src="https://cdn.jsdelivr.net/npm/react@16.12/umd/react.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@16.12/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prop-types@15.7.2/prop-types.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-apexcharts@1.3.6/dist/react-apexcharts.iife.min.js"></script>
+
+    <script type="text/babel">
+        class ApexChart extends React.Component {
+            constructor(props) {
+                super(props);
+
+                this.state = {
+
+                    series: [{{ $round1Percent }},{{ $round2Percent }}],
+                    options: {
+                        labels: ['1st Qtr', '2nd Qtr'],
+                        colors: ['#9c5137', '#657558'],
+                        chart: {
+                            type: 'donut',
+                        },
+                        responsive: [{
+                            breakpoint: 480,
+                            options: {
+                                chart: {
+                                    width: 200
+                                },
+                                legend: {
+                                    position: 'bottom'
+                                }
+                            }
+                        }]
+                    },
+
+
+                };
+            }
+
+
+
+            render() {
+                return (
+                    <div>
+                        <div id="chart">
+                            <ReactApexChart options={this.state.options} series={this.state.series} type="donut" />
+                        </div>
+                        <div id="html-dist"></div>
+                    </div>
+                );
+            }
+        }
+
+        const domContainer = document.querySelector('#circleChart');
+        ReactDOM.render(React.createElement(ApexChart), domContainer);
+    </script>
+
+    <script>
+        $(function(){
+
+            function generate() {
+                let option1 = $('#value_option1').val() > 0 ? parseInt($('#value_option1').val(), 10) : 0;
+                let option2 = $('#value_option2').val() > 0 ? parseInt($('#value_option2').val(), 10) : 0;
+                let option3 = $('#value_option3').val() > 0 ? parseInt($('#value_option3').val(), 10) : 0;
+                let option4 = $('#value_option4').val() > 0 ? parseInt($('#value_option4').val(), 10) : 0;
+
+                let totalVal = option1 + option2 + option3 + option4;
+
+                if (totalVal> 100) {
+                    $('#total_warning').show();
+                    $('#total').val(totalVal);
+                } else {
+                    $('#total_warning').hide();
+
+                    if (option1 > 0 && option2 > 0 && option3 > 0 && option4 === 0 && totalVal < 100) {
+                        $('#value_option4').val(100 - totalVal);
+                        $('#total').val(100);
+                    } else {
+                        $('#total').val(totalVal);
+                    }
+                }
+
+            }
+
+            generate();
+
+            $('#value_option1, #value_option2, #value_option3, #value_option4').change(function(){
+                generate();
+                return false;
+            });
+
+            $('#next_step').click(function(){
+                $('#answerSubmitForm').submit();
+                return false;
+            });
+
+            $('#back_step').click(function(){
+                $('#backQuestionForm').submit();
+                return false;
+            });
+
+        });
+    </script>
+@endsection
+
+
