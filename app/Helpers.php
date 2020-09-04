@@ -73,6 +73,29 @@ class Helpers
         return (Answer::where('user_id', $user->id)->count() > 0);
     }
 
+    public static function getQuestionListForUser($user)
+    {
+        if ($user->company_id) {
+            return Question::where('company_id', $user->company_id)->get();
+        }
+        return Question::whereNull('company_id')->get();
+    }
+
+    public static function currentFrontendUserIsAdmin()
+    {
+        $user = self::getCurrentFrontendUser();
+
+        if (!$user) {
+            return false;
+        }
+
+        return $user->hasRole('admin');
+    }
+
+    public static function haveAnswer($userId)
+    {
+        return (Answer::where('user_id', $userId)->count() > 0);
+    }
 
 
     public static function getResultForUser()
@@ -82,11 +105,9 @@ class Helpers
         if (!$user) {
             return [];
         }
-        if ($user->company_id) {
-            $questions = Question::where('company_id', $user->company_id)->get();
-        } else {
-            $questions = Question::whereNull('company_id')->get();
-        }
+
+        $questions = self::getQuestionListForUser($user);
+
 
         $arDetails = [];
         $arAverage = [
@@ -147,112 +168,29 @@ class Helpers
         return $arAverage;
     }
 
-    public static function getAnswerForQuestion($questionId, $userIds)
-    {
-        return Answer::whereIn('user_id', $userIds)
-            ->where('question_id', $questionId)
-            ->get();
-    }
-
-    public static function getQuestionListByUser($user)
-    {
-
-        if ($user->company_id) {
-            return Question::where('company_id', $user->company_id)->get();
-        }
-        return Question::whereNull('company_id')->get();
-    }
-
-
-    public static function getResultFilter($orderType = 7)
-    {
-        $user = self::getCurrentFrontendUser();
-
-        if (!$user) {
-            return [];
-        }
-
-        $questions = self::getQuestionListByUser($user);
-
-        $arDetails = [];
-        $arAverage = [
-            1 => [
-                'option1' => 0,
-                'option2' => 0,
-                'option3' => 0,
-                'option4' => 0,
-            ],
-            2 => [
-                'option1' => 0,
-                'option2' => 0,
-                'option3' => 0,
-                'option4' => 0,
-            ]
-        ];
-
-
-        foreach ($questions as $question) {
-
-            $answerForQuest = Answer::where('user_id', $user->id)
-                ->where('question_id', $question->id)
-                ->first();
-
-            if (!isset($arDetails[$question->round])) {
-                $arDetails[$question->round] = [];
-            }
-
-            if (!isset($arDetails[$question->round][$question->order])) {
-                $arDetails[$question->round][$question->order] = [];
-            }
-
-            foreach (['option1', 'option2', 'option3', 'option4'] as $opt) {
-                $arDetails[$question->round][$question->order][$opt] = $answerForQuest ? $answerForQuest->{$opt} : 0;
-            }
-        }
-
-
-
-        foreach ($arDetails as $round => $roundResult) {
-            $avRoundOption1 = 0;
-            $avRoundOption2 = 0;
-            $avRoundOption3 = 0;
-            $avRoundOption4 = 0;
-            foreach ($roundResult as $order => $orderResult) {
-                $avRoundOption1 += $orderResult['option1'];
-                $avRoundOption2 += $orderResult['option2'];
-                $avRoundOption3 += $orderResult['option3'];
-                $avRoundOption4 += $orderResult['option4'];
-            }
-
-            $arAverage[$round]['option1'] = round($avRoundOption1/4, 2);
-            $arAverage[$round]['option2'] = round($avRoundOption2/4, 2);
-            $arAverage[$round]['option3'] = round($avRoundOption3/4, 2);
-            $arAverage[$round]['option4'] = round($avRoundOption4/4, 2);
-        }
-
-
-    }
-
     public static function generateAnswerForUser()
     {
         $user = self::getCurrentFrontendUser();
 
         if ($user) {
-            if ($user->company_id) {
-                $questions = Question::where('company_id', $user->company_id)->get();
-            } else {
-                $questions = Question::whereNull('company_id')->get();
-            }
+
+            $questions = self::getQuestionListForUser($user);
+
 
             foreach ($questions as $question) {
-                Answer::create([
-                    'user_id' => $user->id,
-                    'question_id' => $question->id,
-                    'option1' => rand(1, 40),
-                    'option2' => rand(1, 40),
-                    'option3' => rand(1, 40),
-                    'option4' => rand(1, 40),
-                ]);
+                try {
+                    Answer::create([
+                        'user_id' => $user->id,
+                        'question_id' => $question->id,
+                        'option1' => rand(1, 40),
+                        'option2' => rand(1, 40),
+                        'option3' => rand(1, 40),
+                        'option4' => rand(1, 40),
+                    ]);
+                } catch (\Exception $exception) {
+                    //pass
+                }
+
             }
         }
     }
@@ -283,14 +221,21 @@ class Helpers
 
         }
 
-        $answerRound = Answer::where('user_id', $user->id)->whereIn('question_id', $questionIds)->count();
+        $answerRound = Answer::where('user_id', $user->id)
+            ->whereIn('question_id', $questionIds)
+            ->count();
 
         if ($answerRound > 0) {
             $roundAnswerPercent = round($answerRound/12, 2)*100;
         }
 
+        $answer = null;
 
-        $answer = Answer::where('user_id', $user->id)->where('question_id', $question->id)->first();
+        if ($question) {
+            $answer = Answer::where('user_id', $user->id)
+                ->where('question_id', $question->id)
+                ->first();
+        }
 
         return [$question, $roundAnswerPercent, $answer];
     }
@@ -312,15 +257,7 @@ class Helpers
                 return [];
             }
 
-            $countAnswerForGeneral = Answer::where('user_id', $user->id)
-                ->whereIn('question_id', $generalQuestionIds)
-                ->count();
-
-            if ($countAnswerForGeneral > 0) {
-                return [];
-            } else {
-                return ['type' => 'general', 'name' => 'Bộ câu hỏi chung'];
-            }
+            return ['type' => 'general', 'name' => 'Bộ câu hỏi chung'];
         }
 
         $companyQuestionIds = Question::where('company_id', $user->company_id)
@@ -331,31 +268,10 @@ class Helpers
             return [];
         }
 
-        $countAnswerForCompany = Answer::where('user_id', $user->id)
-            ->whereIn('question_id', $companyQuestionIds)
-            ->count();
-
-        if ($countAnswerForCompany > 0) {
-            return [];
-        } else {
-            return ['type' => 'company', 'name' => 'Bộ câu hỏi cho doanh nghiệp '.$user->company->name];
-        }
+        return [
+            'type' => 'company',
+            'name' => 'Bộ câu hỏi cho doanh nghiệp '.$user->company->name
+        ];
     }
 
-
-    public static function currentFrontendUserIsAdmin()
-    {
-        $user = self::getCurrentFrontendUser();
-
-        if (!$user) {
-            return false;
-        }
-
-        return $user->hasRole('admin');
-    }
-
-    public static function haveAnswer($userId)
-    {
-        return (Answer::where('user_id', $userId)->count() > 0);
-    }
 }
