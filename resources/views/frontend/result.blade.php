@@ -61,7 +61,7 @@
                     <div class="rightSide mt50 rightSideResult">
                         <h3 class="title">Loại hình Văn hóa doanh nghiệp</h3>
                         <div class="contain mt50">
-                            <canvas id="myChart" style="width: 100%; height: auto"></canvas>
+                            <canvas id="myChart"></canvas>
 
                         </div>
                     </div>
@@ -81,7 +81,6 @@
         let ctx = document.getElementById('myChart').getContext('2d');
 
         let result = JSON.parse(' @json($result) ');
-        let mapOrder = JSON.parse(' @json(\App\Helpers::mapOrder()) ');
         let mapOption = JSON.parse(' @json(\App\Helpers::mapOption()) ');
         let mapRound = JSON.parse(' @json(\App\Helpers::mapRound()) ');
 
@@ -127,7 +126,7 @@
             options: {
                 responsive: true,
                 legend: {
-                    position: 'bottom'
+                    position: 'top'
                 },
                 spanGaps: true,
             },
