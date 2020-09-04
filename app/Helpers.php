@@ -58,6 +58,7 @@ class Helpers
             4 => 'Sự gắn kết',
             5 => 'Chiến lược',
             6 => 'Tiêu chí thành công',
+            7 => 'Trung bình'
         ];
     }
 
@@ -144,6 +145,92 @@ class Helpers
 
 
         return $arAverage;
+    }
+
+    public static function getAnswerForQuestion($questionId, $userIds)
+    {
+        return Answer::whereIn('user_id', $userIds)
+            ->where('question_id', $questionId)
+            ->get();
+    }
+
+    public static function getQuestionListByUser($user)
+    {
+
+        if ($user->company_id) {
+            return Question::where('company_id', $user->company_id)->get();
+        }
+        return Question::whereNull('company_id')->get();
+    }
+
+
+    public static function getResultFilter($orderType = 7)
+    {
+        $user = self::getCurrentFrontendUser();
+
+        if (!$user) {
+            return [];
+        }
+
+        $questions = self::getQuestionListByUser($user);
+
+        $arDetails = [];
+        $arAverage = [
+            1 => [
+                'option1' => 0,
+                'option2' => 0,
+                'option3' => 0,
+                'option4' => 0,
+            ],
+            2 => [
+                'option1' => 0,
+                'option2' => 0,
+                'option3' => 0,
+                'option4' => 0,
+            ]
+        ];
+
+
+        foreach ($questions as $question) {
+
+            $answerForQuest = Answer::where('user_id', $user->id)
+                ->where('question_id', $question->id)
+                ->first();
+
+            if (!isset($arDetails[$question->round])) {
+                $arDetails[$question->round] = [];
+            }
+
+            if (!isset($arDetails[$question->round][$question->order])) {
+                $arDetails[$question->round][$question->order] = [];
+            }
+
+            foreach (['option1', 'option2', 'option3', 'option4'] as $opt) {
+                $arDetails[$question->round][$question->order][$opt] = $answerForQuest ? $answerForQuest->{$opt} : 0;
+            }
+        }
+
+
+
+        foreach ($arDetails as $round => $roundResult) {
+            $avRoundOption1 = 0;
+            $avRoundOption2 = 0;
+            $avRoundOption3 = 0;
+            $avRoundOption4 = 0;
+            foreach ($roundResult as $order => $orderResult) {
+                $avRoundOption1 += $orderResult['option1'];
+                $avRoundOption2 += $orderResult['option2'];
+                $avRoundOption3 += $orderResult['option3'];
+                $avRoundOption4 += $orderResult['option4'];
+            }
+
+            $arAverage[$round]['option1'] = round($avRoundOption1/4, 2);
+            $arAverage[$round]['option2'] = round($avRoundOption2/4, 2);
+            $arAverage[$round]['option3'] = round($avRoundOption3/4, 2);
+            $arAverage[$round]['option4'] = round($avRoundOption4/4, 2);
+        }
+
+
     }
 
     public static function generateAnswerForUser()
