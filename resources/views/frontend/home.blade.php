@@ -35,10 +35,8 @@
                                             @else
                                                 <a class="myBtn btnTest" href="{{ route('frontend.question') }}" title="Bắt đầu khảo sát">Bắt đầu khảo sát</a>
                                             @endif
+                                                {{--<a class="myBtn btnProfile" href="javascript:void(0)" title="Hồ sơ doanh nghiệp">Hồ sơ doanh nghiệp</a>--}}
 
-                                            @if (\App\Helpers::currentFrontendUserIsAdmin())
-                                                <a class="myBtn btnProfile" href="javascript:void(0)" title="Hồ sơ doanh nghiệp">Hồ sơ doanh nghiệp</a>
-                                            @endif
                                         </div>
                                     </div>
                                 @endif
