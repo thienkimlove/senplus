@@ -8,12 +8,7 @@
 
             <main>
                 <div class="fixCen flex-between">
-
-                    @if (\App\Helpers::haveResult())
-                        <a href="{{ route('frontend.result') }}">Xem kết quả</a>
-                    @endif
-
-                    {{--<div class="myBtn btnTest" title="Test">Test</div>--}}
+                    <div class="myBtn btnTest" title="Test">Test</div>
                     <div class="content">
                         <div class="tabs flex-between">
                             <div class="txt">Danh sách khảo sát của bạn</div>
@@ -28,13 +23,19 @@
                         <div class="filterContent">
                             <div class="tabContent active" id="newest">
                                 @if ($survey)
-                                <a class="item flex-between" href="{{ route('frontend.question') }}" title="Bộ câu hỏi cho doanh nghiệp Công ty Senplus">
-                                    <div class="logoCompany">
-                                        <img src="{{ url('frontend/assets/img/logo.png') }}" alt="Logo" />
+                                    <div class="item flex-between">
+                                        <a class="logoCompany" href="{{ route('frontend.question') }}" title="{{ $survey['name'] }}">
+                                            <img src="{{ url('frontend/assets/img/logo.png') }}" alt="Logo">
+                                        </a>
+                                        <a href="{{ route('frontend.question') }}" class="txt" title="{{ $survey['name'] }}">{{ $survey['name'] }}</a>
+                                        <div class="btnGroup">
+                                            <a class="myBtn btnTest" href="{{ route('frontend.question') }}" title="Bắt đầu khảo sát">Bắt đầu khảo sát</a>
+                                            @if (\App\Helpers::haveResult())
+                                                <a class="myBtn btnViewResult" href="{{ route('frontend.result') }}" title="Xem kết quả">Xem kết quả</a>
+                                            @endif
+                                            <a class="myBtn btnProfile" href="javascript:void(0)" title="Hồ sơ doanh nghiệp">Hồ sơ doanh nghiệp</a>
+                                        </div>
                                     </div>
-                                    <div class="txt">{{ $survey['name'] }}</div>
-                                </a>
-
                                 @endif
                             </div>
                         </div>
