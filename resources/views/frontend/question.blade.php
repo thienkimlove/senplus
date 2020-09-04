@@ -8,7 +8,7 @@
             <main>
                 <div class="fixCen flex-between">
                     @if (\App\Helpers::haveResult())
-                        <a href="{{ route('frontend.result') }}">Xem kết quả</a>
+                        <a href="{{ route('frontend.result') }}" class="myBtn btnTest">Xem kết quả</a>
                     @endif
                     <div class="showTurn"><h2 class="title">Vòng {{$question->round}} - {{ \App\Helpers::mapRound()[$question->round] }}</h2></div>
                     <div class="leftSide mt50 leftSideCircleChart">
@@ -17,7 +17,7 @@
                             {{ csrf_field() }}
                             <div class="content mt50">
                                 <div class="ques flex-between">
-                                    <div class="txt">{{ $question['name'] }}</div>
+                                    <div class="txt" style="text-transform: uppercase;">{{ $question['name'] }}</div>
                                     <input type="hidden" name="question_id" value="{{ $question->id }}">
                                 </div>
 
