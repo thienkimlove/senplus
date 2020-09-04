@@ -37,6 +37,11 @@ class Company extends Model
     |--------------------------------------------------------------------------
     */
 
+    public function filters()
+    {
+        return $this->belongsToMany(Filter::class);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES

@@ -5,13 +5,10 @@
 
 @if (backpack_user()->hasRole('admin') || backpack_user()->hasRole('editor'))
 
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('filter') }}'><i class='nav-icon la la-accessible-icon'></i> <span>Các Thuộc Tính</span></a></li>
 
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('company') }}'><i class='nav-icon la la-centercode'></i> <span>Doanh Nghiệp</span></a></li>
 
-
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('position') }}'><i class='nav-icon la la-product-hunt'></i> <span>Chức Vụ</span></a></li>
-
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('department') }}'><i class='nav-icon la la-file-contract'></i> <span>Phòng Ban</span></a></li>
 
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('custom-user') }}"><i class="nav-icon la la-confluence"></i> <span>Người Dùng</span></a></li>
 
@@ -38,3 +35,5 @@
     </ul>
 </li>
 @endif
+
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('filter') }}'><i class='nav-icon la la-question'></i> Filters</a></li>

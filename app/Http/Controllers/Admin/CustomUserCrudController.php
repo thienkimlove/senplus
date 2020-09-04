@@ -10,8 +10,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Answer;
 use App\Models\Company;
-use App\Models\Department;
-use App\Models\Position;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Backpack\PermissionManager\app\Http\Controllers\UserCrudController;
 use Illuminate\Support\Facades\DB;
@@ -44,25 +42,14 @@ class CustomUserCrudController extends UserCrudController
                 'model'     => Company::class, // foreign key model
             ],
             [
-                // any type of relationship
-                'name'         => 'position', // name of relationship method in the model
-                'type'         => 'relationship',
-                'label'        => 'Chức Vụ', // Table column heading
-                // OPTIONAL
-                'entity'    => 'position', // the method that defines the relationship in your Model
-                'attribute' => 'name', // foreign key attribute that is shown to user
-                'model'     => Position::class, // foreign key model
+                'name' => 'filters',
+                'label' => 'Các thuộc tính',
+                'type' => 'table',
+                'columns' => [
+                    'att_id' => 'ID thuộc tính',
+                    'att_value' => 'Giá trị'
+                ],
             ],
-            [
-                // any type of relationship
-                'name'         => 'department', // name of relationship method in the model
-                'type'         => 'relationship',
-                'label'        => 'Phòng Ban', // Table column heading
-                // OPTIONAL
-                'entity'    => 'department', // the method that defines the relationship in your Model
-                'attribute' => 'name', // foreign key attribute that is shown to user
-                'model'     => Department::class, // foreign key model
-            ]
         ]);
 
         CRUD::removeColumn('roles');
@@ -124,28 +111,18 @@ class CustomUserCrudController extends UserCrudController
                     return $query->orderBy('name', 'ASC')->get();
                 }),
             ],
-            [  // Select
-                'label'     => "Chức Vụ",
-                'type'      => 'select',
-                'name'      => 'position_id', // the db column for the foreign key
-                'entity'    => 'position',
-                'model'     => "App\Models\Position", // related model
-                'attribute' => 'name', // foreign key attribute that is shown to user
-                'options'   => (function ($query) {
-                    return $query->orderBy('name', 'ASC')->get();
-                }),
+            [ // Table
+                'name' => 'filters',
+                'label' => 'Các thuộc tính',
+                'type' => 'table',
+                'entity_singular' => 'option', // used on the "Add X" button
+                'columns' => [
+                    'att_id' => 'ID thuộc tính',
+                    'att_value' => 'Giá trị'
+                ],
+                'max' => 10, // maximum rows allowed in the table
+                'min' => 1, // minimum rows allowed in the table
             ],
-            [  // Select
-                'label'     => "Phòng Ban",
-                'type'      => 'select',
-                'name'      => 'department_id', // the db column for the foreign key
-                'entity'    => 'department',
-                'model'     => "App\Models\Department", // related model
-                'attribute' => 'name', // foreign key attribute that is shown to user
-                'options'   => (function ($query) {
-                    return $query->orderBy('name', 'ASC')->get();
-                }),
-            ]
         ]);
     }
 

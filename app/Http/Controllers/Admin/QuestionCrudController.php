@@ -91,6 +91,8 @@ class QuestionCrudController extends CrudController
                });
             }
         );
+
+        CRUD::denyAccess('delete');
     }
 
     /**

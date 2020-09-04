@@ -5,7 +5,7 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 
-class Department extends Model
+class Filter extends Model
 {
     use CrudTrait;
 
@@ -15,12 +15,13 @@ class Department extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'departments';
+    protected $table = 'filters';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
     protected $fillable = [
-        'name'
+        'name',
+        'options'
     ];
     // protected $hidden = [];
     // protected $dates = [];

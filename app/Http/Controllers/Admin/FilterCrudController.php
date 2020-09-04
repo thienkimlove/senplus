@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\PositionRequest;
+use App\Http\Requests\FilterRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class PositionCrudController
+ * Class FilterCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class PositionCrudController extends CrudController
+class FilterCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -26,9 +26,9 @@ class PositionCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\Position::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/position');
-        CRUD::setEntityNameStrings('Chức Vụ', 'Chức Vụ');
+        CRUD::setModel(\App\Models\Filter::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/filter');
+        CRUD::setEntityNameStrings('Các Thuộc Tính', 'Các Thuộc Tính');
     }
 
     /**
@@ -39,13 +39,25 @@ class PositionCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // columns
+        //CRUD::setFromDb(); // columns
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
          * - CRUD::column('price')->type('number');
          * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
          */
+        CRUD::column('id')->label('ID');
+        CRUD::column('name')->label('Tên Thuộc Tính');
+        CRUD::addColumn([
+            'name' => 'options',
+            'label' => 'Các giá trị',
+            'type' => 'table',
+            'columns' => [
+                'attr_value' => 'Giá trị'
+            ],
+        ]);
+
+        CRUD::denyAccess('delete');
     }
 
     /**
@@ -56,15 +68,33 @@ class PositionCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(PositionRequest::class);
+        CRUD::setValidation(FilterRequest::class);
 
-        CRUD::setFromDb(); // fields
+        //CRUD::setFromDb(); // fields
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
          * - CRUD::field('price')->type('number');
          * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
          */
+
+        CRUD::addFields([
+            [
+                'name' => 'name',
+                'label' => 'Tên Thuộc Tính'
+            ],
+            [ // Table
+                'name' => 'options',
+                'label' => 'Các Giá Trị',
+                'type' => 'table',
+                'entity_singular' => 'option', // used on the "Add X" button
+                'columns' => [
+                    'attr_value' => 'Giá trị'
+                ],
+                'max' => 100, // maximum rows allowed in the table
+                'min' => 1, // minimum rows allowed in the table
+            ],
+        ]);
     }
 
     /**
