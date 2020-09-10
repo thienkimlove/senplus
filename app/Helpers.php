@@ -182,14 +182,17 @@ class Helpers
 
 
             foreach ($questions as $question) {
+                $randOption1 = rand(1, 40);
+                $randOption2 = rand(1, 30);
+                $randOption3 = rand(1, 20);
                 try {
                     Answer::create([
                         'user_id' => $user->id,
                         'question_id' => $question->id,
-                        'option1' => rand(1, 40),
-                        'option2' => rand(1, 40),
-                        'option3' => rand(1, 40),
-                        'option4' => rand(1, 40),
+                        'option1' => $randOption1,
+                        'option2' => $randOption2,
+                        'option3' => $randOption3,
+                        'option4' => 100 - ($randOption1 + $randOption2 + $randOption3),
                     ]);
                 } catch (\Exception $exception) {
                     //pass
