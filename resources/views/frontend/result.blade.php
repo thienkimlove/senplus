@@ -52,7 +52,7 @@
                                     <td>{{ \App\Helpers::mapOption()[$opt] }}</td>
                                     <td>{{ $result[1][$opt] }}</td>
                                     <td>{{ $result[2][$opt] }}</td>
-                                    <td>{{ $result[1][$opt] - $result[2][$opt] }}</td>
+                                    <td>{{ $result[2][$opt] - $result[1][$opt] }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
