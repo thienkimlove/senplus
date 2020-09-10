@@ -1,4 +1,4 @@
-<a  href="javascript:void(0)" onclick="importExcelQuestion(this)" data-url="{{ url($crud->route.'/'.$entry->getKey().'/importExcelQuestion') }}" class="btn btn-xs btn-default" data-button-type="import-excel-question"><i class="fa fa-balance-scale"></i>Upload Bộ Câu Hỏi</a>
+<a  href="javascript:void(0)" onclick="importExcelQuestion(this)" data-url="{{ url($crud->route.'/'.$entry->getKey().'/importExcelQuestion') }}" class="btn btn-xs btn-instagram" data-button-type="import-excel-question"><i class="fa fa-balance-scale"></i>Upload Bộ Câu Hỏi</a>
 
 <script>
     if (typeof importExcelQuestion != 'function') {
