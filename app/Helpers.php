@@ -161,10 +161,10 @@ class Helpers
                 $avRoundOption4 += $orderResult['option4'];
             }
 
-            $arAverage[$round]['option1'] = round($avRoundOption1/4, 2);
-            $arAverage[$round]['option2'] = round($avRoundOption2/4, 2);
-            $arAverage[$round]['option3'] = round($avRoundOption3/4, 2);
-            $arAverage[$round]['option4'] = round($avRoundOption4/4, 2);
+            $arAverage[$round]['option1'] = round($avRoundOption1/6, 2);
+            $arAverage[$round]['option2'] = round($avRoundOption2/6, 2);
+            $arAverage[$round]['option3'] = round($avRoundOption3/6, 2);
+            $arAverage[$round]['option4'] = round($avRoundOption4/6, 2);
         }
 
 
