@@ -7,8 +7,8 @@
 
             <main>
                 <div class="fixCen flex-between">
-                    @if (\App\Helpers::haveResult())
-                        <a href="{{ route('frontend.result') }}" class="myBtn btnTest">Xem kết quả</a>
+                    @if (\App\Helpers::checkIfSurveyHaveResultForUser($survey))
+                        <a href="{{ route('frontend.result') }}?id={{ $survey->id }}" class="myBtn btnTest">Xem kết quả</a>
                     @endif
                     <div class="showTurn"><h2 class="title">Vòng {{$question->round}} - {{ \App\Helpers::mapRound()[$question->round] }}</h2></div>
                     <div class="leftSide mt50 leftSideCircleChart">

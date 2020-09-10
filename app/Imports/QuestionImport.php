@@ -9,16 +9,16 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 
 class QuestionImport implements ToCollection
 {
-    public $companyId;
+    public $surveyId;
 
-    public function __construct($companyId)
+    public function __construct($surveyId)
     {
-        $this->companyId = $companyId;
+        $this->surveyId = $surveyId;
     }
 
     public function collection(Collection $rows)
     {
-        $listOldQuestionIds = Question::where('company_id', $this->companyId)
+        $listOldQuestionIds = Question::where('survey_id', $this->surveyId)
             ->pluck('id')
             ->all();
 
@@ -26,7 +26,7 @@ class QuestionImport implements ToCollection
             Answer::whereIn('question_id', $listOldQuestionIds)->delete();
         }
 
-        Question::where('company_id', $this->companyId)->delete();
+        Question::where('survey_id', $this->surveyId)->delete();
 
 
         foreach ($rows as $row)
@@ -40,7 +40,7 @@ class QuestionImport implements ToCollection
                     'option2' => $row[4],
                     'option3' => $row[5],
                     'option4' => $row[6],
-                    'company_id' => $this->companyId
+                    'survey_id' => $this->surveyId
                 ]);
             }
         }

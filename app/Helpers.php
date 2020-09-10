@@ -10,6 +10,7 @@ namespace App;
 
 use App\Models\Answer;
 use App\Models\Question;
+use App\Models\Survey;
 
 class Helpers
 {
@@ -62,24 +63,28 @@ class Helpers
         ];
     }
 
-    public static function haveResult()
+    public static function checkIfSurveyHaveResultForUser($survey)
     {
         $user = self::getCurrentFrontendUser();
+        $questionIds = $survey->questions->pluck('id')->all();
+        $answerCount = Answer::where('user_id', $user->id)
+            ->whereIn('question_id', $questionIds)
+            ->count();
 
-        if (!$user) {
-            return false;
-        }
-
-        return (Answer::where('user_id', $user->id)->count() > 0);
+        return ($answerCount > 0);
     }
 
-    public static function getQuestionListForUser($user)
+    public static function checkIfSurveyHaveAnyResult($surveyId)
     {
-        if ($user->company_id) {
-            return Question::where('company_id', $user->company_id)->get();
-        }
-        return Question::whereNull('company_id')->get();
+        $questionIds = Question::where('survey_id', $surveyId)
+            ->pluck('id')
+            ->all();
+        $answerCount = Answer::whereIn('question_id', $questionIds)
+            ->count();
+
+        return ($answerCount > 0);
     }
+
 
     public static function currentFrontendUserIsAdmin()
     {
@@ -92,26 +97,68 @@ class Helpers
         return $user->hasRole('admin');
     }
 
-
-
-
-
-    public static function haveAnswer($userId)
+    public static function getQuestion($survey, $round, $order)
     {
-        return (Answer::where('user_id', $userId)->count() > 0);
+        $user = self::getCurrentFrontendUser();
+        if (!$user) {
+            return [null, 0, 0, null];
+        }
+
+
+        if (!$survey || !$survey->status) {
+            return [null, 0, 0, null];
+        }
+
+        $roundAnswerPercent = 0;
+
+        $question = $survey->questions->where('round', $round)
+            ->where('order', $order)
+            ->first();
+
+        $questionIds = $survey->questions->pluck('id')->all();
+
+        $answerRound = Answer::where('user_id', $user->id)
+            ->whereIn('question_id', $questionIds)
+            ->count();
+
+        if ($answerRound > 0) {
+            $roundAnswerPercent = round($answerRound/12, 2)*100;
+        }
+
+        $answer = null;
+
+        if ($question) {
+            $answer = Answer::where('user_id', $user->id)
+                ->where('question_id', $question->id)
+                ->first();
+        }
+
+        return [$question, $roundAnswerPercent, $answer];
+    }
+
+    public static function getSurveyForLoginUser()
+    {
+        $user = self::getCurrentFrontendUser();
+
+        if ($user->company_id) {
+            return Survey::where('company_id', $user->company_id)
+                ->where('status', true)
+                ->get();
+        }
+
+        return Survey::whereNull('company_id')
+            ->where('status', true)
+            ->get();
     }
 
 
-    public static function getResultForUser()
+    public static function getResultForSurvey($survey)
     {
         $user = self::getCurrentFrontendUser();
 
         if (!$user) {
             return [];
         }
-
-        $questions = self::getQuestionListForUser($user);
-
 
         $arDetails = [];
         $arAverage = [
@@ -129,7 +176,7 @@ class Helpers
             ]
         ];
 
-        foreach ($questions as $question) {
+        foreach ($survey->questions as $question) {
             $answerForQuest = Answer::where('user_id', $user->id)
                 ->where('question_id', $question->id)
                 ->first();
@@ -172,16 +219,11 @@ class Helpers
         return $arAverage;
     }
 
-    public static function generateAnswerForUser()
+    public static function generateAnswerForUser($survey)
     {
         $user = self::getCurrentFrontendUser();
-
         if ($user) {
-
-            $questions = self::getQuestionListForUser($user);
-
-
-            foreach ($questions as $question) {
+            foreach ($survey->questions as $question) {
                 $randOption1 = rand(1, 40);
                 $randOption2 = rand(1, 30);
                 $randOption3 = rand(1, 20);
@@ -197,88 +239,14 @@ class Helpers
                 } catch (\Exception $exception) {
                     //pass
                 }
-
             }
         }
     }
 
-    public static function getQuestion($round, $order)
+    public static function getUserRoleAdminWhichNotHaveCompany()
     {
-        $user = self::getCurrentFrontendUser();
-        if (!$user) {
-            return [null, 0, 0, null];
-        }
-
-        $roundAnswerPercent = 0;
-
-        if (!$user->company_id) {
-            $question = Question::whereNull('company_id')
-                ->where('round', $round)
-                ->where('order', $order)
-                ->first();
-
-            $questionIds = Question::whereNull('company_id')->pluck('id')->all();
-        } else {
-            $question = Question::where('company_id', $user->company_id)
-                ->where('round', $round)
-                ->where('order', $order)
-                ->first();
-
-            $questionIds = Question::where('company_id', $user->company_id)->pluck('id')->all();
-
-        }
-
-        $answerRound = Answer::where('user_id', $user->id)
-            ->whereIn('question_id', $questionIds)
-            ->count();
-
-        if ($answerRound > 0) {
-            $roundAnswerPercent = round($answerRound/12, 2)*100;
-        }
-
-        $answer = null;
-
-        if ($question) {
-            $answer = Answer::where('user_id', $user->id)
-                ->where('question_id', $question->id)
-                ->first();
-        }
-
-        return [$question, $roundAnswerPercent, $answer];
+        return User::whereNull('company_id')->whereHas('roles', function($q) {
+            $q->where('name', 'admin');
+        })->get();
     }
-
-    public static function getSurveyForLoginUser()
-    {
-
-        $user = self::getCurrentFrontendUser();
-
-        if (!$user) {
-            return [];
-        }
-
-        if (!$user->company_id) {
-            // ca nhan
-            $generalQuestionIds = Question::whereNull('company_id')->pluck('id')->all();
-
-            if (!$generalQuestionIds) {
-                return [];
-            }
-
-            return ['type' => 'general', 'name' => 'Bộ câu hỏi chung'];
-        }
-
-        $companyQuestionIds = Question::where('company_id', $user->company_id)
-            ->pluck('id')
-            ->all();
-
-        if (!$companyQuestionIds) {
-            return [];
-        }
-
-        return [
-            'type' => 'company',
-            'name' => 'Bộ câu hỏi cho doanh nghiệp '.$user->company->name
-        ];
-    }
-
 }

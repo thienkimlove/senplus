@@ -16,6 +16,8 @@
 
 {{--<li class='nav-item'><a class='nav-link' href='{{ backpack_url('answer') }}'><i class='nav-icon la la-question'></i> Answers</a></li>--}}
 
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('survey') }}'><i class='nav-icon la la-columns'></i> Chiến Dịch</a></li>
+
 @endif
 
 
@@ -36,4 +38,3 @@
 </li>
 @endif
 
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('filter') }}'><i class='nav-icon la la-question'></i> Filters</a></li>

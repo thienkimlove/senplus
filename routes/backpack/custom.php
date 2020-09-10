@@ -18,8 +18,9 @@ Route::group([
 
     Route::get('company/{id}/downloadExcelUser', 'CompanyCrudController@downloadExcelUser');
 
-    Route::get('company/downloadExcelQuestion', 'CompanyCrudController@downloadExcelQuestion');
+    Route::get('survey/downloadExcelQuestion', 'SurveyCrudController@downloadExcelQuestion');
 
+    Route::get('survey/{id}/clear', 'SurveyCrudController@clear');
 
 
     Route::crud('custom-user', 'CustomUserCrudController');
@@ -28,7 +29,6 @@ Route::group([
 
     Route::crud('question', 'QuestionCrudController');
     Route::crud('answer', 'AnswerCrudController');
-
-    Route::get('custom-user/{id}/clear', 'CustomUserCrudController@clear');
     Route::crud('filter', 'FilterCrudController');
+    Route::crud('survey', 'SurveyCrudController');
 }); // this should be the absolute last line of this file

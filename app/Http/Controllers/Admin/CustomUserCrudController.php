@@ -57,9 +57,9 @@ class CustomUserCrudController extends UserCrudController
         CRUD::removeFilter('role');
         CRUD::removeFilter('permissions');
 
-        CRUD::addButtonFromView('line', 'clear_result', 'clear_result', 'end');
-
-
+        CRUD::denyAccess('create');
+        CRUD::denyAccess('edit');
+        CRUD::denyAccess('delete');
     }
 
     public function addUserFields()
@@ -133,10 +133,4 @@ class CustomUserCrudController extends UserCrudController
         CRUD::removeField('password_confirmation');
     }
 
-    public function clear($id)
-    {
-        Answer::where('user_id', $id)->delete();
-
-        return redirect(url('admin/custom-user'));
-    }
 }

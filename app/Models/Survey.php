@@ -5,7 +5,7 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 
-class Question extends Model
+class Survey extends Model
 {
     use CrudTrait;
 
@@ -15,20 +15,14 @@ class Question extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'questions';
+    protected $table = 'surveys';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
     protected $fillable = [
         'name',
-        //'company_id',
-        'survey_id',
-        'round',
-        'order',
-        'option1',
-        'option2',
-        'option3',
-        'option4'
+        'company_id',
+        'status'
     ];
     // protected $hidden = [];
     // protected $dates = [];
@@ -45,9 +39,14 @@ class Question extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function survey()
+    public function company()
     {
-        return $this->belongsTo(Survey::class);
+        return $this->belongsTo(Company::class);
+    }
+
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
     }
 
     /*

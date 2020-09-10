@@ -20,7 +20,8 @@ Route::get('home', 'FrontendController@home')->name('frontend.home');
 Route::get('logout', 'FrontendController@logout')->name('frontend.logout');
 
 
-Route::get('question', 'FrontendController@question')->name('frontend.question');
+Route::get('survey', 'FrontendController@survey')->name('frontend.survey');
 Route::post('answer', 'FrontendController@answer')->name('frontend.answer');
 Route::post('back', 'FrontendController@back')->name('frontend.back');
 Route::get('result', 'FrontendController@result')->name('frontend.result');
+Route::get('general', 'FrontendController@general')->name('frontend.general');

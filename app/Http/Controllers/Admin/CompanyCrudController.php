@@ -7,7 +7,7 @@ use App\Exports\UserExport;
 use App\Http\Requests\CompanyRequest;
 use App\Imports\QuestionImport;
 use App\Imports\UserImport;
-use App\Models\Question;
+use App\User;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Illuminate\Http\Request;
@@ -63,11 +63,13 @@ class CompanyCrudController extends CrudController
             'attribute' => 'name', // foreign key attribute that is shown to user
             'model'     => 'App\Models\Filter', // foreign key model
         ]);
-        CRUD::addButtonFromView('top', 'template_excel_question', 'template_excel_question', 'beginning');
+
         CRUD::addButtonFromView('line', 'template_excel_user', 'template_excel_user', 'end');
 
-        CRUD::addButtonFromView('line', 'import_excel_question', 'import_excel_question', 'end');
+
         CRUD::addButtonFromView('line', 'import_excel_user', 'import_excel_user', 'end');
+
+        CRUD::addButtonFromView('line', 'add_admin', 'add_admin', 'end');
     }
 
     /**
@@ -121,11 +123,6 @@ class CompanyCrudController extends CrudController
     }
 
 
-    public function downloadExcelQuestion()
-    {
-        return Excel::download(new QuestionExport(), 'template_excel_question.xlsx');
-    }
-
     public function downloadExcelUser($id)
     {
         return Excel::download(new UserExport($id), 'template_excel_user.xlsx');
@@ -133,65 +130,28 @@ class CompanyCrudController extends CrudController
 
     protected function setupModerateRoutes($segment, $routeName, $controller)
     {
-        \Route::get($segment.'/{id}/importExcelQuestion', [
-            'as'        => $routeName.'.importExcelQuestion',
-            'uses'      => $controller.'@importExcelQuestion',
-            'operation' => 'importExcelQuestion',
-        ]);
-        \Route::post($segment.'/{id}/importExcelQuestion', [
-            'as'        => $routeName.'.postImportExcelQuestion',
-            'uses'      => $controller.'@postImportExcelQuestion',
-            'operation' => 'importExcelQuestion',
-        ]);
-
-
         \Route::get($segment.'/{id}/importExcelUser', [
-            'as'        => $routeName.'.importExcelUser',
-            'uses'      => $controller.'@importExcelUser',
-            'operation' => 'importExcelUser',
-        ]);
+        'as'        => $routeName.'.importExcelUser',
+        'uses'      => $controller.'@importExcelUser',
+        'operation' => 'importExcelUser',
+    ]);
         \Route::post($segment.'/{id}/importExcelUser', [
             'as'        => $routeName.'.postImportExcelUser',
             'uses'      => $controller.'@postImportExcelUser',
             'operation' => 'importExcelUser',
         ]);
+
+        \Route::get($segment.'/{id}/addAdmin', [
+            'as'        => $routeName.'.addAdmin',
+            'uses'      => $controller.'@addAdmin',
+            'operation' => 'addAdmin',
+        ]);
+        \Route::post($segment.'/{id}/addAdmin', [
+            'as'        => $routeName.'.postAddAdmin',
+            'uses'      => $controller.'@postAddAdmin',
+            'operation' => 'addAdmin',
+        ]);
     }
-
-    public function importExcelQuestion($id)
-    {
-        $this->crud->hasAccessOrFail('update');
-        $this->crud->setOperation('ImportExcelQuestion');
-
-        // get the info for that entry
-        $this->data['entry'] = $this->crud->getEntry($id);
-        $this->data['crud'] = $this->crud;
-        $this->data['title'] = 'ImportExcelQuestion '.$this->crud->entity_name;
-
-        return view('vendor.backpack.crud.import_excel_question', $this->data);
-    }
-
-    public function postImportExcelQuestion($id, Request $request)
-    {
-        $this->crud->hasAccessOrFail('update');
-
-        // TODO: do whatever logic you need here
-        // ...
-        // You can use
-        // - $this->crud
-        // - $this->crud->getEntry($id)
-        // - $request
-        // ...
-
-        $excelFile = $request->file('excel_file');
-
-        Excel::import(new QuestionImport($id), $excelFile);
-
-        // show a success message
-        \Alert::success('Upload thành công.')->flash();
-
-        return \Redirect::to($this->crud->route);
-    }
-
 
 
     public function importExcelUser($id)
@@ -225,6 +185,47 @@ class CompanyCrudController extends CrudController
 
         // show a success message
         \Alert::success('Upload thành công.')->flash();
+
+        return \Redirect::to($this->crud->route);
+    }
+
+    public function addAdmin($id)
+    {
+        $this->crud->hasAccessOrFail('update');
+        $this->crud->setOperation('addAdmin');
+
+        // get the info for that entry
+        $this->data['entry'] = $this->crud->getEntry($id);
+        $this->data['crud'] = $this->crud;
+        $this->data['title'] = 'addAdmin '.$this->crud->entity_name;
+
+        return view('vendor.backpack.crud.add_admin', $this->data);
+    }
+
+    public function postAddAdmin($id, Request $request)
+    {
+        $this->crud->hasAccessOrFail('update');
+
+        // TODO: do whatever logic you need here
+        // ...
+        // You can use
+        // - $this->crud
+        // - $this->crud->getEntry($id)
+        // - $request
+        // ...
+
+        $userId = $request->input('user_id');
+
+        if ($userId && ($user = User::find($userId))) {
+            if ($user->hasRole('admin') && !$user->company_id) {
+                $user->update([
+                    'company_id' => $id
+                ]);
+            }
+        }
+
+        // show a success message
+        \Alert::success('Thêm thành công.')->flash();
 
         return \Redirect::to($this->crud->route);
     }

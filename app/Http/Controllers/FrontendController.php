@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Helpers;
 use App\Models\Answer;
 use App\Models\Question;
+use App\Models\Survey;
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -81,8 +81,8 @@ class FrontendController extends Controller
         if (!auth()->check()) {
             return redirect(route('frontend.index'));
         }
-        $survey = Helpers::getSurveyForLoginUser();
-        return view('frontend.home', compact( 'page', 'survey'));
+        $surveys = Helpers::getSurveyForLoginUser();
+        return view('frontend.home', compact( 'page', 'surveys'));
     }
 
     public function logout()
@@ -97,13 +97,27 @@ class FrontendController extends Controller
      */
 
 
-    public function question(Request $request)
+    public function survey(Request $request)
     {
-        $page = 'question';
+        $page = 'survey';
+        $surveyId = $request->input('id');
+
+        if (!$surveyId) {
+            $request->session()->flash('general_message', 'Chiến dịch khảo sát không tồn tại hoặc không được kích hoạt!');
+            return redirect(route('frontend.home'));
+        }
+
+        $survey = Survey::find($surveyId);
+
+        if (!$survey || !$survey->status) {
+            $request->session()->flash('general_message', 'Chiến dịch khảo sát không tồn tại hoặc không được kích hoạt!');
+            return redirect(route('frontend.home'));
+        }
+
         $round = $request->input('round', 1);
         $order = $request->input('order', 1);
 
-        list($question, $roundPercent, $answer) = Helpers::getQuestion($round, $order);
+        list($question, $roundPercent, $answer) = Helpers::getQuestion($survey, $round, $order);
 
         if (!$question) {
             $request->session()->flash('general_message', 'Câu hỏi không tồn tại!');
@@ -111,7 +125,7 @@ class FrontendController extends Controller
         }
 
 
-        return view('frontend.question', compact( 'page', 'question','roundPercent', 'answer'));
+        return view('frontend.survey', compact( 'page', 'question','roundPercent', 'answer', 'survey'));
     }
 
     public function back(Request $request)
@@ -130,13 +144,13 @@ class FrontendController extends Controller
         }
 
         if ($question->round == 1 && $question->order == 1) {
-            return redirect(route('frontend.question'));
+            return redirect(route('frontend.survey').'?id='.$question->survey->id);
         }
         if ($question->round == 2 && $question->order == 1) {
-            return redirect(route('frontend.question').'?order=6');
+            return redirect(route('frontend.survey').'?id='.$question->survey->id.'&order=6');
         }
 
-        return redirect(route('frontend.question').'?round='.$question->round.'&order='.($question->order - 1));
+        return redirect(route('frontend.survey').'?id='.$question->survey->id.'&round='.$question->round.'&order='.($question->order - 1));
     }
 
     public function answer(Request $request)
@@ -168,8 +182,8 @@ class FrontendController extends Controller
 
 
         if ($request->input('random') == 1) {
-            Helpers::generateAnswerForUser();
-            return redirect(route('frontend.result'));
+            Helpers::generateAnswerForUser($question->survey);
+            return redirect(route('frontend.result').'?id='.$question->survey->id);
         }
 
         if ($existedAnswer) {
@@ -191,13 +205,13 @@ class FrontendController extends Controller
         }
         if ($question->order == 6) {
             if ($question->round == 1) {
-                return redirect(route('frontend.question').'?round=2');
+                return redirect(route('frontend.survey').'?id='.$question->survey->id.'&round=2');
             } else {
-                return redirect(route('frontend.result'));
+                return redirect(route('frontend.result').'?id='.$question->survey->id);
             }
         }
 
-        return redirect(route('frontend.question').'?round='.($question->round).'&order='.($question->order + 1));
+        return redirect(route('frontend.survey').'?id='.$question->survey->id.'&round='.($question->round).'&order='.($question->order + 1));
 
     }
 
@@ -211,17 +225,77 @@ class FrontendController extends Controller
             return redirect(route('frontend.home'));
         }
 
-        $answerYet = Answer::where('user_id', $user->id)->count();
+        $surveyId = $request->input('id');
+
+        if (!$surveyId) {
+            $request->session()->flash('general_message', 'Chiến dịch khảo sát không tồn tại hoặc không được kích hoạt!');
+            return redirect(route('frontend.home'));
+        }
+
+        $survey = Survey::find($surveyId);
+
+        if (!$survey || !$survey->status) {
+            $request->session()->flash('general_message', 'Chiến dịch khảo sát không tồn tại hoặc không được kích hoạt!');
+            return redirect(route('frontend.home'));
+        }
+
+        $questionIds = $survey->questions->pluck('id')->all();
+
+        $answerYet = Answer::where('user_id', $user->id)
+            ->whereIn('question_id', $questionIds)
+            ->count();
 
         if ($answerYet == 0) {
             $request->session()->flash('general_message', 'Chưa có câu trả lời!');
             return redirect(route('frontend.home'));
         }
 
-        $result = Helpers::getResultForUser();
+        $result = Helpers::getResultForSurvey($survey);
 
         return view('frontend.result', compact('result'));
     }
+
+
+    public function general(Request $request)
+    {
+
+        $user = Helpers::getCurrentFrontendUser();
+
+        if (!$user) {
+            $request->session()->flash('general_message', 'Không xác định được người dùng!');
+            return redirect(route('frontend.home'));
+        }
+
+        $surveyId = $request->input('id');
+
+        if (!$surveyId) {
+            $request->session()->flash('general_message', 'Chiến dịch khảo sát không tồn tại hoặc không được kích hoạt!');
+            return redirect(route('frontend.home'));
+        }
+
+        $survey = Survey::find($surveyId);
+
+        if (!$survey || !$survey->status) {
+            $request->session()->flash('general_message', 'Chiến dịch khảo sát không tồn tại hoặc không được kích hoạt!');
+            return redirect(route('frontend.home'));
+        }
+
+        $questionIds = $survey->questions->pluck('id')->all();
+
+        $answerYet = Answer::where('user_id', $user->id)
+            ->whereIn('question_id', $questionIds)
+            ->count();
+
+        if ($answerYet == 0) {
+            $request->session()->flash('general_message', 'Chưa có câu trả lời!');
+            return redirect(route('frontend.home'));
+        }
+
+        $result = Helpers::getResultForSurvey($survey);
+
+        return view('frontend.general', compact('result'));
+    }
+
 
 
     /*

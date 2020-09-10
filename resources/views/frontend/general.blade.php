@@ -9,7 +9,33 @@
             <main>
                 <div class="fixCen flex-between">
                     <div class="myBtn btnTest" title="Nhận kết quả">Nhận kết quả</div>
-
+                    <div class="showTurn"><h2 class="title">Tóm tắt hồ sơ css group</h2></div>
+                    <div class="selectGroup mt50">
+                        <h3 class="title">Bộ lọc dữ liệu</h3>
+                        <form action="" id="filerSelect">
+                            <div class="objectTest">
+                                <div class="title">Đối tượng khảo sát</div>
+                                <div class="input-group"><input type="checkbox"> CEO</div>
+                                <div class="input-group"><input type="checkbox"> Quản lý cấp cao</div>
+                                <div class="input-group"><input type="checkbox"> Quản lý cấp trung</div>
+                                <div class="input-group"><input type="checkbox"> Nhân viên</div>
+                                <div class="input-group"><input type="checkbox"> Khối nội chính</div>
+                                <div class="input-group"><input type="checkbox"> Khối kinh doanh</div>
+                                <div class="input-group"><input type="checkbox"> Tập thể</div>
+                            </div>
+                            <div class="typeOfChart">
+                                <div class="title">Loại biểu đồ</div>
+                                <div class="input-group"><input type="checkbox"> Đăc điểm nổi trội</div>
+                                <div class="input-group"><input type="checkbox"> Phong cách lãnh đạo</div>
+                                <div class="input-group"><input type="checkbox"> Quản lý nhân viên</div>
+                                <div class="input-group"><input type="checkbox"> Sự gắn kết</div>
+                                <div class="input-group"><input type="checkbox"> Chiến lược</div>
+                                <div class="input-group"><input type="checkbox"> Tiêu chí thành công</div>
+                                <div class="input-group"><input type="checkbox"> Loại hình VHDN</div>
+                            </div>
+                            <button class="btnFilter myBtn">Xem</button>
+                        </form>
+                    </div>
                     <div class="leftSide mt50 leftSideResult">
                         <table class="tableResult">
                             <thead>

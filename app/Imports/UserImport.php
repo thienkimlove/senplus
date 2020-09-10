@@ -2,9 +2,7 @@
 
 namespace App\Imports;
 
-use App\Models\Company;
 use App\Models\Filter;
-use App\Models\Question;
 use App\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;

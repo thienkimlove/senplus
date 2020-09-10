@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\QuestionRequest;
 use App\Models\Company;
+use App\Models\Survey;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -49,7 +50,16 @@ class QuestionCrudController extends CrudController
          */
         CRUD::column('name');
 
-        CRUD::column('question_belong')->label('Loại');
+        CRUD::addColumn([
+            // any type of relationship
+            'name'         => 'survey', // name of relationship method in the model
+            'type'         => 'relationship',
+            'label'        => 'Chiến Dịch', // Table column heading
+            // OPTIONAL
+            'entity'    => 'survey', // the method that defines the relationship in your Model
+            'attribute' => 'name', // foreign key attribute that is shown to user
+            'model'     => Survey::class, // foreign key model
+        ]);
 
 //        CRUD::column('option1')->label('Lựa chọn 1');
 //        CRUD::column('option2')->label('Lựa chọn 2');
@@ -78,16 +88,12 @@ class QuestionCrudController extends CrudController
             [
                 'name'  => 'filter_by_type',
                 'type'  => 'select2',
-                'label' => 'Dành Cho',
+                'label' => 'Chiến DỊch',
             ],
-            ['general' => 'Câu hỏi Chung']+Company::pluck('name', 'id')->toArray(),
+            Survey::pluck('name', 'id')->toArray(),
             function ($value) { // if the filter is active
                CRUD::addClause('where', function($q) use($value) {
-                   if ($value != 'general') {
-                       $q->where('company_id', $value);
-                   } else {
-                       $q->whereNull('company_id');
-                   }
+                   $q->where('survey_id', $value);
                });
             }
         );
@@ -97,86 +103,5 @@ class QuestionCrudController extends CrudController
         CRUD::denyAccess('create');
     }
 
-    /**
-     * Define what happens when the Create operation is loaded.
-     * 
-     * @see https://backpackforlaravel.com/docs/crud-operation-create
-     * @return void
-     */
-    protected function setupCreateOperation()
-    {
-        CRUD::setValidation(QuestionRequest::class);
 
-        //CRUD::setFromDb(); // fields
-
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
-         */
-
-        CRUD::addField('name');
-
-
-        CRUD::addField([
-            'name' => 'company',
-            'label' => 'Dành Cho',
-            'type' => 'relationship',
-            'entity' => 'company',
-            'attribute' => 'name',
-            'model' => Company::class
-        ]);
-
-        CRUD::addFields([
-            [
-                'name' => 'option1',
-                'label' => 'Lựa chọn 1'
-            ],
-            [
-                'name' => 'option2',
-                'label' => 'Lựa chọn 2'
-            ],
-            [
-                'name' => 'option3',
-                'label' => 'Lựa chọn 3'
-            ],
-            [
-                'name' => 'option4',
-                'label' => 'Lựa chọn 4'
-            ]
-        ]);
-
-        CRUD::addField([
-            'name' => 'round',
-            'type' => 'select_from_array',
-            'label' => 'Vòng',
-            'options' => [1 => 'Vòng 1', 2 => 'Vòng 2']
-        ]);
-
-        CRUD::addField([
-            'name' => 'order',
-            'type' => 'select_from_array',
-            'label' => 'Thứ tự',
-            'options' => [
-                1 => 'Câu thứ nhất',
-                2 => 'Câu thứ hai',
-                3 => 'Câu thứ ba',
-                4 => 'Câu thứ bốn',
-                5 => 'Câu thứ năm',
-                6 => 'Câu thứ sáu',
-            ]
-        ]);
-
-    }
-
-    /**
-     * Define what happens when the Update operation is loaded.
-     * 
-     * @see https://backpackforlaravel.com/docs/crud-operation-update
-     * @return void
-     */
-    protected function setupUpdateOperation()
-    {
-        $this->setupCreateOperation();
-    }
 }

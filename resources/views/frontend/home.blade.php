@@ -22,23 +22,28 @@
                         </div>
                         <div class="filterContent">
                             <div class="tabContent active" id="newest">
-                                @if ($survey)
-                                    <div class="item flex-between">
-                                        <a class="logoCompany" href="{{ route('frontend.question') }}" title="{{ $survey['name'] }}">
+                                @if ($surveys)
+                                    @foreach ($surveys as $survey)
+                                        <div class="item flex-between">
+                                        <a class="logoCompany" href="{{ route('frontend.survey') }}?id={{ $survey->id }}" title="{{ $survey['name'] }}">
                                             <img src="{{ url('frontend/assets/img/logo.png') }}" alt="Logo">
                                         </a>
-                                        <a href="{{ route('frontend.question') }}" class="txt" title="{{ $survey['name'] }}">{{ $survey['name'] }}</a>
+                                        <a href="{{ route('frontend.survey') }}?id={{ $survey->id }}" class="txt" title="{{ $survey['name'] }}">{{ $survey['name'] }}</a>
                                         <div class="btnGroup">
 
-                                            @if (\App\Helpers::haveResult())
-                                                <a class="myBtn btnViewResult" href="{{ route('frontend.result') }}" title="Xem kết quả">Xem kết quả</a>
+                                            @if (\App\Helpers::checkIfSurveyHaveResultForUser($survey))
+                                                <a class="myBtn btnViewResult" href="{{ route('frontend.result') }}?id={{ $survey->id }}" title="Xem kết quả">Xem kết quả</a>
                                             @else
-                                                <a class="myBtn btnTest" href="{{ route('frontend.question') }}" title="Bắt đầu khảo sát">Bắt đầu khảo sát</a>
+                                                <a class="myBtn btnTest" href="{{ route('frontend.survey') }}?id={{ $survey->id }}" title="Bắt đầu khảo sát">Bắt đầu khảo sát</a>
                                             @endif
-                                                {{--<a class="myBtn btnProfile" href="javascript:void(0)" title="Hồ sơ doanh nghiệp">Hồ sơ doanh nghiệp</a>--}}
+
+                                            @if ($survey->company_id && \App\Helpers::currentFrontendUserIsAdmin())
+                                                <a class="myBtn btnProfile" href="{{ route('frontend.general') }}?id={{ $survey->id }}" title="Hồ sơ doanh nghiệp">Hồ sơ doanh nghiệp</a>
+                                            @endif
 
                                         </div>
                                     </div>
+                                    @endforeach
                                 @endif
                             </div>
                         </div>
