@@ -1,4 +1,4 @@
-<a  href="javascript:void(0)" onclick="importExcelUser(this)" data-url="{{ url($crud->route.'/'.$entry->getKey().'/importExcelUser') }}" class="btn btn-xs btn-default" data-button-type="import-excel-user"><i class="fa fa-balance-scale"></i>Upload Dữ Liệu Nhân Viên</a>
+<a  href="javascript:void(0)" onclick="importExcelUser(this)" data-url="{{ url($crud->route.'/'.$entry->getKey().'/importExcelUser') }}" class="btn btn-xs btn-brand" data-button-type="import-excel-user"><i class="fa fa-balance-scale"></i>Upload Dữ Liệu Nhân Viên</a>
 
 <script>
     if (typeof importExcelUser != 'function') {
