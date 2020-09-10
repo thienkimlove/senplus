@@ -111,18 +111,18 @@ class CustomUserCrudController extends UserCrudController
                     return $query->orderBy('name', 'ASC')->get();
                 }),
             ],
-            [ // Table
-                'name' => 'filters',
-                'label' => 'Các thuộc tính',
-                'type' => 'table',
-                'entity_singular' => 'option', // used on the "Add X" button
-                'columns' => [
-                    'att_id' => 'ID thuộc tính',
-                    'att_value' => 'Giá trị'
-                ],
-                'max' => 10, // maximum rows allowed in the table
-                'min' => 1, // minimum rows allowed in the table
-            ],
+//            [ // Table
+//                'name' => 'filters',
+//                'label' => 'Các thuộc tính',
+//                'type' => 'table',
+//                'entity_singular' => 'option', // used on the "Add X" button
+//                'columns' => [
+//                    'att_id' => 'ID thuộc tính',
+//                    'att_value' => 'Giá trị'
+//                ],
+//                'max' => 10, // maximum rows allowed in the table
+//                'min' => 1, // minimum rows allowed in the table
+//            ],
         ]);
     }
 

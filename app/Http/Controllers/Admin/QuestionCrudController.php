@@ -93,6 +93,8 @@ class QuestionCrudController extends CrudController
         );
 
         CRUD::denyAccess('delete');
+        CRUD::denyAccess('update');
+        CRUD::denyAccess('create');
     }
 
     /**

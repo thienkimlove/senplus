@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Models\Answer;
 use App\Models\Question;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -17,8 +18,16 @@ class QuestionImport implements ToCollection
 
     public function collection(Collection $rows)
     {
+        $listOldQuestionIds = Question::where('company_id', $this->companyId)
+            ->pluck('id')
+            ->all();
+
+        if ($listOldQuestionIds) {
+            Answer::whereIn('question_id', $listOldQuestionIds)->delete();
+        }
 
         Question::where('company_id', $this->companyId)->delete();
+
 
         foreach ($rows as $row)
         {
