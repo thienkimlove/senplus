@@ -35,10 +35,10 @@ class Helpers
     public static function mapOption()
     {
         return [
-            'option1' => 'Gia Đình',
-            'option2' => 'Sáng Tạo',
-            'option3' => 'Thị Trường',
-            'option4' => 'Kiểm Soát',
+            'option1' => 'Clan',
+            'option2' => 'Adhocracy',
+            'option3' => 'Market',
+            'option4' => 'Hierarchy',
         ];
     }
 
@@ -224,9 +224,10 @@ class Helpers
         $user = self::getCurrentFrontendUser();
         if ($user) {
             foreach ($survey->questions as $question) {
-                $randOption1 = rand(1, 40);
-                $randOption2 = rand(1, 30);
-                $randOption3 = rand(1, 20);
+                $randOption1 = rand(1, 70);
+                $randOption2 = rand(1, 100 - $randOption1);
+                $randOption3 = rand(1, 100 - ($randOption1+$randOption2));
+
                 try {
                     Answer::create([
                         'user_id' => $user->id,

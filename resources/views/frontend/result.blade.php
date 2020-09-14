@@ -79,19 +79,28 @@
 
             // The data for our dataset
             data: {
-                labels: ['Y1', mapOption["option1"], 'X1', mapOption["option2"], 'Y2', mapOption["option3"], 'X2', mapOption["option4"]],
+                labels: [
+                    'Linh hoạt',
+                    mapOption["option4"],
+                    'Hướng ngoại',
+                    mapOption["option3"],
+                    'Ổn định',
+                    mapOption["option2"],
+                    'Hướng nội',
+                    mapOption["option1"]
+                ],
                 datasets: [
                     {
                         label: mapRound[1],
                         //backgroundColor: 'green',
                         borderColor: 'green',
-                        data: [null, result[1]['option1'], null, result[1]['option2'], null, result[1]['option3'], null, result[1]['option4']]
+                        data: [null, result[1]['option4'], null, result[1]['option3'], null, result[1]['option2'], null, result[1]['option1']]
                     },
                     {
                         label: mapRound[2],
                         //backgroundColor: 'pink',
                         borderColor: 'pink',
-                        data: [null, result[2]['option1'], null, result[2]['option2'], null, result[2]['option3'], null, result[2]['option4']]
+                        data: [null, result[2]['option4'], null, result[2]['option3'], null, result[2]['option2'], null, result[2]['option1']]
                     }
                 ],
             },
