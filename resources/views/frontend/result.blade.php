@@ -24,9 +24,9 @@
                             @foreach(['option1', 'option2', 'option3', 'option4'] as $index => $opt)
                                 <tr>
                                     <td>{{ \App\Helpers::mapOption()[$opt] }}</td>
-                                    <td>{{ $result[1][$opt] }}</td>
-                                    <td>{{ $result[2][$opt] }}</td>
-                                    <td>{{ $result[2][$opt] - $result[1][$opt] }}</td>
+                                    <td>{{ round($result[1][$opt], 2) }}</td>
+                                    <td>{{ round($result[2][$opt], 2) }}</td>
+                                    <td>{{ round($result[2][$opt] - $result[1][$opt], 2) }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -58,8 +58,6 @@
         let mapOption = JSON.parse(' @json(\App\Helpers::mapOption()) ');
         let mapRound = JSON.parse(' @json(\App\Helpers::mapRound()) ');
 
-        console.log(mapOption);
-
         drawArrow = function(context, fromx, fromy, tox, toy) {
             var headlen = 10;
             var dx = tox - fromx;
@@ -73,6 +71,7 @@
         }
 
 
+
         let chart = new Chart(ctx, {
             // The type of chart we want to create
             type: 'radar',
@@ -83,9 +82,9 @@
                     'Linh hoạt',
                     mapOption["option4"],
                     'Hướng ngoại',
-                    mapOption["option3"],
-                    'Ổn định',
                     mapOption["option2"],
+                    'Ổn định',
+                    mapOption["option3"],
                     'Hướng nội',
                     mapOption["option1"]
                 ],
@@ -94,13 +93,13 @@
                         label: mapRound[1],
                         //backgroundColor: 'green',
                         borderColor: 'green',
-                        data: [null, result[1]['option4'], null, result[1]['option3'], null, result[1]['option2'], null, result[1]['option1']]
+                        data: [null, result[1]['option4'], null, result[1]['option2'], null, result[1]['option3'], null, result[1]['option1']]
                     },
                     {
                         label: mapRound[2],
                         //backgroundColor: 'pink',
                         borderColor: 'pink',
-                        data: [null, result[2]['option4'], null, result[2]['option3'], null, result[2]['option2'], null, result[2]['option1']]
+                        data: [null, result[2]['option4'], null, result[2]['option2'], null, result[2]['option3'], null, result[2]['option1']]
                     }
                 ],
             },

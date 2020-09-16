@@ -21,7 +21,6 @@ class Question extends Model
     protected $guarded = ['id'];
     protected $fillable = [
         'name',
-        //'company_id',
         'survey_id',
         'round',
         'order',

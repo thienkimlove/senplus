@@ -3,18 +3,17 @@
 
 
 
-@if (backpack_user()->hasRole('admin') || backpack_user()->hasRole('editor'))
+@if (backpack_user()->hasRole('admin') || backpack_user()->hasRole('support'))
 
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('filter') }}'><i class='nav-icon la la-accessible-icon'></i> <span>Các Thuộc Tính</span></a></li>
 
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('company') }}'><i class='nav-icon la la-centercode'></i> <span>Doanh Nghiệp</span></a></li>
 
 
-<li class="nav-item"><a class="nav-link" href="{{ backpack_url('custom-user') }}"><i class="nav-icon la la-confluence"></i> <span>Người Dùng</span></a></li>
+<li class="nav-item"><a class="nav-link" href="{{ backpack_url('customer') }}"><i class="nav-icon la la-confluence"></i> <span>Người Dùng</span></a></li>
 
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('question') }}'><i class='nav-icon la la-quora'></i> <span>Bộ Câu Hỏi</span> </a></li>
 
-{{--<li class='nav-item'><a class='nav-link' href='{{ backpack_url('answer') }}'><i class='nav-icon la la-question'></i> Answers</a></li>--}}
 
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('survey') }}'><i class='nav-icon la la-columns'></i> Chiến Dịch</a></li>
 
@@ -37,4 +36,3 @@
     </ul>
 </li>
 @endif
-

@@ -8,17 +8,9 @@
 
             <main>
                 <div class="fixCen flex-between">
-                    <div class="myBtn btnTest" title="Test">Test</div>
                     <div class="content">
                         <div class="tabs flex-between">
                             <div class="txt">Danh sách khảo sát của bạn</div>
-                            <div class="filter">
-                                <ul>
-                                    <li class="active btnShowTab" data-content="#newest"><a href="javascript:void(0)" title="Mới nhất">Mới nhất</a></li>
-                                    {{--<li class="btnShowTab" data-content="#newest"><a href="javascript:void(0)" title="Tháng này">Tháng này</a></li>--}}
-                                    {{--<li class="btnShowTab" data-content="#newest"><a href="javascript:void(0)" title="Tất cả">Tất cả</a></li>--}}
-                                </ul>
-                            </div>
                         </div>
                         <div class="filterContent">
                             <div class="tabContent active" id="newest">

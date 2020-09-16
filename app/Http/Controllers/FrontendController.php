@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Helpers;
 use App\Models\Answer;
+use App\Models\Customer;
+use App\Models\Filter;
 use App\Models\Question;
 use App\Models\Survey;
-use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class FrontendController extends Controller
@@ -26,10 +26,14 @@ class FrontendController extends Controller
 
     public function postLogin(Request $request)
     {
-        $data =  $request->only(['email', 'password']);
+        if (auth()->check()) {
+            return redirect(route('frontend.home'));
+        }
+
+        $data =  $request->only(['login', 'password']);
 
         $rules = [
-            'email' => 'required',
+            'login' => 'required',
             'password' => 'required'
         ];
 
@@ -45,23 +49,23 @@ class FrontendController extends Controller
                 ->withInput($request->except('password'));
         }
 
-        $user = User::where('email', $data['email'])->first();
+        $customer = Customer::where('login', trim($data['login']))->first();
 
-        if (!$user) {
-            $validator->getMessageBag()->add('email', 'Tài khoản không tồn tại!');
+        if (!$customer || !$customer->status) {
+            $validator->getMessageBag()->add('login', 'Tài khoản không tồn tại hoặc chưa kích hoạt!');
             return redirect(route('frontend.index'))
                 ->withErrors($validator)
                 ->withInput($request->except('password'));
         }
 
-        if (!Hash::check($data['password'], $user->getAuthPassword())) {
+        if ($data['password'] != $customer->password) {
             $validator->getMessageBag()->add('password', 'Mật khẩu không đúng xin thử lại!');
             return redirect(route('frontend.index'))
                 ->withErrors($validator)
                 ->withInput($request->except('password'));
         }
 
-        auth()->login($user);
+        auth()->login($customer);
         return redirect(route('frontend.home'));
     }
 
@@ -99,6 +103,9 @@ class FrontendController extends Controller
 
     public function survey(Request $request)
     {
+        if (!auth()->check()) {
+            return redirect(route('frontend.index'));
+        }
         $page = 'survey';
         $surveyId = $request->input('id');
 
@@ -130,6 +137,9 @@ class FrontendController extends Controller
 
     public function back(Request $request)
     {
+        if (!auth()->check()) {
+            return redirect(route('frontend.index'));
+        }
         $questionId = $request->input('question_id');
 
         if (!$questionId) {
@@ -155,6 +165,9 @@ class FrontendController extends Controller
 
     public function answer(Request $request)
     {
+        if (!auth()->check()) {
+            return redirect(route('frontend.index'));
+        }
         $questionId = $request->input('question_id');
 
         if (!$questionId) {
@@ -169,14 +182,7 @@ class FrontendController extends Controller
             return redirect(route('frontend.home'));
         }
 
-        $user = Helpers::getCurrentFrontendUser();
-
-        if (!$user) {
-            $request->session()->flash('general_message', 'Không xác định được người dùng!');
-            return redirect(route('frontend.home'));
-        }
-
-        $existedAnswer = Answer::where('user_id', $user->id)
+        $existedAnswer = Answer::where('customer_id', auth()->user()->id)
             ->where('question_id', $question->id)
             ->first();
 
@@ -195,7 +201,7 @@ class FrontendController extends Controller
             ]);
         } else {
             Answer::create([
-                'user_id' => $user->id,
+                'customer_id' => auth()->user()->id,
                 'question_id' => $question->id,
                 'option1' => $request->input('option1') ? $request->input('option1') : 0,
                 'option2' => $request->input('option2') ? $request->input('option2') : 0,
@@ -217,12 +223,8 @@ class FrontendController extends Controller
 
     public function result(Request $request)
     {
-
-        $user = Helpers::getCurrentFrontendUser();
-
-        if (!$user) {
-            $request->session()->flash('general_message', 'Không xác định được người dùng!');
-            return redirect(route('frontend.home'));
+        if (!auth()->check()) {
+            return redirect(route('frontend.index'));
         }
 
         $surveyId = $request->input('id');
@@ -239,18 +241,12 @@ class FrontendController extends Controller
             return redirect(route('frontend.home'));
         }
 
-        $questionIds = $survey->questions->pluck('id')->all();
-
-        $answerYet = Answer::where('user_id', $user->id)
-            ->whereIn('question_id', $questionIds)
-            ->count();
-
-        if ($answerYet == 0) {
+        if (!Helpers::checkIfSurveyHaveResultForUser($survey)) {
             $request->session()->flash('general_message', 'Chưa có câu trả lời!');
             return redirect(route('frontend.home'));
         }
 
-        $result = Helpers::getResultForSurvey($survey);
+        $result = Helpers::getResultForSurveyAll($survey, [auth()->user()->id]);
 
         return view('frontend.result', compact('result'));
     }
@@ -259,11 +255,13 @@ class FrontendController extends Controller
     public function general(Request $request)
     {
 
-        $user = Helpers::getCurrentFrontendUser();
+        if (!auth()->check()) {
+            return redirect(route('frontend.index'));
+        }
 
-        if (!$user) {
-            $request->session()->flash('general_message', 'Không xác định được người dùng!');
-            return redirect(route('frontend.home'));
+        if (!Helpers::currentFrontendUserIsAdmin()) {
+            $request->session()->flash('general_message', 'Bạn không có quyền xem kết quả doanh nghiệp!');
+            return redirect(route('frontend.index'));
         }
 
         $surveyId = $request->input('id');
@@ -280,20 +278,57 @@ class FrontendController extends Controller
             return redirect(route('frontend.home'));
         }
 
-        $questionIds = $survey->questions->pluck('id')->all();
-
-        $answerYet = Answer::where('user_id', $user->id)
-            ->whereIn('question_id', $questionIds)
-            ->count();
-
-        if ($answerYet == 0) {
+        if (!Helpers::checkIfSurveyHaveAnyResult($survey)) {
             $request->session()->flash('general_message', 'Chưa có câu trả lời!');
             return redirect(route('frontend.home'));
         }
 
-        $result = Helpers::getResultForSurvey($survey);
+        $customerIds = Helpers::getCustomerListByManager($survey);
 
-        return view('frontend.general', compact('result'));
+        $result = Helpers::getResultForSurveyAll($survey, $customerIds);
+
+        return view('frontend.general', compact('result', 'survey'));
+    }
+
+    public function filter(Request $request)
+    {
+        $surveyId = $request->input('survey_id');
+
+        if (!$surveyId) {
+            return response()->json(['error' => true, 'result' => []]);
+        }
+
+        $chooseType = $request->input('choose_type');
+        $survey = Survey::find($surveyId);
+        $customerIds = Helpers::getCustomerListByManager($survey);
+
+        Helpers::log($customerIds);
+
+        if (!$chooseType) {
+            return response()->json([
+                'error' => false,
+                'result' => Helpers::getResultForSurveyAll($survey, $customerIds),
+                'title' => 'Loại hình Văn hóa DN'
+            ]);
+        } else {
+
+            if (auth()->user()->level == Helpers::FRONTEND_MANAGER_LEVEL) {
+                return response()->json([
+                    'error' => false,
+                    'result' => Helpers::getResultForSurveyAll($survey, $customerIds, $chooseType),
+                    'title' => Helpers::mapOrder()[$chooseType]
+                ]);
+            } else {
+                $chooseCustomers = $request->input('choose_customers');
+                $customerIds = Helpers::getCustomerByChooseList($survey, $chooseCustomers);
+                Helpers::log($customerIds);
+                return response()->json([
+                    'error' => false,
+                    'result' => Helpers::getResultForSurveyAll($survey, $customerIds, $chooseType),
+                    'title' => Helpers::mapOrder()[$chooseType]
+                ]);
+            }
+        }
     }
 
 

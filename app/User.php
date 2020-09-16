@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Models\Company;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -23,8 +22,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'company_id',
-        'filters'
     ];
 
     /**
@@ -48,23 +45,4 @@ class User extends Authenticatable
     protected $appends = [
         'display_role'
     ];
-
-    public function getDisplayRoleAttribute()
-    {
-        if ($this->hasRole('admin')) {
-            return 'Admin SenPlus';
-        }
-
-        if ($this->hasRole('editor')) {
-            return 'Editor SenPlus';
-        }
-
-        return  'Người Dùng';
-    }
-
-
-    public function company()
-    {
-        return $this->belongsTo(Company::class);
-    }
 }

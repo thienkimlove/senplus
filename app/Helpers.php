@@ -9,11 +9,17 @@
 namespace App;
 
 use App\Models\Answer;
+use App\Models\Customer;
+use App\Models\Filter;
 use App\Models\Question;
 use App\Models\Survey;
 
 class Helpers
 {
+
+    public const FRONTEND_ADMIN_LEVEL = 2;
+    public const FRONTEND_MANAGER_LEVEL = 1;
+    public const FRONTEND_USER_LEVEL = 0;
 
     public static function log($msg)
     {
@@ -25,10 +31,57 @@ class Helpers
         @file_put_contents(storage_path('logs/debug.log'), $message . "\n", FILE_APPEND);
     }
 
-    public static function getCurrentFrontendUser()
+    public static function mapCustomer()
     {
+        return [
+            0 => [
+                'name' => 'name',
+                'value' => 'Họ và Tên'
+            ],
+            1 => [
+                'name' => 'last_name',
+                'value' => 'Họ'
+            ],
+            2 => [
+                'name' => 'first_name',
+                'value' => 'Tên'
+            ],
+            3 => [
+                'name' => 'email',
+                'value' => 'Email'
+            ],
+            4 => [
+                'name' => 'username',
+                'value' => 'Username'
+            ],
+            5 => [
+                'name' => 'phone',
+                'value' => 'Phone'
+            ],
+            6 => [
+                'name' => 'address',
+                'value' => 'Địa chỉ'
+            ],
 
-        return auth()->user();
+            7 => [
+                'name' => 'login',
+                'value' => 'Tài khoản'
+            ],
+            8 => [
+                'name' => 'password',
+                'value' => 'Mật khẩu'
+            ]
+        ];
+    }
+
+
+    public static function mapLevel()
+    {
+        return [
+            self::FRONTEND_ADMIN_LEVEL => 'Admin',
+            self::FRONTEND_MANAGER_LEVEL => 'Manager',
+            self::FRONTEND_USER_LEVEL => 'User'
+        ];
     }
 
 
@@ -59,24 +112,23 @@ class Helpers
             4 => 'Sự gắn kết',
             5 => 'Chiến lược',
             6 => 'Tiêu chí thành công',
-            7 => 'Trung bình'
+            7 => 'Loại hình Văn Hóa DN'
         ];
     }
 
     public static function checkIfSurveyHaveResultForUser($survey)
     {
-        $user = self::getCurrentFrontendUser();
         $questionIds = $survey->questions->pluck('id')->all();
-        $answerCount = Answer::where('user_id', $user->id)
+        $answerCount = Answer::where('customer_id', auth()->user()->id)
             ->whereIn('question_id', $questionIds)
             ->count();
 
         return ($answerCount > 0);
     }
 
-    public static function checkIfSurveyHaveAnyResult($surveyId)
+    public static function checkIfSurveyHaveAnyResult($survey)
     {
-        $questionIds = Question::where('survey_id', $surveyId)
+        $questionIds = Question::where('survey_id', $survey->id)
             ->pluck('id')
             ->all();
         $answerCount = Answer::whereIn('question_id', $questionIds)
@@ -88,22 +140,11 @@ class Helpers
 
     public static function currentFrontendUserIsAdmin()
     {
-        $user = self::getCurrentFrontendUser();
-
-        if (!$user) {
-            return false;
-        }
-
-        return $user->hasRole('admin');
+        return auth()->user()->level != self::FRONTEND_USER_LEVEL;
     }
 
     public static function getQuestion($survey, $round, $order)
     {
-        $user = self::getCurrentFrontendUser();
-        if (!$user) {
-            return [null, 0, 0, null];
-        }
-
 
         if (!$survey || !$survey->status) {
             return [null, 0, 0, null];
@@ -117,7 +158,7 @@ class Helpers
 
         $questionIds = $survey->questions->pluck('id')->all();
 
-        $answerRound = Answer::where('user_id', $user->id)
+        $answerRound = Answer::where('customer_id', auth()->user()->id)
             ->whereIn('question_id', $questionIds)
             ->count();
 
@@ -128,7 +169,7 @@ class Helpers
         $answer = null;
 
         if ($question) {
-            $answer = Answer::where('user_id', $user->id)
+            $answer = Answer::where('customer_id', auth()->user()->id)
                 ->where('question_id', $question->id)
                 ->first();
         }
@@ -138,10 +179,8 @@ class Helpers
 
     public static function getSurveyForLoginUser()
     {
-        $user = self::getCurrentFrontendUser();
-
-        if ($user->company_id) {
-            return Survey::where('company_id', $user->company_id)
+        if (auth()->user()->company_id) {
+            return Survey::where('company_id', auth()->user()->company_id)
                 ->where('status', true)
                 ->get();
         }
@@ -151,14 +190,152 @@ class Helpers
             ->get();
     }
 
+    public static function getCustomerListByManager($survey)
+    {
+        if (auth()->user()->level == Helpers::FRONTEND_ADMIN_LEVEL) {
+            return Customer::where('company_id', $survey->company_id)
+                ->where('status', true)
+                ->pluck('id')
+                ->all();
+        } else {
+            //manager
+            $customers = Customer::where('company_id', $survey->company_id)
+                ->where('status', true)
+                ->get();
+
+            $storeUserIdByFilter = [];
+
+            foreach (auth()->user()->options as $option) {
+                $filter = Filter::find($option['att_id']);
+                if ($filter && !$filter->is_level) {
+                    $storeUserIdByFilter[$option['att_id']] = [];
+                    foreach ($customers as $customer) {
+                       if ($customer->options) {
+                           foreach ($customer->options as $cusOption) {
+                               if ($cusOption['att_value'] == $option['att_value']) {
+                                   $storeUserIdByFilter[$option['att_id']][] = $customer->id;
+                               }
+                           }
+                       }
+                    }
+                }
+            }
+
+            if (!$storeUserIdByFilter) {
+                return [];
+            }
+
+            $finalCustomerQuery = Customer::where('company_id', $survey->company_id)
+                ->where('status', true);
+
+            foreach ($storeUserIdByFilter as $filterValue) {
+                $finalCustomerQuery = $finalCustomerQuery->whereIn('id', $filterValue);
+            }
+
+            return $finalCustomerQuery->pluck('id')->all();
+
+        }
+    }
+
+    public static function getCustomerByChooseList($survey, $chooseCustomers)
+    {
+
+        $customers = Customer::where('company_id', $survey->company_id)
+            ->where('status', true)
+            ->get();
+        $storeUserIdByFilter = [];
+
+        if ($chooseCustomers) {
+            $listCustomerFilters = explode(',', $chooseCustomers);
+            if ($listCustomerFilters) {
+                foreach ($listCustomerFilters as $listCustomerFilter) {
+                    $exList = explode('||', $listCustomerFilter);
+                    if ($filterId = $exList[0] && $filterValue = $exList[1]) {
+                        foreach ($customers as $customer) {
+                            if ($customer->options) {
+                                foreach ($customer->options as $cusOption) {
+                                    if ($cusOption['att_value'] == $filterValue && $cusOption['att_id'] == $filterId) {
+                                        $storeUserIdByFilter[$filterId][] = $customer->id;
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+
+        if (!$storeUserIdByFilter) {
+            return Customer::where('company_id', $survey->company_id)
+                ->where('status', true)
+                ->pluck('id')
+                ->all();
+        }
+
+        Helpers::log("storeUserIdByFilter");
+        Helpers::log($storeUserIdByFilter);
+
+        $finalCustomerQuery = Customer::where('company_id', $survey->company_id)
+            ->where('status', true);
+
+        foreach ($storeUserIdByFilter as $filterValue) {
+            $finalCustomerQuery = $finalCustomerQuery->whereIn('id', $filterValue);
+        }
+
+        return $finalCustomerQuery->pluck('id')->all();
+    }
+
+    public static function getResultForSurveyAll($survey, $customerIds, $type = 7)
+    {
+
+        $arDetails = [];
+        $arAverage = [
+            1 => [
+                'option1' => 0,
+                'option2' => 0,
+                'option3' => 0,
+                'option4' => 0,
+            ],
+            2 => [
+                'option1' => 0,
+                'option2' => 0,
+                'option3' => 0,
+                'option4' => 0,
+            ]
+        ];
+
+        foreach ($arAverage as $round => $options) {
+            if (!isset($arDetails[$round])) {
+                $arDetails[$round] = [];
+            }
+            foreach ($options as $index => $value) {
+                if ($type == 7) {
+                    $questionIds = $survey->questions
+                        ->where('round', $round)
+                        ->pluck('id')
+                        ->all();
+                } else {
+                    $questionIds = $survey->questions
+                        ->where('round', $round)
+                        ->where('order', $type)
+                        ->pluck('id')
+                        ->all();
+                }
+
+                $arDetails[$round][$index] = Answer::whereIn('question_id', $questionIds)
+                    ->whereIn('customer_id', $customerIds)
+                    ->avg($index);
+            }
+        }
+
+
+        return $arDetails;
+    }
+
 
     public static function getResultForSurvey($survey)
     {
-        $user = self::getCurrentFrontendUser();
-
-        if (!$user) {
-            return [];
-        }
 
         $arDetails = [];
         $arAverage = [
@@ -177,7 +354,7 @@ class Helpers
         ];
 
         foreach ($survey->questions as $question) {
-            $answerForQuest = Answer::where('user_id', $user->id)
+            $answerForQuest = Answer::where('customer_id', auth()->user()->id)
                 ->where('question_id', $question->id)
                 ->first();
 
@@ -221,33 +398,23 @@ class Helpers
 
     public static function generateAnswerForUser($survey)
     {
-        $user = self::getCurrentFrontendUser();
-        if ($user) {
-            foreach ($survey->questions as $question) {
-                $randOption1 = rand(1, 70);
-                $randOption2 = rand(1, 100 - $randOption1);
-                $randOption3 = rand(1, 100 - ($randOption1+$randOption2));
+        foreach ($survey->questions as $question) {
+            $randOption1 = rand(1, 70);
+            $randOption2 = rand(1, 100 - $randOption1);
+            $randOption3 = rand(1, 100 - ($randOption1+$randOption2));
 
-                try {
-                    Answer::create([
-                        'user_id' => $user->id,
-                        'question_id' => $question->id,
-                        'option1' => $randOption1,
-                        'option2' => $randOption2,
-                        'option3' => $randOption3,
-                        'option4' => 100 - ($randOption1 + $randOption2 + $randOption3),
-                    ]);
-                } catch (\Exception $exception) {
-                    //pass
-                }
+            try {
+                Answer::create([
+                    'customer_id' => auth()->user()->id,
+                    'question_id' => $question->id,
+                    'option1' => $randOption1,
+                    'option2' => $randOption2,
+                    'option3' => $randOption3,
+                    'option4' => 100 - ($randOption1 + $randOption2 + $randOption3),
+                ]);
+            } catch (\Exception $exception) {
+                //pass
             }
         }
-    }
-
-    public static function getUserRoleAdminWhichNotHaveCompany()
-    {
-        return User::whereNull('company_id')->whereHas('roles', function($q) {
-            $q->where('name', 'admin');
-        })->get();
     }
 }

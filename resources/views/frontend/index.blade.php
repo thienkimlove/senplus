@@ -19,7 +19,7 @@
             <h3 class="title"><a href="javascript:void(0)" class="tab tabLogin active" title="Đăng nhập" data-content="#loginForm">Đăng nhập</a> | <a href="javascript:void(0)" class="tab tabRegister" title="Đăng ký" data-content="#registerForm">Đăng Ký</a></h3>
             <form action="{{ route('frontend.post_login') }}" method="POST" id="loginForm" class="active">
                 <div class="form-group">
-                    <input id="login_email" name="email" type="email" placeholder="Nhập email">
+                    <input id="login_email" name="login" type="text" placeholder="Nhập tài khoản">
                     {{ csrf_field() }}
                 </div>
                 <div class="form-group">
@@ -27,6 +27,16 @@
                 </div>
                 <div id="login_error" class="error">* Cần nhập đầy đủ thông tin</div>
                 <a id="btnLogin" href="javascript:void(0)">Đăng nhập</a>
+                <div>
+                    @if (count($errors))
+                        <ul>
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
+                </div>
+
             </form>
             <form action="" id="registerForm">
                 <div class="form-group">

@@ -17,6 +17,7 @@ class CreateTableFilters extends Migration
             $table->id();
             $table->string('name');
             $table->longText('options')->nullable();
+            $table->boolean('is_level')->default(false);
             $table->timestamps();
         });
 

@@ -3,7 +3,7 @@
     data-url="{{ url($crud->route.'/'.$entry->getKey().'/addAdmin') }}"
     class="btn btn-xs btn-tumblr"
     data-button-type="add-admin">
-    <i class="fa fa-balance-scale"></i>Thêm Manager
+    <i class="fa fa-balance-scale"></i>Thêm Admin
 </a>
 
 <script>

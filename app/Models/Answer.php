@@ -21,7 +21,7 @@ class Answer extends Model
     // public $timestamps = false;
     protected $guarded = ['id'];
     protected $fillable = [
-        'user_id',
+        'customer_id',
         'question_id',
         'option1',
         'option2',
@@ -48,9 +48,9 @@ class Answer extends Model
         return $this->belongsTo(Question::class);
     }
 
-    public function user()
+    public function customer()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Customer::class);
     }
 
     /*

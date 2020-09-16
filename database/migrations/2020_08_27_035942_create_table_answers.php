@@ -15,12 +15,15 @@ class CreateTableAnswers extends Migration
     {
         Schema::create('answers', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('question_id');
             $table->unsignedSmallInteger('option1')->default(0);
             $table->unsignedSmallInteger('option2')->default(0);
             $table->unsignedSmallInteger('option3')->default(0);
             $table->unsignedSmallInteger('option4')->default(0);
+
+            $table->unique(['customer_id', 'question_id'],'unique_user_question');
+
             $table->timestamps();
         });
     }

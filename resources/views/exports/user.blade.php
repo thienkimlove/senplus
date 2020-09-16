@@ -1,9 +1,9 @@
 <table>
     <thead>
     <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Password</th>
+        @foreach (\App\Helpers::mapCustomer() as $index => $customer)
+            <th>{{ $customer['value'] }}</th>
+        @endforeach
         @foreach ($company->filters as $filter)
             <th>Thuộc Tính {{ $filter->name }}</th>
         @endforeach
@@ -12,9 +12,9 @@
     </thead>
     <tbody>
         <tr>
-            <td>Đặng Văn A</td>
-            <td>senplus@example.com</td>
-            <td>123456</td>
+            @foreach (\App\Helpers::mapCustomer() as $index => $customer)
+                <th>N/A</th>
+            @endforeach
             @foreach ($company->filters as $filter)
                 <td>Giá trị thuộc tính {{ $filter->name }}</td>
             @endforeach

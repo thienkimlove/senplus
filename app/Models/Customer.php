@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Helpers;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class Filter extends Model
+class Customer extends Authenticatable
 {
     use CrudTrait;
+    use Notifiable;
 
     /*
     |--------------------------------------------------------------------------
@@ -15,21 +18,40 @@ class Filter extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'filters';
+    protected $table = 'customers';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
     protected $fillable = [
         'name',
+        'first_name',
+        'last_name',
+        'phone',
+        'address',
+        'email',
+        'username',
+
+        'company_id',
+        'login',
+        'password',
         'options',
-        'is_level'
+        'status',
+        'level'
     ];
-    // protected $hidden = [];
+    protected $hidden = ['password'];
     // protected $dates = [];
+
+    public $appends = ['display_level'];
 
     public $casts = [
         'options' => 'array'
     ];
+
+
+    public function getDisplayLevelAttribute()
+    {
+        return Helpers::mapLevel()[$this->level];
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -37,11 +59,17 @@ class Filter extends Model
     |--------------------------------------------------------------------------
     */
 
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
 
     /*
     |--------------------------------------------------------------------------

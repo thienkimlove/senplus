@@ -17,13 +17,15 @@ class CreateTableQuestions extends Migration
             $table->id();
 
             $table->string('name');
-            $table->unsignedBigInteger('company_id')->nullable();
+            $table->unsignedBigInteger('survey_id')->nullable();
             $table->unsignedSmallInteger('round');
             $table->unsignedSmallInteger('order');
             $table->string('option1');
             $table->string('option2');
             $table->string('option3');
             $table->string('option4');
+
+            $table->unique(['round', 'order', 'survey_id'], 'unique_round_order_survey');
 
             $table->timestamps();
         });

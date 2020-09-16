@@ -15,20 +15,15 @@ Route::group([
     'namespace'  => 'App\Http\Controllers\Admin',
 ], function () { // custom admin routes
     Route::crud('company', 'CompanyCrudController');
-
     Route::get('company/{id}/downloadExcelUser', 'CompanyCrudController@downloadExcelUser');
-
     Route::get('survey/downloadExcelQuestion', 'SurveyCrudController@downloadExcelQuestion');
 
     Route::get('survey/{id}/clear', 'SurveyCrudController@clear');
-
-
-    Route::crud('custom-user', 'CustomUserCrudController');
-
     //custom user controller
 
     Route::crud('question', 'QuestionCrudController');
-    Route::crud('answer', 'AnswerCrudController');
+    //Route::crud('answer', 'AnswerCrudController');
     Route::crud('filter', 'FilterCrudController');
     Route::crud('survey', 'SurveyCrudController');
+    Route::crud('customer', 'CustomerCrudController');
 }); // this should be the absolute last line of this file

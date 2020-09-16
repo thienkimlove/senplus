@@ -2,6 +2,8 @@
 
 namespace App\Imports;
 
+use App\Helpers;
+use App\Models\Customer;
 use App\Models\Filter;
 use App\User;
 use Illuminate\Support\Collection;
@@ -23,12 +25,10 @@ class UserImport implements ToCollection
        $headers = [];
 
         foreach ($rows as $row) {
-            if (trim($row[0]) == 'Name') {
+            if (trim($row[0]) == Helpers::mapCustomer()[0]['value']) {
                 foreach ($row as $index => $value) {
-
                     if (strpos($value, 'Thuộc Tính') !== false) {
                         $filterName = trim(str_replace('Thuộc Tính ', '', $value));
-
                         $filter = Filter::where('name', $filterName)->first();
 
                         if ($filter) {
@@ -43,20 +43,24 @@ class UserImport implements ToCollection
 
 
         foreach ($rows as $row) {
-            if (trim($row[0]) != 'Name') {
-                $user = null;
+            if (trim($row[0]) != Helpers::mapCustomer()[0]['value']) {
+                $customer = null;
                 try {
-                   $user = User::create([
-                        'name' => $row[0],
-                        'email' => $row[1],
-                        'password' => Hash::make($row[2]),
+
+                    $values = [
                         'company_id' => $this->companyId
-                    ]);
+                    ];
+
+                    foreach (Helpers::mapCustomer() as $index => $ars) {
+                        $values[$ars['name']] = $row[$index];
+                    }
+
+                    $customer = Customer::create($values);
                 } catch (\Exception $exception) {
                     //pass
                 }
 
-                if ($user) {
+                if ($customer) {
                    $jsonAttrs = [];
                    foreach ($row as $index => $value) {
                        if (isset($headers[$index])) {
@@ -67,8 +71,8 @@ class UserImport implements ToCollection
                        }
                    }
                    if ($jsonAttrs) {
-                       $user->update([
-                           'filters' => json_encode($jsonAttrs, true)
+                       $customer->update([
+                           'options' => json_encode($jsonAttrs, true)
                        ]);
                    }
                 }
