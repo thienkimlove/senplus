@@ -173,9 +173,8 @@
         let mapRound = JSON.parse(' @json(\App\Helpers::mapRound()) ');
 
 
-        makeChart(ctx, mapOption, mapRound, result);
-
         $(document).ready(function(){
+            makeChart(ctx, mapOption, mapRound, result);
             $('#filerSelectSubmit').click(function(){
                 let surveyId = $('#survey_id').val();
                 let chooseType = $('input[name=choose_type]:checked', '#filerSelect').val();
