@@ -323,9 +323,11 @@ class Helpers
                         ->all();
                 }
 
-                $arDetails[$round][$index] = Answer::whereIn('question_id', $questionIds)
+                $avgValue = Answer::whereIn('question_id', $questionIds)
                     ->whereIn('customer_id', $customerIds)
                     ->avg($index);
+
+                $arDetails[$round][$index] = round($avgValue, 2);
             }
         }
 
@@ -333,68 +335,6 @@ class Helpers
         return $arDetails;
     }
 
-
-    public static function getResultForSurvey($survey)
-    {
-
-        $arDetails = [];
-        $arAverage = [
-            1 => [
-                'option1' => 0,
-                'option2' => 0,
-                'option3' => 0,
-                'option4' => 0,
-            ],
-            2 => [
-                'option1' => 0,
-                'option2' => 0,
-                'option3' => 0,
-                'option4' => 0,
-            ]
-        ];
-
-        foreach ($survey->questions as $question) {
-            $answerForQuest = Answer::where('customer_id', auth()->user()->id)
-                ->where('question_id', $question->id)
-                ->first();
-
-            if (!isset($arDetails[$question->round])) {
-                $arDetails[$question->round] = [];
-            }
-
-            if (!isset($arDetails[$question->round][$question->order])) {
-                $arDetails[$question->round][$question->order] = [];
-            }
-
-            foreach (['option1', 'option2', 'option3', 'option4'] as $opt) {
-                $arDetails[$question->round][$question->order][$opt] = $answerForQuest ? $answerForQuest->{$opt} : 0;
-            }
-        }
-
-
-
-        foreach ($arDetails as $round => $roundResult) {
-            $avRoundOption1 = 0;
-            $avRoundOption2 = 0;
-            $avRoundOption3 = 0;
-            $avRoundOption4 = 0;
-            foreach ($roundResult as $order => $orderResult) {
-                $avRoundOption1 += $orderResult['option1'];
-                $avRoundOption2 += $orderResult['option2'];
-                $avRoundOption3 += $orderResult['option3'];
-                $avRoundOption4 += $orderResult['option4'];
-            }
-
-            $arAverage[$round]['option1'] = round($avRoundOption1/6, 2);
-            $arAverage[$round]['option2'] = round($avRoundOption2/6, 2);
-            $arAverage[$round]['option3'] = round($avRoundOption3/6, 2);
-            $arAverage[$round]['option4'] = round($avRoundOption4/6, 2);
-        }
-
-
-
-        return $arAverage;
-    }
 
     public static function generateAnswerForUser($survey)
     {
