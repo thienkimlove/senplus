@@ -305,27 +305,33 @@ class FrontendController extends Controller
         Helpers::log($customerIds);
 
         if (!$chooseType) {
+            $result = Helpers::getResultForSurveyAll($survey, $customerIds);
             return response()->json([
                 'error' => false,
-                'result' => Helpers::getResultForSurveyAll($survey, $customerIds),
-                'title' => 'Loại hình Văn hóa DN'
+                'result' => $result,
+                'title' => 'Loại hình Văn hóa DN',
+                'body' => view('frontend.partials.table', compact('result'))->render()
             ]);
         } else {
 
             if (auth()->user()->level == Helpers::FRONTEND_MANAGER_LEVEL) {
+                $result = Helpers::getResultForSurveyAll($survey, $customerIds, $chooseType);
                 return response()->json([
                     'error' => false,
-                    'result' => Helpers::getResultForSurveyAll($survey, $customerIds, $chooseType),
-                    'title' => Helpers::mapOrder()[$chooseType]
+                    'result' => $result,
+                    'title' => Helpers::mapOrder()[$chooseType],
+                    'body' => view('frontend.partials.table', compact('result'))->render()
                 ]);
             } else {
                 $chooseCustomers = $request->input('choose_customers');
                 $customerIds = Helpers::getCustomerByChooseList($survey, $chooseCustomers);
                 Helpers::log($customerIds);
+                $result = Helpers::getResultForSurveyAll($survey, $customerIds, $chooseType);
                 return response()->json([
                     'error' => false,
-                    'result' => Helpers::getResultForSurveyAll($survey, $customerIds, $chooseType),
-                    'title' => Helpers::mapOrder()[$chooseType]
+                    'result' => $result,
+                    'title' => Helpers::mapOrder()[$chooseType],
+                    'body' => view('frontend.partials.table', compact('result'))->render()
                 ]);
             }
         }
