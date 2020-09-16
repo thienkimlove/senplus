@@ -80,11 +80,11 @@
             data: {
                 labels: [
                     'Linh hoạt',
-                    mapOption["option4"],
-                    'Hướng ngoại',
                     mapOption["option2"],
-                    'Ổn định',
+                    'Hướng ngoại',
                     mapOption["option3"],
+                    'Ổn định',
+                    mapOption["option4"],
                     'Hướng nội',
                     mapOption["option1"]
                 ],
@@ -93,13 +93,13 @@
                         label: mapRound[1],
                         //backgroundColor: 'green',
                         borderColor: 'green',
-                        data: [null, result[1]['option4'], null, result[1]['option2'], null, result[1]['option3'], null, result[1]['option1']]
+                        data: [null, eResult[1]['option2'], null, eResult[1]['option3'], null, eResult[1]['option4'], null, eResult[1]['option1']]
                     },
                     {
                         label: mapRound[2],
                         //backgroundColor: 'pink',
                         borderColor: 'pink',
-                        data: [null, result[2]['option4'], null, result[2]['option2'], null, result[2]['option3'], null, result[2]['option1']]
+                        data: [null, eResult[2]['option2'], null, eResult[2]['option3'], null, eResult[2]['option4'], null, eResult[2]['option1']]
                     }
                 ],
             },
