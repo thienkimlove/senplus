@@ -189,6 +189,7 @@
                     choose_customers : chooseCustomers
                 }, function(res) {
                     if (!res.error) {
+                        console.log(res.result);
                         makeChart(ctx, mapOption, mapRound, res.result);
                         $('#titleTable').text(res.title);
                         $('#titleRight').text(res.title);
