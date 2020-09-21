@@ -77,12 +77,12 @@ class ExplainCrudController extends CrudController
             [
                 'name' => 'nang_luc_canh_tranh',
                 'label' => 'Năng lực cạnh tranh',
-                'type' => 'textarea'
+                'type' => 'text'
             ],
             [
                 'name' => 'gia_tri_dem_lại',
                 'label' => 'Giá trị đem lại',
-                'type' => 'textarea'
+                'type' => 'text'
             ],
             [
                 'name' => 'xu_huong',
@@ -134,12 +134,12 @@ class ExplainCrudController extends CrudController
             [
                 'name' => 'nang_luc_canh_tranh',
                 'label' => 'Năng lực cạnh tranh',
-                'type' => 'textarea'
+                'type' => 'text'
             ],
             [
                 'name' => 'gia_tri_dem_lại',
                 'label' => 'Giá trị đem lại',
-                'type' => 'textarea'
+                'type' => 'text'
             ],
             [
                 'name' => 'xu_huong',
