@@ -30,6 +30,21 @@ class ExplainCrudController extends CrudController
         CRUD::setModel(\App\Models\Explain::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/explain');
         CRUD::setEntityNameStrings('Giải Thích', 'Giải Thích');
+
+        CRUD::denyAccess('list');
+        CRUD::denyAccess('create');
+        CRUD::denyAccess('update');
+        CRUD::denyAccess('delete');
+
+        if (backpack_user()->hasAnyRole(['admin', 'support'])) {
+            CRUD::allowAccess('list');
+            CRUD::allowAccess('create');
+            CRUD::allowAccess('update');
+        }
+
+        if (backpack_user()->hasRole('admin')) {
+            CRUD::allowAccess('delete');
+        }
     }
 
     /**
