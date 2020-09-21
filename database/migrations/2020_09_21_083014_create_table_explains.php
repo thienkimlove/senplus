@@ -17,8 +17,8 @@ class CreateTableExplains extends Migration
             $table->id();
             $table->string('option')->unique();
             $table->string('ten_van_hoa');
-            $table->text('nang_luc_canh_tranh');
-            $table->text('gia_tri_dem_lai');
+            $table->string('nang_luc_canh_tranh');
+            $table->string('gia_tri_dem_lai');
             $table->text('xu_huong');
             $table->text('uu_diem');
             $table->text('nhuoc_diem');
