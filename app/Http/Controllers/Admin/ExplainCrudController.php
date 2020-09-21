@@ -80,7 +80,7 @@ class ExplainCrudController extends CrudController
                 'type' => 'text'
             ],
             [
-                'name' => 'gia_tri_dem_lại',
+                'name' => 'gia_tri_dem_lai',
                 'label' => 'Giá trị đem lại',
                 'type' => 'text'
             ],
