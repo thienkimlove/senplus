@@ -22,6 +22,8 @@
 
 @if (backpack_user()->hasRole('admin'))
 
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('explain') }}'><i class='nav-icon la la-exchange'></i> Giải Thích </a></li>
+
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('setting') }}'><i class='nav-icon fa fa-cog'></i> Thiết Lập</a></li>
 
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('elfinder') }}\"><i class="nav-icon la la-files-o"></i> <span>{{ trans('backpack::crud.file_manager') }}</span></a></li>
