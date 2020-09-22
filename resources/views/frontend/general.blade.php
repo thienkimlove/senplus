@@ -63,7 +63,7 @@
                             </tbody>
                         </table>
 
-                        <div id="explain">
+                        <div id="explainText">
                             @include('frontend.partials.explain', ['explain' => $explain])
                         </div>
                     </div>
@@ -201,7 +201,7 @@
                         $('#titleTable').text(res.title);
                         $('#titleRight').text(res.title);
                         $('#mainTableBody').html(res.body);
-                        $('#explain').html(res.explain);
+                        $('#explainText').html(res.explain);
                     }
                 });
             });

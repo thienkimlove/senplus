@@ -321,22 +321,26 @@ class FrontendController extends Controller
 
             if (auth()->user()->level == Helpers::FRONTEND_MANAGER_LEVEL) {
                 $result = Helpers::getResultForSurveyAll($survey, $customerIds, $chooseType);
+                $explain = Helpers::explainResult($result, $survey);
                 return response()->json([
                     'error' => false,
                     'result' => $result,
                     'title' => Helpers::mapOrder()[$chooseType],
-                    'body' => view('frontend.partials.table', compact('result'))->render()
+                    'body' => view('frontend.partials.table', compact('result'))->render(),
+                    'explain' => view('frontend.partials.explain', compact('explain'))->render(),
                 ]);
             } else {
                 $chooseCustomers = $request->input('choose_customers');
                 $customerIds = Helpers::getCustomerByChooseList($survey, $chooseCustomers);
                 Helpers::log($customerIds);
                 $result = Helpers::getResultForSurveyAll($survey, $customerIds, $chooseType);
+                $explain = Helpers::explainResult($result, $survey);
                 return response()->json([
                     'error' => false,
                     'result' => $result,
                     'title' => Helpers::mapOrder()[$chooseType],
-                    'body' => view('frontend.partials.table', compact('result'))->render()
+                    'body' => view('frontend.partials.table', compact('result'))->render(),
+                    'explain' => view('frontend.partials.explain', compact('explain'))->render(),
                 ]);
             }
         }
