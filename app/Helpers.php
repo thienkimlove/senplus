@@ -10,6 +10,7 @@ namespace App;
 
 use App\Models\Answer;
 use App\Models\Customer;
+use App\Models\Explain;
 use App\Models\Filter;
 use App\Models\Question;
 use App\Models\Survey;
@@ -72,6 +73,63 @@ class Helpers
                 'value' => 'Mật khẩu'
             ]
         ];
+    }
+
+    public static function explainResult($result, $survey)
+    {
+        if (!$survey->company_id) {
+            return [];
+        }
+
+        $maxRound1Option = 0;
+        $maxRound1OptionKey = null;
+
+        foreach (['option1', 'option2', 'option3', 'option4'] as $option) {
+            if ($result[1][$option] > $maxRound1Option) {
+                $maxRound1Option = $result[1][$option];
+                $maxRound1OptionKey = $option;
+            }
+        }
+
+        $secondRound1Option = 0;
+        $secondRound1OptionKey = null;
+
+        foreach (['option1', 'option2', 'option3', 'option4'] as $option) {
+           if ($option != $maxRound1OptionKey) {
+               if ($result[1][$option] > $secondRound1Option) {
+                   $secondRound1Option = $result[1][$option];
+                   $secondRound1OptionKey = $option;
+               }
+           }
+        }
+
+        $thirdColumnMoreThan10 = [];
+        $thirdColumnLessThan10 = [];
+
+        foreach (['option1', 'option2', 'option3', 'option4'] as $option) {
+            $cValue = round($result[2][$option] - $result[1][$option]);
+
+            if (abs($cValue) >=10) {
+                $thirdColumnMoreThan10[] = $option;
+            } else {
+                $thirdColumnLessThan10[] = $option;
+            }
+        }
+
+        return [
+            'name' => $survey->company->name,
+            'result' => $result,
+            'maxValue' => $maxRound1Option,
+            'maxOption' => $maxRound1OptionKey,
+            'secondValue' => $secondRound1Option,
+            'secondOption' => $secondRound1OptionKey,
+            'moreThan' => $thirdColumnMoreThan10,
+            'lessThan' => $thirdColumnLessThan10,
+            'explainMax' => Explain::where('option', $maxRound1OptionKey)->first(),
+            'explainSecond' => Explain::where('option', $secondRound1OptionKey)->first(),
+            'explainAll' => Explain::get()
+        ];
+
     }
 
 

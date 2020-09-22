@@ -31,6 +31,9 @@
                             @endforeach
                             </tbody>
                         </table>
+                        @if ($explain)
+                            @include('frontend.partials.explain', ['explain' => $explain])
+                        @endif
                     </div>
                     <div class="rightSide mt50 rightSideResult">
                         <h3 class="title">Loại hình Văn hóa doanh nghiệp</h3>

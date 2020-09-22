@@ -62,6 +62,10 @@
 
                             </tbody>
                         </table>
+
+                        <div id="explain">
+                            @include('frontend.partials.explain', ['explain' => $explain])
+                        </div>
                     </div>
                     <div class="rightSide mt50 rightSideResult">
                         <h3 id="titleRight" class="title">Loại hình Văn hóa DN</h3>
@@ -197,6 +201,7 @@
                         $('#titleTable').text(res.title);
                         $('#titleRight').text(res.title);
                         $('#mainTableBody').html(res.body);
+                        $('#explain').html(res.explain);
                     }
                 });
             });

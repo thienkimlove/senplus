@@ -248,7 +248,9 @@ class FrontendController extends Controller
 
         $result = Helpers::getResultForSurveyAll($survey, [auth()->user()->id]);
 
-        return view('frontend.result', compact('result'));
+        $explain = Helpers::explainResult($result, $survey);
+
+        return view('frontend.result', compact('result', 'explain'));
     }
 
 
@@ -284,10 +286,11 @@ class FrontendController extends Controller
         }
 
         $customerIds = Helpers::getCustomerListByManager($survey);
-
         $result = Helpers::getResultForSurveyAll($survey, $customerIds);
 
-        return view('frontend.general', compact('result', 'survey'));
+        $explain = Helpers::explainResult($result, $survey);
+
+        return view('frontend.general', compact('result', 'survey', 'explain'));
     }
 
     public function filter(Request $request)
@@ -306,11 +309,13 @@ class FrontendController extends Controller
 
         if (!$chooseType) {
             $result = Helpers::getResultForSurveyAll($survey, $customerIds);
+            $explain = Helpers::explainResult($result, $survey);
             return response()->json([
                 'error' => false,
                 'result' => $result,
                 'title' => 'Loại hình Văn hóa DN',
-                'body' => view('frontend.partials.table', compact('result'))->render()
+                'body' => view('frontend.partials.table', compact('result'))->render(),
+                'explain' => view('frontend.partials.explain', compact('explain'))->render(),
             ]);
         } else {
 
