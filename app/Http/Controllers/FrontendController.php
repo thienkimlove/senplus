@@ -287,7 +287,6 @@ class FrontendController extends Controller
 
         $customerIds = Helpers::getCustomerListByManager($survey);
         $result = Helpers::getResultForSurveyAll($survey, $customerIds);
-
         $explain = Helpers::explainResult($result, $survey);
 
         return view('frontend.general', compact('result', 'survey', 'explain'));
@@ -309,38 +308,35 @@ class FrontendController extends Controller
 
         if (!$chooseType) {
             $result = Helpers::getResultForSurveyAll($survey, $customerIds);
-            $explain = Helpers::explainResult($result, $survey);
             return response()->json([
                 'error' => false,
                 'result' => $result,
                 'title' => 'Loại hình Văn hóa DN',
                 'body' => view('frontend.partials.table', compact('result'))->render(),
-                'explain' => view('frontend.partials.explain', compact('explain'))->render(),
+
             ]);
         } else {
 
             if (auth()->user()->level == Helpers::FRONTEND_MANAGER_LEVEL) {
                 $result = Helpers::getResultForSurveyAll($survey, $customerIds, $chooseType);
-                $explain = Helpers::explainResult($result, $survey);
                 return response()->json([
                     'error' => false,
                     'result' => $result,
                     'title' => Helpers::mapOrder()[$chooseType],
                     'body' => view('frontend.partials.table', compact('result'))->render(),
-                    'explain' => view('frontend.partials.explain', compact('explain'))->render(),
+
                 ]);
             } else {
                 $chooseCustomers = $request->input('choose_customers');
                 $customerIds = Helpers::getCustomerByChooseList($survey, $chooseCustomers);
                 Helpers::log($customerIds);
                 $result = Helpers::getResultForSurveyAll($survey, $customerIds, $chooseType);
-                $explain = Helpers::explainResult($result, $survey);
                 return response()->json([
                     'error' => false,
                     'result' => $result,
                     'title' => Helpers::mapOrder()[$chooseType],
                     'body' => view('frontend.partials.table', compact('result'))->render(),
-                    'explain' => view('frontend.partials.explain', compact('explain'))->render(),
+
                 ]);
             }
         }

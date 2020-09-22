@@ -198,10 +198,10 @@
                     if (!res.error) {
                         console.log(res.result);
                         makeChart(ctx, mapOption, mapRound, res.result);
+                        $('#explainText').hide();
                         $('#titleTable').text(res.title);
                         $('#titleRight').text(res.title);
                         $('#mainTableBody').html(res.body);
-                        $('#explainText').html(res.explain);
                     }
                 });
             });
