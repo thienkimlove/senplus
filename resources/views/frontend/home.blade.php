@@ -41,6 +41,9 @@
                         </div>
 
                         @if (\App\Helpers::currentFrontendUserIsAdmin())
+                            <div class="tabs flex-between">
+                                <div class="txt">Danh sách tài khoản manager</div>
+                            </div>
 
                             <div class="filterContent">
                                 <div class="tabContent active">
@@ -60,7 +63,9 @@
                                 </div>
                             </div>
 
-
+                            <div class="tabs flex-between">
+                                <div class="txt">Thêm manager</div>
+                            </div>
                             <div class="filterContent">
                                 <form action="{{ route('frontend.add_manager') }}"
                                       method="POST"
