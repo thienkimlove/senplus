@@ -197,10 +197,31 @@ class Helpers
     }
 
 
-    public static function currentFrontendUserIsAdmin()
+    public static function currentFrontendUserIsManager()
     {
         return auth()->user()->level != self::FRONTEND_USER_LEVEL;
     }
+
+    public static function currentFrontendUserIsAdmin()
+    {
+        return auth()->user()->level == self::FRONTEND_ADMIN_LEVEL;
+    }
+
+
+    public static function getListManagerForCurrentUser()
+    {
+
+        if (auth()->user()->company_id) {
+            return Customer::where('company_id', auth()->user()->company_id)
+                ->where('level', self::FRONTEND_MANAGER_LEVEL)
+                ->where('status', true)
+                ->get();
+        }
+
+        return null;
+
+    }
+
 
     public static function getQuestion($survey, $round, $order)
     {

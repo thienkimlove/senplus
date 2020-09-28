@@ -31,3 +31,7 @@ Route::post('back', 'FrontendController@back')->name('frontend.back');
 Route::get('result', 'FrontendController@result')->name('frontend.result');
 Route::get('general', 'FrontendController@general')->name('frontend.general');
 Route::post('filter', 'FrontendController@filter')->name('frontend.filter');
+
+
+Route::get('remove-manager', 'FrontendController@removeManager')->name('frontend.remove_manager');
+Route::post('add-manager', 'FrontendController@addManager')->name('frontend.add_manager');

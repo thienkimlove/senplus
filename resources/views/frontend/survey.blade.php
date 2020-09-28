@@ -35,7 +35,7 @@
                                     <div style="display: none" id="total_warning" class="warningTxt pa showWarning">Tổng số không > 100</div>
                                 </div>
 
-                                @if (\App\Helpers::currentFrontendUserIsAdmin())
+                                @if (\App\Helpers::currentFrontendUserIsManager())
                                 <div class="ques flex-between pr">
                                     <div class="txt">Tự động tạo</div>
                                     <input type="checkbox" name="random" value="1">

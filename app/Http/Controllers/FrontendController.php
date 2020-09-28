@@ -136,6 +136,9 @@ class FrontendController extends Controller
             return redirect(route('frontend.index'));
         }
         $surveys = Helpers::getSurveyForLoginUser();
+
+
+
         return view('frontend.home', compact( 'page', 'surveys'));
     }
 
@@ -144,6 +147,115 @@ class FrontendController extends Controller
         auth()->logout();
         return redirect(route('frontend.index'));
     }
+
+
+    public function removeManager(Request $request)
+    {
+        if (!auth()->check()) {
+            return redirect(route('frontend.index'));
+        }
+
+
+        if (!Helpers::currentFrontendUserIsAdmin()) {
+            $request->session()->flash('general_message', 'Tài khoản của bạn không đủ quyền!');
+            return redirect(route('frontend.home'));
+        }
+
+        $managerId = $request->input('id');
+
+        if (!$managerId) {
+            $request->session()->flash('general_message', 'Không có thông tin tài khoản!');
+            return redirect(route('frontend.home'));
+        }
+
+        $manager = Customer::find($managerId);
+
+        if (!$manager) {
+            $request->session()->flash('general_message', 'Không có thông tin tài khoản!');
+            return redirect(route('frontend.home'));
+        }
+
+        if ($manager->level != Helpers::FRONTEND_MANAGER_LEVEL) {
+            $request->session()->flash('general_message', 'Tài khoản không phải là Manager!');
+            return redirect(route('frontend.home'));
+        }
+
+        if ($manager->company_id != auth()->user()->company_id) {
+            $request->session()->flash('general_message', 'Không cùng doanh nghiệp!');
+            return redirect(route('frontend.home'));
+        }
+
+        try {
+            $manager->update([
+                'level' => Helpers::FRONTEND_USER_LEVEL
+            ]);
+
+            $request->session()->flash('general_message', 'Remove Manager thành công!');
+            return redirect(route('frontend.home'));
+
+        } catch (\Exception $exception) {
+            $request->session()->flash('general_message', 'Có lỗi xảy ra xin thử lại!');
+            Helpers::log($exception->getMessage());
+            return redirect(route('frontend.home'));
+        }
+    }
+
+
+    public function addManager(Request $request) {
+        if (!auth()->check()) {
+            return redirect(route('frontend.index'));
+        }
+
+
+        if (!Helpers::currentFrontendUserIsAdmin()) {
+            $request->session()->flash('general_message', 'Tài khoản của bạn không đủ quyền!');
+            return redirect(route('frontend.home'));
+        }
+
+        $customerLogin = $request->input('login');
+
+        if (!$customerLogin) {
+            $request->session()->flash('general_message', 'Không có thông tin tài khoản!');
+            return redirect(route('frontend.home'));
+        }
+
+        $manager = Customer::where('login', $customerLogin)->first();
+
+        if (!$manager) {
+            $request->session()->flash('general_message', 'Không có thông tin tài khoản!');
+            return redirect(route('frontend.home'));
+        }
+
+        if (!$manager->status) {
+            $request->session()->flash('general_message', 'Tài khoản chưa được kích hoạt!');
+            return redirect(route('frontend.home'));
+        }
+
+        if ($manager->level != Helpers::FRONTEND_USER_LEVEL) {
+            $request->session()->flash('general_message', 'Tài khoản Không phải là thành viên thường!');
+            return redirect(route('frontend.home'));
+        }
+
+        if ($manager->company_id != auth()->user()->company_id) {
+            $request->session()->flash('general_message', 'Không cùng doanh nghiệp!');
+            return redirect(route('frontend.home'));
+        }
+
+        try {
+            $manager->update([
+                'level' => Helpers::FRONTEND_MANAGER_LEVEL
+            ]);
+
+            $request->session()->flash('general_message', 'Add Manager thành công!');
+            return redirect(route('frontend.home'));
+
+        } catch (\Exception $exception) {
+            $request->session()->flash('general_message', 'Có lỗi xảy ra xin thử lại!');
+            Helpers::log($exception->getMessage());
+            return redirect(route('frontend.home'));
+        }
+    }
+
 
     /*
      * Survey
