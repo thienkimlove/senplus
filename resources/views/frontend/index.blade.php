@@ -16,8 +16,13 @@
             </div>
         </div>
         <div class="rightSide">
-            <h3 class="title"><a href="javascript:void(0)" class="tab tabLogin active" title="Đăng nhập" data-content="#loginForm">Đăng nhập</a> | <a href="javascript:void(0)" class="tab tabRegister" title="Đăng ký" data-content="#registerForm">Đăng Ký</a></h3>
-            <form action="{{ route('frontend.post_login') }}" method="POST" id="loginForm" class="active">
+            <h3 class="title">
+                <a href="javascript:void(0)" class="tab tabLogin active" title="Đăng nhập" data-content="#loginForm">Đăng nhập</a> | <a href="javascript:void(0)" class="tab tabRegister" title="Đăng ký" data-content="#registerForm">Đăng Ký</a>
+            </h3>
+            <form action="{{ route('frontend.post_login') }}"
+                  method="POST"
+                  id="loginForm"
+                  class="{{ $showReg ? '' : 'active' }}">
                 <div class="form-group">
                     <input id="login_email" name="login" type="text" placeholder="Nhập tài khoản">
                     {{ csrf_field() }}
@@ -25,30 +30,34 @@
                 <div class="form-group">
                     <input id="login_pass" name="password" type="password" placeholder="Nhập mật khẩu">
                 </div>
-                <div id="login_error" class="error">* Cần nhập đầy đủ thông tin</div>
+                <div id="login_error" style="display: {{ count($errors) ? 'visible' : 'hidden' }}" class="error">* Cần nhập đầy đủ thông tin</div>
                 <a id="btnLogin" href="javascript:void(0)">Đăng nhập</a>
-                <div>
-                    @if (count($errors))
-                        <ul>
-                            @foreach($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    @endif
-                </div>
-
+                {{--<div>--}}
+                    {{--@if (count($errors))--}}
+                        {{--<ul>--}}
+                            {{--@foreach($errors->all() as $error)--}}
+                                {{--<li>{{ $error }}</li>--}}
+                            {{--@endforeach--}}
+                        {{--</ul>--}}
+                    {{--@endif--}}
+                {{--</div>--}}
             </form>
-            <form action="" id="registerForm">
+            <form action="{{ route('frontend.post_reg') }}"
+                  method="POST"
+                  id="registerForm"
+                  class="{{ $showReg ? 'active' : '' }}">
                 <div class="form-group">
-                    <input type="text" placeholder="Nhập họ và tên">
+                    <input type="text" name="name" id="reg_name" placeholder="Nhập họ và tên">
                 </div>
                 <div class="form-group">
-                    <input type="email" placeholder="Nhập email">
+                    {{ csrf_field() }}
+                    <input type="email" name="login" id="reg_email" placeholder="Nhập tài khoản (Email/Username)">
                 </div>
                 <div class="form-group">
-                    <input type="tel" placeholder="Nhập số điện thoại">
+                    <input type="password" name="password" id="reg_pass" placeholder="Nhập mật khẩu">
                 </div>
-                <div class="error">* Cần nhập đầy đủ thông tin</div>
+                <div id="reg_error" style="display: {{ count($errors) ? 'visible' : 'hidden' }}" class="error">* Cần nhập đầy đủ thông tin</div>
+
                 <a id="btnRegister" href="javascript:void(0)" title="Đăng ký">Đăng ký</a>
             </form>
         </div>
@@ -63,17 +72,27 @@
                 let pass = $('#login_pass').val();
                 let errorEle = $('#login_error');
 
-                if (!email) {
-                    errorEle.show();
-                    return false;
-                }
-
-                if (!pass) {
+                if (!email || !pass) {
                     errorEle.show();
                     return false;
                 }
 
                 $('form#loginForm').submit();
+
+                return false;
+            });
+            $('#btnRegister').click(function(){
+                let name = $('#reg_name').val();
+                let email = $('#reg_email').val();
+                let pass = $('#reg_pass').val();
+                let errorEle = $('#reg_error');
+
+                if (!email || !pass || !name) {
+                    errorEle.show();
+                    return false;
+                }
+
+                $('form#registerForm').submit();
 
                 return false;
             });

@@ -24,6 +24,54 @@ class FrontendController extends Controller
         return redirect(route('frontend.index'));
     }
 
+    public function postReg(Request $request)
+    {
+        if (auth()->check()) {
+            return redirect(route('frontend.home'));
+        }
+
+        $data =  $request->only(['login', 'password', 'name']);
+
+        $rules = [
+            'login' => 'required',
+            'password' => 'required',
+            'name' => 'required',
+        ];
+
+        $messages = [
+            'required' => ':attribute bắt buộc nhập.',
+        ];
+
+        $validator = Validator::make($data , $rules, $messages);
+        // if the validator fails, redirect back to the form
+        if ($validator->fails()) {
+            return redirect(route('frontend.index').'?showReg=1')
+                ->withErrors($validator)
+                ->withInput($request->except('password'));
+        }
+
+        $customer = Customer::where('login', trim($data['login']))->first();
+
+        if ($customer) {
+            $validator->getMessageBag()->add('login', 'Tài khoản đã tồn tại!');
+            return redirect(route('frontend.index').'?showReg=1')
+                ->withErrors($validator)
+                ->withInput($request->except('password'));
+        }
+
+        try {
+            $customer = Customer::create($data);
+            auth()->login($customer);
+            return redirect(route('frontend.home'));
+        } catch (\Exception $exception) {
+            $validator->getMessageBag()->add('login', $exception->getMessage());
+            return redirect(route('frontend.index').'?showReg=1')
+                ->withErrors($validator)
+                ->withInput($request->except('password'));
+        }
+
+    }
+
     public function postLogin(Request $request)
     {
         if (auth()->check()) {
@@ -66,16 +114,18 @@ class FrontendController extends Controller
         }
 
         auth()->login($customer);
+
         return redirect(route('frontend.home'));
     }
 
-    public function index()
+    public function index(Request $request)
     {
         if (auth()->check()) {
             return redirect(route('frontend.home'));
         }
         $page = 'index';
-        return view('frontend.index', compact('page'));
+        $showReg = ($request->input('showReg') == 1);
+        return view('frontend.index', compact('page', 'showReg'));
 
     }
 
