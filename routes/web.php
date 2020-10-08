@@ -15,15 +15,21 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'FrontendController@index')->name('frontend.index');
 
+Route::get('register', 'FrontendController@register')->name('frontend.register');
 Route::post('register', 'FrontendController@postReg')->name('frontend.post_reg');
 
 Route::get('login', 'FrontendController@login')->name('frontend.login');
 Route::post('login', 'FrontendController@postLogin')->name('frontend.post_login');
+Route::post('forgot', 'FrontendController@postForgot')->name('frontend.post_forgot');
+Route::get('forgot', 'FrontendController@forgotPass')->name('frontend.forgot_pass');
 
 
 Route::get('home', 'FrontendController@home')->name('frontend.home');
 Route::get('logout', 'FrontendController@logout')->name('frontend.logout');
 
+Route::get('profile', 'FrontendController@profile')->name('frontend.profile');
+Route::get('customer', 'FrontendController@customer')->name('frontend.customer');
+Route::get('campaign', 'FrontendController@campaign')->name('frontend.campaign');
 
 Route::get('survey', 'FrontendController@survey')->name('frontend.survey');
 Route::post('answer', 'FrontendController@answer')->name('frontend.answer');

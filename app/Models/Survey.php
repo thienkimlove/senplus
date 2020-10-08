@@ -22,10 +22,18 @@ class Survey extends Model
     protected $fillable = [
         'name',
         'company_id',
-        'status'
+        'status',
+        'start_time',
+        'end_time',
     ];
     // protected $hidden = [];
     // protected $dates = [];
+
+
+    protected $casts = [
+        'start_time' => 'datetime',
+        'end_time' => 'datetime',
+    ];
 
     /*
     |--------------------------------------------------------------------------

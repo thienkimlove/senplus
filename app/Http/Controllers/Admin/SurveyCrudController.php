@@ -64,6 +64,18 @@ class SurveyCrudController extends CrudController
         ]);
 
         CRUD::column('status')->label('Trạng Thái')->type('boolean');
+
+        CRUD::addColumn([
+            'name' => 'start_time',
+            'type' => 'datetime',
+            'label' => 'Thời gian bắt đầu'
+        ]);
+        CRUD::addColumn([
+            'name' => 'end_time',
+            'type' => 'datetime',
+            'label' => 'Thời gian kết thúc'
+        ]);
+
         CRUD::addButtonFromView('top', 'template_excel_question', 'template_excel_question', 'beginning');
         CRUD::addButtonFromView('line', 'import_excel_question', 'import_excel_question', 'end');
         CRUD::addButtonFromView('line', 'clear_result', 'clear_result', 'end');
@@ -99,6 +111,17 @@ class SurveyCrudController extends CrudController
         ]);
 
         CRUD::field('status')->label('Trạng Thái')->type('boolean');
+
+        CRUD::addField([
+            'name' => 'start_time',
+            'type' => 'datetime',
+            'label' => 'Thời gian bắt đầu'
+        ]);
+        CRUD::addField([
+            'name' => 'end_time',
+            'type' => 'datetime',
+            'label' => 'Thời gian kết thúc'
+        ]);
     }
 
     protected function setupUpdateOperation()

@@ -1,114 +1,107 @@
 @extends('frontend.layout')
 
+@section('before_header')
+    <link rel="stylesheet" type="text/css" href="/frontend/assets/css/bootstrap.min2.css">
+    <link rel="stylesheet" type="text/css" href="/frontend/assets/css/bootstrap-datetimepicker2.css">
+    <link rel="stylesheet" type="text/css" href="/frontend/assets/css/styleHomeUser.css">
+
+    <title data-react-helmet="true">Home User</title>
+
+    <script src="/frontend/assets/js/jquery-3.5.1.min.js" type="text/javascript"></script>
+    <script src="/frontend/assets/js/bootstrap.min2.js" type="text/javascript"></script>
+    <script src="/frontend/assets/js/moment.js" type="text/javascript"></script>
+    <script src="/frontend/assets/js/bootstrap-datetimepicker.min2.js" type="text/javascript"></script>
+
+    <script src="/frontend/assets/js/page_all.js" type="text/javascript"></script>
+    <script src="/frontend/assets/js/page_homeUser.js" type="text/javascript"></script>
+@endsection    
+
 @section('content')
-    <div id="root">
-        <div class="Root_1Kcx">
-
-            @include('frontend.partials.header')
-
-            <main>
-                <div class="fixCen flex-between">
-                    <div class="content">
-                        <div class="tabs flex-between">
-                            <div class="txt">Danh sách khảo sát của bạn</div>
-                        </div>
-                        <div class="filterContent">
-                            <div class="tabContent active">
-                                @if ($surveys)
-                                    @foreach ($surveys as $survey)
-                                        <div class="item flex-between">
-                                        <a class="logoCompany" href="{{ route('frontend.survey') }}?id={{ $survey->id }}" title="{{ $survey['name'] }}">
-                                            <img src="{{ url('frontend/assets/img/logo.png') }}" alt="Logo">
-                                        </a>
-                                        <a href="{{ route('frontend.survey') }}?id={{ $survey->id }}" class="txt" title="{{ $survey['name'] }}">{{ $survey['name'] }}</a>
-                                        <div class="btnGroup">
-
-                                            @if (\App\Helpers::checkIfSurveyHaveResultForUser($survey))
-                                                <a class="myBtn btnViewResult" href="{{ route('frontend.result') }}?id={{ $survey->id }}" title="Xem kết quả">Xem kết quả</a>
-                                            @else
-                                                <a class="myBtn btnTest" href="{{ route('frontend.survey') }}?id={{ $survey->id }}" title="Bắt đầu khảo sát">Bắt đầu khảo sát</a>
-                                            @endif
-
-                                            @if ($survey->company_id && \App\Helpers::currentFrontendUserIsManager())
-                                                <a class="myBtn btnProfile" href="{{ route('frontend.general') }}?id={{ $survey->id }}" title="Hồ sơ doanh nghiệp">Hồ sơ doanh nghiệp</a>
-                                            @endif
-
+    <body class="bodyHomeUser">
+    @include('frontend.header_user')
+    <main>
+        <div class="helloBlock">
+            <div class="avatar">
+                <img src="/frontend/assets/img/demo-logo1.jpg" alt="" class="imgFull">
+            </div>
+            <div class="txt">
+                Chào mừng [{{ auth()->user()->name }}] <br> quay lại với CAS online
+            </div>
+        </div>
+        <nav class="btnMainGoup">
+            <ul class="fixCen">
+                @if (\App\Helpers::currentFrontendUserIsManager())
+                <li>
+                    <a href="{{ route('frontend.profile') }}" class="link" title="Hồ sơ doanh nghiêp" aria-label="Corporate Profile">
+                        <span class="img"><img src="/frontend/assets/img/btn-hoso.jpg" alt="" class="imgFull"></span>
+                        Hồ sơ doanh nghiêp
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('frontend.customer') }}" class="link" title="Dữ liệu người dùng" aria-label="User Data">
+                        <span class="img"> <img src="/frontend/assets/img/btn-dulieu.jpg" alt="" class="imgFull"></span>
+                        Dữ liệu người dùng
+                    </a>
+                </li>
+                @endif
+                <li>
+                    <a href="{{ route('frontend.campaign') }}" class="link" title="Danh sách khảo sát" aria-label="Survey Campaign">
+                        <span class="img"> <img src="/frontend/assets/img/btn-chiendich.jpg" alt="" class="imgFull"></span>
+                        Danh sách khảo sát
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="campaignBlock">
+            <div class="fixCen">
+                <div class="leftSide">
+                    <h2 class="title">Danh sách khảo sát</h2>
+                    <div class="surveyList">
+                        @if ($surveys)
+                        <ul>
+                            @foreach ($surveys as $index => $survey)
+                            <li>
+                                <h4><a href="javascript:void(0)"
+                                       class="titleCampaign"
+                                       title="{{ $survey->name }}"
+                                       aria-label="{{ $survey->name }}"
+                                       data-popup=".popupCampaign{{ $index }}">{{ $survey->name }} ({{ $survey->start_time? $survey->start_time->format('d/m/Y') : $survey->created_at->format('d/m/Y') }})</a></h4>
+                                <div class="popupCampaign pa popupCampaign{{ $index }}">
+                                    <h3 class="titlePopup">[{{ $survey->name }}]</h3>
+                                    <div class="charts">
+                                        <div class="leftSide">
+                                            <img src="/frontend/assets/img/demo-bd1.jpg" alt="" class="imgFull">
+                                            <div class="chartName">Tên loại hình doanh nghiệp</div>
+                                        </div>
+                                        <div class="rightSide">
+                                            <img src="/frontend/assets/img/demo-bd2.jpg" alt="" class="imgFull">
+                                            <div class="chartName">Đối tượng khảo sát</div>
                                         </div>
                                     </div>
-                                    @endforeach
-                                @endif
-                            </div>
-                        </div>
-
-                        @if (\App\Helpers::currentFrontendUserIsAdmin())
-                            <div class="tabs flex-between">
-                                <div class="txt">Danh sách tài khoản manager</div>
-                            </div>
-
-                            <div class="filterContent">
-                                <div class="tabContent active">
-                                    @if ($managers = \App\Helpers::getListManagerForCurrentUser())
-                                        @foreach ($managers as $manager)
-                                            <div class="item flex-between">
-                                                <a href="javascript:void(0)">{{ $manager->login }}</a>
-                                                <div class="btnGroup">
-                                                    <a class="myBtn btnProfile" href="{{ route('frontend.remove_manager') }}?id={{ $manager->id }}" title="remove">Remove Access</a>
-
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    @else
-                                        Không có manager nào.
-                                    @endif
+                                    <a href="javascript:void(0)" class="btnViewDetail myBtn" title="Xem chi tiết" aria-label="View detail">Chi tiết</a>
                                 </div>
-                            </div>
-
-                            <div class="tabs flex-between">
-                                <div class="txt">Thêm manager</div>
-                            </div>
-                            <div class="filterContent">
-                                <form action="{{ route('frontend.add_manager') }}"
-                                      method="POST"
-                                      id="addManager">
-                                    <div class="form-group">
-                                        {{ csrf_field() }}
-                                        <input type="email" name="login" id="reg_email" placeholder="Nhập tài khoản (Email/Username)">
-                                    </div>
-
-                                    <div id="add_error" style="display: {{ count($errors) ? 'visible' : 'hidden' }}" class="error">
-                                        * Cần nhập đầy đủ thông tin
-                                    </div>
-
-                                    <a id="btnAdd" href="javascript:void(0)" title="Thêm Manager">Thêm Manager</a>
-                                </form>
-
-                            </div>
+                            </li>
+                            @endforeach
+                        </ul>
+                        @else
+                            Không có chiến dịch khảo sát nào.
                         @endif
                     </div>
+                    <a href="{{ route('frontend.campaign') }}" class="myBtn" title="Xem tất cả" aria-label="View All">Xem tất cả</a>
                 </div>
-            </main>
-
-
+                <div class="rightSide">
+                    <h2 class="title">Khảo sát mới</h2>
+                    @if ($latestCanDoSurvey)
+                        <h3 class="newestCampaignName">{{ $latestCanDoSurvey->name }}</h3>
+                        <div class="desNewestCampaign">{{ \Illuminate\Support\Str::limit($latestCanDoSurvey->desc, 25) }}</div>
+                        <a href="{{ route('frontend.survey') }}?id={{ $latestCanDoSurvey->id }}" class="myBtn" title="Khảo sát ngay" aria-label="Survey now">Khảo sát ngay</a>
+                    @endif
+                </div>
+            </div>
         </div>
-    </div>
-@endsection
+    </main>
 
-@section('after_scripts')
-    <script>
-        $(function(){
-            $('#btnAdd').click(function(){
-                let email = $('#reg_email').val();
-                let errorEle = $('#add_error');
+    @include('frontend.footer_user')
 
-                if (!email) {
-                    errorEle.show();
-                    return false;
-                }
-
-                $('form#addManager').submit();
-
-                return false;
-            });
-        });
-    </script>
+    </body>
 @endsection

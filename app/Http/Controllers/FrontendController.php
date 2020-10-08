@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Helpers;
 use App\Models\Answer;
 use App\Models\Customer;
-use App\Models\Filter;
 use App\Models\Question;
 use App\Models\Survey;
 use Illuminate\Http\Request;
@@ -54,7 +53,7 @@ class FrontendController extends Controller
 
         if ($customer) {
             $validator->getMessageBag()->add('login', 'Tài khoản đã tồn tại!');
-            return redirect(route('frontend.index').'?showReg=1')
+            return redirect(route('frontend.register'))
                 ->withErrors($validator)
                 ->withInput($request->except('password'));
         }
@@ -65,7 +64,7 @@ class FrontendController extends Controller
             return redirect(route('frontend.home'));
         } catch (\Exception $exception) {
             $validator->getMessageBag()->add('login', $exception->getMessage());
-            return redirect(route('frontend.index').'?showReg=1')
+            return redirect(route('frontend.register'))
                 ->withErrors($validator)
                 ->withInput($request->except('password'));
         }
@@ -118,14 +117,76 @@ class FrontendController extends Controller
         return redirect(route('frontend.home'));
     }
 
-    public function index(Request $request)
+    public function postForgot(Request $request)
+    {
+        if (auth()->check()) {
+            return redirect(route('frontend.home'));
+        }
+
+        $data =  $request->only(['login']);
+
+        $rules = [
+            'login' => 'required'
+        ];
+
+        $messages = [
+            'required' => ':attribute bắt buộc nhập.',
+        ];
+
+        $validator = Validator::make($data , $rules, $messages);
+        // if the validator fails, redirect back to the form
+        if ($validator->fails()) {
+            return redirect(route('frontend.forgot_pass'))
+                ->withErrors($validator)
+                ->withInput($request->except('password'));
+        }
+
+        $customer = Customer::where('login', trim($data['login']))->first();
+
+        if (!$customer || !$customer->status) {
+            $validator->getMessageBag()->add('login', 'Tài khoản không tồn tại hoặc chưa kích hoạt!');
+            return redirect(route('frontend.forgot_pass'))
+                ->withErrors($validator)
+                ->withInput($request->except('password'));
+        }
+
+        if (!$customer->email) {
+            $validator->getMessageBag()->add('login', 'Tài khoản chưa có thông tin email!');
+            return redirect(route('frontend.forgot_pass'))
+                ->withErrors($validator)
+                ->withInput($request->except('password'));
+        }
+
+        //TODO improve forgot password by send email to user, but user must have email
+
+        return redirect(route('frontend.home'));
+    }
+
+    public function register()
+    {
+        if (auth()->check()) {
+            return redirect(route('frontend.home'));
+        }
+        $page = 'register';
+        return view('frontend.register', compact('page'));
+    }
+
+    public function forgotPass()
+    {
+        if (auth()->check()) {
+            return redirect(route('frontend.home'));
+        }
+        $page = 'forgot';
+        return view('frontend.forgot', compact('page'));
+    }
+
+    public function index()
     {
         if (auth()->check()) {
             return redirect(route('frontend.home'));
         }
         $page = 'index';
-        $showReg = ($request->input('showReg') == 1);
-        return view('frontend.index', compact('page', 'showReg'));
+        return view('frontend.index', compact('page'));
 
     }
 
@@ -136,10 +197,8 @@ class FrontendController extends Controller
             return redirect(route('frontend.index'));
         }
         $surveys = Helpers::getSurveyForLoginUser();
-
-
-
-        return view('frontend.home', compact( 'page', 'surveys'));
+        $latestCanDoSurvey = Helpers::getLatestSurveyCanDoForUser();
+        return view('frontend.home', compact( 'page', 'surveys', 'latestCanDoSurvey'));
     }
 
     public function logout()
@@ -502,6 +561,16 @@ class FrontendController extends Controller
                 ]);
             }
         }
+    }
+
+    /*
+     * v2
+     */
+
+    public function profile()
+    {
+
+        return view('frontend.profile');
     }
 
 

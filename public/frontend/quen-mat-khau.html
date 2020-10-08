@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="content-language" content="vi"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=5"/>
+
+    <link rel="shortcut icon" href="./assets/img/favicon.png"/>
+    <link rel="icon" href="./assets/img/favicon.png" type="image/x-icon"/>
+    <link rel="shortcut icon" href="./assets/img/favicon.png" type="image/vnd.microsoft.icon"/>
+
+    <link rel="stylesheet" type="text/css" href="./assets/css/bootstrapv4.5.min.css">
+    <link rel="stylesheet" type="text/css" href="./assets/css/styleIndex.css">
+    <title data-react-helmet="true">Quên mật khẩu</title>
+
+    <script src="./assets/js/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <script src="./assets/js/bootstrap4.5.min.js" type="text/javascript"></script>
+    <script src="./assets/js/page_all.js" type="text/javascript"></script>
+
+</head>
+<body class="bodyIndex">
+    
+<div class="wrapper" style="background: url('assets/img/bg.jpg') center top no-repeat;background-size: 100%;">
+    <div class="box loginBox">
+        <form action="" id="loginForm" class="active">
+            <div class="topForm">
+                <h1 class="smLogo"><img src="assets/img/logo-sm.png" alt="" class="imgFull"></h1>
+                <div class="txt">Hệ thống đánh giá văn hóa doanh nghiệp</div>
+            </div>
+            <!--Khi cần show lỗi thì anh add class showWarning vào div warning dưới đây-->
+            <div class="warning">Email hoặc Mật khẩu không đúng!</div>
+            <div class="form-group">
+                <div class="txtBlue">Quên mật khẩu ?</div>
+            </div>
+            <div class="form-group">
+                <input type="email" placeholder="Email" class="email">
+            </div>
+           <div class="txtNote">Nhập email đã đăng kí để nhận mật khẩu mới</div>
+            <div class="form-group">
+                <button id="btnSend" type="button">Gửi</button>
+            </div>
+        </form>
+        <div class="btnGroup">
+            <a href="javascript:vid(0)" class="btnFb" title="Fanpage" aria-label="Fanpage"><img src="assets/img/i_fb.png" alt="" class="imgFull"></a>
+            <a href="javascript:vid(0)" class="btnFb" title="Messenger" aria-label="Messenger"><img src="assets/img/i_mes.png" alt="" class="imgFull"></a>
+            <a href="javascript:vid(0)" class="btnFb" title="Youtube" aria-label="Youtube"><img src="assets/img/i_youtube.png" alt="" class="imgFull"></a>
+        </div>
+        <form action="" hidden id="registerForm">
+            <div class="form-group">
+                <input type="text" placeholder="Nhập họ và tên" class="username">
+            </div>
+            <div class="form-group">
+                <input type="email" placeholder="Nhập email">
+            </div>
+            <div class="form-group">
+                <input type="tel" placeholder="Nhập số điện thoại">
+            </div>
+            <div class="error">* Cần nhập đầy đủ thông tin</div>
+            <a id="btnRegister" href="javascript:void(0)" title="Đăng ký">Đăng ký</a>
+        </form>
+    </div>
+</div>
+
+
+</body>
+</html>

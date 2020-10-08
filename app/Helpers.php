@@ -14,6 +14,7 @@ use App\Models\Explain;
 use App\Models\Filter;
 use App\Models\Question;
 use App\Models\Survey;
+use Carbon\Carbon;
 
 class Helpers
 {
@@ -262,11 +263,13 @@ class Helpers
         if (auth()->user()->company_id) {
             return Survey::where('company_id', auth()->user()->company_id)
                 ->where('status', true)
+                ->orderBy('created_at', 'DESC')
                 ->get();
         }
 
         return Survey::whereNull('company_id')
             ->where('status', true)
+            ->orderBy('created_at', 'DESC')
             ->get();
     }
 
@@ -436,5 +439,42 @@ class Helpers
                 //pass
             }
         }
+    }
+
+    public static function userCanDoSurvey($survey)
+    {
+        if (!$survey->status) {
+            return false;
+        }
+
+        $now = Carbon::now()->toDateTimeString();
+
+        if ($survey->start_time  && $survey->start_time > $now) {
+            return false;
+        }
+
+        if ($survey->end_time  && $survey->end_time < $now) {
+            return false;
+        }
+        if (self::checkIfSurveyHaveResultForUser($survey)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public static function getLatestSurveyCanDoForUser()
+    {
+        $surveys = self::getSurveyForLoginUser();
+        if (!$surveys) {
+            return null;
+        }
+
+        foreach ($surveys as $survey) {
+            if (self::userCanDoSurvey($survey)) {
+                return $survey;
+            }
+        }
+        return null;
     }
 }
