@@ -24,13 +24,20 @@
     <div class="logoSM bdb">
         <img src="/frontend/assets/img/logo-sm.png" alt="" class="imgFull">
     </div>
-    <a href="javascript:void(0)" class="link" title="Hệ thống đánh giá văn hóa doanh nghiệp" aria-label="CAS"><strong>Hệ thống đánh giá văn hóa doanh nghiệp</strong></a>
+    <a href="{{ route('frontend.home') }}" class="link" title="Hệ thống đánh giá văn hóa doanh nghiệp" aria-label="CAS">
+        <strong>Hệ thống đánh giá văn hóa doanh nghiệp</strong>
+    </a>
     <a href="javascript:void(0)" class="link bdt" title="Giới thiệu" aria-label="Introduce">Giới thiệu</a>
     <a href="javascript:void(0)" class="link" title="Hướng dẫn sử dụng" aria-label="Guiding">Hướng dẫn sử dụng</a>
-    <a href="javascript:void(0)" class="link bdt" title="Trang chủ" aria-label="Home page"><strong>Trang chủ (?)</strong></a>
-    <a href="javascript:void(0)" class="link bdt" title="Hồ sơ doanh nghiêp" aria-label="Corporate Profile">Hồ sơ doanh nghiêp</a>
-    <a href="javascript:void(0)" class="link" title="Dữ liệu người dùng" aria-label="User Data">Dữ liệu người dùng</a>
-    <a href="javascript:void(0)" class="link bdb" aria-label="Survey Campaign" title="Danh sách khảo sát">Danh sách khảo sát</a>
+    <a href="{{ route('frontend.home') }}" class="link bdt" title="Trang chủ" aria-label="Home page">
+        <strong>Trang chủ (?)</strong>
+    </a>
+    @if (\App\Helpers::currentFrontendUserIsManager())
+    <a href="{{ route('frontend.profile') }}" class="link bdt" title="Hồ sơ doanh nghiêp" aria-label="Corporate Profile">Hồ sơ doanh nghiêp</a>
+    <a href="{{ route('frontend.customer') }}" class="link" title="Dữ liệu người dùng" aria-label="User Data">Dữ liệu người dùng</a>
+    <a href="{{ route('frontend.campaign') }}" class="link bdb" aria-label="Survey Campaign" title="Danh sách khảo sát">Danh sách khảo sát</a>
+
+    @endif
 
 </div>
 <header>

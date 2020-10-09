@@ -471,6 +471,10 @@ main {
   font-size: 0.9375vw;
 }
 
+.fz13px {
+  font-size: 0.6770833333vw;
+}
+
 .mt50 {
   margin-top: 2.6041666667vw;
 }
@@ -491,6 +495,10 @@ main {
 
 .fwb {
   font-weight: bold;
+}
+
+.fsitl {
+  font-style: italic;
 }
 
 header, main {
@@ -1396,6 +1404,7 @@ footer .fixCen .socialMedia a:hover {
 }
 
 .campaignBlock .fixCen a.myBtn {
+  margin-top: 1.0416666667vw;
   color: #ffffff;
 }
 
@@ -1563,7 +1572,12 @@ footer .fixCen .socialMedia a:hover {
   position: relative;
   height: 2.0833333333vw;
   line-height: 2.0833333333vw;
-  margin-bottom: 1.3020833333vw;
+  margin-bottom: 0.78125vw;
+  border-bottom: thin solid #c5cbc5;
+}
+
+.campaignBlock .fixCen .surveyList li:last-child {
+  margin-bottom: 0;
 }
 
 .campaignBlock .fixCen .surveyList li h4 {
@@ -1574,7 +1588,6 @@ footer .fixCen .socialMedia a:hover {
 
 .campaignBlock .fixCen .surveyList .titleCampaign {
   display: block;
-  border-bottom: thin solid #c5cbc5;
 }
 
 .btnEdit {
@@ -1675,6 +1688,7 @@ footer .fixCen .socialMedia a:hover {
 
 .editBlock .right.checkBoxGroup label {
   margin-right: 1.0416666667vw;
+  width: 100%;
 }
 
 .editBlock .right.checkBoxGroup input {
@@ -1789,6 +1803,11 @@ footer .fixCen .socialMedia a:hover {
           box-shadow: none;
 }
 
+.editBlock select option {
+  background: #eee;
+  font-size: 0.78125vw;
+}
+
 .editBlock .imgThumb img {
   width: 4.1666666667vw;
   height: auto;
@@ -1888,6 +1907,32 @@ footer .fixCen .socialMedia a:hover {
 .searchBlock .fixCen {
   width: 42.4479166667vw;
   padding: 1.0416666667vw 0 0;
+}
+
+#filterMember {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-flow: row wrap;
+     -moz-box-orient: horizontal;
+     -moz-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+}
+
+#filterMember .addNewUser {
+  position: absolute;
+  top: 1.0416666667vw;
+  right: 0;
+}
+
+#filterMember form {
+  width: 100%;
+  padding: 0;
+}
+
+#filterMember form #inputSearchDemo {
+  right: 6.7708333333vw;
+  width: 8.8541666667vw;
 }
 
 .campaignSurvey {
@@ -2175,11 +2220,29 @@ footer .fixCen .socialMedia a:hover {
      -moz-box-direction: normal;
       -ms-flex-flow: row wrap;
           flex-flow: row wrap;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+     -moz-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   -webkit-transition: 0.5s;
   -o-transition: 0.5s;
   -moz-transition: 0.5s;
   transition: 0.5s;
   position: relative;
+}
+
+.editSurveyBlock #surveyObject .right {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+     -moz-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .editSurveyBlock #surveyObject.disabled {
@@ -2266,16 +2329,11 @@ footer .fixCen .socialMedia a:hover {
 }
 
 .tableList .bgEdit {
-  display: block;
+  display: inline-block;
 }
 
-.tableList .bgEdit:after {
-  content: '';
+.tableList .btnEditSurvey {
   display: inline-block;
-  background: url("../../assets/img/i_pen.png") 100% center no-repeat;
-  -webkit-background-size: 0.8854166667vw 0.8854166667vw;
-     -moz-background-size: 0.8854166667vw;
-          background-size: 0.8854166667vw;
   width: 0.8854166667vw;
   height: 0.9375vw;
   margin-left: 0.2604166667vw;

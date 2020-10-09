@@ -23,6 +23,7 @@ class Helpers
     public const FRONTEND_MANAGER_LEVEL = 1;
     public const FRONTEND_USER_LEVEL = 0;
 
+
     public static function log($msg)
     {
         if (is_array($msg)) {
@@ -356,8 +357,8 @@ class Helpers
                 ->all();
         }
 
-        Helpers::log("storeUserIdByFilter");
-        Helpers::log($storeUserIdByFilter);
+        //Helpers::log("storeUserIdByFilter");
+        //Helpers::log($storeUserIdByFilter);
 
         $finalCustomerQuery = Customer::where('company_id', $survey->company_id)
             ->where('status', true);
@@ -476,5 +477,21 @@ class Helpers
             }
         }
         return null;
+    }
+
+    public static function getTotalAnswerForSurvey($survey)
+    {
+        $questionIds = Question::where('survey_id', $survey->id)
+            ->pluck('id')
+            ->all();
+        $userIds = Answer::whereIn('question_id', $questionIds)->pluck('customer_id')->all();
+        return count(array_unique($userIds));
+    }
+
+    public static function getTotalUserNotAnswer($survey)
+    {
+        $totalCompanyUser = Customer::where('company_id', $survey->company_id)->count();
+
+        return $totalCompanyUser - self::getTotalAnswerForSurvey($survey);
     }
 }

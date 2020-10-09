@@ -52,6 +52,47 @@ class CompanyCrudController extends CrudController
     {
 
         CRUD::column('name')->label('Tên Công Ty');
+        CRUD::column('brand_name')->label('Thương hiệu');
+        CRUD::column('logo')->label('Logo')->type('image');
+        CRUD::addColumn([
+
+            'label'     => 'Lĩnh Vực',
+            'type'      => 'select',
+            'name'      => 'business_field_id',
+            'entity'    => 'business',
+            'attribute' => 'name',
+            'model'     => 'App\Models\Business',
+        ]);
+        CRUD::addColumn([
+
+            'label'     => 'Số NV',
+            'type'      => 'select',
+            'name'      => 'employee_number_id',
+            'entity'    => 'employee',
+            'attribute' => 'name',
+            'model'     => 'App\Models\Employee',
+        ]);
+
+        CRUD::addColumn([
+
+            'label'     => 'Doanh Thu',
+            'type'      => 'select',
+            'name'      => 'average_income_id',
+            'entity'    => 'income',
+            'attribute' => 'name',
+            'model'     => 'App\Models\Income',
+        ]);
+
+        CRUD::addColumn([
+
+            'label'     => 'Tổng Vốn',
+            'type'      => 'select',
+            'name'      => 'total_fund_id',
+            'entity'    => 'fund',
+            'attribute' => 'name',
+            'model'     => 'App\Models\Fund',
+        ]);
+
         CRUD::addColumn([
 
             'label'     => 'Các Thuộc Tính',
@@ -73,6 +114,49 @@ class CompanyCrudController extends CrudController
     {
         CRUD::setValidation(CompanyRequest::class);
         CRUD::field('name')->label('Tên Công ty');
+
+        CRUD::field('brand_name')->label('Thương hiệu');
+        CRUD::field('logo')->label('Logo')->type('browse');
+        CRUD::addField([
+
+            'label'     => 'Lĩnh Vực',
+            'type'      => 'select2',
+            'name'      => 'business_field_id',
+            'entity'    => 'business',
+            'attribute' => 'name',
+            'model'     => 'App\Models\Business',
+        ]);
+        CRUD::addField([
+
+            'label'     => 'Số NV',
+            'type'      => 'select2',
+            'name'      => 'employee_number_id',
+            'entity'    => 'employee',
+            'attribute' => 'name',
+            'model'     => 'App\Models\Employee',
+        ]);
+
+        CRUD::addColumn([
+
+            'label'     => 'Doanh Thu',
+            'type'      => 'select2',
+            'name'      => 'average_income_id',
+            'entity'    => 'income',
+            'attribute' => 'name',
+            'model'     => 'App\Models\Income',
+        ]);
+
+        CRUD::addField([
+
+            'label'     => 'Tổng Vốn',
+            'type'      => 'select2',
+            'name'      => 'total_fund_id',
+            'entity'    => 'fund',
+            'attribute' => 'name',
+            'model'     => 'App\Models\Fund',
+        ]);
+
+
         CRUD::addField([
             'label'     => "Các Thuộc Tính",
             'type'      => 'select2_multiple',

@@ -32,7 +32,7 @@
         <div class="email">email@xxx.com</div>
     </div>
     <a href="javascript:void(0)" class="link bdb" title="Góp ý cải thiện sản phẩm" aria-label="Suggestions for product improvement">Góp ý cải thiện sản phẩm</a>
-    <a href="javascript:void(0)" class="link" title="Thông tin tài khoản" aria-label="Profile"><strong>Thông tin tài khoản</strong></a>
+    <a href="thong-tin-tai-khoan.html" class="link" title="Thông tin tài khoản" aria-label="Profile"><strong>Thông tin tài khoản</strong></a>
     <a href="javascript:void(0)" class="btnLogout" title="Đăng xuất" aria-label="Logout">Đăng xuất</a>
     <div class="bottomInfo bdt">
         <a href="javascript:void(0)" class="link" title="Chính sách bảo mật" aria-label="Privacy policy">Chính sách bảo mật</a>
@@ -47,10 +47,10 @@
     <a href="javascript:void(0)" class="link" title="Hệ thống đánh giá văn hóa doanh nghiệp" aria-label="CAS"><strong>Hệ thống đánh giá văn hóa doanh nghiệp</strong></a>
     <a href="javascript:void(0)" class="link bdt" title="Giới thiệu" aria-label="Introduce">Giới thiệu</a>
     <a href="javascript:void(0)" class="link" title="Hướng dẫn sử dụng" aria-label="Guiding">Hướng dẫn sử dụng</a>
-    <a href="javascript:void(0)" class="link bdt" title="Trang chủ" aria-label="Home page"><strong>Trang chủ (?)</strong></a>
-    <a href="javascript:void(0)" class="link bdt" title="Hồ sơ doanh nghiêp" aria-label="Corporate Profile">Hồ sơ doanh nghiêp</a>
-    <a href="javascript:void(0)" class="link" title="Dữ liệu người dùng" aria-label="User Data">Dữ liệu người dùng</a>
-    <a href="javascript:void(0)" class="link bdb" aria-label="Survey Campaign" title="Danh sách khảo sát">Danh sách khảo sát</a>
+    <a href="home-user.html" class="link bdt" title="Tên công ty" aria-label="Home page"><strong>Tên công ty (?)</strong></a>
+    <a href="ho-so-doanh-nghiep.html" class="link bdt" title="Hồ sơ doanh nghiêp" aria-label="Corporate Profile">Hồ sơ doanh nghiêp</a>
+    <a href="danh-sach-thanh-vien.html" class="link" title="Dữ liệu người dùng" aria-label="User Data">Dữ liệu người dùng</a>
+    <a href="danh-sach-chien-dich.html" class="link bdb" aria-label="Survey Campaign" title="Danh sách khảo sát">Danh sách khảo sát</a>
     <div class="bottomInfo">
         <div class="txt">Đăng nhập để thực hiện khảo sát</div>
         <a href="javascript:void(0)" class="btnLogin" title="Đăng nhập" aria-label="Login">Đăng nhập</a>
@@ -99,7 +99,7 @@
                         </a>
                     </li>
                     <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="du-lieu-nguoi-dung.html" itemid="du-lieu-nguoi-dung.html" class="link" title="Dữ liệu người dùng" aria-label="User Data">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="danh-sach-thanh-vien.html" itemid="du-lieu-nguoi-dung.html" class="link" title="Dữ liệu người dùng" aria-label="User Data">
                             <span itemprop="name">Dữ liệu người dùng</span>
                         </a>
                     </li>
@@ -170,78 +170,98 @@
     <div class="editSurveyBlock editBlock">
         <div class="fixCen">
             <div class="box">
-            <table class="tableList tableListSurvey">
-                <thead>
-                    <tr><td>Tên</td><td>Bắt đầu</td><td>Kết thúc</td><td>Tham gia</td><td>Chưa xong</td><td>Tình trạng</td><td>Báo cáo</td></tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><a href="thuc-hien-khao-sat.html" class="link bgEdit" title="Năng lực cạnh tranh PVNDB - 3">Năng lực cạnh tranh PVNDB - 113</a></td>
-                        <td>07/10/2020</td>
-                        <td>14/10/2020</td>
-                        <td>100</td>
-                        <td class="red">40</td>
-                        <td>Dừng <a href="javascript:void(0)" class="hasIconEdit" data-popup=".popupOption1" title="Sửa"></a>
-                            <div class="popupOption popupOption1">
-                                <a href="javascript:void(0)" class="btnOpen" title="Mở"><span class="icon">+</span> Mở</a>
-                                <a href="javascript:void(0)" class="btnClose" title="Đóng"><span class="icon">-</span> Đóng</a>
-                                <a href="javascript:void(0)" class="btnPause" title="Dừng"><span class="icon">||</span> Dừng</a>
-                                <a href="javascript:void(0)" class="btnDelete" title="Xóa" onclick="showPopupNotify('#popupDelSurvey')">Xóa</a>
-                            </div>
-                        </td>
-                        <td>Chờ</td>
-                    </tr>
-                    <tr>
-                        <td><a href="thuc-hien-khao-sat.html" class="link bgEdit" title="Năng lực cạnh tranh PVNDB - 3">Năng lực cạnh tranh PVNDB - 13</a></td>
-                        <td>07/10/2020</td>
-                        <td>14/10/2020</td>
-                        <td>100</td>
-                        <td class="red">40</td>
-                        <td>Dừng <a href="javascript:void(0)" class="hasIconEdit" data-popup=".popupOption2" title="Sửa"></a>
-                            <div class="popupOption popupOption2">
-                                <a href="javascript:void(0)" class="btnOpen" title="Mở"><span class="icon">+</span> Mở</a>
-                                <a href="javascript:void(0)" class="btnClose" title="Đóng"><span class="icon">-</span> Đóng</a>
-                                <a href="javascript:void(0)" class="btnPause" title="Dừng"><span class="icon">||</span> Dừng</a>
-                                <a href="javascript:void(0)" class="btnDelete" title="Xóa" onclick="showPopupNotify('#popupDelSurvey')">Xóa</a>
-                            </div>
-                        </td>
-                        <td>Chờ</td>
-                    </tr>
-                    <tr>
-                        <td><a href="thuc-hien-khao-sat.html" class="link bgEdit" title="Năng lực cạnh tranh PVNDB - 3">Năng lực cạnh tranh PVNDB - 3</a></td>
-                        <td>07/10/2020</td>
-                        <td>14/10/2020</td>
-                        <td>100</td>
-                        <td class="red">40</td>
-                        <td>Đóng <a href="javascript:void(0)" class="hasIconEdit" data-popup=".popupOption3" title="Sửa"></a>
-                            <div class="popupOption popupOption3">
-                                <a href="javascript:void(0)" class="btnOpen" title="Mở"><span class="icon">+</span> Mở</a>
-                                <a href="javascript:void(0)" class="btnClose" title="Đóng"><span class="icon">-</span> Đóng</a>
-                                <a href="javascript:void(0)" class="btnPause" title="Dừng"><span class="icon">||</span> Dừng</a>
-                                <a href="javascript:void(0)" class="btnDelete" title="Xóa" onclick="showPopupNotify('#popupDelSurvey')">Xóa</a>
-                            </div>
-                        </td>
-                        <td><a href="bao-cao-chien-dich.html" title="Xem">Xem</a></td>
-                    </tr>
-                    <tr>
-                        <td><a href="thuc-hien-khao-sat.html" class="link bgEdit" title="Năng lực cạnh tranh PVNDB - 3">Năng lực cạnh tranh PVNDB - 3</a></td>
-                        <td>07/10/2020</td>
-                        <td>14/10/2020</td>
-                        <td>100</td>
-                        <td class="red">40</td>
-                        <td>Đóng <a href="javascript:void(0)" class="hasIconEdit" data-popup=".popupOption4" title="Sửa"></a>
-                            <div class="popupOption popupOption4">
-                                <a href="javascript:void(0)" class="btnOpen" title="Mở"><span class="icon">+</span> Mở</a>
-                                <a href="javascript:void(0)" class="btnClose" title="Đóng"><span class="icon">-</span> Đóng</a>
-                                <a href="javascript:void(0)" class="btnPause" title="Dừng"><span class="icon">||</span> Dừng</a>
-                                <a href="javascript:void(0)" class="btnDelete" title="Xóa" onclick="showPopupNotify('#popupDelSurvey')">Xóa</a>
-                            </div>
-                        </td>
-                        <td><a href="bao-cao-chien-dich.html" title="Xem">Xem</a></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+                <table class="tableList tableListSurvey">
+                    <thead>
+                        <tr><td>Tên</td><td>Bắt đầu</td><td>Kết thúc</td><td>Tham gia</td><td>Chưa xong</td><td>Tình trạng</td><td>Báo cáo</td></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <a href="thuc-hien-khao-sat.html" class="link bgEdit" title="Năng lực cạnh tranh PVNDB - 3">Năng lực cạnh tranh PVNDB - 113</a>
+                                <a href="javascript:void(0)" class="btnEditSurvey" title="Sửa chiến dịch">
+                                    <img src="assets/img/i_pen.png" alt="Edit">
+                                </a>
+                            </td>
+                            <td>07/10/2020</td>
+                            <td>14/10/2020</td>
+                            <td>100</td>
+                            <td class="red">40</td>
+                            <td>Dừng <a href="javascript:void(0)" class="hasIconEdit" data-popup=".popupOption1" title="Sửa"></a>
+                                <div class="popupOption popupOption1">
+                                    <a href="javascript:void(0)" class="btnOpen" title="Mở"><span class="icon">+</span> Mở</a>
+                                    <a href="javascript:void(0)" class="btnClose" title="Đóng"><span class="icon">-</span> Đóng</a>
+                                    <a href="javascript:void(0)" class="btnPause" title="Dừng"><span class="icon">||</span> Dừng</a>
+                                    <a href="javascript:void(0)" class="btnDelete" title="Xóa" onclick="showPopupNotify('#popupDelSurvey')">Xóa</a>
+                                </div>
+                            </td>
+                            <td>Chờ</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="thuc-hien-khao-sat.html" class="link bgEdit" title="Năng lực cạnh tranh PVNDB - 3">Năng lực cạnh tranh PVNDB - 113</a>
+                                <a href="javascript:void(0)" class="btnEditSurvey" title="Sửa chiến dịch">
+                                    <img src="assets/img/i_pen.png" alt="Edit">
+                                </a>
+                            </td>
+                            <td>07/10/2020</td>
+                            <td>14/10/2020</td>
+                            <td>100</td>
+                            <td class="red">40</td>
+                            <td>Dừng <a href="javascript:void(0)" class="hasIconEdit" data-popup=".popupOption2" title="Sửa"></a>
+                                <div class="popupOption popupOption2">
+                                    <a href="javascript:void(0)" class="btnOpen" title="Mở"><span class="icon">+</span> Mở</a>
+                                    <a href="javascript:void(0)" class="btnClose" title="Đóng"><span class="icon">-</span> Đóng</a>
+                                    <a href="javascript:void(0)" class="btnPause" title="Dừng"><span class="icon">||</span> Dừng</a>
+                                    <a href="javascript:void(0)" class="btnDelete" title="Xóa" onclick="showPopupNotify('#popupDelSurvey')">Xóa</a>
+                                </div>
+                            </td>
+                            <td>Chờ</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="thuc-hien-khao-sat.html" class="link bgEdit" title="Năng lực cạnh tranh PVNDB - 3">Năng lực cạnh tranh PVNDB - 113</a>
+                                <a href="javascript:void(0)" class="btnEditSurvey" title="Sửa chiến dịch">
+                                    <img src="assets/img/i_pen.png" alt="Edit">
+                                </a>
+                            </td>
+                            <td>07/10/2020</td>
+                            <td>14/10/2020</td>
+                            <td>100</td>
+                            <td class="red">40</td>
+                            <td>Đóng <a href="javascript:void(0)" class="hasIconEdit" data-popup=".popupOption3" title="Sửa"></a>
+                                <div class="popupOption popupOption3">
+                                    <a href="javascript:void(0)" class="btnOpen" title="Mở"><span class="icon">+</span> Mở</a>
+                                    <a href="javascript:void(0)" class="btnClose" title="Đóng"><span class="icon">-</span> Đóng</a>
+                                    <a href="javascript:void(0)" class="btnPause" title="Dừng"><span class="icon">||</span> Dừng</a>
+                                    <a href="javascript:void(0)" class="btnDelete" title="Xóa" onclick="showPopupNotify('#popupDelSurvey')">Xóa</a>
+                                </div>
+                            </td>
+                            <td><a href="bao-cao-chien-dich.html" title="Xem">Xem</a></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="thuc-hien-khao-sat.html" class="link bgEdit" title="Năng lực cạnh tranh PVNDB - 3">Năng lực cạnh tranh PVNDB - 113</a>
+                                <a href="javascript:void(0)" class="btnEditSurvey" title="Sửa chiến dịch">
+                                    <img src="assets/img/i_pen.png" alt="Edit">
+                                </a>
+                            </td>
+                            <td>07/10/2020</td>
+                            <td>14/10/2020</td>
+                            <td>100</td>
+                            <td class="red">40</td>
+                            <td>Đóng <a href="javascript:void(0)" class="hasIconEdit" data-popup=".popupOption4" title="Sửa"></a>
+                                <div class="popupOption popupOption4">
+                                    <a href="javascript:void(0)" class="btnOpen" title="Mở"><span class="icon">+</span> Mở</a>
+                                    <a href="javascript:void(0)" class="btnClose" title="Đóng"><span class="icon">-</span> Đóng</a>
+                                    <a href="javascript:void(0)" class="btnPause" title="Dừng"><span class="icon">||</span> Dừng</a>
+                                    <a href="javascript:void(0)" class="btnDelete" title="Xóa" onclick="showPopupNotify('#popupDelSurvey')">Xóa</a>
+                                </div>
+                            </td>
+                            <td><a href="bao-cao-chien-dich.html" title="Xem">Xem</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </main>

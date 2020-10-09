@@ -14,6 +14,7 @@
     @yield('before_header')
 
 </head>
+@include('frontend.flash-message')
 @yield('content')
 @yield('after_scripts')
 </html>

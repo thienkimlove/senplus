@@ -17,6 +17,18 @@
 
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('survey') }}'><i class='nav-icon la la-columns'></i> Chiến Dịch</a></li>
 
+
+<li class="nav-item nav-dropdown">
+    <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-columns"></i> Static Content </a>
+    <ul class="nav-dropdown-items">
+        <li class='nav-item'><a class='nav-link' href='{{ backpack_url('business') }}'><i class='nav-icon la la-buffer'></i> Lĩnh Vực </a></li>
+
+        <li class='nav-item'><a class='nav-link' href='{{ backpack_url('employee') }}'><i class='nav-icon la la-ember'></i> Nhân viên </a></li>
+        <li class='nav-item'><a class='nav-link' href='{{ backpack_url('income') }}'><i class='nav-icon la la-inbox'></i> Doanh Thu </a></li>
+        <li class='nav-item'><a class='nav-link' href='{{ backpack_url('fund') }}'><i class='nav-icon la la-fulcrum'></i> Nguồn Vốn </a></li>
+    </ul>
+</li>
+
 @endif
 
 
@@ -38,3 +50,5 @@
     </ul>
 </li>
 @endif
+
+

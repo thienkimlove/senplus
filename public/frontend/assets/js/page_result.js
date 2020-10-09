@@ -6,45 +6,16 @@
  * @version 2.0.0
  * Copyright 2020. MIT licensed.
  */$(document).ready(function () {
-  if ($('.datepicker').length > 0) {
-    $('.datepicker').datetimepicker();
-  }
-
-  var popup = '';
-  $('.titleCampaign').hover(function () {
-    popup = $(this).data('popup');
-    $('.popupCampaign').removeClass('showPopup');
-    $(popup).addClass('showPopup');
-    $(popup).mouseover(function () {
-      $(this).addClass('showPopup');
-    }).mouseout(function () {
-      $(this).removeClass('showPopup');
-    });
-  });
   $('.btnEdit').click(function () {
     edit($(this));
   });
-  $('.btnEditDate').click(function () {
-    editDate($(this));
-  });
-  $('.checkBoxGroup').click(function () {
-    editCheckbox($(this));
-  }); // $('#surveyObject').click(function () {
-  //     editManyCheckbox($(this));
-  // });
-
-  $('#btnEditPermission').click(function () {
-    editCheckbox($(this));
-  });
   $('#inputSearchDemo').mousedown(function () {
-    $('#searchUserBlock').addClass('showSearchUserBlock');
-    $('#searchUserBlock').mouseleave(function () {
+    $('#filterDataBox').addClass('showSearchUserBlock');
+    $('#filterDataBox').mouseleave(function () {
       $(this).removeClass('showSearchUserBlock');
     });
   });
-  $('.hasIconEdit').click(function () {
-    showPopup($(this));
-  });
+  $('#seclectDepartment').selectpicker();
 });
 
 function showPopup(btnClick) {

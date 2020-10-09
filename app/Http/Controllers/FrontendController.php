@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers;
 use App\Models\Answer;
+use App\Models\Company;
 use App\Models\Customer;
 use App\Models\Question;
 use App\Models\Survey;
@@ -515,6 +516,9 @@ class FrontendController extends Controller
 
     public function filter(Request $request)
     {
+        if (!auth()->check()) {
+            return redirect(route('frontend.index'));
+        }
         $surveyId = $request->input('survey_id');
 
         if (!$surveyId) {
@@ -567,10 +571,141 @@ class FrontendController extends Controller
      * v2
      */
 
+    public function campaign()
+    {
+        if (!auth()->check()) {
+            return redirect(route('frontend.index'));
+        }
+
+        if (!Helpers::currentFrontendUserIsManager()) {
+            return redirect(route('frontend.home'));
+        }
+
+        $company = Company::find(auth()->user()->company_id);
+
+        $surveys = Helpers::getSurveyForLoginUser();
+
+        return view('frontend.campaign', compact('company', 'surveys'));
+    }
+
     public function profile()
     {
+        if (!auth()->check()) {
+            return redirect(route('frontend.index'));
+        }
 
-        return view('frontend.profile');
+        if (!Helpers::currentFrontendUserIsManager()) {
+            return redirect(route('frontend.home'));
+        }
+
+        $company = Company::find(auth()->user()->company_id);
+
+        return view('frontend.profile', compact('company'));
+    }
+
+    public function postProfile(Request $request)
+    {
+        if (!Helpers::currentFrontendUserIsManager()) {
+            return redirect(route('frontend.home'));
+        }
+        $companyId = $request->input('company_id');
+
+        if (!$companyId) {
+            $request->session()->flash('general_message', 'Không có ID doanh nghiệp!');
+            return redirect(route('frontend.home'));
+        }
+
+        $company = Company::find($companyId);
+
+        if (!$company) {
+            $request->session()->flash('general_message', 'Doanh nghiệp không tồn tại!');
+            return redirect(route('frontend.home'));
+        }
+
+        $update_fields = [
+            'name',
+            'brand_name',
+            'main_address',
+            'contact_phone',
+            //'logo',
+            'business_field_id',
+            'employee_number_id',
+            'average_income_id',
+            'total_fund_id',
+        ];
+
+        foreach ($update_fields as $field) {
+
+            $value = $request->input($field);
+
+            if ($value) {
+                try  {
+                    $company->update([
+                        $field => $value
+                    ]);
+                } catch (\Exception $exception) {
+                    //pass
+                }
+            }
+        }
+
+
+
+        if ($file = $request->file('logo')) {
+            $filename = $file->getClientOriginalName();
+            $destinationPath = public_path('uploads');
+            $file->move($destinationPath, $filename);
+
+            try  {
+                $company->update([
+                    'logo' => 'uploads/'.$filename
+                ]);
+            } catch (\Exception $exception) {
+                //pass
+            }
+
+        }
+
+        return redirect(route('frontend.home'));
+    }
+
+    public function handleDelSurvey(Request $request)
+    {
+        $surveyId = $request->input('survey_id');
+
+        if (!$surveyId) {
+            return response()->json(['error' => 'Không có thông tin chiến dịch khảo sát']);
+        }
+
+        $survey = Survey::find($surveyId);
+
+        if (!$survey) {
+            return response()->json(['error' => 'Không có thông tin chiến dịch khảo sát']);
+        }
+
+        // check if user is admin
+
+        if (!Helpers::currentFrontendUserIsAdmin()) {
+            return response()->json(['error' => 'Không có quyền xóa chiến dịch khảo sát']);
+        }
+
+        $survey->update([
+            'status' => false
+        ]);
+
+        return response()->json(['success' => true]);
+    }
+
+
+    public function personal()
+    {
+        if (!auth()->check()) {
+            return redirect(route('frontend.index'));
+        }
+
+        $company = Company::find(auth()->user()->company_id);
+
+        return view('frontend.personal', compact('company'));
     }
 
 

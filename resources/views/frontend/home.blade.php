@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="/frontend/assets/css/bootstrap-datetimepicker2.css">
     <link rel="stylesheet" type="text/css" href="/frontend/assets/css/styleHomeUser.css">
 
-    <title data-react-helmet="true">Home User</title>
+    <title data-react-helmet="true">Home</title>
 
     <script src="/frontend/assets/js/jquery-3.5.1.min.js" type="text/javascript"></script>
     <script src="/frontend/assets/js/bootstrap.min2.js" type="text/javascript"></script>
@@ -43,13 +43,14 @@
                         Dữ liệu người dùng
                     </a>
                 </li>
-                @endif
+
                 <li>
                     <a href="{{ route('frontend.campaign') }}" class="link" title="Danh sách khảo sát" aria-label="Survey Campaign">
                         <span class="img"> <img src="/frontend/assets/img/btn-chiendich.jpg" alt="" class="imgFull"></span>
                         Danh sách khảo sát
                     </a>
                 </li>
+                @endif
             </ul>
         </nav>
         <div class="campaignBlock">
@@ -87,7 +88,7 @@
                             Không có chiến dịch khảo sát nào.
                         @endif
                     </div>
-                    <a href="{{ route('frontend.campaign') }}" class="myBtn" title="Xem tất cả" aria-label="View All">Xem tất cả</a>
+                    <a href="{{ route('frontend.private') }}" class="myBtn" title="Xem tất cả" aria-label="View All">Xem tất cả</a>
                 </div>
                 <div class="rightSide">
                     <h2 class="title">Khảo sát mới</h2>

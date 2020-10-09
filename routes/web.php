@@ -27,8 +27,17 @@ Route::get('forgot', 'FrontendController@forgotPass')->name('frontend.forgot_pas
 Route::get('home', 'FrontendController@home')->name('frontend.home');
 Route::get('logout', 'FrontendController@logout')->name('frontend.logout');
 
+// its for user profile
+Route::get('personal', 'FrontendController@personal')->name('frontend.personal');
+
+// for ho so doanh nghiep
 Route::get('profile', 'FrontendController@profile')->name('frontend.profile');
+Route::post('profile', 'FrontendController@postProfile')->name('frontend.post_profile');
+
+// user data
 Route::get('customer', 'FrontendController@customer')->name('frontend.customer');
+
+// list survey for company
 Route::get('campaign', 'FrontendController@campaign')->name('frontend.campaign');
 
 Route::get('survey', 'FrontendController@survey')->name('frontend.survey');
@@ -41,3 +50,5 @@ Route::post('filter', 'FrontendController@filter')->name('frontend.filter');
 
 Route::get('remove-manager', 'FrontendController@removeManager')->name('frontend.remove_manager');
 Route::post('add-manager', 'FrontendController@addManager')->name('frontend.add_manager');
+
+Route::post('handleDelSurvey', 'FrontendController@handleDelSurvey')->name('frontend.del_survey');

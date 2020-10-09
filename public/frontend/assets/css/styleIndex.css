@@ -471,6 +471,10 @@ main {
   font-size: 0.9375vw;
 }
 
+.fz13px {
+  font-size: 0.6770833333vw;
+}
+
 .mt50 {
   margin-top: 2.6041666667vw;
 }
@@ -491,6 +495,10 @@ main {
 
 .fwb {
   font-weight: bold;
+}
+
+.fsitl {
+  font-style: italic;
 }
 
 @-webkit-keyframes changeBg {

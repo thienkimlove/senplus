@@ -471,6 +471,10 @@ main {
   font-size: 0.9375vw;
 }
 
+.fz13px {
+  font-size: 0.6770833333vw;
+}
+
 .mt50 {
   margin-top: 2.6041666667vw;
 }
@@ -491,6 +495,10 @@ main {
 
 .fwb {
   font-weight: bold;
+}
+
+.fsitl {
+  font-style: italic;
 }
 
 @-webkit-keyframes changeBg {
@@ -2461,6 +2469,166 @@ footer .fixCen .socialMedia a:hover {
   height: 2.3958333333vw;
 }
 
+.contentBlock .resultBox {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+     -moz-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-flow: row wrap;
+     -moz-box-orient: horizontal;
+     -moz-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+  padding: 1.0416666667vw 1.5625vw 2.0833333333vw;
+}
+
+.contentBlock .resultBox .txt {
+  font-size: 0.7291666667vw;
+  font-style: italic;
+  margin-bottom: 1.0416666667vw;
+}
+
+.contentBlock .resultBox h3.title {
+  font-size: 0.78125vw;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: bold;
+  padding: 0 0 0.2604166667vw;
+}
+
+.contentBlock .resultBox .name {
+  color: #3aadbb;
+  font-size: 0.78125vw;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 1.0416666667vw;
+}
+
+.contentBlock .tableAndChart {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+     -moz-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-flow: row wrap;
+     -moz-box-orient: horizontal;
+     -moz-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+}
+
+.contentBlock .tableResult {
+  font-size: 0.7291666667vw;
+  width: 100%;
+}
+
+.contentBlock .tableResult th, .contentBlock .tableResult td {
+  border: thin solid #ffffff;
+}
+
+.contentBlock .tableResult th {
+  font-weight: 500;
+  height: 3.4375vw;
+}
+
+.contentBlock .tableResult thead {
+  text-transform: uppercase;
+  text-align: center;
+  background: #c1ad79;
+  color: #ffffff;
+}
+
+.contentBlock .tableResult tbody tr td {
+  height: 2.6041666667vw;
+  text-align: center;
+}
+
+.contentBlock .tableResult tbody tr td:first-child {
+  padding-left: 0.5208333333vw;
+  text-align: left;
+}
+
+.contentBlock .tableResult tbody tr:nth-child(odd) {
+  background: #39bfc7;
+}
+
+.contentBlock .tableResult tbody tr:nth-child(even) {
+  background: #8ad9de;
+}
+
+.contentBlock .lines {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+     -moz-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.contentBlock .lines .item {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+     -moz-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 0 0.78125vw;
+}
+
+.contentBlock .lines .line {
+  display: inline-block;
+  height: 0.2604166667vw;
+  width: 1.5625vw;
+  -webkit-border-radius: 0.2604166667vw;
+     -moz-border-radius: 0.2604166667vw;
+          border-radius: 0.2604166667vw;
+  margin-right: 0.2604166667vw;
+}
+
+.contentBlock .radaChart img {
+  max-width: 100%;
+  height: auto;
+  margin: auto;
+}
+
+.contentBlock .leftSide {
+  width: 50%;
+}
+
+.contentBlock .rightSide {
+  width: 45%;
+}
+
+.contentBlock .articleResult {
+  width: 100%;
+  margin-top: 2.6041666667vw;
+  text-align: justify;
+}
+
 .hasBefore:before {
   display: block;
   content: '';
@@ -2497,6 +2665,14 @@ footer .fixCen .socialMedia a:hover {
   margin-bottom: 0;
 }
 
+.topBlock .descriptionRusult {
+  color: #333333;
+}
+
+.topBlock .descriptionRusult p {
+  margin-bottom: 0.5208333333vw;
+}
+
 .topBlock .fixCen {
   width: 42.4479166667vw;
   padding: 1.0416666667vw 0;
@@ -2527,4 +2703,170 @@ footer .fixCen .socialMedia a:hover {
 .topBlock .btnEdit {
   right: 8.2291666667vw;
   top: 1.1458333333vw;
+}
+
+.filterData {
+  margin-bottom: 0;
+  width: 100%;
+  height: auto;
+}
+
+.filterData select {
+  height: 1.5625vw;
+  -webkit-border-radius: 0.15625vw;
+     -moz-border-radius: 0.15625vw;
+          border-radius: 0.15625vw;
+  padding-left: 0.2604166667vw;
+  overflow: hidden;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  -moz-transition: 0.3s;
+  transition: 0.3s;
+  outline: none;
+  background: #ffffff;
+  color: #000000;
+  border: thin solid transparent;
+}
+
+.filterData select:focus {
+  border: thin solid #69cad3;
+  -webkit-box-shadow: 0px 0px 5px #69cad3;
+     -moz-box-shadow: 0px 0px 5px #69cad3;
+          box-shadow: 0px 0px 5px #69cad3;
+}
+
+.filterData input {
+  -webkit-border-radius: 0.15625vw;
+     -moz-border-radius: 0.15625vw;
+          border-radius: 0.15625vw;
+  padding-left: 0.2604166667vw;
+  overflow: hidden;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  -moz-transition: 0.3s;
+  transition: 0.3s;
+  outline: none;
+  border: thin solid #939393;
+  color: #939393;
+}
+
+.filterData input:focus {
+  border: thin solid #69cad3;
+  -webkit-box-shadow: 0px 0px 5px #69cad3;
+     -moz-box-shadow: 0px 0px 5px #69cad3;
+          box-shadow: 0px 0px 5px #69cad3;
+}
+
+.filterData #inputSearchDemo {
+  height: 1.875vw;
+  width: 6.7708333333vw;
+  position: absolute;
+  right: 8.3333333333vw;
+  top: 0.3125vw;
+  background: url("../../assets/img/i_search.png") 95% center no-repeat;
+  -webkit-background-size: 0.8854166667vw 0.8854166667vw;
+     -moz-background-size: 0.8854166667vw;
+          background-size: 0.8854166667vw;
+  border: none;
+}
+
+.filterData #filterDataBox {
+  color: #000000;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+     -moz-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-flow: row wrap;
+     -moz-box-orient: horizontal;
+     -moz-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+  height: 0;
+  overflow: hidden;
+  padding: 0;
+  -webkit-transition: 0.5s;
+  -o-transition: 0.5s;
+  -moz-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.filterData #filterDataBox.showSearchUserBlock {
+  opacity: 1;
+  height: auto;
+  padding: 1.0416666667vw 0.5208333333vw;
+}
+
+.filterData #filterDataBox .typeOfChart {
+  width: 10.4166666667vw;
+}
+
+.filterData #filterDataBox .objectTest {
+  width: 27.6041666667vw;
+}
+
+.filterData #filterDataBox .objectTest .selectGroup {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+     -moz-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-flow: row wrap;
+     -moz-box-orient: horizontal;
+     -moz-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+}
+
+.filterData #filterDataBox .objectTest select, .filterData #filterDataBox .objectTest .bootstrap-select {
+  margin-right: 0.2604166667vw;
+  width: 32%;
+}
+
+.filterData #filterDataBox .objectTest select:last-child, .filterData #filterDataBox .objectTest .bootstrap-select:last-child {
+  margin-right: 0;
+}
+
+.filterData #filterDataBox h3.title {
+  display: block;
+  width: 100%;
+  font-size: 0.9375vw;
+  padding: 0 0 0.5208333333vw;
+  border-bottom: thin solid #cccccc;
+  margin-bottom: 0.5208333333vw;
+  height: 1.5625vw;
+}
+
+.filterData #filterDataBox .bottom {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+     -moz-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+     -moz-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: 1.5625vw;
 }
