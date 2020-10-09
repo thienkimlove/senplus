@@ -49,6 +49,13 @@ class CustomerCrudController extends CrudController
     protected function setupListOperation()
     {
         CRUD::column('name')->label('Tên');
+        CRUD::column('avatar')->label('Avatar')->type('image');
+        CRUD::addColumn([
+            'label' => 'Gender',
+            'type' => 'select_from_array',
+            'options' => Helpers::getGenders(),
+            'name' => 'gender'
+        ]);
         CRUD::addColumn([
             // n-n relationship (with pivot table)
             'label'     => 'Doanh Nghiệp',
@@ -98,6 +105,13 @@ class CustomerCrudController extends CrudController
         CRUD::setValidation(CustomerRequest::class);
 
         CRUD::field('name')->label('Tên');
+        CRUD::field('avatar')->label('Avatar')->type('image');
+        CRUD::addField([
+            'label' => 'Gender',
+            'type' => 'select_from_array',
+            'options' => Helpers::getGenders(),
+            'name' => 'gender'
+        ]);
         CRUD::field('first_name')->label('Tên');
         CRUD::field('last_name')->label('Họ');
         CRUD::field('email')->label('Email');

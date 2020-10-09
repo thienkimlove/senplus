@@ -6,6 +6,10 @@
  * @version 2.0.0
  * Copyright 2020. MIT licensed.
  */$(document).ready(function () {
+  if ($('.wrapper').length > 0) {
+    changeBg();
+  }
+
   $('.btnUserID').click(function () {
     $('#userPopup').toggleClass('active');
   });
@@ -44,6 +48,12 @@
   $('#popupCorporateCulture .closePopup').click(function () {
     $('#popupCorporateCulture').toggleClass('showPopCorCul');
   });
+
+  if ($('.hasIconEdit').length > 0) {
+    $('.hasIconEdit').click(function () {
+      showPopup($(this));
+    });
+  }
 });
 
 function tooglePopup(popup) {
@@ -82,4 +92,16 @@ function showPopupNotify(popup) {
     $(this).fadeOut();
     $(popup).removeClass('showPopup');
   });
+}
+
+function changeBg() {
+  var bg = 1;
+  setInterval(function () {
+    bg++;
+    $('.wrapper').css('background', 'url(../../assets/img/bg' + bg + '.jpg) center top no-repeat');
+
+    if (bg >= 5) {
+      bg = 0;
+    }
+  }, 15000);
 }

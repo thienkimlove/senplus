@@ -42,9 +42,6 @@
       $(this).removeClass('showSearchUserBlock');
     });
   });
-  $('.hasIconEdit').click(function () {
-    showPopup($(this));
-  });
 });
 
 function showPopup(btnClick) {

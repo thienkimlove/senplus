@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="/frontend/assets/css/styleIndex.css">
     <title data-react-helmet="true">Đăng ký</title>
 
-    <script src="/frontend/assets/js/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <script src="/frontend/assets/js/jquery-3.5.1.min.js" type="text/javascript"></script>
     <script src="/frontend/assets/js/bootstrap4.5.min.js" type="text/javascript"></script>
     <script src="/frontend/assets/js/page_all.js" type="text/javascript"></script>
 @endsection

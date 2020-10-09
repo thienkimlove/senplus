@@ -145,7 +145,7 @@
                     </li>
                     <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
                         <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="ho-so-doanh-nghiep.html" itemid="ho-so-doanh-nghiep.html" class="link" title="Hồ sơ doanh nghiêp" aria-label="Corporate Profile">
-                            <span itemprop="name">Hồ sơ doanh nghiêp</span>
+                            <span itemprop="name">Hồ sơ doanh nghiệp</span>
                         </a>
                     </li>
                     <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
@@ -190,9 +190,12 @@
     <div class="topBlock">
         <div class="fixCen hasBefore">
             <div class="descriptionRusult">
-                <p class="fsitl">* Trên biểu đồ, đường màu xanh thể hiện <strong>Văn hóa hiện tại</strong>, đường màu đỏ thể hiện <strong>Văn hóa mong muốn</strong></p>
-                <p class="fwb">Để kiểm tra mức độ nhất quán, vui lòng sử dụng bộ lọc để chọn các loại biểu đồ tương ứng với 6 yếu tố nội tại của doanh nghiệp.</p>
-                <p class="fwb">Để nhận tư vấn chuyên sâu hơn, vui lòng liên hệ với Senplus.</p>
+                <p class="blue2 fw18px">
+                    [Tên chiến dịch khảo sát]
+                </p>
+                <p>Thời gian thực hiện: [ngày bắt đầu  - ngày kết thúc]</p>
+                <p>Đối tượng: [tương ứng với đối tượng bộ lọc]</p>
+                <p>Số lượng: [số - tương ứng với sl của đối tượng lọc đã hoàn thành ks]</p>
             </div>
         </div>
     </div>
@@ -203,23 +206,23 @@
                 <a href="javascript:void(0)" class="myBtn" title="Tạo chiến dịch" >+ Tạo chiến dịch</a>
                 <form action="" class="filterData">
                     <input type="text" placeholder="Lọc dữ liệu" id="inputSearchDemo">
-                    <div id="filterDataBox" class="showSearchUserBlock">
+                    <div id="filterDataBox">
                         <div class="objectTest">
                             <h3 class="title">Đối tượng khảo sát</h3>
                             <div class="selectGroup">
-                                <select name="" multiple  id="seclectDepartment">
+                                <select name="" multiple class="multiSeclect" id="seclectDepartment">
                                     <option class="option" value="0">Bộ phận/phòng ban</option>
                                     <option class="option" value="1">Kinh doanh</option>
                                     <option class="option" value="2">Nội chính</option>
                                     <option class="option" value="3">Tất cả</option>
                                 </select>
-                                <select name="" id="seclectPosition">
+                                <select name="" multiple class="multiSeclect" id="seclectPosition">
                                     <option class="option" value="0">Vị trí</option>
                                     <option class="option" value="1">Giám đốc</option>
                                     <option class="option" value="2">Trưởng phòng</option>
                                     <option class="option" value="3">Nhân viên</option>
                                 </select>
-                                <select name="" id="seclectSeniority">
+                                <select name="" multiple class="multiSeclect" id="seclectSeniority">
                                     <option class="option" value="0">Thâm niên</option>
                                     <option class="option" value="1">< 1 năm</option>
                                     <option class="option" value="2">< 3 năm</option>

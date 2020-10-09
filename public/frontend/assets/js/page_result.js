@@ -15,7 +15,11 @@
       $(this).removeClass('showSearchUserBlock');
     });
   });
-  $('#seclectDepartment').selectpicker();
+
+  if ($('.multiSeclect').length) {
+    $('.multiSeclect').val(0);
+    $('.multiSeclect').selectpicker('refresh');
+  }
 });
 
 function showPopup(btnClick) {

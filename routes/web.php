@@ -13,32 +13,40 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'FrontendController@index')->name('frontend.index');
+Route::get('/', 'CustomerController@index')->name('frontend.index');
 
-Route::get('register', 'FrontendController@register')->name('frontend.register');
-Route::post('register', 'FrontendController@postReg')->name('frontend.post_reg');
+Route::get('register', 'CustomerController@register')->name('frontend.register');
+Route::post('register', 'CustomerController@postReg')->name('frontend.post_reg');
 
-Route::get('login', 'FrontendController@login')->name('frontend.login');
-Route::post('login', 'FrontendController@postLogin')->name('frontend.post_login');
-Route::post('forgot', 'FrontendController@postForgot')->name('frontend.post_forgot');
-Route::get('forgot', 'FrontendController@forgotPass')->name('frontend.forgot_pass');
-
-
-Route::get('home', 'FrontendController@home')->name('frontend.home');
-Route::get('logout', 'FrontendController@logout')->name('frontend.logout');
+Route::get('login', 'CustomerController@login')->name('frontend.login');
+Route::post('login', 'CustomerController@postLogin')->name('frontend.post_login');
+Route::post('forgot', 'CustomerController@postForgot')->name('frontend.post_forgot');
+Route::get('forgot', 'CustomerController@forgotPass')->name('frontend.forgot_pass');
+Route::get('home', 'CustomerController@home')->name('frontend.home');
+Route::get('logout', 'CustomerController@logout')->name('frontend.logout');
 
 // its for user profile
-Route::get('personal', 'FrontendController@personal')->name('frontend.personal');
+Route::get('personal', 'CustomerController@personal')->name('frontend.personal');
+Route::post('personal', 'CustomerController@postPersonal')->name('frontend.post_personal');
+
+// list customer survey for only this user.
+Route::get('individual', 'CustomerController@individual')->name('frontend.individual');
+
+
 
 // for ho so doanh nghiep
-Route::get('profile', 'FrontendController@profile')->name('frontend.profile');
-Route::post('profile', 'FrontendController@postProfile')->name('frontend.post_profile');
-
+Route::get('profile', 'CompanyController@profile')->name('frontend.profile');
+Route::post('profile', 'CompanyController@postProfile')->name('frontend.post_profile');
 // user data
-Route::get('customer', 'FrontendController@customer')->name('frontend.customer');
-
+Route::get('member', 'CompanyController@member')->name('frontend.member');
+Route::get('detail', 'CompanyController@detail')->name('frontend.detail');
+Route::post('detail', 'CompanyController@postDetail')->name('frontend.post_detail');
 // list survey for company
-Route::get('campaign', 'FrontendController@campaign')->name('frontend.campaign');
+Route::get('campaign', 'CompanyController@campaign')->name('frontend.campaign');
+
+Route::post('handleDelSurvey', 'FrontendController@handleDelSurvey')->name('frontend.del_survey');
+
+
 
 Route::get('survey', 'FrontendController@survey')->name('frontend.survey');
 Route::post('answer', 'FrontendController@answer')->name('frontend.answer');
@@ -50,5 +58,3 @@ Route::post('filter', 'FrontendController@filter')->name('frontend.filter');
 
 Route::get('remove-manager', 'FrontendController@removeManager')->name('frontend.remove_manager');
 Route::post('add-manager', 'FrontendController@addManager')->name('frontend.add_manager');
-
-Route::post('handleDelSurvey', 'FrontendController@handleDelSurvey')->name('frontend.del_survey');

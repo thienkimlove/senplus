@@ -139,8 +139,8 @@ class Helpers
     {
         return [
             self::FRONTEND_ADMIN_LEVEL => 'Admin',
-            self::FRONTEND_MANAGER_LEVEL => 'Manager',
-            self::FRONTEND_USER_LEVEL => 'User'
+            self::FRONTEND_MANAGER_LEVEL => 'Quản lý',
+            self::FRONTEND_USER_LEVEL => 'Nhân viên'
         ];
     }
 
@@ -177,10 +177,15 @@ class Helpers
         ];
     }
 
-    public static function checkIfSurveyHaveResultForUser($survey)
+    public static function checkIfSurveyHaveResultForUser($survey, $customerId = null)
     {
+
+        if (!$customerId) {
+            $customerId = auth()->user()->id;
+        }
+
         $questionIds = $survey->questions->pluck('id')->all();
-        $answerCount = Answer::where('customer_id', auth()->user()->id)
+        $answerCount = Answer::where('customer_id', $customerId)
             ->whereIn('question_id', $questionIds)
             ->count();
 
@@ -259,10 +264,14 @@ class Helpers
         return [$question, $roundAnswerPercent, $answer];
     }
 
-    public static function getSurveyForLoginUser()
+    public static function getSurveyForLoginUser($customer = null)
     {
-        if (auth()->user()->company_id) {
-            return Survey::where('company_id', auth()->user()->company_id)
+        if (!$customer) {
+            $customer = auth()->user();
+        }
+
+        if ($customer->company_id) {
+            return Survey::where('company_id', $customer->company_id)
                 ->where('status', true)
                 ->orderBy('created_at', 'DESC')
                 ->get();
@@ -493,5 +502,13 @@ class Helpers
         $totalCompanyUser = Customer::where('company_id', $survey->company_id)->count();
 
         return $totalCompanyUser - self::getTotalAnswerForSurvey($survey);
+    }
+
+    public static function getGenders()
+    {
+        return [
+            'male' => 'Nam',
+            'female' => 'Nữ'
+        ];
     }
 }

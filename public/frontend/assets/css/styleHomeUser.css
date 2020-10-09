@@ -1444,7 +1444,7 @@ footer .fixCen .socialMedia a:hover {
 }
 
 .campaignBlock .fixCen .leftSide .title {
-  margin-bottom: 3.6458333333vw;
+  margin-bottom: 3.0208333333vw;
 }
 
 .campaignBlock .fixCen .rightSide {
@@ -1458,7 +1458,7 @@ footer .fixCen .socialMedia a:hover {
 
 .campaignBlock .fixCen .rightSide .title {
   text-align: right;
-  margin-bottom: 2.6041666667vw;
+  margin-bottom: 1.8229166667vw;
 }
 
 .campaignBlock .fixCen .rightSide .newestCampaignName {
@@ -1768,6 +1768,7 @@ footer .fixCen .socialMedia a:hover {
 }
 
 .editBlock label {
+  font-weight: normal;
   margin: 0;
   line-height: 1.8229166667vw;
 }
@@ -1805,7 +1806,7 @@ footer .fixCen .socialMedia a:hover {
 
 .editBlock select option {
   background: #eee;
-  font-size: 0.78125vw;
+  font-size: 0.7291666667vw;
 }
 
 .editBlock .imgThumb img {

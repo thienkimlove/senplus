@@ -718,6 +718,10 @@ main {
           filter: brightness(1.1);
 }
 
+.box button.myBtn {
+  padding: 0 1.0416666667vw;
+}
+
 .box #btnLogin {
   float: right;
 }
@@ -1132,10 +1136,10 @@ main {
   -webkit-background-size: 100% 100% !important;
      -moz-background-size: 100% !important;
           background-size: 100% !important;
-  -webkit-animation: 40s linear infinite alternate changeBg;
-  -o-animation: 40s linear infinite alternate changeBg;
-  -moz-animation: 40s linear infinite alternate changeBg;
-       animation: 40s linear infinite alternate changeBg;
+  -webkit-transition: 2.5s;
+  -o-transition: 2.5s;
+  -moz-transition: 2.5s;
+  transition: 2.5s;
 }
 
 .logo {

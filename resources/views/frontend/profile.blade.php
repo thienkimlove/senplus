@@ -24,7 +24,7 @@
         <div class="sortInfoBlock">
             <div class="fixCen">
                 <div class="avatar">
-                    <img src="/frontend/assets//img/demo-logo1.jpg" alt="" class="imgFull">
+                    <img src="/frontend/assets/img/demo-logo1.jpg" alt="" class="imgFull">
                 </div>
                 <div class="txt">
                     {{ $company->name }}
@@ -35,7 +35,7 @@
             <div class="fixCen">
                 <h2 class="title">Thông tin doanh nghiệp</h2>
                 <a href="javascript:void(0)" class="btnEdit" data-edit="#CorInfo" title="Chỉnh sửa"><span>Chỉnh sửa</span>
-                    <img src="/frontend/assets//img/i_pen.png" alt="" class="imgFull">
+                    <img src="/frontend/assets/img/i_pen.png" alt="" class="imgFull">
                 </a>
                 <div class="box">
                     <form action="{{ route('frontend.post_profile') }}" method="POST" id="CorInfo" enctype="multipart/form-data">

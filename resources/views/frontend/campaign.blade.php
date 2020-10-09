@@ -1,19 +1,18 @@
 @extends('frontend.layout')
 
 @section('before_header')
-    <link rel="stylesheet" type="text/css" href="/frontend/assets/css/bootstrap.min2.css">
-    <link rel="stylesheet" type="text/css" href="/frontend/assets/css/bootstrap-datetimepicker2.css">
-    <link rel="stylesheet" type="text/css" href="/frontend/assets/css/styleHomeUser.css">
+    <link rel="stylesheet" type="text/css" href="/frontend/assets/css/bootstrapv4.5.min.css">
+    <link rel="stylesheet" type="text/css" href="/frontend/assets/css/bootstrap-select.css">
+    <link rel="stylesheet" type="text/css" href="/frontend/assets/css/styleSurveyAction.css">
+    <link rel="stylesheet" type="text/css" href="/frontend/assets/css/styleSurveyAction.css">
 
-    <title data-react-helmet="true">Danh sách chiến dịch</title>
+    <title data-react-helmet="true">Danh sách khảo sát</title>
 
     <script src="/frontend/assets/js/jquery-3.5.1.min.js" type="text/javascript"></script>
-    <script src="/frontend/assets/js/bootstrap.min2.js" type="text/javascript"></script>
-    <script src="/frontend/assets/js/moment.js" type="text/javascript"></script>
-    <script src="/frontend/assets/js/bootstrap-datetimepicker.min2.js" type="text/javascript"></script>
-
+    <script src="/frontend/assets/js/bootstrap.bundle.min.js" type="text/javascript"></script>
+    <script src="/frontend/assets/js/bootstrap-select.min.js" type="text/javascript"></script>
     <script src="/frontend/assets/js/page_all.js" type="text/javascript"></script>
-    <script src="/frontend/assets/js/page_homeUser.js" type="text/javascript"></script>
+    <script src="/frontend/assets/js/page_result.js" type="text/javascript"></script>
 @endsection    
 
 @section('content')

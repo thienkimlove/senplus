@@ -36,7 +36,9 @@ class Customer extends Authenticatable
         'password',
         'options',
         'status',
-        'level'
+        'level',
+        'gender',
+        'avatar'
     ];
     protected $hidden = ['password'];
     // protected $dates = [];

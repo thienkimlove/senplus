@@ -38,7 +38,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('frontend.customer') }}" class="link" title="Dữ liệu người dùng" aria-label="User Data">
+                    <a href="{{ route('frontend.member') }}" class="link" title="Dữ liệu người dùng" aria-label="User Data">
                         <span class="img"> <img src="/frontend/assets/img/btn-dulieu.jpg" alt="" class="imgFull"></span>
                         Dữ liệu người dùng
                     </a>
@@ -60,7 +60,7 @@
                     <div class="surveyList">
                         @if ($surveys)
                         <ul>
-                            @foreach ($surveys as $index => $survey)
+                            @foreach ($surveys->take(2) as $index => $survey)
                             <li>
                                 <h4><a href="javascript:void(0)"
                                        class="titleCampaign"
@@ -88,7 +88,7 @@
                             Không có chiến dịch khảo sát nào.
                         @endif
                     </div>
-                    <a href="{{ route('frontend.private') }}" class="myBtn" title="Xem tất cả" aria-label="View All">Xem tất cả</a>
+                    <a href="{{ route('frontend.individual') }}" class="myBtn" title="Xem tất cả" aria-label="View All">Xem tất cả</a>
                 </div>
                 <div class="rightSide">
                     <h2 class="title">Khảo sát mới</h2>

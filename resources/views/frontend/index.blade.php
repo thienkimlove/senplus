@@ -1,12 +1,15 @@
 @extends('frontend.layout')
 
 @section('before_header')
+    <link rel="shortcut icon" href="/frontend/assets/img/favicon.png"/>
+    <link rel="icon" href="/frontend/assets/img/favicon.png" type="image/x-icon"/>
+    <link rel="shortcut icon" href="/frontend/assets/img/favicon.png" type="image/vnd.microsoft.icon"/>
+
     <link rel="stylesheet" type="text/css" href="/frontend/assets/css/bootstrapv4.5.min.css">
     <link rel="stylesheet" type="text/css" href="/frontend/assets/css/styleIndex.css">
-    <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <title data-react-helmet="true">Index</title>
 
-    <script src="/frontend/assets/js/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <script src="/frontend/assets/js/jquery-3.5.1.min.js" type="text/javascript"></script>
     <script src="/frontend/assets/js/bootstrap4.5.min.js" type="text/javascript"></script>
     <script src="/frontend/assets/js/page_all.js" type="text/javascript"></script>
 @endsection

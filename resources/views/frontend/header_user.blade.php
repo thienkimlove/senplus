@@ -4,17 +4,27 @@
             <img src="/frontend/assets/img/i_x.png" alt="" class="imgFull">
         </a>
         <div class="avatar">
-            <img src="/frontend/assets/img/demo-logo1.jpg" alt="" class="imgFull">
+            <img src="{{ auth()->user()->avatar ? url(auth()->user()->avatar) : '/frontend/assets/img/demo-logo1.jpg' }}" alt="" class="imgFull">
         </div>
         <div class="userName">{{ auth()->user()->name }}</div>
         <div class="email">{{ auth()->user()->email }}</div>
     </div>
-    <a href="javascript:void(0)" class="link bdb" title="Góp ý cải thiện sản phẩm" aria-label="Suggestions for product improvement">Góp ý cải thiện sản phẩm</a>
-    <a href="javascript:void(0)" class="link" title="Thông tin tài khoản" aria-label="Profile"><strong>Thông tin tài khoản</strong></a>
-    <a href="javascript:void(0)" class="btnLogout" title="Đăng xuất" aria-label="Logout">Đăng xuất</a>
+    <a href="javascript:void(0)" class="link bdb" title="Góp ý cải thiện sản phẩm" aria-label="Suggestions for product improvement">
+        Góp ý cải thiện sản phẩm
+    </a>
+    <a href="{{ route('frontend.personal') }}" class="link" title="Thông tin tài khoản" aria-label="Profile">
+        <strong>Thông tin tài khoản</strong>
+    </a>
+    <a href="{{ route('frontend.logout') }}" class="btnLogout" title="Đăng xuất" aria-label="Logout">
+        Đăng xuất
+    </a>
     <div class="bottomInfo bdt">
-        <a href="javascript:void(0)" class="link" title="Chính sách bảo mật" aria-label="Privacy policy">Chính sách bảo mật</a>
-        <a href="javascript:void(0)" class="link" title="Điều khoản sử dụng" aria-label="Terms of use">Điều khoản sử dụng</a>
+        <a href="javascript:void(0)" class="link" title="Chính sách bảo mật" aria-label="Privacy policy">
+            Chính sách bảo mật
+        </a>
+        <a href="javascript:void(0)" class="link" title="Điều khoản sử dụng" aria-label="Terms of use">
+            Điều khoản sử dụng
+        </a>
     </div>
 </div>
 <div id="popupCorporateCulture" class="px">
@@ -27,15 +37,25 @@
     <a href="{{ route('frontend.home') }}" class="link" title="Hệ thống đánh giá văn hóa doanh nghiệp" aria-label="CAS">
         <strong>Hệ thống đánh giá văn hóa doanh nghiệp</strong>
     </a>
-    <a href="javascript:void(0)" class="link bdt" title="Giới thiệu" aria-label="Introduce">Giới thiệu</a>
-    <a href="javascript:void(0)" class="link" title="Hướng dẫn sử dụng" aria-label="Guiding">Hướng dẫn sử dụng</a>
+    <a href="javascript:void(0)" class="link bdt" title="Giới thiệu" aria-label="Introduce">
+        Giới thiệu
+    </a>
+    <a href="javascript:void(0)" class="link" title="Hướng dẫn sử dụng" aria-label="Guiding">
+        Hướng dẫn sử dụng
+    </a>
     <a href="{{ route('frontend.home') }}" class="link bdt" title="Trang chủ" aria-label="Home page">
         <strong>Trang chủ (?)</strong>
     </a>
     @if (\App\Helpers::currentFrontendUserIsManager())
-    <a href="{{ route('frontend.profile') }}" class="link bdt" title="Hồ sơ doanh nghiêp" aria-label="Corporate Profile">Hồ sơ doanh nghiêp</a>
-    <a href="{{ route('frontend.customer') }}" class="link" title="Dữ liệu người dùng" aria-label="User Data">Dữ liệu người dùng</a>
-    <a href="{{ route('frontend.campaign') }}" class="link bdb" aria-label="Survey Campaign" title="Danh sách khảo sát">Danh sách khảo sát</a>
+        <a href="{{ route('frontend.profile') }}" class="link bdt" title="Hồ sơ doanh nghiêp" aria-label="Corporate Profile">
+            Hồ sơ doanh nghiêp
+        </a>
+        <a href="{{ route('frontend.member') }}" class="link" title="Dữ liệu người dùng" aria-label="User Data">
+            Dữ liệu người dùng
+        </a>
+        <a href="{{ route('frontend.campaign') }}" class="link bdb" aria-label="Survey Campaign" title="Danh sách khảo sát">
+            Danh sách khảo sát
+        </a>
 
     @endif
 
