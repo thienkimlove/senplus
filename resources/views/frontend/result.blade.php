@@ -19,16 +19,29 @@
     @include('frontend.header_user')
 
     <main>
-        <div class="sortInfoBlock">
-            <div class="fixCen">
-                <div class="avatar">
-                    <img src="/frontend/assets/img/demo-logo1.jpg" alt="" class="imgFull">
-                </div>
-                <div class="txt">
-                    Tên doanh nghiệp
+        @if ($survey->company_id)
+            <div class="sortInfoBlock">
+                <div class="fixCen">
+                    <div class="avatar">
+                        <img src="{{ $survey->company->logo ? url($survey->company->logo) : '/frontend/assets/img/demo-logo1.jpg' }}" alt="" class="imgFull">
+                    </div>
+                    <div class="txt">
+                        {{ $survey->company->name }}
+                    </div>
                 </div>
             </div>
-        </div>
+        @else
+            <div class="sortInfoBlock">
+                <div class="fixCen">
+                    <div class="avatar">
+                        <img src="{{ auth()->user()->avatar? url(auth()->user()->avatar) : '/frontend/assets/img/demo-logo1.jpg' }}" alt="" class="imgFull">
+                    </div>
+                    <div class="txt">
+                        {{ auth()->user()->name }}
+                    </div>
+                </div>
+            </div>
+        @endif
         <div class="topBlock">
             <div class="fixCen hasBefore">
                 <div class="descriptionRusult">

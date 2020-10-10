@@ -25,11 +25,14 @@
                 <div class="avatar">
                     <img src="{{ $customer->avatar? url($customer->avatar) : '/frontend/assets/img/demo-logo1.jpg' }}" alt="" class="imgFull">
                 </div>
+                <div class="txt">
+                    {{ $customer->name }}
+                </div>
             </div>
         </div>
         <div class="topBlock">
             <div class="fixCen hasBefore">
-                <h2 class="title">Các Danh sách khảo sát</h2>
+                <h2 class="title">Danh sách khảo sát</h2>
             </div>
         </div>
         <div class="editSurveyBlock editBlock">

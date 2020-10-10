@@ -201,6 +201,15 @@ class CustomerController extends Controller
         return view('frontend.home', compact( 'page', 'surveys', 'latestCanDoSurvey'));
     }
 
+    public function intro()
+    {
+        $page = 'intro';
+        if (!auth()->check()) {
+            return redirect(route('frontend.index'));
+        }
+        return view('frontend.intro', compact( 'page'));
+    }
+
     public function logout()
     {
         auth()->logout();

@@ -23,10 +23,10 @@
         <div class="sortInfoBlock">
             <div class="fixCen">
                 <div class="avatar">
-                    <img src="/frontend/assets/img/demo-logo1.jpg" alt="" class="imgFull">
+                    <img src="{{ $company->logo ? url($company->logo) : '/frontend/assets/img/demo-logo1.jpg' }}" alt="" class="imgFull">
                 </div>
                 <div class="txt">
-                    Tên doanh nghiệp
+                    {{ $company->name }}
                 </div>
             </div>
         </div>

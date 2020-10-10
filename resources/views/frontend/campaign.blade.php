@@ -40,7 +40,7 @@
         <div class="sortInfoBlock">
             <div class="fixCen">
                 <div class="avatar">
-                    <img src="/frontend/assets//img/demo-logo1.jpg" alt="" class="imgFull">
+                    <img src="{{ $company->logo ? url($company->logo) : '/frontend/assets/img/demo-logo1.jpg' }}" alt="" class="imgFull">
                 </div>
                 <div class="txt">
                     {{ $company->name }}
@@ -49,7 +49,7 @@
         </div>
         <div class="topBlock">
             <div class="fixCen hasBefore">
-                <h2 class="title">Các Danh sách khảo sát</h2>
+                <h2 class="title">Danh sách khảo sát</h2>
                 <a href="javascript:void(0)" class="myBtn addNewUser" title="Tạo chiến dịch">+ Tạo chiến dịch</a>
             </div>
         </div>

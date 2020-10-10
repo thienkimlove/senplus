@@ -40,7 +40,7 @@
     <a href="javascript:void(0)" class="link bdt" title="Giới thiệu" aria-label="Introduce">
         Giới thiệu
     </a>
-    <a href="javascript:void(0)" class="link" title="Hướng dẫn sử dụng" aria-label="Guiding">
+    <a href="{{ route('frontend.intro') }}" class="link" title="Hướng dẫn sử dụng" aria-label="Guiding">
         Hướng dẫn sử dụng
     </a>
     <a href="{{ route('frontend.home') }}" class="link bdt" title="Trang chủ" aria-label="Home page">
@@ -71,12 +71,16 @@
             <ul>
                 <li><a href="javascript:void(0)" title="Về chúng tôi" aria-label="About us">Về chúng tôi</a></li>
                 <li><a href="javascript:void(0)" title="Các sản phẩm" aria-label="Products">Các sản phẩm</a></li>
-                <li><a href="javascript:void(0)" title="Văn hóa doanh nghiệp" aria-label="Corporate Culture">Các sản phẩm</a></li>
+                <li>
+                    <a href="javascript:void(0)" title="Văn hóa doanh nghiệp" aria-label="Corporate Culture">
+                        Văn hóa doanh nghiệp
+                    </a>
+                </li>
                 <li><a href="javascript:void(0)" title="Blog" aria-label="Blog">Blog</a></li>
             </ul>
             <div class="userBlock">
                 <div class="avatar">
-                    <img src="/frontend/assets/img/demo-logo1.jpg" alt="" class="imgFull">
+                    <img src="{{ auth()->user()->avatar ? url(auth()->user()->avatar) : '/frontend/assets/img/demo-logo1.jpg' }}" alt="" class="imgFull">
                 </div>
                 <div class="userName">{{ auth()->user()->username }}</div>
             </div>

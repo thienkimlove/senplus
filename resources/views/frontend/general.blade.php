@@ -22,7 +22,7 @@
         <div class="sortInfoBlock">
             <div class="fixCen">
                 <div class="avatar">
-                    <img src="/frontend/assets/img/demo-logo1.jpg" alt="" class="imgFull">
+                    <img src="{{ $survey->company->logo ? url($survey->company->logo) : '/frontend/assets/img/demo-logo1.jpg' }}" alt="" class="imgFull">
                 </div>
                 <div class="txt">
                     {{ $survey->company->name }}

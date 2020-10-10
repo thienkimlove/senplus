@@ -23,6 +23,7 @@ Route::post('login', 'CustomerController@postLogin')->name('frontend.post_login'
 Route::post('forgot', 'CustomerController@postForgot')->name('frontend.post_forgot');
 Route::get('forgot', 'CustomerController@forgotPass')->name('frontend.forgot_pass');
 Route::get('home', 'CustomerController@home')->name('frontend.home');
+Route::get('intro', 'CustomerController@intro')->name('frontend.intro');
 Route::get('logout', 'CustomerController@logout')->name('frontend.logout');
 
 // its for user profile
