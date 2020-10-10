@@ -103,11 +103,9 @@ class SurveyCrudController extends CrudController
 
         CRUD::addField([
             'label'     => "Doanh Nghiệp",
-            'type'      => 'select',
-            'name'      => 'company',
-            'entity'    => 'company',
-            'model'     => "App\Models\Company",
-            'attribute' => 'name',
+            'type'      => 'select_from_array',
+            'name'      => 'company_id',
+            'options' => [null => 'Chung'] + Company::pluck('name', 'id')->all()
         ]);
 
         CRUD::field('status')->label('Trạng Thái')->type('boolean');
