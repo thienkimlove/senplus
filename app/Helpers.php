@@ -10,6 +10,7 @@ namespace App;
 
 use App\Mail\RegisterConfirm;
 use App\Models\Answer;
+use App\Models\Company;
 use App\Models\Customer;
 use App\Models\Explain;
 use App\Models\Filter;
@@ -512,6 +513,20 @@ class Helpers
             'male' => 'Nam',
             'female' => 'Nữ'
         ];
+    }
+
+    public static function getDefaultCompany()
+    {
+        $default = Company::where('name', 'Default')->first();
+
+        if (!$default) {
+
+            $default = Company::create([
+                'name' => 'Default'
+            ]);
+        }
+
+        return $default;
     }
 
     public static function sendMailNewRegister($customer)

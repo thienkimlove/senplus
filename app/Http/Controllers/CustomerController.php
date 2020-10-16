@@ -60,8 +60,12 @@ class CustomerController extends Controller
         }
 
         try {
+
+            $defaultCompany = Helpers::getDefaultCompany();
+
             $data['status'] = false;
             $data['token'] = Str::uuid();
+            $data['company_id'] = $defaultCompany->id;
             $customer = Customer::create($data);
             //auth()->login($customer);
             Helpers::sendMailNewRegister($customer);
