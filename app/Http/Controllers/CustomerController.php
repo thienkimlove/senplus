@@ -10,6 +10,7 @@ use App\Models\Question;
 use App\Models\Survey;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class CustomerController extends Controller
 {
@@ -29,10 +30,10 @@ class CustomerController extends Controller
             return redirect(route('frontend.home'));
         }
 
-        $data =  $request->only(['login', 'password', 'name']);
+        $data =  $request->only(['email', 'password', 'name']);
 
         $rules = [
-            'login' => 'required',
+            'email' => 'required',
             'password' => 'required',
             'name' => 'required',
         ];
@@ -44,29 +45,69 @@ class CustomerController extends Controller
         $validator = Validator::make($data , $rules, $messages);
         // if the validator fails, redirect back to the form
         if ($validator->fails()) {
-            return redirect(route('frontend.index').'?showReg=1')
+            return redirect(route('frontend.register'))
                 ->withErrors($validator)
                 ->withInput($request->except('password'));
         }
 
-        $customer = Customer::where('login', trim($data['login']))->first();
+        $customer = Customer::where('email', trim($data['email']))->first();
 
         if ($customer) {
-            $validator->getMessageBag()->add('login', 'Tài khoản đã tồn tại!');
+            $validator->getMessageBag()->add('email', 'Tài khoản đã tồn tại!');
             return redirect(route('frontend.register'))
                 ->withErrors($validator)
                 ->withInput($request->except('password'));
         }
 
         try {
+            $data['status'] = false;
+            $data['token'] = Str::uuid();
             $customer = Customer::create($data);
-            auth()->login($customer);
-            return redirect(route('frontend.home'));
+            //auth()->login($customer);
+            Helpers::sendMailNewRegister($customer);
+            $request->session()->flash('general_message', 'Đăng ký thành công xin kiểm tra email kích hoạt!');
+            return redirect(route('frontend.index'));
         } catch (\Exception $exception) {
-            $validator->getMessageBag()->add('login', $exception->getMessage());
+            $validator->getMessageBag()->add('email', $exception->getMessage());
             return redirect(route('frontend.register'))
                 ->withErrors($validator)
                 ->withInput($request->except('password'));
+        }
+
+    }
+
+    public function active(Request $request)
+    {
+
+        $token = $request->input('token');
+
+        if (!$token) {
+            $request->session()->flash('general_message', 'Không có mã kích hoạt!');
+            return redirect(route('frontend.index'));
+        }
+
+        $customer = Customer::where('token', $token)->first();
+
+        if (!$customer) {
+            $request->session()->flash('general_message', 'Mã kích hoạt không hợp lệ!');
+            return redirect(route('frontend.index'));
+        }
+
+        if ($customer->status) {
+            $request->session()->flash('general_message', 'Tài khoản đã được kích hoạt!');
+            return redirect(route('frontend.index'));
+        }
+
+        try {
+            $customer->update([
+                'status' => true,
+                'token' => null
+            ]);
+            $request->session()->flash('general_message', 'Tài khoản đã được kích hoạt thành công! Xin hãy đăng nhập!');
+            return redirect(route('frontend.index'));
+        } catch (\Exception $exception) {
+            $request->session()->flash('general_message', 'Có lỗi xảy ra khi kích hoạt : '.$exception->getMessage().'. Xin thử lại!');
+            return redirect(route('frontend.index'));
         }
 
     }
@@ -77,10 +118,10 @@ class CustomerController extends Controller
             return redirect(route('frontend.home'));
         }
 
-        $data =  $request->only(['login', 'password']);
+        $data =  $request->only(['email', 'password']);
 
         $rules = [
-            'login' => 'required',
+            'email' => 'required',
             'password' => 'required'
         ];
 
@@ -96,10 +137,10 @@ class CustomerController extends Controller
                 ->withInput($request->except('password'));
         }
 
-        $customer = Customer::where('login', trim($data['login']))->first();
+        $customer = Customer::where('email', trim($data['email']))->first();
 
         if (!$customer || !$customer->status) {
-            $validator->getMessageBag()->add('login', 'Tài khoản không tồn tại hoặc chưa kích hoạt!');
+            $validator->getMessageBag()->add('email', 'Tài khoản không tồn tại hoặc chưa kích hoạt!');
             return redirect(route('frontend.index'))
                 ->withErrors($validator)
                 ->withInput($request->except('password'));
@@ -123,10 +164,10 @@ class CustomerController extends Controller
             return redirect(route('frontend.home'));
         }
 
-        $data =  $request->only(['login']);
+        $data =  $request->only(['email']);
 
         $rules = [
-            'login' => 'required'
+            'email' => 'required'
         ];
 
         $messages = [
@@ -141,21 +182,15 @@ class CustomerController extends Controller
                 ->withInput($request->except('password'));
         }
 
-        $customer = Customer::where('login', trim($data['login']))->first();
+        $customer = Customer::where('email', trim($data['email']))->first();
 
         if (!$customer || !$customer->status) {
-            $validator->getMessageBag()->add('login', 'Tài khoản không tồn tại hoặc chưa kích hoạt!');
+            $validator->getMessageBag()->add('email', 'Tài khoản không tồn tại hoặc chưa kích hoạt!');
             return redirect(route('frontend.forgot_pass'))
                 ->withErrors($validator)
                 ->withInput($request->except('password'));
         }
 
-        if (!$customer->email) {
-            $validator->getMessageBag()->add('login', 'Tài khoản chưa có thông tin email!');
-            return redirect(route('frontend.forgot_pass'))
-                ->withErrors($validator)
-                ->withInput($request->except('password'));
-        }
 
         //TODO improve forgot password by send email to user, but user must have email
 

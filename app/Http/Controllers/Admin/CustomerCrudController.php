@@ -60,13 +60,13 @@ class CustomerCrudController extends CrudController
             // n-n relationship (with pivot table)
             'label'     => 'Doanh Nghiệp',
             'type'      => 'select',
-            'name'      => 'company',
+            'name'      => 'company_id',
             'entity'    => 'company',
             'attribute' => 'name',
             'model'     => 'App\Models\Company',
         ]);
         CRUD::column('display_level')->label('Cấp');
-        CRUD::column('login')->label('Tài khoản');
+        CRUD::column('email')->label('Email');
         CRUD::column('password')->label('Mật khẩu');
         CRUD::column('status')->label('Trạng thái')->type('boolean');
 
@@ -112,11 +112,10 @@ class CustomerCrudController extends CrudController
             'options' => Helpers::getGenders(),
             'name' => 'gender'
         ]);
-        CRUD::field('first_name')->label('Tên');
-        CRUD::field('last_name')->label('Họ');
+
         CRUD::field('email')->label('Email');
         CRUD::field('phone')->label('Phone');
-        CRUD::field('username')->label('Username');
+
         CRUD::field('address')->label('Address')->type('textarea');
         CRUD::addField([
             'label'     => 'Cấp',
@@ -124,7 +123,7 @@ class CustomerCrudController extends CrudController
             'name'      => 'level',
             'options'   => Helpers::mapLevel(),
         ]);
-        CRUD::field('login')->label('Tài khoản');
+
         CRUD::field('password')->label('Mật khẩu');
         CRUD::field('status')->label('Trạng thái')->type('boolean');
 
@@ -142,5 +141,6 @@ class CustomerCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+        CRUD::removeField('password');
     }
 }

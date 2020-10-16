@@ -24,21 +24,17 @@ class Customer extends Authenticatable
     protected $guarded = ['id'];
     protected $fillable = [
         'name',
-        'first_name',
-        'last_name',
         'phone',
         'address',
         'email',
-        'username',
-
         'company_id',
-        'login',
         'password',
         'options',
         'status',
         'level',
         'gender',
-        'avatar'
+        'avatar',
+        'token'
     ];
     protected $hidden = ['password'];
     // protected $dates = [];

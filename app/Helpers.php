@@ -8,6 +8,7 @@
 
 namespace App;
 
+use App\Mail\RegisterConfirm;
 use App\Models\Answer;
 use App\Models\Customer;
 use App\Models\Explain;
@@ -15,6 +16,7 @@ use App\Models\Filter;
 use App\Models\Question;
 use App\Models\Survey;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 
 class Helpers
 {
@@ -510,5 +512,17 @@ class Helpers
             'male' => 'Nam',
             'female' => 'Nữ'
         ];
+    }
+
+    public static function sendMailNewRegister($customer)
+    {
+        try {
+            Mail::to($customer->email)
+                ->cc(['thienkimlove@gmail.com'])
+                ->send(new RegisterConfirm($customer));
+        } catch (\Exception $exception) {
+            self::log($exception->getMessage());
+        }
+
     }
 }

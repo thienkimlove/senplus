@@ -32,12 +32,22 @@
                 </div>
                 <div class="hr"><span>hoặc</span></div>
                 <!--Khi cần show lỗi thì anh add class showWarning vào div warning dưới đây, ko cần thì bỏ-->
-                <div id="reg_error" class="warning {{ count($errors) ? 'showWarning' : '' }}">Email hoặc Mật khẩu không đúng!</div>
-                <div class="form-group">
-                    <input type="text" placeholder="Họ và tên" class="username" id="reg_name" name="name">
+                <div id="reg_error" class="warning {{ count($errors) ? 'showWarning' : '' }}">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                 </div>
                 <div class="form-group">
-                    <input type="text" placeholder="Tài Khoản" class="email" id="reg_email" name="login">
+                    <input type="text" placeholder="Họ và tên" class="username" id="reg_name" name="name" value="{{ old('name') }}">
+                </div>
+                <div class="form-group">
+                    <input type="text" placeholder="Email" class="email" id="reg_email" name="email" value="{{ old('email') }}">
                 </div>
                 <div class="form-group">
                     <input type="password" placeholder="Mật khẩu 6 kí tự" class="password" id="reg_pass" name="password" autocomplete="new-password">

@@ -33,6 +33,15 @@ class Company extends Model
     // protected $hidden = [];
     // protected $dates = [];
 
+    public $appends = [
+        'is_default'
+    ];
+
+    public function getIsDefaultAttribute()
+    {
+        return ($this->name == 'Default');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS

@@ -30,7 +30,7 @@
                         Email hoặc Mật khẩu không đúng!
                     </div>
                     <div class="form-group">
-                        <input type="text" placeholder="Tài khoản" class="email" id="login_email" name="login">
+                        <input type="email" placeholder="Email" class="email" id="login_email" name="email">
                     </div>
                     <div class="form-group">
                         <input type="password" placeholder="Mật khẩu 6 kí tự" class="password" id="login_pass" name="password">
