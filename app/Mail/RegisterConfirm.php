@@ -30,6 +30,6 @@ class RegisterConfirm extends Mailable
         $customer = $this->customer;
         return $this->from('support@mg.casonline.vn')
             ->subject('Kích hoạt tài khoản tại Sen Cộng')
-            ->view('emails.register_confirm');
+            ->view('emails.register_confirm', compact('customer'));
     }
 }

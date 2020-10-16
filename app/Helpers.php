@@ -516,9 +516,13 @@ class Helpers
 
     public static function sendMailNewRegister($customer)
     {
-        Mail::to($customer->email)
-            ->cc(['thienkimlove@gmail.com'])
-            ->send(new RegisterConfirm($customer));
+        try {
+            Mail::to($customer->email)
+                ->cc(['thienkimlove@gmail.com'])
+                ->send(new RegisterConfirm($customer));
+        } catch (\Exception $exception) {
+            self::log($exception->getMessage());
+        }
 
     }
 }
