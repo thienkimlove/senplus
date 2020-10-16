@@ -28,7 +28,7 @@ class RegisterConfirm extends Mailable
     public function build()
     {
         $customer = $this->customer;
-        return $this->from('support@casonline.vn')
+        return $this->from('support@mg.casonline.vn')
             ->subject('Kích hoạt tài khoản tại Sen Cộng')
             ->view('emails.register_confirm');
     }
