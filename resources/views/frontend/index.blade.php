@@ -27,10 +27,18 @@
                     </div>
                     <!--Khi cần show lỗi thì anh add class showWarning vào div warning dưới đây-->
                     <div id="login_error" class="warning {{ count($errors) ? 'showWarning' : '' }}">
-                        Email hoặc Mật khẩu không đúng!
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                     </div>
                     <div class="form-group">
-                        <input type="email" placeholder="Email" class="email" id="login_email" name="email">
+                        <input type="email" placeholder="Email" class="email" id="login_email" name="email" value="{{ old('email') }}">
                     </div>
                     <div class="form-group">
                         <input type="password" placeholder="Mật khẩu 6 kí tự" class="password" id="login_pass" name="password">
