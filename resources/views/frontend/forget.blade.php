@@ -15,7 +15,7 @@
 
     <div class="wrapper" style="background: url('/frontend/assets/img/bg.jpg') center top no-repeat;background-size: 100%;">
         <div class="box loginBox">
-            <form action="{{ route('frontend.post_forget') }}" id="forgetForm" class="active">
+            <form action="{{ route('frontend.post_forget') }}" id="forgetForm" method="POST" class="active">
                 {{ csrf_field() }}
                 <div class="topForm">
                     <h1 class="smLogo"><img src="/frontend/assets/img/logo-sm.png" alt="" class="imgFull"></h1>
