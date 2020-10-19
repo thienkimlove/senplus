@@ -43,10 +43,10 @@
                     <div class="form-group">
                         <input type="password" placeholder="Mật khẩu 6 kí tự" class="password" id="login_pass" name="password">
                     </div>
-                    {{--<div class="form-group">--}}
-                        {{--<input type="checkbox" class="checkbox" checked /> Duy trì đăng nhập--}}
-                        {{--<a href="{{ route('frontend.forgot_pass') }}" class="forgetPass" title="Quên mật khẩu" aria-label="Forget Password">Quên mật khẩu?</a>--}}
-                    {{--</div>--}}
+                    <div class="form-group">
+                        <input type="checkbox" class="checkbox" checked /> Duy trì đăng nhập
+                        <a href="{{ route('frontend.forgot_pass') }}" class="forgetPass" title="Quên mật khẩu" aria-label="Forget Password">Quên mật khẩu?</a>
+                    </div>
                     <div class="form-group">
                         <div class="noAccount">Chưa có tài khoản? <a href="{{ route('frontend.register') }}" class="registerLink" title="Đăng ký" aria-label="Register">Đăng ký</a></div>
                         <button id="btnLogin" type="button">Đăng nhập</button>
@@ -122,7 +122,9 @@
                 let errorEle = $('#login_error');
 
                 if (!email || !pass) {
-                    errorEle.removeClass('showWarning').addClass('showWarning');
+                    errorEle.html('Xin kiểm tra lại thông tin nhập vào!')
+                        .removeClass('showWarning')
+                        .addClass('showWarning');
                     return false;
                 }
 

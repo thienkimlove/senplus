@@ -91,7 +91,9 @@
                 let errorEle = $('#reg_error');
 
                 if (!email || !pass || !name) {
-                    errorEle.removeClass('showWarning').addClass('showWarning');
+                    errorEle.html('Xin kiểm tra lại thông tin nhập vào!')
+                        .removeClass('showWarning')
+                        .addClass('showWarning');
                     return false;
                 }
 

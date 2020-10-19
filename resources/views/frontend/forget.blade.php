@@ -15,14 +15,14 @@
 
     <div class="wrapper" style="background: url('/frontend/assets/img/bg.jpg') center top no-repeat;background-size: 100%;">
         <div class="box loginBox">
-            <form action="{{ route('frontend.post_forgot') }}" id="forgotForm" class="active">
+            <form action="{{ route('frontend.post_forget') }}" id="forgetForm" class="active">
                 {{ csrf_field() }}
                 <div class="topForm">
                     <h1 class="smLogo"><img src="/frontend/assets/img/logo-sm.png" alt="" class="imgFull"></h1>
                     <div class="txt">Hệ thống đánh giá văn hóa doanh nghiệp</div>
                 </div>
                 <!--Khi cần show lỗi thì anh add class showWarning vào div warning dưới đây-->
-                <div id="forgot_error" class="warning {{ count($errors) ? 'showWarning' : '' }}">
+                <div id="forget_error" class="warning {{ count($errors) ? 'showWarning' : '' }}">
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>
@@ -38,9 +38,11 @@
                     <div class="txtBlue"><a href="{{ route('frontend.register') }}">Đăng Ký</a></div>
                 </div>
                 <div class="form-group">
-                    <input type="text" placeholder="Email" class="email" id="login_email" name="email" value="{{ old('email') }}">
+                    <input type="password" placeholder="Mật khẩu mới" class="password" id="password" name="password">
+                    <input type="password" placeholder="Nhập lại mật khẩu mới" class="password" id="password_confirm" name="password_confirm">
+                    <input type="hidden" value="{{ $token }}" name="forget_token"/>
                 </div>
-                <div class="txtNote">Nhập email đã đăng kí để nhận mật khẩu mới</div>
+                <div class="txtNote">Nhập mật khẩu mới</div>
                 <div class="form-group">
                     <button id="btnSend" type="button">Gửi</button>
                 </div>
@@ -61,17 +63,18 @@
     <script>
         $(function(){
             $('#btnSend').click(function(){
-                let email = $('#login_email').val();
-                let errorEle = $('#forgot_error');
+                let pass = $('#password').val();
+                let pass_again = $('#password_confirm').val();
+                let errorEle = $('#forget_error');
 
-                if (!email) {
+                if (!pass || !pass_again || (pass !== pass_again)) {
                     errorEle.html('Xin kiểm tra lại thông tin nhập vào!')
                         .removeClass('showWarning')
                         .addClass('showWarning');
                     return false;
                 }
 
-                $('form#forgotForm').submit();
+                $('form#forgetForm').submit();
 
                 return false;
             });

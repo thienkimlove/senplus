@@ -8,6 +8,7 @@
 
 namespace App;
 
+use App\Mail\ForgotPassword;
 use App\Mail\RegisterConfirm;
 use App\Models\Answer;
 use App\Models\Company;
@@ -535,6 +536,17 @@ class Helpers
             Mail::to($customer->email)
                 ->cc(['thienkimlove@gmail.com'])
                 ->send(new RegisterConfirm($customer));
+        } catch (\Exception $exception) {
+            self::log($exception->getMessage());
+        }
+
+    }
+    public static function sendMailForgotPassword($customer)
+    {
+        try {
+            Mail::to($customer->email)
+                ->cc(['thienkimlove@gmail.com'])
+                ->send(new ForgotPassword($customer));
         } catch (\Exception $exception) {
             self::log($exception->getMessage());
         }

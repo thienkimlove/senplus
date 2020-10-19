@@ -116,6 +116,103 @@ class CustomerController extends Controller
 
     }
 
+    public function forget(Request $request)
+    {
+
+        $token = $request->input('token');
+
+        if (!$token) {
+            $request->session()->flash('general_message', 'Không có mã lấy lại mật khẩu!');
+            return redirect(route('frontend.index'));
+        }
+
+        $customer = Customer::where('token', $token)->first();
+
+        if (!$customer || !$customer->status) {
+            $request->session()->flash('general_message', 'Mã lấy lại mật khẩu không hợp lệ hoặc tài khoản chưa được kích hoạt!');
+            return redirect(route('frontend.index'));
+        }
+
+        $page = 'forget';
+        return view('frontend.forget', compact('page', 'token'));
+
+    }
+
+    public function postForget(Request $request)
+    {
+        if (auth()->check()) {
+            return redirect(route('frontend.home'));
+        }
+
+        $data =  $request->only(['password', 'password_confirm', 'forget_token']);
+
+        $rules = [
+            'password' => 'required',
+            'password_confirm' => 'required',
+            'forget_token' => 'required',
+        ];
+
+        $messages = [
+            'required' => ':attribute bắt buộc nhập.',
+        ];
+
+        $validator = Validator::make($data , $rules, $messages);
+        // if the validator fails, redirect back to the form
+        if ($validator->fails()) {
+            $validator->getMessageBag()->add('password', 'Thiếu thông tin nhập vào!');
+            return redirect(route('frontend.forget'))
+                ->withErrors($validator)
+                ->withInput($request->except(['password', 'password_confirm']));
+        }
+
+        $token = $request->input('forget_token');
+
+        if (!$token) {
+            $request->session()->flash('general_message', 'Không có mã lấy lại mật khẩu!');
+            return redirect(route('frontend.forget'))
+                ->withErrors($validator)
+                ->withInput($request->except(['password', 'password_confirm']));
+        }
+
+        $password = $request->input('password');
+        $passwordConfirm = $request->input('password_confirm');
+
+        if ($password != $passwordConfirm) {
+            $request->session()->flash('general_message', 'Mật khẩu xác nhận không trùng với mật khẩu mới!');
+            return redirect(route('frontend.forget'))
+                ->withErrors($validator)
+                ->withInput($request->except(['password', 'password_confirm']));
+        }
+
+        $customer = Customer::where('token', $token)->first();
+
+        if (!$customer || !$customer->status) {
+            $request->session()->flash('general_message', 'Mã lấy lại mật khẩu không hợp lệ hoặc tài khoản chưa được kích hoạt!');
+            return redirect(route('frontend.index'));
+        }
+
+
+        // Add token and send email
+
+        try {
+            $customer->update([
+                'token' => null,
+                'password' => $password
+            ]);
+
+            $request->session()->flash('general_message', 'Đổi mật khẩu mới thành công!');
+            return redirect(route('frontend.index'));
+
+        } catch (\Exception $exception) {
+            $validator->getMessageBag()->add('password', 'Có lỗi xảy ra xin thử lại!');
+            return redirect(route('frontend.forget'))
+                ->withErrors($validator)
+                ->withInput($request->except(['password', 'password_confirm']));
+        }
+
+
+    }
+
     public function postLogin(Request $request)
     {
         if (auth()->check()) {
@@ -183,7 +280,7 @@ class CustomerController extends Controller
         if ($validator->fails()) {
             return redirect(route('frontend.forgot_pass'))
                 ->withErrors($validator)
-                ->withInput($request->except('password'));
+                ->withInput();
         }
 
         $customer = Customer::where('email', trim($data['email']))->first();
@@ -192,13 +289,21 @@ class CustomerController extends Controller
             $validator->getMessageBag()->add('email', 'Tài khoản không tồn tại hoặc chưa kích hoạt!');
             return redirect(route('frontend.forgot_pass'))
                 ->withErrors($validator)
-                ->withInput($request->except('password'));
+                ->withInput();
         }
 
+        // Add token and send email
 
-        //TODO improve forgot password by send email to user, but user must have email
-
-        return redirect(route('frontend.home'));
+        try {
+            $customer->token = Str::uuid();
+            $customer->save();
+            Helpers::sendMailForgotPassword($customer);
+        } catch (\Exception $exception) {
+            $validator->getMessageBag()->add('email', 'Có lỗi xảy ra xin thử lại!');
+            return redirect(route('frontend.forgot_pass'))
+                ->withErrors($validator)
+                ->withInput();
+        }
     }
 
     public function register()

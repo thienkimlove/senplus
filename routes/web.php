@@ -21,8 +21,15 @@ Route::get('active', 'CustomerController@active')->name('frontend.active');
 
 Route::get('login', 'CustomerController@login')->name('frontend.login');
 Route::post('login', 'CustomerController@postLogin')->name('frontend.post_login');
+
+
 Route::post('forgot', 'CustomerController@postForgot')->name('frontend.post_forgot');
+Route::post('forget', 'CustomerController@postForget')->name('frontend.post_forget');
+Route::get('forget', 'CustomerController@forget')->name('frontend.forget');
 Route::get('forgot', 'CustomerController@forgotPass')->name('frontend.forgot_pass');
+
+
+
 Route::get('home', 'CustomerController@home')->name('frontend.home');
 Route::get('intro', 'CustomerController@intro')->name('frontend.intro');
 Route::get('logout', 'CustomerController@logout')->name('frontend.logout');
