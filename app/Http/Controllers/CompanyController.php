@@ -9,6 +9,7 @@ use App\Models\Customer;
 use App\Models\Question;
 use App\Models\Survey;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
 
 class CompanyController extends Controller
@@ -24,11 +25,246 @@ class CompanyController extends Controller
             return redirect(route('frontend.home'));
         }
 
-        $company = Company::find(auth()->user()->company_id);
+        $company = Helpers::getLoginCompany();
 
         $surveys = Helpers::getSurveyForLoginUser();
 
         return view('frontend.campaign', compact('company', 'surveys'));
+    }
+
+    public function campaignDetail(Request $request)
+    {
+        if (!auth()->check()) {
+            return redirect(route('frontend.index'));
+        }
+
+        if (!Helpers::currentFrontendUserIsManager()) {
+            return redirect(route('frontend.home'));
+        }
+
+        $surveyId = $request->input('id');
+
+        if (!$surveyId) {
+            Helpers::setFlashMessage('Id không tồn tại!');
+            return redirect(route('frontend.home'));
+        }
+
+        $survey = Survey::find($surveyId);
+
+        if (!$survey) {
+            Helpers::setFlashMessage('Chiến dịch không tồn tại!');
+            return redirect(route('frontend.home'));
+        }
+
+        $company = Helpers::getLoginCompany();
+
+        return view('frontend.campaign_detail', compact('company', 'survey'));
+    }
+
+    public function campaignEdit(Request $request)
+    {
+        if (!auth()->check()) {
+            return redirect(route('frontend.index'));
+        }
+
+        if (!Helpers::currentFrontendUserIsManager()) {
+            return redirect(route('frontend.home'));
+        }
+
+        $surveyId = $request->input('id');
+
+        if (!$surveyId) {
+            Helpers::setFlashMessage('Id không tồn tại!');
+            return redirect(route('frontend.home'));
+        }
+
+        $survey = Survey::find($surveyId);
+
+        if (!$survey) {
+            Helpers::setFlashMessage('Chiến dịch không tồn tại!');
+            return redirect(route('frontend.home'));
+        }
+
+        $company = Helpers::getLoginCompany();
+
+        return view('frontend.campaign_edit', compact('company', 'survey'));
+    }
+
+    public function postCampaignEdit(Request $request)
+    {
+        if (!Helpers::currentFrontendUserIsManager()) {
+            return redirect(route('frontend.home'));
+        }
+        $surveyId = $request->input('survey_id');
+
+        if (!$surveyId) {
+            Helpers::setFlashMessage('Không có ID Chiến dịch!');
+            return redirect(route('frontend.home'));
+        }
+
+        $survey = Survey::find($surveyId);
+
+        if (!$survey) {
+            Helpers::setFlashMessage('Chiến dịch không tồn tại!');
+            return redirect(route('frontend.home'));
+        }
+
+        $data =  $request->only(['name', 'link', 'start_time', 'end_time', 'desc']);
+
+        $rules = [
+            'name' => 'required',
+            'link' => 'required',
+            'start_time' => 'required',
+            'end_time' => 'required',
+        ];
+
+        $messages = [
+            'required' => ':attribute bắt buộc nhập.',
+        ];
+
+        $validator = Validator::make($data , $rules, $messages);
+        // if the validator fails, redirect back to the form
+        if ($validator->fails()) {
+            return redirect(route('frontend.campaign_edit').'?id='.$surveyId)
+                ->withErrors($validator);
+        }
+
+        // validate link
+
+        $link = str_replace( url('/'), "", $request->input('link'));
+        $link = str_replace('/', "", $link);
+
+
+        $findInSurveyList = Survey::where('link', $link)->where('id', '!=', $surveyId)->count();
+
+        if ($findInSurveyList > 0) {
+            $validator->getMessageBag()->add('link', 'Mã đường dẫn chiến dịch đã tồn tại!');
+            return redirect(route('frontend.campaign_edit').'?id='.$surveyId)
+                ->withErrors($validator);
+        }
+
+        $update_fields = [
+            'name',
+            'link',
+            'desc',
+            'start_time',
+            'end_time',
+        ];
+
+        foreach ($update_fields as $field) {
+
+
+
+            $value = $request->input($field);
+
+            if ($value) {
+                if (in_array($field, ['start_time' ,'end_time'])) {
+                    $value = Carbon::createFromFormat('d/m/Y H:i:s',$value)->toDateTimeString();
+                }
+
+                try  {
+                    $survey->update([
+                        $field => $value
+                    ]);
+                } catch (\Exception $exception) {
+                    //pass
+                }
+            }
+        }
+
+        return redirect(route('frontend.campaign_detail').'?id='.$surveyId);
+    }
+
+    public function campaignCreate()
+    {
+        if (!auth()->check()) {
+            return redirect(route('frontend.index'));
+        }
+
+        if (!Helpers::currentFrontendUserIsManager()) {
+            return redirect(route('frontend.home'));
+        }
+
+        $company = Helpers::getLoginCompany();
+
+        return view('frontend.campaign_create', compact('company'));
+    }
+
+    public function postCampaignCreate(Request $request)
+    {
+        if (!Helpers::currentFrontendUserIsManager()) {
+            return redirect(route('frontend.home'));
+        }
+
+
+        $data =  $request->only(['name', 'link', 'start_time', 'end_time', 'desc']);
+
+        $rules = [
+            'name' => 'required',
+            'link' => 'required',
+            'start_time' => 'required',
+            'end_time' => 'required',
+        ];
+
+        $messages = [
+            'required' => ':attribute bắt buộc nhập.',
+        ];
+
+        $validator = Validator::make($data , $rules, $messages);
+        // if the validator fails, redirect back to the form
+        if ($validator->fails()) {
+            return redirect(route('frontend.campaign_create'))
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        // validate link
+
+        $link = str_replace( url('/'), "", $request->input('link'));
+        $link = str_replace('/', "", $link);
+
+
+        $findInSurveyList = Survey::where('link', $link)->count();
+
+        if ($findInSurveyList > 0) {
+            $validator->getMessageBag()->add('link', 'Mã đường dẫn chiến dịch đã tồn tại!');
+            return redirect(route('frontend.campaign_create'))
+                ->withErrors($validator);
+        }
+
+        $update_fields = [
+            'name',
+            'link',
+            'desc',
+            'start_time',
+            'end_time',
+        ];
+
+        $createData = [
+            'company_id' => auth()->user()->company_id
+        ];
+
+        foreach ($update_fields as $field) {
+            $value = $request->input($field);
+            if ($value) {
+                if (in_array($field, ['start_time' ,'end_time'])) {
+                    $value = Carbon::createFromFormat('d/m/Y H:i:s',$value)->toDateTimeString();
+                }
+                $createData[$field] = $value;
+            }
+        }
+
+        try {
+            Survey::create($createData);
+            Helpers::setFlashMessage('Tạo chiến dịch khảo sát thành công!');
+            return redirect(route('frontend.home'));
+
+        } catch (\Exception $exception) {
+            $validator->getMessageBag()->add('name', 'Có lỗi xảy ra xin thử lại sau!');
+            return redirect(route('frontend.campaign_create'))
+                ->withErrors($validator);
+        }
+
     }
 
     public function profile()
@@ -41,7 +277,7 @@ class CompanyController extends Controller
             return redirect(route('frontend.home'));
         }
 
-        $company = Company::find(auth()->user()->company_id);
+        $company = Helpers::getLoginCompany();
 
         return view('frontend.profile', compact('company'));
     }
@@ -56,7 +292,8 @@ class CompanyController extends Controller
             return redirect(route('frontend.home'));
         }
 
-        $company = Company::find(auth()->user()->company_id);
+        $company = Helpers::getLoginCompany();
+
         $customers = Customer::where('company_id', $company->id)
             ->where('level', '!=', Helpers::FRONTEND_ADMIN_LEVEL)
             ->paginate(10);
@@ -89,7 +326,7 @@ class CompanyController extends Controller
             return redirect(route('frontend.member'));
         }
 
-        $company = Company::find(auth()->user()->company_id);
+        $company = Helpers::getLoginCompany();
         $surveys = Helpers::getSurveyForLoginUser($customer);
         $countTotal = $surveys->count();
 

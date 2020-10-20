@@ -69,7 +69,7 @@ class CustomerController extends Controller
             $customer = Customer::create($data);
             //auth()->login($customer);
             Helpers::sendMailNewRegister($customer);
-            $request->session()->flash('general_message', 'Đăng ký thành công xin kiểm tra email kích hoạt!');
+            Helpers::setFlashMessage('Đăng ký thành công xin kiểm tra email kích hoạt!');
             return redirect(route('frontend.index'));
         } catch (\Exception $exception) {
             $validator->getMessageBag()->add('email', $exception->getMessage());
@@ -298,6 +298,8 @@ class CustomerController extends Controller
             $customer->token = Str::uuid();
             $customer->save();
             Helpers::sendMailForgotPassword($customer);
+            $request->session()->flash('general_message', 'Xin kiểm tra email để nhận mã lấy lại mật khẩu!');
+            return redirect(route('frontend.index'));
         } catch (\Exception $exception) {
             $validator->getMessageBag()->add('email', 'Có lỗi xảy ra xin thử lại!');
             return redirect(route('frontend.forgot_pass'))

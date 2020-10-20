@@ -1,25 +1,12 @@
-@extends('frontend.layout')
+@extends('frontend.layout_home')
 
-@section('before_header')
-    <link rel="stylesheet" type="text/css" href="/frontend/assets/css/bootstrapv4.5.min.css">
-    <link rel="stylesheet" type="text/css" href="/frontend/assets/css/bootstrap-select.css">
-    <link rel="stylesheet" type="text/css" href="/frontend/assets/css/styleSurveyAction.css">
-    <link rel="stylesheet" type="text/css" href="/frontend/assets/css/styleSurveyAction.css">
+@section('after_head')
+    <title data-react-helmet="true">Hồ sơ doanh nghiệp</title>
+@endsection
 
-    <title data-react-helmet="true">Danh sách khảo sát</title>
-
-    <script src="/frontend/assets/js/jquery-3.5.1.min.js" type="text/javascript"></script>
-    <script src="/frontend/assets/js/bootstrap.bundle.min.js" type="text/javascript"></script>
-    <script src="/frontend/assets/js/bootstrap-select.min.js" type="text/javascript"></script>
-    <script src="/frontend/assets/js/page_all.js" type="text/javascript"></script>
-    <script src="/frontend/assets/js/page_result.js" type="text/javascript"></script>
-@endsection    
 
 @section('content')
-    <body class="bodyHomeUser">
-    @include('frontend.header_user')
-
-    <div class="popup px popupNotify" id="popupDelSurvey">
+    <div class="popup px popupNotify" id="popupDelSurveyWithParam">
         <div class="bg_drop pa"></div>
         <div class="popupContent pa box">
             <a href="javascript:void(0)" class="closePopup pa" title="Đóng lại" aria-label="Close">
@@ -34,23 +21,12 @@
             </div>
         </div>
     </div>
-
-
     <main>
-        <div class="sortInfoBlock">
-            <div class="fixCen">
-                <div class="avatar">
-                    <img src="{{ $company->logo ? url($company->logo) : '/frontend/assets/img/demo-logo1.jpg' }}" alt="" class="imgFull">
-                </div>
-                <div class="txt">
-                    {{ $company->name }}
-                </div>
-            </div>
-        </div>
+        @include('frontend.partials.sort_block')
         <div class="topBlock">
             <div class="fixCen hasBefore">
-                <h2 class="title">Danh sách khảo sát</h2>
-                <a href="javascript:void(0)" class="myBtn addNewUser" title="Tạo chiến dịch">+ Tạo chiến dịch</a>
+                <h2 class="title">Hệ thống đánh giá VHDN</h2>
+                <a href="{{ route('frontend.campaign_create') }}" class="myBtn addNewUser" title="Tạo chiến dịch">+ Tạo chiến dịch</a>
             </div>
         </div>
         <div class="editSurveyBlock editBlock">
@@ -77,7 +53,7 @@
                                        title="{{ $survey->name }}">
                                         {{ $survey->name }}
                                     </a>
-                                    <a href="javascript:void(0)" class="btnEditSurvey" title="Sửa chiến dịch">
+                                    <a href="{{ route('frontend.campaign_detail').'?id='.$survey->id }}" class="btnEditSurvey" title="Sửa chiến dịch">
                                         <img src="/frontend/assets//img/i_pen.png" alt="Edit">
                                     </a>
                                 </td>
@@ -106,14 +82,13 @@
             </div>
         </div>
     </main>
-    @include('frontend.footer_user')
-    </body>
 @endsection
+
 
 @section('after_scripts')
     <script>
         function showPopupNotifyWithParams(surveyId) {
-            let popup = '#popupDelSurvey';
+            let popup = '#popupDelSurveyWithParam';
             let dropElement = $('.bg_drop');
             $(popup).addClass('showPopup');
             dropElement.fadeIn();
@@ -147,12 +122,5 @@
 
             });
         }
-        $(function(){
-            $('.btnSave').click(function(){
-                $('#CorInfo').submit();
-                return false;
-            });
-
-        });
     </script>
 @endsection

@@ -6,25 +6,6 @@
  * @version 2.0.0
  * Copyright 2020. MIT licensed.
  */$(document).ready(function () {
-  if ($('.wrapper').length > 0) {
-    changeBg();
-  }
-
-  $('.btnUserID').click(function () {
-    $('#userPopup').toggleClass('active');
-  });
-  var showHidePopup = 0;
-  $('.showHidePopup').bind('click', function () {
-    tooglePopup('.box_right');
-
-    if (showHidePopup == 0) {
-      $('.openBtn').fadeOut(100);
-      showHidePopup++;
-    } else {
-      $('.openBtn').fadeIn(1000);
-      showHidePopup--;
-    }
-  });
   $(window).on('DOMMouseScroll mousewheel', function (event) {
     if (event.originalEvent.wheelDelta > 0) {
       if ($(this).scrollTop() >= 50) {
@@ -36,17 +17,35 @@
       $('header').removeClass('fixed');
     }
   });
-  $('.userBlock').click(function () {
-    $('#popupProfile').toggleClass('showPopProfile');
+  $('#showMenuGuide').click(function () {
+    $('#menuQuestion').toggleClass('showMenu');
+    $('#menuQuestion').mouseleave(function () {
+      $(this).removeClass('showMenu');
+    });
   });
-  $('#popupProfile .closePopup').click(function () {
+  $('.userBlock').click(function () {
+    $('body').toggleClass('fixed');
     $('#popupProfile').toggleClass('showPopProfile');
+    $('#popupProfile .closePopup').click(function () {
+      $('#popupProfile').toggleClass('showPopProfile');
+      $('body').toggleClass('fixed');
+    });
+    $('#popupProfile').mouseleave(function () {
+      $(this).removeClass('showPopProfile');
+    });
   });
   $('#btnShowMainMenu').click(function () {
+    showMenuSide = 1;
+    $('body').toggleClass('fixed');
+    $(this).toggleClass('closeSt');
     $('#popupCorporateCulture').toggleClass('showPopCorCul');
-  });
-  $('#popupCorporateCulture .closePopup').click(function () {
-    $('#popupCorporateCulture').toggleClass('showPopCorCul');
+    $('#popupCorporateCulture .closePopup').click(function () {
+      $('#popupCorporateCulture').toggleClass('showPopCorCul');
+      $('body').toggleClass('fixed');
+    });
+    $('#popupCorporateCulture').mouseleave(function () {
+      $(this).removeClass('showPopCorCul');
+    });
   });
 
   if ($('.hasIconEdit').length > 0) {
@@ -56,18 +55,15 @@
   }
 });
 
-function tooglePopup(popup) {
-  $(popup).toggleClass('openPopup');
-}
-
-function showMenu(btnShowMenu) {
-  $('#mainMenu').addClass('active');
-  $('#mainMenu .bg_drop').click(function () {
-    $('#mainMenu').removeClass('active');
+function showPopup(btnClick) {
+  var popup = $(btnClick).data('popup');
+  $(popup).addClass('showPopup');
+  $(popup).mouseleave(function () {
+    $(this).removeClass('showPopup');
   });
 }
 
-function showPopup(popup) {
+function showPopupGuiding(popup) {
   $(popup).siblings().removeClass('showPopup');
   $(popup).addClass('showPopup');
   $('.bg_drop').fadeIn();
@@ -92,16 +88,4 @@ function showPopupNotify(popup) {
     $(this).fadeOut();
     $(popup).removeClass('showPopup');
   });
-}
-
-function changeBg() {
-  var bg = 1;
-  setInterval(function () {
-    bg++;
-    $('.wrapper').css('background', 'url(../../assets/img/bg' + bg + '.jpg) center top no-repeat');
-
-    if (bg >= 5) {
-      bg = 0;
-    }
-  }, 15000);
 }

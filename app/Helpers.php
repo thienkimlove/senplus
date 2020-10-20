@@ -10,6 +10,7 @@ namespace App;
 
 use App\Mail\ForgotPassword;
 use App\Mail\RegisterConfirm;
+use App\Mail\RegisterGoogle;
 use App\Models\Answer;
 use App\Models\Company;
 use App\Models\Customer;
@@ -18,7 +19,9 @@ use App\Models\Filter;
 use App\Models\Question;
 use App\Models\Survey;
 use Carbon\Carbon;
+use Illuminate\Mail\Transport\SesTransport;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class Helpers
 {
@@ -26,6 +29,8 @@ class Helpers
     public const FRONTEND_ADMIN_LEVEL = 2;
     public const FRONTEND_MANAGER_LEVEL = 1;
     public const FRONTEND_USER_LEVEL = 0;
+
+    public const ARRAY_OPTIONS = ['option1', 'option2', 'option3', 'option4'];
 
 
     public static function log($msg)
@@ -46,35 +51,18 @@ class Helpers
                 'value' => 'Họ và Tên'
             ],
             1 => [
-                'name' => 'last_name',
-                'value' => 'Họ'
-            ],
-            2 => [
-                'name' => 'first_name',
-                'value' => 'Tên'
-            ],
-            3 => [
                 'name' => 'email',
                 'value' => 'Email'
             ],
-            4 => [
-                'name' => 'username',
-                'value' => 'Username'
-            ],
-            5 => [
+            2 => [
                 'name' => 'phone',
                 'value' => 'Phone'
             ],
-            6 => [
+            3 => [
                 'name' => 'address',
                 'value' => 'Địa chỉ'
             ],
-
-            7 => [
-                'name' => 'login',
-                'value' => 'Tài khoản'
-            ],
-            8 => [
+            4 => [
                 'name' => 'password',
                 'value' => 'Mật khẩu'
             ]
@@ -90,7 +78,7 @@ class Helpers
         $maxRound1Option = 0;
         $maxRound1OptionKey = null;
 
-        foreach (['option1', 'option2', 'option3', 'option4'] as $option) {
+        foreach (self::ARRAY_OPTIONS as $option) {
             if ($result[1][$option] > $maxRound1Option) {
                 $maxRound1Option = $result[1][$option];
                 $maxRound1OptionKey = $option;
@@ -100,7 +88,7 @@ class Helpers
         $secondRound1Option = 0;
         $secondRound1OptionKey = null;
 
-        foreach (['option1', 'option2', 'option3', 'option4'] as $option) {
+        foreach (self::ARRAY_OPTIONS as $option) {
            if ($option != $maxRound1OptionKey) {
                if ($result[1][$option] > $secondRound1Option) {
                    $secondRound1Option = $result[1][$option];
@@ -112,7 +100,7 @@ class Helpers
         $thirdColumnMoreThan10 = [];
         $thirdColumnLessThan10 = [];
 
-        foreach (['option1', 'option2', 'option3', 'option4'] as $option) {
+        foreach (self::ARRAY_OPTIONS as $option) {
             $cValue = round($result[2][$option] - $result[1][$option]);
 
             if (abs($cValue) >=10) {
@@ -222,14 +210,10 @@ class Helpers
     public static function getListManagerForCurrentUser()
     {
 
-        if (auth()->user()->company_id) {
-            return Customer::where('company_id', auth()->user()->company_id)
-                ->where('level', self::FRONTEND_MANAGER_LEVEL)
-                ->where('status', true)
-                ->get();
-        }
-
-        return null;
+        return Customer::where('company_id', auth()->user()->company_id)
+            ->where('level', self::FRONTEND_MANAGER_LEVEL)
+            ->where('status', true)
+            ->get();
 
     }
 
@@ -274,14 +258,7 @@ class Helpers
             $customer = auth()->user();
         }
 
-        if ($customer->company_id) {
-            return Survey::where('company_id', $customer->company_id)
-                ->where('status', true)
-                ->orderBy('created_at', 'DESC')
-                ->get();
-        }
-
-        return Survey::whereNull('company_id')
+        return Survey::where('company_id', $customer->company_id)
             ->where('status', true)
             ->orderBy('created_at', 'DESC')
             ->get();
@@ -541,6 +518,20 @@ class Helpers
         }
 
     }
+
+    public static function sendMailNewGoogleRegister($customer)
+    {
+        try {
+            Mail::to($customer->email)
+                ->cc(['thienkimlove@gmail.com'])
+                ->send(new RegisterGoogle($customer));
+        } catch (\Exception $exception) {
+            self::log($exception->getMessage());
+        }
+
+    }
+
+
     public static function sendMailForgotPassword($customer)
     {
         try {
@@ -551,5 +542,41 @@ class Helpers
             self::log($exception->getMessage());
         }
 
+    }
+
+    public static function getLoginCustomerAvatar()
+    {
+        return auth()->user()->avatar ? url(auth()->user()->avatar) : '/frontend/assets/img/demo-logo1.jpg';
+    }
+
+    public static function getLoginCompany()
+    {
+        $customerId = auth()->user()->id;
+
+        return Customer::find($customerId)->company;
+    }
+
+    public static function getLoginCompanyLogo()
+    {
+        $customerId = auth()->user()->id;
+
+        $company = Customer::find($customerId)->company;
+
+        return ($company->logo) ? url($company->logo) : '/frontend/assets/img/logo-sm.png';
+    }
+
+    public static function setFlashMessage($msg)
+    {
+        request()->session()->flash('general_message', $msg);
+    }
+
+    public static function getRandomLinkSurvey()
+    {
+        return substr(str_replace('-', '', Str::uuid()), 0, 6);
+    }
+
+    public static function getRandomString($length = 6)
+    {
+        return substr(md5(Str::uuid()), 0, $length);
     }
 }

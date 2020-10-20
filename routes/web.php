@@ -29,6 +29,9 @@ Route::get('forget', 'CustomerController@forget')->name('frontend.forget');
 Route::get('forgot', 'CustomerController@forgotPass')->name('frontend.forgot_pass');
 
 
+Route::get('login-google', 'SocialController@redirectToGoogleProvider')->name('frontend.login_google');
+Route::get('google/callback', 'SocialController@handleGoogleProviderCallback')->name('frontend.callback_google');
+
 
 Route::get('home', 'CustomerController@home')->name('frontend.home');
 Route::get('intro', 'CustomerController@intro')->name('frontend.intro');
@@ -52,6 +55,13 @@ Route::get('detail', 'CompanyController@detail')->name('frontend.detail');
 Route::post('detail', 'CompanyController@postDetail')->name('frontend.post_detail');
 // list survey for company
 Route::get('campaign', 'CompanyController@campaign')->name('frontend.campaign');
+Route::get('campaign-detail', 'CompanyController@campaignDetail')->name('frontend.campaign_detail');
+
+Route::get('campaign-edit', 'CompanyController@campaignEdit')->name('frontend.campaign_edit');
+Route::post('campaign-edit', 'CompanyController@postCampaignEdit')->name('frontend.post_campaign_edit');
+
+Route::get('campaign-create', 'CompanyController@campaignCreate')->name('frontend.campaign_create');
+Route::post('campaign-create', 'CompanyController@postCampaignCreate')->name('frontend.post_campaign_create');
 
 Route::post('handleDelSurvey', 'FrontendController@handleDelSurvey')->name('frontend.del_survey');
 

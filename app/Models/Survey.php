@@ -25,6 +25,8 @@ class Survey extends Model
         'status',
         'start_time',
         'end_time',
+        'link',
+        'desc'
     ];
     // protected $hidden = [];
     // protected $dates = [];

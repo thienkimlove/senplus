@@ -1,147 +1,101 @@
 @extends('frontend.layout')
 
-@section('before_header')
-    <link rel="stylesheet" type="text/css" href="/frontend/assets/css/bootstrap.min2.css">
-    <link rel="stylesheet" type="text/css" href="/frontend/assets/css/bootstrap-datetimepicker2.css">
+@section('after_head')
     <link rel="stylesheet" type="text/css" href="/frontend/assets/css/styleHomeUser.css">
+@endsection
 
-    <title data-react-helmet="true">Dữ liệu người dùng</title>
-
-    <script src="/frontend/assets/js/jquery-3.5.1.min.js" type="text/javascript"></script>
-    <script src="/frontend/assets/js/bootstrap.min2.js" type="text/javascript"></script>
-    <script src="/frontend/assets/js/moment.js" type="text/javascript"></script>
-    <script src="/frontend/assets/js/bootstrap-datetimepicker.min2.js" type="text/javascript"></script>
-
-    <script src="/frontend/assets/js/page_all.js" type="text/javascript"></script>
-    <script src="/frontend/assets/js/page_homeUser.js" type="text/javascript"></script>
-@endsection    
 
 @section('content')
-    <body class="bodyHomeUser">
-    @include('frontend.header_user')
-
+    @include('frontend.partials.home_header')
+    @include('frontend.partials.second_menu')
     <main>
-        <div class="sortInfoBlock">
-            <div class="fixCen">
-                <div class="avatar">
-                    <img src="{{ $company->logo ? url($company->logo) : '/frontend/assets/img/demo-logo1.jpg' }}" alt="" class="imgFull">
-                </div>
-                <div class="txt">
-                    {{ $company->name }}
-                </div>
+        <div class="helloBlock">
+            <div class="avatar">
+                <img src="{{ \App\Helpers::getLoginCustomerAvatar() }}" alt="" class="imgFull">
+            </div>
+            <div class="txt">
+                Chào mừng [{{ auth()->user()->name }}] <br> quay lại với CAS online
             </div>
         </div>
-        <div class="searchBlock">
-            <div class="fixCen hasBefore">
-                <a href="javascript;void(0)" class="myBtn addNewUser" title="Thêm mới">+ Thêm mới</a>
-                <a href="javascript:void(0)" class="btnEdit" data-edit="#userData" title="Chỉnh sửa"><span>Chỉnh sửa</span>
-                    <img src="/frontend/assets/img/i_pen.png" alt="" class="imgFull">
-                </a>
-                <form action="" class="searchUser">
-                    <input type="text" placeholder="Tìm kiếm" id="inputSearchDemo">
-                    <div id="searchUserBlock">
-                        <p><strong>Tìm kiếm theo</strong></p>
-                        <div class="selectGroup">
-                            <select name="selectDepartment" id="selectDepartment">
-                                <option value="0">Bộ phận/ phòng ban</option>
-                                <option value="1">Bộ phận/ phòng ban</option>
-                                <option value="2">Bộ phận/ phòng ban</option>
-                                <option value="3">Bộ phận/ phòng ban</option>
-                            </select>
-                            <select name="selectPosition" id="selectPosition">
-                                <option value="0">Vị trí/ chức vụ</option>
-                                <option value="1">Bộ phận/ phòng ban</option>
-                                <option value="2">Bộ phận/ phòng ban</option>
-                                <option value="3">Bộ phận/ phòng ban</option>
-                            </select>
-                            <select name="selectSeniority" id="selectSeniority">
-                                <option value="0">Thâm niên</option>
-                                <option value="1">Bộ phận/ phòng ban</option>
-                                <option value="2">Bộ phận/ phòng ban</option>
-                                <option value="3">Bộ phận/ phòng ban</option>
-                            </select>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="editInfoBlock editBlock">
-            <div class="fixCen">
-                <div class="box">
-                    <form action="{{ route('frontend.post_detail') }}" method="POST" id="userData">
-                        {{ csrf_field() }}
-                        <input type="hidden" name="customer_id" value="{{ $customer->id }}" />
-                        <div class="form-group">
-                            <label class="left" for="userName">Họ tên</label>
-                            <input type="text" name="name" class="right" id="userName" value="{{ $customer->name }}" disabled style="font-weight: bold;">
-                        </div>
-                        <div class="form-group">
-                            <label class="left" for="gender">Giới tính</label>
-                            <input type="text" class="right" id="showGender" value="{{ $customer->gender ? \App\Helpers::getGenders()[$customer->gender] : "" }}" disabled>
-                            <div class="right checkBoxGroup disabled" id="gender" data-show="#showGender">
-                                <label><input type="checkbox" name="gender" value="male" class="male">Nam</label>
-                                <label><input type="checkbox" name="gender" value="female" class="female">Nữ</label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="left" for="email">Email</label>
-                            <input type="text" name="email" class="right" id="email" value="{{ $customer->email }}" disabled>
-                        </div>
+        @if (\App\Helpers::currentFrontendUserIsManager())
+        <nav class="btnMainGoup">
+            <ul class="fixCen">
 
-                        <div class="form-group">
-                            <label class="left" for="showPermission">Phân quyền</label>
-                            <input type="text" class="right" id="showPermission" value=" {{ \App\Helpers::mapLevel()[$customer->level] }}" disabled>
-                            <div class="right checkBoxGroup disabled" id="permission" data-show="#showPermission">
-                                <label><input type="checkbox" name="level" value="{{ \App\Helpers::FRONTEND_USER_LEVEL }}" class="female">Nhân viên</label>
-                                <label><input type="checkbox" name="level" value="{{ \App\Helpers::FRONTEND_MANAGER_LEVEL }}" class="male">Quản lý</label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <button type="button">Bỏ qua</button>
-                            <button type="button" class="myBtn btnSave">Lưu / Tạo mới</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="campaignSurvey pr hasBefore">
+                <li>
+                    <a href="{{ route('frontend.profile') }}" class="link" title="Hồ sơ doanh nghiêp" aria-label="Corporate Profile">
+                        <span class="img"><img src="/frontend/assets/img/btn-hoso.jpg" alt="" class="imgFull"></span>
+                        Hồ sơ doanh nghiêp
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('frontend.member') }}" class="link" title="Dữ liệu người dùng" aria-label="User Data">
+                        <span class="img"> <img src="/frontend/assets/img/btn-dulieu.jpg" alt="" class="imgFull"></span>
+                        Dữ liệu người dùng
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('frontend.campaign') }}" class="link" title="Danh sách khảo sát" aria-label="Survey Campaign">
+                        <span class="img"> <img src="/frontend/assets/img/btn-chiendich.jpg" alt="" class="imgFull"></span>
+                        Danh sách khảo sát
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        @endif
+        <div class="campaignBlock">
+            <div class="fixCen">
+                <div class="leftSide">
                     <h2 class="title">Danh sách khảo sát</h2>
-                    <nav class="menuBar">
-                        <ul>
-                            <li>Tổng số khảo sát: <span class="number black">{{ $countTotal }}</span></li>
-                            <li>Hoàn thành: <span class="number blue">{{ $countCompleted }}</span></li>
-                            <li>Chưa thực hiện: <span class="number red">{{ $countNotCompleted }}</span></li>
-                        </ul>
-                    </nav>
-                    <div class="campaignList">
-                        <ul>
-                            @foreach ($surveys as $survey)
-                                <li>
-                                    <a href="javascript:void(0)" class="titleCampaign" title="{{ $survey->name }}" aria-label="Chiến dịch VHDN Celadon">{{ $survey->name }} ({{ $survey->created_at->format('d/m/Y') }})</a>
-
-                                    @if (\App\Helpers::checkIfSurveyHaveResultForUser($survey, $customer->id))
-                                        <a href="{{ route('frontend.result').'?id='.$survey->id }}" class="btnWait" title="Xem" aria-label="Xem">Xem</a>
-                                    @else
-
-                                    <a href="javascript:void(0)" class="btnWait" title="Chờ" aria-label="Wait">Chờ</a>
-                                    @endif
-                                </li>
-                            @endforeach
-                        </ul>
+                    <div class="surveyList">
+                        @if ($surveys)
+                            <ul>
+                                @foreach ($surveys->take(2) as $index => $survey)
+                                    <li>
+                                        <h4><a href="javascript:void(0)"
+                                               class="titleCampaign"
+                                               title="{{ $survey->name }}"
+                                               aria-label="{{ $survey->name }}"
+                                               data-popup=".popupCampaign{{ $index }}">{{ $survey->name }} ({{ $survey->start_time? $survey->start_time->format('d/m/Y') : $survey->created_at->format('d/m/Y') }})</a></h4>
+                                        <div class="popupCampaign pa popupCampaign{{ $index }}">
+                                            <h3 class="titlePopup">[{{ $survey->name }}]</h3>
+                                            <div class="charts">
+                                                <div class="leftSide">
+                                                    <img src="/frontend/assets/img/demo-bd1.jpg" alt="" class="imgFull">
+                                                    <div class="chartName">Tên loại hình doanh nghiệp</div>
+                                                </div>
+                                                <div class="rightSide">
+                                                    <img src="/frontend/assets/img/demo-bd2.jpg" alt="" class="imgFull">
+                                                    <div class="chartName">Đối tượng khảo sát</div>
+                                                </div>
+                                            </div>
+                                            <a href="javascript:void(0)" class="btnViewDetail myBtn" title="Xem chi tiết" aria-label="View detail">Chi tiết</a>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            Không có chiến dịch khảo sát nào.
+                        @endif
                     </div>
+                    <a href="{{ route('frontend.individual') }}" class="myBtn" title="Xem tất cả" aria-label="View All">Xem tất cả</a>
+                </div>
+                <div class="rightSide">
+                    <h2 class="title">Khảo sát mới</h2>
+                    @if ($latestCanDoSurvey)
+                        <h3 class="newestCampaignName">{{ $latestCanDoSurvey->name }}</h3>
+                        <div class="desNewestCampaign">{{ \Illuminate\Support\Str::limit($latestCanDoSurvey->desc, 25) }}</div>
+                        <a href="{{ route('frontend.survey') }}?id={{ $latestCanDoSurvey->id }}" class="myBtn" title="Khảo sát ngay" aria-label="Survey now">Khảo sát ngay</a>
+                    @endif
                 </div>
             </div>
         </div>
     </main>
-    @include('frontend.footer_user')
-    </body>
+    @include('frontend.partials.home_footer')
+    @include('frontend.partials.home_popup')
 @endsection
 
+
 @section('after_scripts')
-    <script>
-        $(function(){
-            $('.btnSave').click(function(){
-                $('#userData').submit();
-                return false;
-            });
-        });
-    </script>
+    <script src="/frontend/assets/js/page_homeUser.js" type="text/javascript"></script>
 @endsection

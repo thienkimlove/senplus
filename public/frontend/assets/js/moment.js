@@ -5,14 +5,7 @@
  * @author Thuclfc
  * @version 2.0.0
  * Copyright 2020. MIT licensed.
- *///! moment.js
-//! version : 2.29.0
-//! authors : Tim Wood, Iskren Chernev, Moment.js contributors
-//! license : MIT
-//! momentjs.com
-;
-
-(function (global, factory) {
+ */(function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() : typeof define === 'function' && define.amd ? define(factory) : global.moment = factory();
 })(this, function () {
   'use strict';

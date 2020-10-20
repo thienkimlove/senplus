@@ -1,23 +1,15 @@
 @extends('frontend.layout')
 
-@section('before_header')
-    <link rel="shortcut icon" href="/frontend/assets/img/favicon.png"/>
-    <link rel="icon" href="/frontend/assets/img/favicon.png" type="image/x-icon"/>
-    <link rel="shortcut icon" href="/frontend/assets/img/favicon.png" type="image/vnd.microsoft.icon"/>
-
-    <link rel="stylesheet" type="text/css" href="/frontend/assets/css/bootstrapv4.5.min.css">
-    <link rel="stylesheet" type="text/css" href="/frontend/assets/css/styleIndex.css">
-    <title data-react-helmet="true">Index</title>
-
-    <script src="/frontend/assets/js/jquery-3.5.1.min.js" type="text/javascript"></script>
-    <script src="/frontend/assets/js/bootstrap4.5.min.js" type="text/javascript"></script>
-    <script src="/frontend/assets/js/page_all.js" type="text/javascript"></script>
+@section('after_head')
+    <title data-react-helmet="true">Home</title>
 @endsection
 
+
 @section('content')
-    <body class="bodyIndex">
     <div class="wrapper">
         <div class="contain pa">
+
+
             <div class="box loginBox">
                 <form action="{{ route('frontend.post_login') }}" method="POST" id="loginForm" class="active">
                     {{ csrf_field() }}
@@ -25,8 +17,8 @@
                         <h1 class="smLogo"><img src="/frontend/assets/img/logo-sm.png" alt="" class="imgFull"></h1>
                         <div class="txt">Hệ thống đánh giá văn hóa doanh nghiệp</div>
                     </div>
-                    <!--Khi cần show lỗi thì anh add class showWarning vào div warning dưới đây-->
-                    <div id="login_error" class="warning {{ count($errors) ? 'showWarning' : '' }}">
+
+                    <div id="error" class="warning {{ count($errors) ? 'showWarning' : '' }}">
                         @if ($errors->any())
                             <div class="alert alert-danger">
                                 <ul>
@@ -37,14 +29,15 @@
                             </div>
                         @endif
                     </div>
+
                     <div class="form-group">
-                        <input type="email" placeholder="Email" class="email" id="login_email" name="email" value="{{ old('email') }}">
+                        <input type="email" placeholder="Email" class="email" name="email" value="{{ old('email') }}" id="email">
                     </div>
                     <div class="form-group">
-                        <input type="password" placeholder="Mật khẩu 6 kí tự" class="password" id="login_pass" name="password">
+                        <input type="password" placeholder="Mật khẩu 6 kí tự" class="password" name="password" id="password">
                     </div>
                     <div class="form-group">
-                        <input type="checkbox" class="checkbox" checked /> Duy trì đăng nhập
+                        <input type="checkbox" class="checkbox" checked> Duy trì đăng nhập
                         <a href="{{ route('frontend.forgot_pass') }}" class="forgetPass" title="Quên mật khẩu" aria-label="Forget Password">Quên mật khẩu?</a>
                     </div>
                     <div class="form-group">
@@ -64,14 +57,14 @@
                     </a>
                 </div>
             </div>
+
             <div class="box box_right">
                 <a href="javascript:void(0)" class="openBtn pa showHidePopup" title="" aria-label="Open">
-                    <img src="/frontend/assets/img/btn_plus.png" alt="" class="imgFull">
-                </a>
+                    <img src="/frontend/assets/img/btn_plus.png" alt="" class="imgFull"></a>
                 <a href="javascript:void(0)" class="closeBtn pa showHidePopup" title="Đóng lại" aria-label="Close">
                     <img src="/frontend/assets/img/i_x.png" alt="" class="imgFull">
                 </a>
-                <div class="title">HỆ THỐNG ĐÁNH GIÁ VĂN HOÁ DOANH NGHIỆP</div>
+                <div class="title">HỆ THỐNG ĐÁNH GIÁ <br> VĂN HOÁ DOANH NGHIỆP</div>
                 <div class="txt_intro">
                     <strong>CAS (Culture Assement System)</strong> - Hệ thống mạnh mẽ với tính năng linh hoạt cao giúp doanh nghiệp đo lường và củng cố văn hoá riêng biệt.
                     <br>
@@ -110,16 +103,16 @@
             </div>
         </div>
     </div>
-    </body>
 @endsection
+
 
 @section('after_scripts')
     <script>
         $(function(){
             $('#btnLogin').click(function(){
-                let email = $('#login_email').val();
-                let pass = $('#login_pass').val();
-                let errorEle = $('#login_error');
+                let email = $('#email').val();
+                let pass = $('#password').val();
+                let errorEle = $('#error');
 
                 if (!email || !pass) {
                     errorEle.html('Xin kiểm tra lại thông tin nhập vào!')

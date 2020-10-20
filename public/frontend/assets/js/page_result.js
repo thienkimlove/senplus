@@ -6,13 +6,39 @@
  * @version 2.0.0
  * Copyright 2020. MIT licensed.
  */$(document).ready(function () {
-  $('.btnEdit').click(function () {
-    edit($(this));
+  $(window).on('DOMMouseScroll mousewheel', function (event) {
+    if (event.originalEvent.wheelDelta > 0) {
+      if ($(this).scrollTop() >= 50) {
+        $('header').addClass('fixed');
+      } else if ($(this).scrollTop() < 20) {
+        $('header').removeClass('fixed');
+      }
+    } else {
+      $('header').removeClass('fixed');
+    }
+  });
+  $('.userBlock').click(function () {
+    $('#popupProfile').toggleClass('showPopProfile');
+    $('#popupProfile .closePopup').click(function () {
+      $('#popupProfile').toggleClass('showPopProfile');
+    });
+    $('#popupProfile').mouseleave(function () {
+      $(this).removeClass('showPopProfile');
+    });
+  });
+  $('#btnShowMainMenu').click(function () {
+    $('#popupCorporateCulture').toggleClass('showPopCorCul');
+    $('#popupCorporateCulture .closePopup').click(function () {
+      $('#popupCorporateCulture').toggleClass('showPopCorCul');
+    });
+    $('#popupCorporateCulture').mouseleave(function () {
+      $(this).removeClass('showPopCorCul');
+    });
   });
   $('#inputSearchDemo').mousedown(function () {
     $('#filterDataBox').addClass('showSearchUserBlock');
-    $('#filterDataBox').mouseleave(function () {
-      $(this).removeClass('showSearchUserBlock');
+    $('#filterDataBox .btnView').click(function () {
+      $('#filterDataBox').removeClass('showSearchUserBlock');
     });
   });
 
@@ -22,88 +48,29 @@
   }
 });
 
-function showPopup(btnClick) {
-  var popup = $(btnClick).data('popup');
+function showPopupGuiding(popup) {
+  $(popup).siblings().removeClass('showPopup');
   $(popup).addClass('showPopup');
-  $(popup).mouseleave(function () {
-    $(this).removeClass('showPopup');
+  $('.bg_drop').fadeIn();
+  $('.closePopup').click(function () {
+    $('.bg_drop').fadeOut();
+    $(popup).removeClass('showPopup');
+  });
+  $('.bg_drop').click(function () {
+    $(this).fadeOut();
+    $(popup).removeClass('showPopup');
   });
 }
 
-function edit(btnEdit) {
-  var dataNeedEdit = $(btnEdit).data('edit');
-  $(dataNeedEdit).find('*').removeAttr('disabled').removeAttr('readonly');
-  $(dataNeedEdit).find('*').removeClass('disabled');
-  $('.btnSave').click(function () {
-    $(dataNeedEdit).find('*').not('button').attr('disabled', 'disabled');
-    $(dataNeedEdit).find('*').addClass('disabled');
+function showPopupNotify(popup) {
+  $(popup).addClass('showPopup');
+  $('.bg_drop').fadeIn();
+  $('.closePopup').click(function () {
+    $('.bg_drop').fadeOut();
+    $(popup).removeClass('showPopup');
   });
-}
-
-function editDate(btnEdit) {
-  var dataNeedEdit = $(btnEdit).data('edit');
-  $(dataNeedEdit).removeAttr('readonly');
-  $(dataNeedEdit).removeClass('disabled');
-  $(dataNeedEdit).parent().mouseleave(function (e) {
-    $(dataNeedEdit).attr('readonly', 'readonly');
-    $(dataNeedEdit).addClass('disabled');
-    e.preventDefault();
+  $('.bg_drop').click(function () {
+    $(this).fadeOut();
+    $(popup).removeClass('showPopup');
   });
-}
-
-function editCheckbox(btnEdit) {
-  var positionShow = $(btnEdit).data('show');
-  var inputCheck = $(btnEdit).find('input');
-  $(inputCheck).prop('checked', false);
-  $(inputCheck).change(function (e) {
-    $($(this)).prop('checked', true);
-    $(positionShow).attr('value', $(this).val());
-    e.preventDefault();
-  });
-}
-
-function editManyCheckbox(btnEdit) {
-  var uncheck = [];
-  var manyCheck = [];
-  var positionShow = $(btnEdit).data('show');
-  var inputCheck = $(btnEdit).find('input');
-  $(inputCheck).removeAttr('checked');
-  $(inputCheck).prop('checked', false);
-  $.each(inputCheck, function (key, value) {
-    $(this).change(function (e) {
-      e.preventDefault();
-      toggleCheck($(this));
-
-      if ($(this).hasClass('checked')) {
-        manyCheck.push($(this).val());
-      } else {
-        uncheck.push($(this).val());
-      }
-
-      const new_arr = manyCheck.filter(item => !uncheck.includes(item));
-      $('.btnChoose').click(function () {
-        $(positionShow).attr('value', removeDuplicates(new_arr)); // $(btnEdit).addClass('disabled');
-
-        $(inputCheck).removeClass('checked');
-      });
-    });
-  });
-}
-
-function toggleCheck(input) {
-  $(input).toggleClass('checked');
-}
-
-function removeDuplicates(arr) {
-  var deduper = {};
-  arr.forEach(function (item) {
-    deduper[item] = null;
-  });
-  return Object.keys(deduper);
-}
-
-function copyLink(linkNeedCopy) {
-  var copyText = document.getElementById(linkNeedCopy);
-  copyText.select();
-  document.execCommand("copy");
 }

@@ -52,7 +52,8 @@ class SurveyCrudController extends CrudController
     protected function setupListOperation()
     {
 
-        CRUD::column('name')->label('Tên Chiến Dịch Khảo Sát');
+        CRUD::column('name')->label('Tên Chiến Dịch');
+        CRUD::column('link')->label('Mã Link Chiến Dịch');
         CRUD::addColumn([
             // n-n relationship (with pivot table)
             'label'     => 'Doanh Nghiệp',
@@ -100,6 +101,7 @@ class SurveyCrudController extends CrudController
         CRUD::setValidation(SurveyRequest::class);
 
         CRUD::field('name')->label('Tên Chiến Dịch Khảo Sát');
+        CRUD::field('link')->label('Mã Link Chiến Dịch Khảo Sát');
 
         CRUD::addField([
             'label'     => "Doanh Nghiệp",
