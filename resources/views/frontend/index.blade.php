@@ -18,6 +18,16 @@
                         <div class="txt">Hệ thống đánh giá văn hóa doanh nghiệp</div>
                     </div>
 
+                    <div class="btnGroup twoBtn">
+                        <div class="txtBlue">Đăng nhập tài khoản nhanh</div>
+                        <a href="{{ route('frontend.login_facebook') }}" class="btnFb" title=Đăng nhập bằng Facebook" aria-label="Đăng nhập bằng Facebook">
+                            <img src="/frontend/assets/img/i_fb_blue.png" alt="" class="imgFull">
+                        </a>
+                        <a href="{{ route('frontend.login_google') }}" class="btnGG" title="Đăng nhập bằng Google" aria-label="Đăng nhập bằng Google">
+                            <img src="/frontend/assets/img/i_gg.png" alt="" class="imgFull">
+                        </a>
+                    </div>
+
                     <div id="error" class="warning {{ count($errors) ? 'showWarning' : '' }}">
                         @if ($errors->any())
                             <div class="alert alert-danger">
