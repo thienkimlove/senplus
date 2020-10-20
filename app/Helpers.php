@@ -10,6 +10,7 @@ namespace App;
 
 use App\Mail\ForgotPassword;
 use App\Mail\RegisterConfirm;
+use App\Mail\RegisterFacebook;
 use App\Mail\RegisterGoogle;
 use App\Models\Answer;
 use App\Models\Company;
@@ -525,6 +526,18 @@ class Helpers
             Mail::to($customer->email)
                 ->cc(['thienkimlove@gmail.com'])
                 ->send(new RegisterGoogle($customer));
+        } catch (\Exception $exception) {
+            self::log($exception->getMessage());
+        }
+
+    }
+
+    public static function sendMailNewFacebookRegister($customer)
+    {
+        try {
+            Mail::to($customer->email)
+                ->cc(['thienkimlove@gmail.com'])
+                ->send(new RegisterFacebook($customer));
         } catch (\Exception $exception) {
             self::log($exception->getMessage());
         }

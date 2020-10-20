@@ -32,6 +32,9 @@ Route::get('forgot', 'CustomerController@forgotPass')->name('frontend.forgot_pas
 Route::get('login-google', 'SocialController@redirectToGoogleProvider')->name('frontend.login_google');
 Route::get('google/callback', 'SocialController@handleGoogleProviderCallback')->name('frontend.callback_google');
 
+Route::get('login-facebook', 'SocialController@redirectToFacebookProvider')->name('frontend.login_facebook');
+Route::get('facebook/callback', 'SocialController@handleFacebookProviderCallback')->name('frontend.callback_facebook');
+
 
 Route::get('home', 'CustomerController@home')->name('frontend.home');
 Route::get('intro', 'CustomerController@intro')->name('frontend.intro');

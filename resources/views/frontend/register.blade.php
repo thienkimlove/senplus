@@ -17,7 +17,7 @@
                     </div>
                     <div class="btnGroup twoBtn">
                         <div class="txtBlue">Tạo tài khoản nhanh</div>
-                        <a href="javascript:void(0)" class="btnFb" title="Đăng ký bằng Facebook" aria-label="Đăng ký bằng Facebook">
+                        <a href="{{ route('frontend.login_facebook') }}" class="btnFb" title="Đăng ký bằng Facebook" aria-label="Đăng ký bằng Facebook">
                             <img src="/frontend/assets/img/i_fb_blue.png" alt="" class="imgFull">
                         </a>
                         <a href="{{ route('frontend.login_google') }}" class="btnGG" title="Đăng ký bằng Google" aria-label="Đăng ký bằng Google">
