@@ -20,7 +20,7 @@
                         <a href="javascript:void(0)" class="btnFb" title="Đăng ký bằng Facebook" aria-label="Đăng ký bằng Facebook">
                             <img src="/frontend/assets/img/i_fb_blue.png" alt="" class="imgFull">
                         </a>
-                        <a href="javascript:void(0)" class="btnGG" title="Đăng ký bằng Google" aria-label="Đăng ký bằng Google">
+                        <a href="{{ route('frontend.login_google') }}" class="btnGG" title="Đăng ký bằng Google" aria-label="Đăng ký bằng Google">
                             <img src="/frontend/assets/img/i_gg.png" alt="" class="imgFull">
                         </a>
                     </div>
