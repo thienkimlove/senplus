@@ -28,7 +28,7 @@
                                     <h3 class="title">Đối tượng khảo sát</h3>
                                     <div class="selectGroup">
                                         @foreach ($survey->company->filters->where('is_level', false) as $filter)
-                                            <select name="{{ $filter->id }}" multiple class="multiSeclect filterSelect">
+                                            <select name="filter_{{ $filter->id }}" multiple class="multiSeclect filterSelect">
                                                 @foreach ($filter->options as $option)
                                                     <option class="option" value="{{ $option['attr_value'] }}">
                                                         {{ $option['attr_value'] }}
@@ -104,7 +104,8 @@
                 let checkboxValues = [];
 
                 $('.filterSelect').each(function () {
-                    checkboxValues.push(this.name + '||' + this.value);
+                    let filterId = this.name.replace('filter_', '');
+                    checkboxValues.push(filterId + '||' + this.value);
                 });
                 let chooseCustomers = checkboxValues.toString(); //Output Format: 1,2,3
 
@@ -114,7 +115,6 @@
                     choose_customers : chooseCustomers
                 }, function(res) {
                     if (!res.error) {
-                        console.log(res.result);
                         makeChart(ctx, mapOption, mapRound, res.result);
                         $('#explainText').hide();
                         $('#titleTable').text(res.title);

@@ -388,7 +388,7 @@ class Helpers
 
     public static function getCustomerListByManager($survey)
     {
-        if (auth()->user()->level == Helpers::FRONTEND_ADMIN_LEVEL) {
+        if (Helpers::currentFrontendUserIsAdmin()) {
             return Customer::where('company_id', $survey->company_id)
                 ->where('status', true)
                 ->pluck('id')
@@ -400,7 +400,6 @@ class Helpers
                 ->get();
 
             $storeUserIdByFilter = [];
-
             foreach (auth()->user()->options as $option) {
                 $filter = Filter::find($option['att_id']);
                 if ($filter && !$filter->is_level) {
@@ -447,15 +446,15 @@ class Helpers
                 foreach ($listCustomerFilters as $listCustomerFilter) {
                     $exList = explode('||', $listCustomerFilter);
                     if ($filterId = $exList[0] && $filterValue = $exList[1]) {
-                        foreach ($customers as $customer) {
-                            if ($customer->options) {
-                                foreach ($customer->options as $cusOption) {
-                                    if ($cusOption['att_value'] == $filterValue && $cusOption['att_id'] == $filterId) {
-                                        $storeUserIdByFilter[$filterId][] = $customer->id;
-                                    }
+
+                        $filterDB = Filter::find($filterId);
+
+                        if ($filterDB) {
+                            foreach ($customers as $customer) {
+                                if ($filterValue == self::getCustomerFilterValue($customer, $filterDB)) {
+                                    $storeUserIdByFilter[$filterId][] = $customer->id;
                                 }
                             }
-
                         }
                     }
                 }
@@ -468,9 +467,6 @@ class Helpers
                 ->pluck('id')
                 ->all();
         }
-
-        //Helpers::log("storeUserIdByFilter");
-        //Helpers::log($storeUserIdByFilter);
 
         $finalCustomerQuery = Customer::where('company_id', $survey->company_id)
             ->where('status', true);
