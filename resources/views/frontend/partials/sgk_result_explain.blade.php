@@ -1,5 +1,5 @@
 <div>
-    <h4>QUẢN LÝ NHÂN VIÊN</h4>
+    <h4>SỰ GẮN KẾT</h4>
 </div>
 
 <div>

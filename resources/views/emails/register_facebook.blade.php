@@ -6,7 +6,7 @@
                 Bạn hoặc ai đó đã đăng ký tài khoản tại Sen Cộng với tài khoản Facebook <b>{{ $customer->email }}</b>.
             </p>
             <p>
-                <strong>Trong trường hợp bạn cần đăng nhập bằng mặt khẩu</strong>, hãy ghi nhớ mật khẩu: <br>
+                <strong>Trong trường hợp bạn cần đăng nhập bằng mật khẩu</strong>, hãy ghi nhớ mật khẩu: <br>
             </p>
             <p>
                 <b>{{ $customer->password }}</b>

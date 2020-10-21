@@ -1,10 +1,5 @@
 @extends('frontend.layout_home')
 
-@section('after_head')
-    <title data-react-helmet="true">Chiến dịch khảo sát</title>
-@endsection
-
-
 @section('content')
     <main>
         @include('frontend.partials.sort_block')
@@ -67,7 +62,6 @@
 @endsection    
 
 @section('after_scripts')
-    <script src="/frontend/assets/js/page_survey.js" type="text/javascript"></script>
     <script>
         $(function(){
             $('#cancelForm').click(function(){

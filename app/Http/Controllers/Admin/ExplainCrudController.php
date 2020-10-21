@@ -161,7 +161,37 @@ class ExplainCrudController extends CrudController
                 'type' => 'table',
                 'columns' => ['content' => 'Nội dung']
 
-            ]
+            ],
+            [
+                'name' => 'dac_diem_noi_troi',
+                'label' => 'Nhận xét - Đặc điểm nổi trội',
+                'type' => 'text'
+            ],
+            [
+                'name' => 'phong_cach_lanh_dao',
+                'label' => 'Nhận xét - Phong cách lãnh đạo',
+                'type' => 'text'
+            ],
+            [
+                'name' => 'quan_ly_nhan_vien',
+                'label' => 'Nhận xét - Quản lý nhân viên',
+                'type' => 'text'
+            ],
+            [
+                'name' => 'su_gan_ket',
+                'label' => 'Nhận xét - Sự gắn kết',
+                'type' => 'text'
+            ],
+            [
+                'name' => 'chien_luoc',
+                'label' => 'Nhận xét - Chiến lược',
+                'type' => 'text'
+            ],
+            [
+                'name' => 'tieu_chi_thanh_cong',
+                'label' => 'Nhận xét - Tiêu chí thành công',
+                'type' => 'text'
+            ],
         ]);
 
         /**

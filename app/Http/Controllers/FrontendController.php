@@ -40,12 +40,13 @@ class FrontendController extends Controller
         list($question, $roundPercent, $answer) = Helpers::getQuestion($survey, $round, $order);
 
         if (!$question) {
-            $request->session()->flash('general_message', 'Câu hỏi không tồn tại!');
+            Helpers::setFlashMessage('Câu hỏi không tồn tại!');
             return redirect(route('frontend.home'));
         }
 
 
-        return view('frontend.survey', compact( 'page', 'question','roundPercent', 'answer', 'survey'));
+        return view('frontend.survey', compact( 'page', 'question','roundPercent', 'answer', 'survey'))
+            ->with(['section' => 'home', 'title' => 'Thực hiện khảo sát', 'isStyleSurvey' => true]);
     }
 
     public function back(Request $request)
@@ -56,13 +57,13 @@ class FrontendController extends Controller
         $questionId = $request->input('question_id');
 
         if (!$questionId) {
-            $request->session()->flash('general_message', 'Câu hỏi không tồn tại!');
+            Helpers::setFlashMessage('Câu hỏi không tồn tại!');
             return redirect(route('frontend.home'));
         }
         $question = Question::find($questionId);
 
         if (!$question) {
-            $request->session()->flash('general_message', 'Câu hỏi không tồn tại!');
+            Helpers::setFlashMessage('Câu hỏi không tồn tại!');
             return redirect(route('frontend.home'));
         }
 
@@ -84,14 +85,14 @@ class FrontendController extends Controller
         $questionId = $request->input('question_id');
 
         if (!$questionId) {
-            $request->session()->flash('general_message', 'Câu hỏi không tồn tại!');
+            Helpers::setFlashMessage('Câu hỏi không tồn tại!');
             return redirect(route('frontend.home'));
         }
 
         $question = Question::find($questionId);
 
         if (!$question) {
-            $request->session()->flash('general_message', 'Câu hỏi không tồn tại!');
+            Helpers::setFlashMessage('Câu hỏi không tồn tại!');
             return redirect(route('frontend.home'));
         }
 
@@ -143,27 +144,26 @@ class FrontendController extends Controller
         $surveyId = $request->input('id');
 
         if (!$surveyId) {
-            $request->session()->flash('general_message', 'Chiến dịch khảo sát không tồn tại hoặc không được kích hoạt!');
+            Helpers::setFlashMessage('Chiến dịch khảo sát không tồn tại hoặc không được kích hoạt!');
             return redirect(route('frontend.home'));
         }
 
         $survey = Survey::find($surveyId);
 
         if (!$survey || !$survey->status) {
-            $request->session()->flash('general_message', 'Chiến dịch khảo sát không tồn tại hoặc không được kích hoạt!');
+            Helpers::setFlashMessage('Chiến dịch khảo sát không tồn tại hoặc không được kích hoạt!');
             return redirect(route('frontend.home'));
         }
 
         if (!Helpers::checkIfSurveyHaveResultForUser($survey)) {
-            $request->session()->flash('general_message', 'Chưa có câu trả lời!');
+            Helpers::setFlashMessage('Chưa có câu trả lời!');
             return redirect(route('frontend.home'));
         }
 
-        $result = Helpers::getResultForSurveyAll($survey, [auth()->user()->id]);
+        $explain = Helpers::getResultExplainForSurveyAll($survey, [auth()->user()->id]);
 
-        $explain = Helpers::explainResult($result, $survey);
-
-        return view('frontend.result', compact('result', 'explain', 'survey'));
+        return view('frontend.result', compact('explain', 'survey'))
+            ->with(['section' => 'home', 'title' => 'Kết quả khảo sát', 'isStyleSurvey' => true]);
     }
 
     public function general(Request $request)
@@ -174,34 +174,34 @@ class FrontendController extends Controller
         }
 
         if (!Helpers::currentFrontendUserIsAdmin()) {
-            $request->session()->flash('general_message', 'Bạn không có quyền xem kết quả doanh nghiệp!');
+            Helpers::setFlashMessage('Bạn không có quyền xem kết quả doanh nghiệp!');
             return redirect(route('frontend.index'));
         }
 
         $surveyId = $request->input('id');
 
         if (!$surveyId) {
-            $request->session()->flash('general_message', 'Chiến dịch khảo sát không tồn tại hoặc không được kích hoạt!');
+            Helpers::setFlashMessage('Chiến dịch khảo sát không tồn tại hoặc không được kích hoạt!');
             return redirect(route('frontend.home'));
         }
 
         $survey = Survey::find($surveyId);
 
         if (!$survey || !$survey->status) {
-            $request->session()->flash('general_message', 'Chiến dịch khảo sát không tồn tại hoặc không được kích hoạt!');
+            Helpers::setFlashMessage('Chiến dịch khảo sát không tồn tại hoặc không được kích hoạt!');
             return redirect(route('frontend.home'));
         }
 
         if (!Helpers::checkIfSurveyHaveAnyResult($survey)) {
-            $request->session()->flash('general_message', 'Chưa có câu trả lời!');
+            Helpers::setFlashMessage('Chưa có câu trả lời!');
             return redirect(route('frontend.home'));
         }
 
         $customerIds = Helpers::getCustomerListByManager($survey);
-        $result = Helpers::getResultForSurveyAll($survey, $customerIds);
-        $explain = Helpers::explainResult($result, $survey);
+        $explain = Helpers::getResultExplainForSurveyAll($survey, $customerIds);
 
-        return view('frontend.general', compact('result', 'survey', 'explain'));
+        return view('frontend.general', compact( 'survey', 'explain'))
+            ->with(['section' => 'home', 'title' => 'Kết quả khảo sát toàn Doanh nghiệp', 'isStyleSurvey' => true]);
     }
 
     public function filter(Request $request)
@@ -212,49 +212,30 @@ class FrontendController extends Controller
         $surveyId = $request->input('survey_id');
 
         if (!$surveyId) {
-            return response()->json(['error' => true, 'result' => []]);
+            return response()->json(['error' => true, 'res' => []]);
         }
 
-        $chooseType = $request->input('choose_type');
+        $chooseType = $request->input('choose_type', 7);
         $survey = Survey::find($surveyId);
         $customerIds = Helpers::getCustomerListByManager($survey);
 
-        Helpers::log($customerIds);
-
-        if (!$chooseType) {
-            $result = Helpers::getResultForSurveyAll($survey, $customerIds);
-            return response()->json([
-                'error' => false,
-                'result' => $result,
-                'title' => 'Loại hình Văn hóa DN',
-                'body' => view('frontend.partials.table', compact('result'))->render(),
-
-            ]);
-        } else {
-
-            if (auth()->user()->level == Helpers::FRONTEND_MANAGER_LEVEL) {
-                $result = Helpers::getResultForSurveyAll($survey, $customerIds, $chooseType);
-                return response()->json([
-                    'error' => false,
-                    'result' => $result,
-                    'title' => Helpers::mapOrder()[$chooseType],
-                    'body' => view('frontend.partials.table', compact('result'))->render(),
-
-                ]);
-            } else {
-                $chooseCustomers = $request->input('choose_customers');
-                $customerIds = Helpers::getCustomerByChooseList($survey, $chooseCustomers);
-                Helpers::log($customerIds);
-                $result = Helpers::getResultForSurveyAll($survey, $customerIds, $chooseType);
-                return response()->json([
-                    'error' => false,
-                    'result' => $result,
-                    'title' => Helpers::mapOrder()[$chooseType],
-                    'body' => view('frontend.partials.table', compact('result'))->render(),
-
-                ]);
-            }
+        if ($request->input('choose_customers')) {
+            $chooseCustomers = $request->input('choose_customers');
+            $customerIds = Helpers::getCustomerByChooseList($survey, $chooseCustomers);
         }
+        $explain = Helpers::getResultExplainForSurveyAll($survey, $customerIds);
+
+        return response()->json([
+            'error' => false,
+            'result' => $explain['details'][$chooseType]['result'],
+            'title' => Helpers::mapOrder()[$chooseType],
+            'table' => view('frontend.partials.table')
+                ->with(['result' => $explain['details'][$chooseType]['result']])
+                ->render(),
+            'explain' => view('frontend.partials.'.Helpers::ARRAY_TYPES[$chooseType].'_result_explain')
+                ->with(['explain' => $explain])
+                ->render(),
+        ]);
     }
 
     /*

@@ -204,3 +204,19 @@
         </div>
     </div>
 </div>
+
+<div class="popup px popupNotify" id="popupDelSurveyWithParam">
+    <div class="bg_drop pa"></div>
+    <div class="popupContent pa box">
+        <a href="javascript:void(0)" class="closePopup pa" title="Đóng lại" aria-label="Close">
+            <img src="/frontend/assets//img/i_x.png" alt="" class="imgFull">
+        </a>
+        <div class="notify">Dữ liệu chiến dịch không thể phục hồi sau khi xoá</div>
+        <div class="colorBlue fwb fz18px">Chắc chắn xoá chiến dịch? </div>
+        <div class="form-group">
+            <input type="hidden" id="popup_token" value="{{ csrf_token() }}" />
+            <button type="button" class="skip myBtn">Bỏ qua</button>
+            <button type="button" id="popup_button_del_survey" class="myBtn btnDelete">Xóa</button>
+        </div>
+    </div>
+</div>

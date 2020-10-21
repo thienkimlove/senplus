@@ -344,16 +344,18 @@ class CustomerController extends Controller
         }
         $surveys = Helpers::getSurveyForLoginUser();
         $latestCanDoSurvey = Helpers::getLatestSurveyCanDoForUser();
-        return view('frontend.home', compact( 'page', 'surveys', 'latestCanDoSurvey'));
+        return view('frontend.home', compact( 'page', 'surveys', 'latestCanDoSurvey'))
+            ->with(['section' => 'home', 'title' => 'Home']);
     }
 
     public function intro()
     {
         $page = 'intro';
+        $section = 'home';
         if (!auth()->check()) {
             return redirect(route('frontend.index'));
         }
-        return view('frontend.intro', compact( 'page'));
+        return view('frontend.intro', compact( 'page', 'section'));
     }
 
     public function logout()
@@ -371,7 +373,8 @@ class CustomerController extends Controller
         $customer = Customer::find(auth()->user()->id);
         $surveys = Helpers::getSurveyForLoginUser();
 
-        return view('frontend.individual', compact('customer', 'surveys'));
+        return view('frontend.individual', compact('customer', 'surveys'))
+            ->with(['section' => 'home', 'title' => 'Danh sách khảo sát của bạn']);
     }
 
     public function personal(Request $request)
@@ -393,7 +396,8 @@ class CustomerController extends Controller
 
         $customer = Customer::find($customerId);
 
-        return view('frontend.personal', compact('customer'));
+        return view('frontend.personal', compact('customer'))
+            ->with(['section' => 'home', 'title' => 'Thông tin cá nhân']);
     }
 
     public function postPersonal(Request $request)
@@ -402,11 +406,10 @@ class CustomerController extends Controller
             return redirect(route('frontend.index'));
         }
 
-        Helpers::log($request->all());
+        //Helpers::log($request->all());
 
         $update_fields = [
             'name',
-            'email',
             'phone',
             //'avatar',
             'gender',
@@ -414,11 +417,8 @@ class CustomerController extends Controller
 
         $customerId = auth()->user()->id;
 
-        if ($request->input('customer_id')) {
-            $customerId = $request->input('customer_id');
-            if (!Helpers::currentFrontendUserIsManager()) {
-                return redirect(route('frontend.home'));
-            }
+        if ($request->input('customer_id') != $customerId) {
+            return redirect(route('frontend.home'));
         }
 
         $customer = Customer::find($customerId);

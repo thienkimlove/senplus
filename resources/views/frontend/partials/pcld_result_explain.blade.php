@@ -1,5 +1,5 @@
 <div>
-    <h4>ĐẶC ĐIỂM NỔI TRỘI</h4>
+    <h4>PHONG CÁCH LÃNH ĐẠO</h4>
 </div>
 
 <div>

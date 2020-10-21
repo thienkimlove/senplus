@@ -1,97 +1,93 @@
 @extends('frontend.layout_home')
 
-@section('after_head')
-    <title data-react-helmet="true">Chi tiết thành viên</title>
-@endsection
-
-
 @section('content')
     <main>
         @include('frontend.partials.sort_block')
         <div class="searchBlock">
             <div class="fixCen hasBefore">
-                
                 @if (\App\Helpers::currentFrontendUserIsManager())                
                     <a href="{{ route('frontend.member_create') }}" class="myBtn addNewUser" title="Thêm mới">+ Thêm mới</a>
-
-                    <a href="{{ route('frontend.member_edit') }}?id={{$customer->id}}" class="btnEdit" title="Chỉnh sửa">
-                        <span>Chỉnh sửa</span>
-                        <img src="/frontend/assets/img/i_pen.png" alt="" class="imgFull">
-                    </a>
                 @endif
-                    <form action="" class="searchUser">
-                        <input type="text" placeholder="Tìm kiếm" id="inputSearchDemo">
-                       
-                    </form>
+                <form action="" class="searchUser">
+                    <input type="text" placeholder="Tìm kiếm" id="inputSearchDemo">
+                </form>
             </div>
-
         </div>
         <div class="editInfoBlock editBlock">
             <div class="fixCen">
                 <div class="box">
-                    <form action="" id="userData">
+                    <div id="error" class="warning {{ count($errors) ? 'showWarning' : '' }}">
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                    </div>
+                    <form action="{{ route('frontend.post_member_edit') }}" method="POST" id="userData">
+                        {{ csrf_field() }}
+                        <input type="hidden" value="{{ $customer->id }}" name="customer_id">
                         <div class="form-group">
                             <label class="left" for="userName">Họ tên</label>
-                            <input type="text" class="right" id="userName" value="{{ $customer->name }}" disabled style="font-weight: bold;">
+                            <input type="text" class="right" name="name" id="userName" value="{{ $customer->name }}" style="font-weight: bold;">
                         </div>
                         <div class="form-group">
                             <label class="left" for="gender">Giới tính</label>
-                            <input type="text" class="right" id="gender" value="{{ $customer->gender ? \App\Helpers::getGenders()[$customer->gender] : '' }}" disabled>
-                        </div>
-                        <div class="form-group">
-                            <label class="left" for="email">Email</label>
-                            <input type="text" class="right" id="email" value="{{ $customer->email }}" disabled>
+                            <div class="right checkBoxGroup" id="gender" data-show="#showGender">
+                                <label><input type="checkbox" name="gender" {{  $customer->gender == 'male' ? 'checked' : '' }} value="male" class="male">Nam</label>
+                                <label><input type="checkbox" name="gender" {{  $customer->gender == 'female' ? 'checked' : '' }} class="female">Nữ</label>
+                            </div>
                         </div>
 
                         @if ($company->filters)
                             @foreach ($company->filters as $filter)
-                                @if ($value = \App\Helpers::getCustomerFilterValue($customer, $filter))
-                                    <div class="form-group">
-                                        <label class="left" for="filter_{{ $filter->name }}">{{ $filter->name }}</label>
-                                        <input type="text" class="right" id="filter_{{ $filter->name }}" value="{{ $value }}" disabled>
-                                    </div>
-                                @endif
+                                <div class="form-group">
+                                    <label class="left" for="filter_{{ $filter->id }}">{{ $filter->name }}</label>
+                                    <select class="right" name="filter_{{ $filter->id }}" id="filter_{{ $filter->id }}">
+                                        @foreach ($filter->options as $option)
+                                            <option {{ \App\Helpers::getCustomerFilterValue($customer, $filter) == $option['attr_value'] ? 'selected' : '' }} value="{{ $option['attr_value'] }}">{{ $option['attr_value'] }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             @endforeach
                         @endif
 
+                        @if ($customer->level != \App\Helpers::FRONTEND_ADMIN_LEVEL)
 
                         <div class="form-group">
                             <label class="left" for="showPermission">Phân quyền</label>
-                            <input type="text" class="right" id="showPermission" value="{{ \App\Helpers::mapLevel()[$customer->level] }}" disabled>
+                            <div class="right checkBoxGroup" id="permission" data-show="#showPermission">
+                                <label><input type="checkbox" {{  $customer->level == \App\Helpers::FRONTEND_USER_LEVEL ? 'checked' : '' }} name="level" value="{{ \App\Helpers::FRONTEND_USER_LEVEL }}" class="female">Nhân viên</label>
+                                <label><input type="checkbox" name="level" {{  $customer->level == \App\Helpers::FRONTEND_MANAGER_LEVEL ? 'checked' : '' }} value="{{ \App\Helpers::FRONTEND_MANAGER_LEVEL }}" class="male">Quản lý</label>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <button type="button" onclick="window.location.reload(); return false;">Bỏ qua</button>
-                            <button type="button" class="myBtn btnSave">Lưu / Tạo mới</button>
+                        @endif
+                        <div class="form-group showBtn">
+                            <button type="button" id="cancelForm" data-url="{{ route('frontend.member_detail').'?id='.$customer->id }}">Bỏ qua</button>
+                            <button type="button" id="submitForm" class="myBtn btnSave">Lưu</button>
                         </div>
                     </form>
                 </div>
-                <div class="campaignSurvey pr hasBefore">
-                    <h2 class="title">Danh sách khảo sát</h2>
-                    <nav class="menuBar">
-                        <ul>
-                            <li>Tổng số khảo sát: <span class="number black">{{ $countTotal }}</span></li>
-                            <li>Hoàn thành: <span class="number blue">{{ $countCompleted }}</span></li>
-                            <li>Chưa thực hiện: <span class="number red">{{ $countNotCompleted }}</span></li>
-                        </ul>
-                    </nav>
-                    <div class="campaignList">
-                        <ul>
-                            @foreach ($surveys as $survey)
-                                <li>
-                                    <a href="javascript:void(0)" class="titleCampaign" title="{{ $survey->name }}" aria-label="Chiến dịch VHDN Celadon">{{ $survey->name }} ({{ $survey->created_at->format('d/m/Y') }})</a>
 
-                                    @if (\App\Helpers::checkIfSurveyHaveResultForUser($survey, $customer->id))
-                                        <a href="{{ route('frontend.result').'?id='.$survey->id }}" class="btnWait" title="Xem" aria-label="Xem">Xem</a>
-                                    @else
-
-                                        <a href="javascript:void(0)" class="btnWait" title="Chờ" aria-label="Wait">Chờ</a>
-                                    @endif
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
             </div>
         </div>
     </main>
+@endsection
+
+@section('after_scripts')
+    <script>
+        $(function(){
+            $('#cancelForm').click(function(){
+                window.location.href =  $(this).attr('data-url');
+            });
+
+            $('#submitForm').click(function(){
+                $('#userData').submit();
+                return false;
+            });
+        });
+    </script>
 @endsection

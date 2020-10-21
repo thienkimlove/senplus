@@ -1,5 +1,5 @@
 <div>
-    <h4>PHONG CÁCH LÃNH ĐẠO</h4>
+    <h4>QUẢN LÝ NHÂN VIÊN</h4>
 </div>
 
 <div>

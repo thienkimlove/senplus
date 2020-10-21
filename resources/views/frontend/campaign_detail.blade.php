@@ -1,10 +1,5 @@
 @extends('frontend.layout_home')
 
-@section('after_head')
-    <title data-react-helmet="true">Chiến dịch khảo sát</title>
-@endsection
-
-
 @section('content')
     <main>
         @include('frontend.partials.sort_block')
@@ -50,4 +45,5 @@
             </div>
         </div>
     </main>
-@endsection    
+@endsection
+

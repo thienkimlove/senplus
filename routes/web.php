@@ -54,7 +54,14 @@ Route::get('profile', 'CompanyController@profile')->name('frontend.profile');
 Route::post('profile', 'CompanyController@postProfile')->name('frontend.post_profile');
 // user data
 Route::get('member', 'CompanyController@member')->name('frontend.member');
-Route::get('detail', 'CompanyController@detail')->name('frontend.detail');
+Route::get('member-create', 'CompanyController@memberCreate')->name('frontend.member_create');
+Route::post('member-create', 'CompanyController@postMemberCreate')->name('frontend.post_member_create');
+
+Route::get('member-detail', 'CompanyController@memberDetail')->name('frontend.member_detail');
+Route::get('member-edit', 'CompanyController@memberEdit')->name('frontend.member_edit');
+Route::post('member-edit', 'CompanyController@postMemberEdit')->name('frontend.post_member_edit');
+
+
 Route::post('detail', 'CompanyController@postDetail')->name('frontend.post_detail');
 // list survey for company
 Route::get('campaign', 'CompanyController@campaign')->name('frontend.campaign');
@@ -65,8 +72,7 @@ Route::post('campaign-edit', 'CompanyController@postCampaignEdit')->name('fronte
 
 Route::get('campaign-create', 'CompanyController@campaignCreate')->name('frontend.campaign_create');
 Route::post('campaign-create', 'CompanyController@postCampaignCreate')->name('frontend.post_campaign_create');
-
-Route::post('handleDelSurvey', 'FrontendController@handleDelSurvey')->name('frontend.del_survey');
+Route::post('handleDelSurvey', 'CompanyController@handleDelSurvey')->name('frontend.del_survey');
 
 
 

@@ -26,7 +26,13 @@ class Explain extends Model
         'gia_tri_dem_lai',
         'xu_huong',
         'uu_diem',
-        'nhuoc_diem'
+        'nhuoc_diem',
+        'dac_diem_noi_troi',
+        'phong_cach_lanh_dao',
+        'quan_ly_nhan_vien',
+        'su_gan_ket',
+        'chien_luoc',
+        'tieu_chi_thanh_cong'
     ];
     // protected $hidden = [];
     // protected $dates = [];

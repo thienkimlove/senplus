@@ -1,101 +1,92 @@
-@extends('frontend.layout')
-
-@section('after_head')
-    <link rel="stylesheet" type="text/css" href="/frontend/assets/css/styleHomeUser.css">
-@endsection
-
+@extends('frontend.layout_home')
 
 @section('content')
-    @include('frontend.partials.home_header')
-    @include('frontend.partials.second_menu')
     <main>
-        <div class="helloBlock">
-            <div class="avatar">
-                <img src="{{ \App\Helpers::getLoginCustomerAvatar() }}" alt="" class="imgFull">
+        @include('frontend.partials.sort_block')
+        <div class="searchBlock">
+            <div class="fixCen hasBefore">
+                
+                @if (\App\Helpers::currentFrontendUserIsManager())                
+                    <a href="{{ route('frontend.member_create') }}" class="myBtn addNewUser" title="Thêm mới">+ Thêm mới</a>
+
+                    <a href="{{ route('frontend.member_edit') }}?id={{$customer->id}}" class="btnEdit" title="Chỉnh sửa">
+                        <span>Chỉnh sửa</span>
+                        <img src="/frontend/assets/img/i_pen.png" alt="" class="imgFull">
+                    </a>
+                @endif
+                    <form action="" class="searchUser">
+                        <input type="text" placeholder="Tìm kiếm" id="inputSearchDemo">
+
+                    </form>
             </div>
-            <div class="txt">
-                Chào mừng [{{ auth()->user()->name }}] <br> quay lại với CAS online
-            </div>
+
         </div>
-        @if (\App\Helpers::currentFrontendUserIsManager())
-        <nav class="btnMainGoup">
-            <ul class="fixCen">
-
-                <li>
-                    <a href="{{ route('frontend.profile') }}" class="link" title="Hồ sơ doanh nghiêp" aria-label="Corporate Profile">
-                        <span class="img"><img src="/frontend/assets/img/btn-hoso.jpg" alt="" class="imgFull"></span>
-                        Hồ sơ doanh nghiêp
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('frontend.member') }}" class="link" title="Dữ liệu người dùng" aria-label="User Data">
-                        <span class="img"> <img src="/frontend/assets/img/btn-dulieu.jpg" alt="" class="imgFull"></span>
-                        Dữ liệu người dùng
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{ route('frontend.campaign') }}" class="link" title="Danh sách khảo sát" aria-label="Survey Campaign">
-                        <span class="img"> <img src="/frontend/assets/img/btn-chiendich.jpg" alt="" class="imgFull"></span>
-                        Danh sách khảo sát
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        @endif
-        <div class="campaignBlock">
+        <div class="editInfoBlock editBlock">
             <div class="fixCen">
-                <div class="leftSide">
-                    <h2 class="title">Danh sách khảo sát</h2>
-                    <div class="surveyList">
-                        @if ($surveys)
-                            <ul>
-                                @foreach ($surveys->take(2) as $index => $survey)
-                                    <li>
-                                        <h4><a href="javascript:void(0)"
-                                               class="titleCampaign"
-                                               title="{{ $survey->name }}"
-                                               aria-label="{{ $survey->name }}"
-                                               data-popup=".popupCampaign{{ $index }}">{{ $survey->name }} ({{ $survey->start_time? $survey->start_time->format('d/m/Y') : $survey->created_at->format('d/m/Y') }})</a></h4>
-                                        <div class="popupCampaign pa popupCampaign{{ $index }}">
-                                            <h3 class="titlePopup">[{{ $survey->name }}]</h3>
-                                            <div class="charts">
-                                                <div class="leftSide">
-                                                    <img src="/frontend/assets/img/demo-bd1.jpg" alt="" class="imgFull">
-                                                    <div class="chartName">Tên loại hình doanh nghiệp</div>
-                                                </div>
-                                                <div class="rightSide">
-                                                    <img src="/frontend/assets/img/demo-bd2.jpg" alt="" class="imgFull">
-                                                    <div class="chartName">Đối tượng khảo sát</div>
-                                                </div>
-                                            </div>
-                                            <a href="javascript:void(0)" class="btnViewDetail myBtn" title="Xem chi tiết" aria-label="View detail">Chi tiết</a>
-                                        </div>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        @else
-                            Không có chiến dịch khảo sát nào.
+                <div class="box">
+                    <form action="" id="userData">
+                        <div class="form-group">
+                            <label class="left" for="userName">Họ tên</label>
+                            <input type="text" class="right" id="userName" value="{{ $customer->name }}" disabled style="font-weight: bold;">
+                        </div>
+                        <div class="form-group">
+                            <label class="left" for="gender">Giới tính</label>
+                            <input type="text" class="right" id="gender" value="{{ $customer->gender ? \App\Helpers::getGenders()[$customer->gender] : '' }}" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label class="left" for="email">Email</label>
+                            <input type="text" class="right" id="email" value="{{ $customer->email }}" disabled>
+                        </div>
+
+                        @if ($company->filters)
+                            @foreach ($company->filters as $filter)
+                                @if ($value = \App\Helpers::getCustomerFilterValue($customer, $filter))
+                                    <div class="form-group">
+                                        <label class="left" for="filter_{{ $filter->name }}">{{ $filter->name }}</label>
+                                        <input type="text" class="right" id="filter_{{ $filter->name }}" value="{{ $value }}" disabled>
+                                    </div>
+                                @endif
+                            @endforeach
                         @endif
-                    </div>
-                    <a href="{{ route('frontend.individual') }}" class="myBtn" title="Xem tất cả" aria-label="View All">Xem tất cả</a>
+
+
+                        <div class="form-group">
+                            <label class="left" for="showPermission">Phân quyền</label>
+                            <input type="text" class="right" id="showPermission" value="{{ \App\Helpers::mapLevel()[$customer->level] }}" disabled>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" onclick="window.location.reload(); return false;">Bỏ qua</button>
+                            <button type="button" class="myBtn btnSave">Lưu / Tạo mới</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="rightSide">
-                    <h2 class="title">Khảo sát mới</h2>
-                    @if ($latestCanDoSurvey)
-                        <h3 class="newestCampaignName">{{ $latestCanDoSurvey->name }}</h3>
-                        <div class="desNewestCampaign">{{ \Illuminate\Support\Str::limit($latestCanDoSurvey->desc, 25) }}</div>
-                        <a href="{{ route('frontend.survey') }}?id={{ $latestCanDoSurvey->id }}" class="myBtn" title="Khảo sát ngay" aria-label="Survey now">Khảo sát ngay</a>
-                    @endif
+                <div class="campaignSurvey pr hasBefore">
+                    <h2 class="title">Danh sách khảo sát</h2>
+                    <nav class="menuBar">
+                        <ul>
+                            <li>Tổng số khảo sát: <span class="number black">{{ $countTotal }}</span></li>
+                            <li>Hoàn thành: <span class="number blue">{{ $countCompleted }}</span></li>
+                            <li>Chưa thực hiện: <span class="number red">{{ $countNotCompleted }}</span></li>
+                        </ul>
+                    </nav>
+                    <div class="campaignList">
+                        <ul>
+                            @foreach ($surveys as $survey)
+                                <li>
+                                    <a href="javascript:void(0)" class="titleCampaign" title="{{ $survey->name }}" aria-label="Chiến dịch VHDN Celadon">{{ $survey->name }} ({{ $survey->created_at->format('d/m/Y') }})</a>
+
+                                    @if (\App\Helpers::checkIfSurveyHaveResultForUser($survey, $customer->id))
+                                        <a href="{{ route('frontend.result').'?id='.$survey->id }}" class="btnWait" title="Xem" aria-label="Xem">Xem</a>
+                                    @else
+
+                                        <a href="javascript:void(0)" class="btnWait" title="Chờ" aria-label="Wait">Chờ</a>
+                                    @endif
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </main>
-    @include('frontend.partials.home_footer')
-    @include('frontend.partials.home_popup')
-@endsection
-
-
-@section('after_scripts')
-    <script src="/frontend/assets/js/page_homeUser.js" type="text/javascript"></script>
 @endsection

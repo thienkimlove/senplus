@@ -33,6 +33,16 @@ class Helpers
 
     public const ARRAY_OPTIONS = ['option1', 'option2', 'option3', 'option4'];
 
+    public const ARRAY_TYPES = [
+        1 => 'ddnt',
+        2 => 'pcld',
+        3 => 'qlnv',
+        4 => 'sgk',
+        5 => 'cl',
+        6 => 'tctc',
+        7 => 'general'
+    ];
+
 
     public static function log($msg)
     {
@@ -70,12 +80,8 @@ class Helpers
         ];
     }
 
-    public static function explainResult($result, $survey)
+    public static function explainResult($result)
     {
-        if (!$survey->company_id) {
-            return [];
-        }
-
         $maxRound1Option = 0;
         $maxRound1OptionKey = null;
 
@@ -100,6 +106,7 @@ class Helpers
 
         $thirdColumnMoreThan10 = [];
         $thirdColumnLessThan10 = [];
+        $percentMatch = 0;
 
         foreach (self::ARRAY_OPTIONS as $option) {
             $cValue = round($result[2][$option] - $result[1][$option]);
@@ -109,10 +116,13 @@ class Helpers
             } else {
                 $thirdColumnLessThan10[] = $option;
             }
+
+            if (abs($cValue) < 5) {
+                $percentMatch += 25;
+            }
         }
 
         return [
-            'name' => $survey->company->name,
             'result' => $result,
             'maxValue' => $maxRound1Option,
             'maxOption' => $maxRound1OptionKey,
@@ -120,13 +130,114 @@ class Helpers
             'secondOption' => $secondRound1OptionKey,
             'moreThan' => $thirdColumnMoreThan10,
             'lessThan' => $thirdColumnLessThan10,
+            'percentMatch' => $percentMatch,
             'explainMax' => Explain::where('option', $maxRound1OptionKey)->first(),
-            'explainSecond' => Explain::where('option', $secondRound1OptionKey)->first(),
-            'explainAll' => Explain::get()
+            'explainSecond' => Explain::where('option', $secondRound1OptionKey)->first()
         ];
 
     }
 
+    public static function getResultForSurvey($survey, $customerIds, $type)
+    {
+
+        $arDetails = [];
+        $arAverage = [
+            1 => [
+                'option1' => 0,
+                'option2' => 0,
+                'option3' => 0,
+                'option4' => 0,
+            ],
+            2 => [
+                'option1' => 0,
+                'option2' => 0,
+                'option3' => 0,
+                'option4' => 0,
+            ]
+        ];
+
+        foreach ($arAverage as $round => $options) {
+            if (!isset($arDetails[$round])) {
+                $arDetails[$round] = [];
+            }
+            foreach ($options as $index => $value) {
+                if ($type == 7) {
+                    $questionIds = $survey->questions
+                        ->where('round', $round)
+                        ->pluck('id')
+                        ->all();
+                } else {
+                    $questionIds = $survey->questions
+                        ->where('round', $round)
+                        ->where('order', $type)
+                        ->pluck('id')
+                        ->all();
+                }
+
+                $avgValue = Answer::whereIn('question_id', $questionIds)
+                    ->whereIn('customer_id', $customerIds)
+                    ->avg($index);
+
+                $arDetails[$round][$index] = round($avgValue, 2);
+            }
+        }
+
+
+        return $arDetails;
+    }
+
+    public static function getResultExplainForSurveyAll($survey, $customerIds)
+    {
+        $explains = [
+            'company_name' => $survey->company->name,
+            'details' => [],
+            'all' => Explain::all(),
+            'avgPercentMatch' => 0
+        ];
+
+        $avgPercentMatch = 0;
+
+        for ($i = 1; $i < 8; $i++) {
+            $result = self::getResultForSurvey($survey, $customerIds, $i);
+
+
+
+            $explains['details'][$i] = self::explainResult($result);
+
+            if ($i != 7) {
+                $avgPercentMatch += $explains['details'][$i]['percentMatch'];
+            }
+        }
+
+        // get additional general explain.
+
+        $explains['avgPercentMatch'] = ($avgPercentMatch > 0) ? round($avgPercentMatch/6, 2) : 0;
+
+        return $explains;
+
+    }
+
+    public static function getMatchName($value)
+    {
+        if ($value == 100) {
+            return 'Hoàn toàn phù hợp';
+        }
+
+        if ($value >= 75) {
+            return 'Phù hợp';
+        }
+
+        if ($value >= 50) {
+            return 'Tương đối phù hợp';
+        }
+
+        if ($value >= 25) {
+            return 'Chưa thực sự phù hợp';
+        }
+
+        return 'Không phù hợp';
+
+    }
 
     public static function mapLevel()
     {
@@ -137,7 +248,6 @@ class Helpers
         ];
     }
 
-
     public static function mapOption()
     {
         return [
@@ -147,7 +257,6 @@ class Helpers
             'option4' => 'Hierarchy',
         ];
     }
-
 
     public static function mapRound()
     {
@@ -207,7 +316,6 @@ class Helpers
         return auth()->user()->level == self::FRONTEND_ADMIN_LEVEL;
     }
 
-
     public static function getListManagerForCurrentUser()
     {
 
@@ -263,6 +371,19 @@ class Helpers
             ->where('status', true)
             ->orderBy('created_at', 'DESC')
             ->get();
+    }
+
+    public static function getCustomerFilterValue($customer, $filter)
+    {
+        if (!$customer->options) {
+            return null;
+        }
+
+        foreach ($customer->options as $option) {
+            if ($option['att_id'] == $filter->id) {
+                return $option['att_value'];
+            }
+        }
     }
 
     public static function getCustomerListByManager($survey)
@@ -360,56 +481,6 @@ class Helpers
 
         return $finalCustomerQuery->pluck('id')->all();
     }
-
-    public static function getResultForSurveyAll($survey, $customerIds, $type = 7)
-    {
-
-        $arDetails = [];
-        $arAverage = [
-            1 => [
-                'option1' => 0,
-                'option2' => 0,
-                'option3' => 0,
-                'option4' => 0,
-            ],
-            2 => [
-                'option1' => 0,
-                'option2' => 0,
-                'option3' => 0,
-                'option4' => 0,
-            ]
-        ];
-
-        foreach ($arAverage as $round => $options) {
-            if (!isset($arDetails[$round])) {
-                $arDetails[$round] = [];
-            }
-            foreach ($options as $index => $value) {
-                if ($type == 7) {
-                    $questionIds = $survey->questions
-                        ->where('round', $round)
-                        ->pluck('id')
-                        ->all();
-                } else {
-                    $questionIds = $survey->questions
-                        ->where('round', $round)
-                        ->where('order', $type)
-                        ->pluck('id')
-                        ->all();
-                }
-
-                $avgValue = Answer::whereIn('question_id', $questionIds)
-                    ->whereIn('customer_id', $customerIds)
-                    ->avg($index);
-
-                $arDetails[$round][$index] = round($avgValue, 2);
-            }
-        }
-
-
-        return $arDetails;
-    }
-
 
     public static function generateAnswerForUser($survey)
     {
@@ -560,6 +631,11 @@ class Helpers
     public static function getLoginCustomerAvatar()
     {
         return auth()->user()->avatar ? url(auth()->user()->avatar) : '/frontend/assets/img/demo-logo1.jpg';
+    }
+
+    public static function getCustomerAvatar($customer)
+    {
+        return $customer->avatar ? url($customer->avatar) : '/frontend/assets/img/demo-logo1.jpg';
     }
 
     public static function getLoginCompany()
