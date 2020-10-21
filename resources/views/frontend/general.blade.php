@@ -19,6 +19,7 @@
 
                 <div class="topOfBox">
                     <h3 class="turnName">Báo cáo tổng quan</h3>
+                    <a href="{{ route('frontend.campaign_create') }}" class="myBtn" title="Tạo chiến dịch" >+ Tạo chiến dịch</a>
                     <form action="javascript:void(0)" class="filterData">
                         <input type="text" placeholder="Lọc dữ liệu" id="inputSearchDemo">
                         <input id="survey_id" type="hidden" name="survey_id" value="{{ $survey->id }}">
