@@ -91,13 +91,6 @@ $(document).ready(function () {
         });
     });
 
-    let multiSelect = $('.multiSeclect');
-
-    if (multiSelect.length) {
-        multiSelect.val(0);
-        multiSelect.selectpicker('refresh');
-    }
-
 });
 
 function showPopup(btnClick) {
