@@ -34,7 +34,7 @@ class CompanyController extends Controller
 
         $surveys = Helpers::getSurveyForLoginUser();
 
-        return view('frontend.campaign', compact('company', 'surveys', 'section'))
+        return view('frontend.campaign', compact('company', 'surveys'))
             ->with(['section' => 'campaign', 'title' => 'Danh sách khảo sát']);
     }
 
