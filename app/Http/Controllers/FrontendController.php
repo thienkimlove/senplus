@@ -162,6 +162,11 @@ class FrontendController extends Controller
 
         $explain = Helpers::getResultExplainForSurveyAll($survey, [auth()->user()->id]);
 
+        if (!$explain) {
+            Helpers::setFlashMessage('Bạn chưa hoàn thành khảo sát!');
+            return redirect(route('frontend.home'));
+        }
+
         return view('frontend.result', compact('explain', 'survey'))
             ->with(['section' => 'home', 'title' => 'Kết quả khảo sát', 'isStyleSurvey' => true]);
     }
@@ -200,6 +205,11 @@ class FrontendController extends Controller
         $customerIds = Helpers::getCustomerListByManager($survey);
         $explain = Helpers::getResultExplainForSurveyAll($survey, $customerIds);
 
+        if (!$explain) {
+            Helpers::setFlashMessage('Chiến dịch khảo sát chưa có dữ liệu!');
+            return redirect(route('frontend.home'));
+        }
+
         return view('frontend.general', compact( 'survey', 'explain'))
             ->with(['section' => 'home', 'title' => 'Kết quả khảo sát toàn Doanh nghiệp', 'isStyleSurvey' => true]);
     }
@@ -225,7 +235,7 @@ class FrontendController extends Controller
         }
         $explain = Helpers::getResultExplainForSurveyAll($survey, $customerIds);
 
-        if ($explain['emptyResult']) {
+        if (!$explain) {
             return response()->json(['error' => true]);
         }
 

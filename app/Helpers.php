@@ -188,24 +188,30 @@ class Helpers
 
     public static function getResultExplainForSurveyAll($survey, $customerIds)
     {
+
+        // check if have result for survey with $customerIds
+
+        if (!self::checkIfSurveyHaveResultForUsers($survey, $customerIds)) {
+            return [];
+        }
+
+
         $explains = [
             'company_name' => $survey->company->name,
             'details' => [],
             'all' => Explain::all(),
-            'avgPercentMatch' => 0,
-            'emptyResult' => false
+            'avgPercentMatch' => 0
         ];
+
 
         $avgPercentMatch = 0;
 
         for ($i = 1; $i < 8; $i++) {
             $result = self::getResultForSurvey($survey, $customerIds, $i);
-            if (!$result) {
-                $explains['emptyResult'] = true;
-            }
-            $explains['details'][$i] = $result? self::explainResult($result) : [];
+
+            $explains['details'][$i] = self::explainResult($result);
             if ($i != 7) {
-                $avgPercentMatch += isset($explains['details'][$i]['percentMatch']) ? $explains['details'][$i]['percentMatch'] : 0;
+                $avgPercentMatch += $explains['details'][$i]['percentMatch'];
             }
         }
 
@@ -277,6 +283,16 @@ class Helpers
             6 => 'Tiêu chí thành công',
             7 => 'Loại hình Văn Hóa DN'
         ];
+    }
+
+    public static function checkIfSurveyHaveResultForUsers($survey, $customerIds)
+    {
+        $questionIds = $survey->questions->pluck('id')->all();
+        $answerCount = Answer::whereIn('customer_id', $customerIds)
+            ->whereIn('question_id', $questionIds)
+            ->count();
+
+        return ($answerCount > 0);
     }
 
     public static function checkIfSurveyHaveResultForUser($survey, $customerId = null)
