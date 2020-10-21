@@ -120,6 +120,8 @@
                         $('#titleTable').text(res.title);
                         $('#titleRight').text(res.title);
                         $('#article').html(res.explain);
+                    } else {
+                        alert('Chưa có dữ liệu câu trả lời vói trường hợp này!');
                     }
                 });
             });

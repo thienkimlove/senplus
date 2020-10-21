@@ -192,20 +192,20 @@ class Helpers
             'company_name' => $survey->company->name,
             'details' => [],
             'all' => Explain::all(),
-            'avgPercentMatch' => 0
+            'avgPercentMatch' => 0,
+            'emptyResult' => false
         ];
 
         $avgPercentMatch = 0;
 
         for ($i = 1; $i < 8; $i++) {
             $result = self::getResultForSurvey($survey, $customerIds, $i);
-
-
-
-            $explains['details'][$i] = self::explainResult($result);
-
+            if (!$result) {
+                $explains['emptyResult'] = true;
+            }
+            $explains['details'][$i] = $result? self::explainResult($result) : [];
             if ($i != 7) {
-                $avgPercentMatch += $explains['details'][$i]['percentMatch'];
+                $avgPercentMatch += isset($explains['details'][$i]['percentMatch']) ? $explains['details'][$i]['percentMatch'] : 0;
             }
         }
 

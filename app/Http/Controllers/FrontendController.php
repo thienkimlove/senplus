@@ -225,6 +225,10 @@ class FrontendController extends Controller
         }
         $explain = Helpers::getResultExplainForSurveyAll($survey, $customerIds);
 
+        if ($explain['emptyResult']) {
+            return response()->json(['error' => true]);
+        }
+
         return response()->json([
             'error' => false,
             'result' => $explain['details'][$chooseType]['result'],
