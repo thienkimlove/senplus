@@ -27,7 +27,7 @@
                                 @if (\App\Helpers::currentFrontendUserIsAdmin())
                                     <h3 class="title">Đối tượng khảo sát</h3>
                                     <div class="selectGroup">
-                                        @foreach ($survey->company->filters as $filter)
+                                        @foreach ($survey->company->filters->where('is_level', false) as $filter)
                                             <select name="{{ $filter->id }}" multiple class="multiSeclect filterSelect">
                                                 @foreach ($filter->options as $option)
                                                     <option class="option" value="{{ $option['attr_value'] }}">
@@ -41,11 +41,11 @@
                             </div>
                             <div class="typeOfChart">
                                 <h3 class="title">Loại biểu đồ</h3>
-                                @foreach (\App\Helpers::mapOrder() as $index => $value)
-                                    <select name="choose_type" id="chartKind">
+                                <select name="choose_type">
+                                    @foreach (\App\Helpers::mapOrder() as $index => $value)
                                         <option class="option" value="{{ $index }}">{{ $value }}</option>
-                                    </select>
-                                @endforeach
+                                    @endforeach
+                                </select>
                             </div>
                             <button id="filerSelectSubmit" class="btnFilter myBtn">Xem</button>
                         </div>
