@@ -91,7 +91,7 @@ $(document).ready(function () {
         });
     });
 
-    let multiSelect = $('.multiSelect');
+    let multiSelect = $('.multiSeclect');
 
     if (multiSelect.length) {
         multiSelect.val(0);
