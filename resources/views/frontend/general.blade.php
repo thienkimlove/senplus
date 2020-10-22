@@ -43,7 +43,10 @@
                             <div class="typeOfChart">
                                 <h3 class="title">Loại biểu đồ</h3>
                                 <select name="choose_type" id="chartKind">
-                                    @foreach (\App\Helpers::mapOrder() as $index => $value)
+                                    @php
+                                       $sortOrders = ksort(\App\Helpers::mapOrder());
+                                    @endphp
+                                    @foreach ($sortOrders as $index => $value)
                                         <option class="option" value="{{ $index }}">{{ $value }}</option>
                                     @endforeach
                                 </select>
