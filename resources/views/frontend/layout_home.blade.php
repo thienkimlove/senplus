@@ -32,7 +32,7 @@
 <script src="/frontend/assets/js/bootstrap-datetimepicker.min2.js" type="text/javascript"></script>
 <script src="/frontend/assets/js/bootstrap-select.min.js" type="text/javascript"></script>
 <script src="/frontend/assets/js/Chart.min.js"></script>
-<script src="/frontend/assets/js/page_all.js" type="text/javascript"></script>
+<script src="/frontend/assets/js/page_all.js?v=1" type="text/javascript"></script>
 @yield('after_scripts')
 </body>
 </html>
