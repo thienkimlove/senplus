@@ -251,6 +251,14 @@ function makeChart(ctx, mapOption, mapRound, eResult) {
                 position: 'top'
             },
             spanGaps: true,
+            scale: {
+                angleLines: {
+                    display: false
+                },
+                ticks: {
+                    suggestedMin: 0
+                }
+            }
         },
         plugins: [{
             beforeDraw: function(chart, options) {

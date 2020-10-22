@@ -53,10 +53,6 @@
                     </form>
                 </div>
 
-                <div class="box">
-                    <canvas id="myChart"></canvas>
-                </div>
-
                 <div class="box resultBox">
                     <div class="txt">* Sử dụng bộ lọc dữ liệu để nhận kết quả đa chiều</div>
                     <div class="tableAndChart">
@@ -80,7 +76,7 @@
                             <div class="name">[{{ $survey->company->name }}]</div>
                             <div class="content">
                                 <div class="radaChart">
-
+                                    <canvas id="myChart"></canvas>
                                 </div>
                             </div>
                         </div>
