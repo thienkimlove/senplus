@@ -30,11 +30,28 @@
         <ul>
             @foreach ($explain['details'][1]['moreThan'] as $option)
                 @php
-                    $tempValue = round($explain['details'][1]['result'][2][$option] - $explain['details'][1]['result'][1][$option]);
-                    //dd($explain['explainAll']->where('option', $option));
+                    $tempValue = round($explain['details'][1]['result'][2][$option] - $explain['details'][1]['result'][1][$option], 2);
                 @endphp
 
-                <li>{{ ($tempValue > 0) ? 'Gia tăng' : 'Giảm bớt' }} tỉ trọng của {{ $explain['all']->where('option', $option)->first()->ten_van_hoa }} ({{ abs($tempValue) }} điểm) tương ứng với đặc điểm  {{ $explain['all']->where('option', $option)->first()->dac_diem_noi_troi }}</li>
+                <li>{{ ($tempValue > 0) ? 'Gia tăng' : 'Giảm bớt' }} tỉ trọng của {{ $explain['all']->where('option', $option)->first()->ten_van_hoa }} ({{ $tempValue }} điểm) tương ứng với đặc điểm  {{ $explain['all']->where('option', $option)->first()->dac_diem_noi_troi }}</li>
+            @endforeach
+        </ul>
+    </div>
+
+@endif
+
+@if ($explain['details'][1]['lessThan'])
+    <div>
+        Có {{ count($explain['details'][1]['lessThan']) }} sự chênh lệch lớn hơn hoặc bằng 10, thể hiện nhu cầu thay đổi cần lưu ý của họ đó là:
+    </div>
+    <div>
+        <ul>
+            @foreach ($explain['details'][1]['lessThan'] as $option)
+                @php
+                    $tempValue = round($explain['details'][1]['result'][2][$option] - $explain['details'][1]['result'][1][$option], 2);
+                @endphp
+
+                <li>{{ ($tempValue > 0) ? 'Gia tăng' : 'Giảm bớt' }} tỉ trọng của {{ $explain['all']->where('option', $option)->first()->ten_van_hoa }} ({{ $tempValue }} điểm) tương ứng với đặc điểm  {{ $explain['all']->where('option', $option)->first()->dac_diem_noi_troi }}</li>
             @endforeach
         </ul>
     </div>

@@ -113,7 +113,7 @@ class Helpers
 
             if (abs($cValue) >=10) {
                 $thirdColumnMoreThan10[] = $option;
-            } else {
+            } else if (abs($cValue) < 10 && abs($cValue) >= 5) {
                 $thirdColumnLessThan10[] = $option;
             }
 

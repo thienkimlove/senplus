@@ -90,17 +90,34 @@
 
     @if ($explain['details'][7]['moreThan'])
         <div>
-            Có {{ count($explain['details'][7]['moreThan']) }} sự thay đổi quan trọng đó là:
+            Có {{ count($explain['details'][7]['moreThan']) }} sự thay đổi cấp thiết đó là:
         </div>
         <div>
             <ul>
                 @foreach ($explain['details'][7]['moreThan'] as $option)
                     @php
-                        $tempValue = round($explain['details'][7]['result'][2][$option] - $explain['details'][7]['result'][1][$option]);
-                        //dd($explain['explainAll']->where('option', $option));
+                        $tempValue = round($explain['details'][7]['result'][2][$option] - $explain['details'][7]['result'][1][$option], 2);
                     @endphp
 
-                    <li>{{ ($tempValue > 0) ? 'Gia tăng' : 'Giảm bớt' }} tỉ trọng của loại hình {{ $explain['all']->where('option', $option)->first()->ten_van_hoa }} ({{ abs($tempValue) }} điểm) tương ứng với năng lực cạnh tranh bằng {{ $explain['all']->where('option', $option)->first()->nang_luc_canh_tranh }}</li>
+                    <li>{{ ($tempValue > 0) ? 'Gia tăng' : 'Giảm bớt' }} tỉ trọng của loại hình {{ $explain['all']->where('option', $option)->first()->ten_van_hoa }} ({{ $tempValue }} điểm) tương ứng với năng lực cạnh tranh bằng {{ $explain['all']->where('option', $option)->first()->nang_luc_canh_tranh }}</li>
+                @endforeach
+            </ul>
+        </div>
+
+    @endif
+
+    @if ($explain['details'][7]['lessThan'])
+        <div>
+            Có {{ count($explain['details'][7]['lessThan']) }} sự thay đổi cần lưu ý đó là:
+        </div>
+        <div>
+            <ul>
+                @foreach ($explain['details'][7]['lessThan'] as $option)
+                    @php
+                        $tempValue = round($explain['details'][7]['result'][2][$option] - $explain['details'][7]['result'][1][$option], 2);
+                    @endphp
+
+                    <li>{{ ($tempValue > 0) ? 'Gia tăng' : 'Giảm bớt' }} tỉ trọng của loại hình {{ $explain['all']->where('option', $option)->first()->ten_van_hoa }} ({{ $tempValue }} điểm) tương ứng với năng lực cạnh tranh bằng {{ $explain['all']->where('option', $option)->first()->nang_luc_canh_tranh }}</li>
                 @endforeach
             </ul>
         </div>
