@@ -109,7 +109,7 @@ class Helpers
         $percentMatch = 0;
 
         foreach (self::ARRAY_OPTIONS as $option) {
-            $cValue = round($result[2][$option] - $result[1][$option]);
+            $cValue = round($result[2][$option] - $result[1][$option], 2);
 
             if (abs($cValue) >=10) {
                 $thirdColumnMoreThan10[] = $option;
