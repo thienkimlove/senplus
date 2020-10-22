@@ -11,7 +11,7 @@
 </div>
 
 <div>
-    Điều giữ cho các thành viên {{ $explain['company_name'] }} luôn gắn kết là <b>{{ $explain['details'][4]['explainMax']->dac_diem_noi_troi }}</b>
+    Điều giữ cho các thành viên {{ $explain['company_name'] }} luôn gắn kết là <b>{{ $explain['details'][4]['explainMax']->su_gan_ket }}</b>
 </div>
 
 <div>

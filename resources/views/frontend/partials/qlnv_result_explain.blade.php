@@ -11,7 +11,7 @@
 </div>
 
 <div>
-    Cách quản lý nhân viên tại {{ $explain['company_name'] }} là <b>{{ $explain['details'][3]['explainMax']->dac_diem_noi_troi }}</b>
+    Cách quản lý nhân viên tại {{ $explain['company_name'] }} là <b>{{ $explain['details'][3]['explainMax']->quan_ly_nhan_vien }}</b>
 </div>
 
 <div>

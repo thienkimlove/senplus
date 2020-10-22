@@ -11,7 +11,7 @@
 </div>
 
 <div>
-    Phong cách của lãnh đạo {{ $explain['company_name'] }} là <b>{{ $explain['details'][2]['explainMax']->dac_diem_noi_troi }}</b>
+    Phong cách của lãnh đạo {{ $explain['company_name'] }} là <b>{{ $explain['details'][2]['explainMax']->phong_cach_lanh_dao }}</b>
 </div>
 
 <div>

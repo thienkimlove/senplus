@@ -11,7 +11,7 @@
 </div>
 
 <div>
-    Tiêu chí để đánh giá sự thành công của {{ $explain['company_name'] }} là <b>{{ $explain['details'][6]['explainMax']->dac_diem_noi_troi }}</b>
+    Tiêu chí để đánh giá sự thành công của {{ $explain['company_name'] }} là <b>{{ $explain['details'][6]['explainMax']->tieu_chi_thanh_cong }}</b>
 </div>
 
 <div>

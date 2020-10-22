@@ -11,7 +11,7 @@
 </div>
 
 <div>
-    Định hướng chiến lược của {{ $explain['company_name'] }} là <b>{{ $explain['details'][5]['explainMax']->dac_diem_noi_troi }}</b>
+    Định hướng chiến lược của {{ $explain['company_name'] }} là <b>{{ $explain['details'][5]['explainMax']->chien_luoc }}</b>
 </div>
 
 <div>
