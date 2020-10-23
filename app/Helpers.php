@@ -106,19 +106,24 @@ class Helpers
 
         $thirdColumnMoreThan10 = [];
         $thirdColumnLessThan10 = [];
+        $thirdColumnBigThan5 = [];
         $percentMatch = 0;
 
         foreach (self::ARRAY_OPTIONS as $option) {
-            $cValue = round($result[2][$option] - $result[1][$option], 2);
+            $cValue = round(($result[2][$option] - $result[1][$option]), 2);
 
-            if (abs($cValue) >=10) {
+            $absValue = abs($cValue);
+
+            if ($absValue >=10) {
                 $thirdColumnMoreThan10[] = $option;
-            } else if (abs($cValue) < 10 && abs($cValue) >= 5) {
+            } else if ($absValue < 10 && $absValue >= 5) {
                 $thirdColumnLessThan10[] = $option;
+            } else {
+                $percentMatch += 25;
             }
 
-            if (abs($cValue) < 5) {
-                $percentMatch += 25;
+            if ($absValue >= 5) {
+                $thirdColumnBigThan5[] = $option;
             }
         }
 
@@ -130,6 +135,7 @@ class Helpers
             'secondOption' => $secondRound1OptionKey,
             'moreThan' => $thirdColumnMoreThan10,
             'lessThan' => $thirdColumnLessThan10,
+            'bigThan' => $thirdColumnBigThan5,
             'percentMatch' => $percentMatch,
             'explainMax' => Explain::where('option', $maxRound1OptionKey)->first(),
             'explainSecond' => Explain::where('option', $secondRound1OptionKey)->first()
@@ -157,22 +163,21 @@ class Helpers
         ];
 
         foreach ($arAverage as $round => $options) {
-            if (!isset($arDetails[$round])) {
-                $arDetails[$round] = [];
+
+            if ($type == 7) {
+                $questionIds = $survey->questions
+                    ->where('round', $round)
+                    ->pluck('id')
+                    ->all();
+            } else {
+                $questionIds = $survey->questions
+                    ->where('round', $round)
+                    ->where('order', $type)
+                    ->pluck('id')
+                    ->all();
             }
+
             foreach ($options as $index => $value) {
-                if ($type == 7) {
-                    $questionIds = $survey->questions
-                        ->where('round', $round)
-                        ->pluck('id')
-                        ->all();
-                } else {
-                    $questionIds = $survey->questions
-                        ->where('round', $round)
-                        ->where('order', $type)
-                        ->pluck('id')
-                        ->all();
-                }
 
                 $avgValue = Answer::whereIn('question_id', $questionIds)
                     ->whereIn('customer_id', $customerIds)
@@ -181,7 +186,6 @@ class Helpers
                 $arDetails[$round][$index] = round($avgValue, 2);
             }
         }
-
 
         return $arDetails;
     }
@@ -207,8 +211,8 @@ class Helpers
         $avgPercentMatch = 0;
 
         for ($i = 1; $i < 8; $i++) {
-            $result = self::getResultForSurvey($survey, $customerIds, $i);
 
+            $result = self::getResultForSurvey($survey, $customerIds, $i);
             $explains['details'][$i] = self::explainResult($result);
             if ($i != 7) {
                 $avgPercentMatch += $explains['details'][$i]['percentMatch'];
@@ -409,43 +413,24 @@ class Helpers
                 ->where('status', true)
                 ->pluck('id')
                 ->all();
-        } else {
-            //manager
-            $customers = Customer::where('company_id', $survey->company_id)
-                ->where('status', true)
-                ->get();
+        }
+        //manager
+        $customers = Customer::where('company_id', $survey->company_id)
+            ->where('status', true)
+            ->get();
 
-            $storeUserIdByFilter = [];
-            foreach (auth()->user()->options as $option) {
-                $filter = Filter::find($option['att_id']);
-                if ($filter && !$filter->is_level) {
-                    $storeUserIdByFilter[$option['att_id']] = [];
-                    foreach ($customers as $customer) {
-                       if ($customer->options) {
-                           foreach ($customer->options as $cusOption) {
-                               if ($cusOption['att_value'] == $option['att_value']) {
-                                   $storeUserIdByFilter[$option['att_id']][] = $customer->id;
-                               }
-                           }
-                       }
+        $storeUserIds = [];
+        foreach (auth()->user()->options as $option) {
+            $filter = Filter::find($option['att_id']);
+            if ($filter && !$filter->is_level) {
+                foreach ($customers as $customer) {
+                    if ($option['att_value'] == self::getCustomerFilterValue($customer, $filter)) {
+                        $storeUserIds[] = $customer->id;
                     }
                 }
             }
-
-            if (!$storeUserIdByFilter) {
-                return [];
-            }
-
-            $finalCustomerQuery = Customer::where('company_id', $survey->company_id)
-                ->where('status', true);
-
-            foreach ($storeUserIdByFilter as $filterValue) {
-                $finalCustomerQuery = $finalCustomerQuery->whereIn('id', $filterValue);
-            }
-
-            return $finalCustomerQuery->pluck('id')->all();
-
         }
+        return array_unique($storeUserIds);
     }
 
     public static function getCustomerByChooseList($survey, $chooseCustomers)
@@ -457,17 +442,15 @@ class Helpers
         $storeUserIdByFilter = [];
 
         if ($chooseCustomers) {
+            // 1|| Nhân Sự##HanhfChinh, 2||Nhân Sự##HanhfChinh
             $listCustomerFilters = explode(',', $chooseCustomers);
             if ($listCustomerFilters) {
                 foreach ($listCustomerFilters as $listCustomerFilter) {
                     $exList = explode('||', $listCustomerFilter);
-                    if ($filterId = $exList[0] && $filterValue = $exList[1]) {
-
-                        $filterDB = Filter::find($filterId);
-
-                        if ($filterDB) {
+                    if (isset($exList[0]) && isset($exList[1]) && $filterId = $exList[0] && $filterValues = explode('##', $exList[1])) {
+                        if ($filterDB = Filter::find($filterId)) {
                             foreach ($customers as $customer) {
-                                if ($filterValue == self::getCustomerFilterValue($customer, $filterDB)) {
+                                if (in_array(self::getCustomerFilterValue($customer, $filterDB), $filterValues)) {
                                     $storeUserIdByFilter[$filterId][] = $customer->id;
                                 }
                             }

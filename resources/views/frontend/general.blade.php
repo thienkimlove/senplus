@@ -29,7 +29,7 @@
                                     <h3 class="title">Đối tượng khảo sát</h3>
                                     <div class="selectGroup">
                                         @foreach ($survey->company->filters->where('is_level', false) as $filter)
-                                            <select name="filter_{{ $filter->id }}" multiple class="multiSeclect filterSelect">
+                                            <select name="filter_{{ $filter->id }}" multiple class="multiSelectCustom">
                                                 @foreach ($filter->options as $option)
                                                     <option class="option" value="{{ $option['attr_value'] }}">
                                                         {{ $option['attr_value'] }}
@@ -42,10 +42,11 @@
                             </div>
                             <div class="typeOfChart">
                                 <h3 class="title">Loại biểu đồ</h3>
+
                                 <select name="choose_type" id="chartKind">
-                                    @foreach (array_reverse(\App\Helpers::mapOrder()) as $index => $value)
-                                        <option class="option" value="{{ $index }}">{{ $value }}</option>
-                                    @endforeach
+                                    @for($i = 7; $i > 0 ; $i--)
+                                        <option class="option" value="{{ $i }}">{{ \App\Helpers::mapOrder()[$i] }}</option>
+                                    @endfor
                                 </select>
                             </div>
                             <button id="filerSelectSubmit" class="btnFilter myBtn">Xem</button>
@@ -99,14 +100,22 @@
             let mapRound = JSON.parse(' @json(\App\Helpers::mapRound()) ');
             makeChart(ctx, mapOption, mapRound, result);
 
+            let multiSelect = $('.multiSelectCustom');
+            if (multiSelect.length) {
+                multiSelect.selectpicker({'noneSelectedText' : 'Tất cả'});
+            }
+
             $('#filerSelectSubmit').click(function(){
                 let surveyId = $('#survey_id').val();
                 let chooseType = $('#chartKind').val();
                 let checkboxValues = [];
 
-                $('.filterSelect').each(function () {
-                    let filterId = this.name.replace('filter_', '');
-                    checkboxValues.push(filterId + '||' + this.value);
+                multiSelect.each(function () {
+                    let values = $(this).val();
+                    if (values) {
+                        let filterId = this.name.replace('filter_', '');
+                        checkboxValues.push(filterId + '||' + values.join('##'));
+                    }
                 });
                 let chooseCustomers = checkboxValues.toString(); //Output Format: 1,2,3
 
@@ -120,7 +129,8 @@
                         $('#explainText').hide();
                         $('#titleTable').text(res.title);
                         $('#titleRight').text(res.title);
-                        $('#article').html(res.explain);
+                        $('#article').html(res.detail);
+                        $('#mainTableBody').html(res.table);
                     } else {
                         alert('Chưa có dữ liệu câu trả lời vói trường hợp này!');
                     }
