@@ -232,8 +232,11 @@ class FrontendController extends Controller
         $survey = Survey::find($surveyId);
         $customerIds = Helpers::getCustomerListByManager($survey);
 
+        //Helpers::log($customerIds);
+
         if ($request->input('choose_customers')) {
             $chooseCustomers = $request->input('choose_customers');
+            Helpers::log($chooseCustomers);
             $customerIds = Helpers::getCustomerByChooseList($survey, $chooseCustomers, $customerIds);
         }
         $explain = Helpers::getResultExplainForSurveyAll($survey, $customerIds);

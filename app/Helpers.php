@@ -460,10 +460,11 @@ class Helpers
             if ($listCustomerFilters) {
                 foreach ($listCustomerFilters as $listCustomerFilter) {
                     $exList = explode('||', $listCustomerFilter);
-                    if (isset($exList[0]) && isset($exList[1]) && $filterId = $exList[0] && $filterValues = explode('##', $exList[1])) {
+                    if (isset($exList[0]) && isset($exList[1]) && $filterId = $exList[0]) {
                         if ($filterDB = Filter::find($filterId)) {
                             foreach ($customers as $customer) {
-                                if (in_array(self::getCustomerFilterValue($customer, $filterDB), $filterValues)) {
+                                $cusFilterValue = self::getCustomerFilterValue($customer, $filterDB);
+                                if (strpos($exList[1], $cusFilterValue) !== false) {
                                     $storeUserIds[] = $customer->id;
                                 }
                             }
