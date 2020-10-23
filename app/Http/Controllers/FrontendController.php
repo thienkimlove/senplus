@@ -204,7 +204,7 @@ class FrontendController extends Controller
 
         $customerIds = Helpers::getCustomerListByManager($survey);
 
-        $filters = Helpers::currentFrontendUserIsAdmin()? $survey->company->filters : $survey->company->filters->where('is_level', true);
+        $filters = Helpers::currentFrontendUserIsAdmin()? $survey->company->filters : $survey->company->filters->where('is_level', false);
 
         $explain = Helpers::getResultExplainForSurveyAll($survey, $customerIds);
 
