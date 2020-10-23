@@ -136,6 +136,18 @@ class CustomerCrudController extends CrudController
             'model'     => 'App\Models\Company',
         ]);
 
+        CRUD::addField(
+            [
+                'name' => 'options',
+                'label' => 'Các thuộc tính',
+                'type' => 'table',
+                'columns' => [
+                    'att_id' => 'ID thuộc tính',
+                    'att_value' => 'Giá trị'
+                ],
+            ]
+        );
+
     }
 
     protected function setupUpdateOperation()
