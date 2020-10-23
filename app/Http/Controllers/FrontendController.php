@@ -238,7 +238,7 @@ class FrontendController extends Controller
         }
         $explain = Helpers::getResultExplainForSurveyAll($survey, $customerIds);
 
-        Helpers::log($explain);
+        //Helpers::log($explain);
 
         if (!$explain) {
             return response()->json(['error' => true]);
@@ -254,6 +254,7 @@ class FrontendController extends Controller
             'detail' => view('frontend.partials.'.Helpers::ARRAY_TYPES[$chooseType].'_result_explain')
                 ->with(['explain' => $explain])
                 ->render(),
+            'debug' => $customerIds? implode(',', Customer::whereIn('id', $customerIds)->pluck('name')->all()) : ''
         ]);
     }
 

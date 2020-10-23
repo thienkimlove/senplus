@@ -54,6 +54,7 @@
 
                 <div class="box resultBox">
                     <div class="txt">* Sử dụng bộ lọc dữ liệu để nhận kết quả đa chiều</div>
+                    <div class="txt" id="customers"></div>
                     <div class="tableAndChart">
                         <div class="leftSide">
                             <table class="tableResult">
@@ -129,6 +130,7 @@
                         $('#titleRight').text(res.title);
                         $('#article').html(res.detail);
                         $('#mainTableBody').html(res.table);
+                        $('#customers').html(res.debug);
                     } else {
                         alert('Chưa có dữ liệu câu trả lời vói trường hợp này!');
                     }
