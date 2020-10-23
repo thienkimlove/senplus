@@ -106,8 +106,7 @@ class Helpers
 
         $thirdColumnMoreThan10 = [];
         $thirdColumnLessThan10 = [];
-        $thirdColumnBigThan5 = [];
-        $percentMatch = 0;
+
 
         foreach (self::ARRAY_OPTIONS as $option) {
             $cValue = round(($result[2][$option] - $result[1][$option]), 2);
@@ -118,12 +117,6 @@ class Helpers
                 $thirdColumnMoreThan10[] = $option;
             } else if ($absValue < 10 && $absValue >= 5) {
                 $thirdColumnLessThan10[] = $option;
-            } else {
-                $percentMatch += 25;
-            }
-
-            if ($absValue >= 5) {
-                $thirdColumnBigThan5[] = $option;
             }
         }
 
@@ -135,8 +128,6 @@ class Helpers
             'secondOption' => $secondRound1OptionKey,
             'moreThan' => $thirdColumnMoreThan10,
             'lessThan' => $thirdColumnLessThan10,
-            'bigThan' => $thirdColumnBigThan5,
-            'percentMatch' => $percentMatch,
             'explainMax' => Explain::where('option', $maxRound1OptionKey)->first(),
             'explainSecond' => Explain::where('option', $secondRound1OptionKey)->first()
         ];
@@ -190,6 +181,11 @@ class Helpers
         return $arDetails;
     }
 
+    public static function getXValue($explains, $i, $option)
+    {
+        return round($explains['details'][$i]['result'][2][$option] - $explains['details'][$i]['result'][1][$option], 2) - round($explains['details'][7]['result'][2][$option] - $explains['details'][7]['result'][1][$option], 2);
+    }
+
     public static function getResultExplainForSurveyAll($survey, $customerIds)
     {
 
@@ -204,23 +200,39 @@ class Helpers
             'company_name' => $survey->company->name,
             'details' => [],
             'all' => Explain::all(),
-            'avgPercentMatch' => 0
+            'avgPercentMatch' => 0,
+            'extends' => []
         ];
-
-
-        $avgPercentMatch = 0;
 
         for ($i = 1; $i < 8; $i++) {
 
             $result = self::getResultForSurvey($survey, $customerIds, $i);
             $explains['details'][$i] = self::explainResult($result);
-            if ($i != 7) {
-                $avgPercentMatch += $explains['details'][$i]['percentMatch'];
-            }
         }
 
         // get additional general explain.
 
+        $avgPercentMatch = 0;
+
+        for ($i = 1; $i < 7; $i++) {
+            $percentMatch = 0;
+            $bigThan = [];
+            foreach (self::ARRAY_OPTIONS as $option) {
+                $xValue = self::getXValue($explains, $i, $option);
+
+                if (abs($xValue) < 5) {
+                    $percentMatch += 25;
+                } else {
+                    $bigThan[] = $option;
+                }
+            }
+
+            $explains['extends'][$i] = [
+                'bigThan' => $bigThan,
+                'percentMatch' => $percentMatch,
+            ];
+            $avgPercentMatch += $percentMatch;
+        }
         $explains['avgPercentMatch'] = ($avgPercentMatch > 0) ? round($avgPercentMatch/6, 2) : 0;
 
         return $explains;

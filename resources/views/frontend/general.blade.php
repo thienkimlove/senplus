@@ -25,20 +25,18 @@
                         <input id="survey_id" type="hidden" name="survey_id" value="{{ $survey->id }}">
                         <div id="filterDataBox">
                             <div class="objectTest">
-                                @if (\App\Helpers::currentFrontendUserIsAdmin())
-                                    <h3 class="title">Đối tượng khảo sát</h3>
-                                    <div class="selectGroup">
-                                        @foreach ($survey->company->filters->where('is_level', false) as $filter)
-                                            <select name="filter_{{ $filter->id }}" multiple class="multiSelectCustom">
-                                                @foreach ($filter->options as $option)
-                                                    <option class="option" value="{{ $option['attr_value'] }}">
-                                                        {{ $option['attr_value'] }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        @endforeach
-                                    </div>
-                                @endif
+                                <h3 class="title">Đối tượng khảo sát</h3>
+                                <div class="selectGroup">
+                                    @foreach ($filters as $filter)
+                                        <select name="filter_{{ $filter->id }}" multiple class="multiSelectCustom">
+                                            @foreach ($filter->options as $option)
+                                                <option class="option" value="{{ $option['attr_value'] }}">
+                                                    {{ $option['attr_value'] }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    @endforeach
+                                </div>
                             </div>
                             <div class="typeOfChart">
                                 <h3 class="title">Loại biểu đồ</h3>

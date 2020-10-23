@@ -178,7 +178,7 @@ class FrontendController extends Controller
             return redirect(route('frontend.index'));
         }
 
-        if (!Helpers::currentFrontendUserIsAdmin()) {
+        if (!Helpers::currentFrontendUserIsManager()) {
             Helpers::setFlashMessage('Bạn không có quyền xem kết quả doanh nghiệp!');
             return redirect(route('frontend.index'));
         }
@@ -203,6 +203,9 @@ class FrontendController extends Controller
         }
 
         $customerIds = Helpers::getCustomerListByManager($survey);
+
+        $filters = Helpers::currentFrontendUserIsAdmin()? $survey->company->filters : $survey->company->filters->where('is_level', false);
+
         $explain = Helpers::getResultExplainForSurveyAll($survey, $customerIds);
 
         if (!$explain) {
@@ -210,7 +213,7 @@ class FrontendController extends Controller
             return redirect(route('frontend.home'));
         }
 
-        return view('frontend.general', compact( 'survey', 'explain'))
+        return view('frontend.general', compact( 'survey', 'explain', 'filters'))
             ->with(['section' => 'home', 'title' => 'Kết quả khảo sát toàn Doanh nghiệp', 'isStyleSurvey' => true]);
     }
 
