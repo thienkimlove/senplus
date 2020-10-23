@@ -445,13 +445,14 @@ class Helpers
         return array_unique($storeUserIds);
     }
 
-    public static function getCustomerByChooseList($survey, $chooseCustomers)
+    public static function getCustomerByChooseList($survey, $chooseCustomers, $customerIds)
     {
 
         $customers = Customer::where('company_id', $survey->company_id)
             ->where('status', true)
+            ->whereIn('id', $customerIds)
             ->get();
-        $storeUserIdByFilter = [];
+        $storeUserIds = [];
 
         if ($chooseCustomers) {
             // 1|| Nhân Sự##HanhfChinh, 2||Nhân Sự##HanhfChinh
@@ -463,7 +464,7 @@ class Helpers
                         if ($filterDB = Filter::find($filterId)) {
                             foreach ($customers as $customer) {
                                 if (in_array(self::getCustomerFilterValue($customer, $filterDB), $filterValues)) {
-                                    $storeUserIdByFilter[$filterId][] = $customer->id;
+                                    $storeUserIds[] = $customer->id;
                                 }
                             }
                         }
@@ -472,21 +473,7 @@ class Helpers
             }
         }
 
-        if (!$storeUserIdByFilter) {
-            return Customer::where('company_id', $survey->company_id)
-                ->where('status', true)
-                ->pluck('id')
-                ->all();
-        }
-
-        $finalCustomerQuery = Customer::where('company_id', $survey->company_id)
-            ->where('status', true);
-
-        foreach ($storeUserIdByFilter as $filterValue) {
-            $finalCustomerQuery = $finalCustomerQuery->whereIn('id', $filterValue);
-        }
-
-        return $finalCustomerQuery->pluck('id')->all();
+        return array_unique($storeUserIds);
     }
 
     public static function generateAnswerForUser($survey)
