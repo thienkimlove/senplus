@@ -462,10 +462,11 @@ class Helpers
                     $exList = explode('||', $listCustomerFilter);
                     if (isset($exList[0]) && isset($exList[1]) && $filterId = $exList[0]) {
                         if ($filterDB = Filter::find($filterId)) {
+                            $storeUserIds[$filterId] = [];
                             foreach ($customers as $customer) {
                                 $cusFilterValue = self::getCustomerFilterValue($customer, $filterDB);
                                 if (strpos($exList[1], $cusFilterValue) !== false) {
-                                    $storeUserIds[] = $customer->id;
+                                    $storeUserIds[$filterId][] = $customer->id;
                                 }
                             }
                         }
@@ -474,7 +475,17 @@ class Helpers
             }
         }
 
-        return array_unique($storeUserIds);
+        if (!$storeUserIds) {
+            return [];
+        }
+
+        $result = reset($storeUserIds);
+
+        foreach ($storeUserIds as $index => $storeUserId) {
+            $result = array_intersect($result, $storeUserId);
+        }
+
+        return array_unique($result);
     }
 
     public static function generateAnswerForUser($survey)
