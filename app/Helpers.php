@@ -434,7 +434,7 @@ class Helpers
         $storeUserIds = [];
         foreach (auth()->user()->options as $option) {
             $filter = Filter::find($option['att_id']);
-            if ($filter && !$filter->is_level) {
+            if ($filter && $filter->is_level) {
                 foreach ($customers as $customer) {
                     if ($option['att_value'] == self::getCustomerFilterValue($customer, $filter)) {
                         $storeUserIds[] = $customer->id;
