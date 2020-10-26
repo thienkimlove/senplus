@@ -63,7 +63,7 @@
                                     <th id="titleTable">Loại hình Văn hóa doanh nghiệp</th>
                                     <th>Đánh giá <br>(hiện tại)</th>
                                     <th>Mong muốn <br>(tuong lai)</th>
-                                    <th>Chênh lệch</th>
+                                    <th>Nhu cầu thay đổi</th>
                                 </tr>
                                 </thead>
                                 <tbody id="mainTableBody">
