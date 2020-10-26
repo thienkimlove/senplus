@@ -241,8 +241,8 @@ class Helpers
 
     public static function getMatchName($value)
     {
-        if ($value == 100) {
-            return 'Phù hợp';
+        if ($value >= 95) {
+            return 'Hoàn toàn phù hợp';
         }
 
         if ($value >= 75) {
@@ -250,8 +250,9 @@ class Helpers
         }
 
         if ($value >= 50) {
-            return 'Chưa thực sự phù hợp';
+            return 'Chưa phù hợp';
         }
+
 
         return 'Không phù hợp';
 
