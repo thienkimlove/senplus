@@ -6,6 +6,7 @@ use App\Helpers;
 use App\Models\Answer;
 use App\Models\Company;
 use App\Models\Customer;
+use App\Models\Filter;
 use App\Models\Question;
 use App\Models\Survey;
 use Illuminate\Http\Request;
@@ -213,7 +214,7 @@ class FrontendController extends Controller
             return redirect(route('frontend.home'));
         }
 
-        return view('frontend.general', compact( 'survey', 'explain', 'filters'))
+        return view('frontend.general', compact( 'survey', 'explain', 'filters', 'customerIds'))
             ->with(['section' => 'home', 'title' => 'Kết quả khảo sát toàn Doanh nghiệp', 'isStyleSurvey' => true]);
     }
 
@@ -234,11 +235,19 @@ class FrontendController extends Controller
 
         //Helpers::log($customerIds);
 
+        $objectCustomerNames = Helpers::getFilterManagerNames();
+
         if ($request->input('choose_customers')) {
             $chooseCustomers = $request->input('choose_customers');
-            Helpers::log($chooseCustomers);
+            //Helpers::log($chooseCustomers);
             $customerIds = Helpers::getCustomerByChooseList($survey, $chooseCustomers, $customerIds);
+
+            $objectCustomerNames = Helpers::getTotalFilterNames($chooseCustomers, $objectCustomerNames);
         }
+
+
+
+
         $explain = Helpers::getResultExplainForSurveyAll($survey, $customerIds);
 
         //Helpers::log($explain);
@@ -257,7 +266,9 @@ class FrontendController extends Controller
             'detail' => view('frontend.partials.'.Helpers::ARRAY_TYPES[$chooseType].'_result_explain')
                 ->with(['explain' => $explain])
                 ->render(),
-            'debug' => $customerIds? implode(',', Customer::whereIn('id', $customerIds)->pluck('name')->all()) : ''
+            'debug' => $customerIds? implode(',', Customer::whereIn('id', $customerIds)->pluck('name')->all()) : '',
+            'total' => 'Số lượng : '. count($customerIds),
+            'object' => $objectCustomerNames? 'Đối tượng : '.$objectCustomerNames : ""
         ]);
     }
 

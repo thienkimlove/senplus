@@ -7,10 +7,19 @@
             <div class="fixCen hasBefore">
                 <div class="descriptionRusult">
                     <p class="blue2 fw18px">
-                        [{{ $survey->name }}]
+                        {{ $survey->name }}
                     </p>
-                    <p>Thời gian thực hiện: [{{ $survey->start_time? $survey->start_time->format('d/m/Y') : "" }}  - {{ $survey->end_time? $survey->end_time->format('d/m/Y') : "" }}]</p>
-                    <p>Số lượng: [{{ \App\Helpers::getTotalAnswerForSurvey($survey) }}]</p>
+                    <p>Thời gian thực hiện: {{ $survey->start_time? $survey->start_time->format('d/m/Y') : "" }}  - {{ $survey->end_time? $survey->end_time->format('d/m/Y') : "" }}</p>
+
+                    @if (!\App\Helpers::currentFrontendUserIsAdmin())
+                        <p id="objectCustomer">
+                           Đối tượng khảo sát : {{ \App\Helpers::getFilterManagerNames() }}
+                        </p>
+                    @else
+                        <p id="objectCustomer" style="display: none"></p>
+                    @endif
+
+                    <p id="totalCustomer">Số lượng: {{ count($customerIds) }}</p>
                 </div>
             </div>
         </div>
@@ -42,9 +51,9 @@
                                 <h3 class="title">Loại biểu đồ</h3>
 
                                 <select name="choose_type" id="chartKind">
-                                    @for($i = 7; $i > 0 ; $i--)
-                                        <option class="option" value="{{ $i }}">{{ \App\Helpers::mapOrder()[$i] }}</option>
-                                    @endfor
+                                    @foreach(\App\Helpers::mapOrder() as $index => $mapName)
+                                        <option class="option" value="{{ $index }}">{{ $mapName }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <button id="filerSelectSubmit" class="btnFilter myBtn">Xem</button>
@@ -60,7 +69,7 @@
                             <table class="tableResult">
                                 <thead>
                                 <tr>
-                                    <th id="titleTable">Loại hình Văn hóa doanh nghiệp</th>
+                                    <th id="titleTable">Tổng quan</th>
                                     <th>Đánh giá <br>(hiện tại)</th>
                                     <th>Mong muốn <br>(tuong lai)</th>
                                     <th>Nhu cầu thay đổi</th>
@@ -72,8 +81,8 @@
                             </table>
                         </div>
                         <div class="rightSide">
-                            <h3 class="title" id="titleRight">Loại hình Văn hóa doanh nghiệp</h3>
-                            <div class="name">[{{ $survey->company->name }}]</div>
+                            <h3 class="title" id="titleRight">Tổng quan</h3>
+                            <div class="name">{{ $survey->company->name }}</div>
                             <div class="content">
                                 <div class="radaChart">
                                     <canvas id="myChart"></canvas>
@@ -131,6 +140,15 @@
                         $('#article').html(res.detail);
                         $('#mainTableBody').html(res.table);
                         $('#customers').html(res.debug);
+
+                        if (res.object) {
+                            $('#objectCustomer').show().html(res.object)
+                        } else {
+                            $('#objectCustomer').hide().html('');
+                        }
+
+                        $('#totalCustomer').html(res.total);
+
                     } else {
                         alert('Chưa có dữ liệu câu trả lời vói trường hợp này!');
                     }

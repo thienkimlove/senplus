@@ -239,6 +239,38 @@ class Helpers
 
     }
 
+    public static function getFilterManagerNames()
+    {
+        $filterNames = [];
+        if (!Helpers::currentFrontendUserIsAdmin()) {
+            foreach (auth()->user()->options as $option) {
+                $filter = Filter::find($option['att_id']);
+                if ($filter && $filter->is_level) {
+                    $filterNames[] = $option['att_value'];
+                }
+            }
+        }
+        return ($filterNames) ? implode(' + ', $filterNames) : "";
+    }
+
+    public static function getTotalFilterNames($chooseCustomers, $objectCustomerNames)
+    {
+        // 1|| Nhân Sự##HanhfChinh, 2||Nhân Sự##HanhfChinh
+        $listCustomerFilters = explode(',', $chooseCustomers);
+        if ($listCustomerFilters) {
+            foreach ($listCustomerFilters as $listCustomerFilter) {
+                $exList = explode('||', $listCustomerFilter);
+                if (isset($exList[0]) && isset($exList[1]) && $filterId = $exList[0]) {
+                    if ($filterDB = Filter::find($filterId)) {
+                        $objectCustomerNames .= ' + '.str_replace('##', ', ', $exList[1]);
+                    }
+                }
+            }
+        }
+
+        return $objectCustomerNames;
+    }
+
     public static function getMatchName($value)
     {
         if ($value >= 95) {
@@ -288,13 +320,13 @@ class Helpers
     public static function mapOrder()
     {
         return [
+            7 => 'Tổng quan',
             1 => 'Đặc điểm nổi trội',
             2 => 'Phong cách lãnh đạo',
             3 => 'Quản lý nhân viên',
             4 => 'Sự gắn kết',
             5 => 'Chiến lược',
             6 => 'Tiêu chí thành công',
-            7 => 'Loại hình Văn Hóa DN'
         ];
     }
 
@@ -462,7 +494,8 @@ class Helpers
                             $storeUserIds[$filterId] = [];
                             foreach ($customers as $customer) {
                                 $cusFilterValue = self::getCustomerFilterValue($customer, $filterDB);
-                                if (strpos($exList[1], $cusFilterValue) !== false) {
+
+                                if ($cusFilterValue && strpos($exList[1], $cusFilterValue) !== false) {
                                     $storeUserIds[$filterId][] = $customer->id;
                                 }
                             }

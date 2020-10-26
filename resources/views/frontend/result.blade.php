@@ -7,10 +7,10 @@
             <div class="fixCen hasBefore">
                 <div class="descriptionRusult">
                     <p class="blue2 fw18px">
-                        [{{ $survey->name }}]
+                        {{ $survey->name }}
                     </p>
-                    <p>Thời gian thực hiện: [{{ $survey->start_time? $survey->start_time->format('d/m/Y') : "" }}  - {{ $survey->end_time? $survey->end_time->format('d/m/Y') : "" }}]</p>
-                    <p>Số lượng: [{{ \App\Helpers::getTotalAnswerForSurvey($survey) }}]</p>
+                    <p>Thời gian thực hiện: {{ $survey->start_time? $survey->start_time->format('d/m/Y') : "" }}  - {{ $survey->end_time? $survey->end_time->format('d/m/Y') : "" }}</p>
+                    <p>Số lượng: {{ \App\Helpers::getTotalAnswerForSurvey($survey) }}</p>
                 </div>
             </div>
         </div>
@@ -24,10 +24,10 @@
                             <table class="tableResult">
                                 <thead>
                                 <tr>
-                                    <th>{{ $title  }}</th>
+                                    <th>Tổng quan</th>
                                     <th>Đánh giá <br>(hiện tại)</th>
                                     <th>Mong muốn <br>(tuong lai)</th>
-                                    <th>Chênh lệch</th>
+                                    <th>Chêch lệch</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -43,8 +43,8 @@
                             </table>
                         </div>
                         <div class="rightSide">
-                            <h3 class="title">Loại hình Văn hóa doanh nghiệp</h3>
-                            <div class="name">[{{ $survey->company->name }}]</div>
+                            <h3 class="title">Tổng quan</h3>
+                            <div class="name">{{ $survey->company->name }}</div>
                             <div class="content">
 
                                 <div class="radaChart">
