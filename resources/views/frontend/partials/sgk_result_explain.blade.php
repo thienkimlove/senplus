@@ -67,8 +67,8 @@
         <thead>
         <tr>
             <th>SỰ PHÙ HỢP</th>
-            <th>Nhu cầu thay đổi về sự gắn kết</th>
             <th>Nhu cầu thay đổi tổng quan</th>
+            <th>Nhu cầu thay đổi về sự gắn kết</th>
             <th>Chênh lệch</th>
         </tr>
         </thead>
@@ -76,8 +76,10 @@
         @foreach (\App\Helpers::ARRAY_OPTIONS as $option)
             <tr>
                 <td><b>{{ $explain['all']->where('option', $option)->first()->ten_van_hoa }}</b></td>
-                <td>{{ round($explain['details'][4]['result'][2][$option] - $explain['details'][4]['result'][1][$option], 2) }}</td>
+
                 <td>{{ round($explain['details'][7]['result'][2][$option] - $explain['details'][7]['result'][1][$option], 2) }}</td>
+
+                <td>{{ round($explain['details'][4]['result'][2][$option] - $explain['details'][4]['result'][1][$option], 2) }}</td>
                 <td>{{ \App\Helpers::getXValue($explain, 4, $option) }}</td>
             </tr>
         @endforeach
