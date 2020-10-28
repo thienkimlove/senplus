@@ -69,7 +69,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="left" for="phoneNumber">* Số điện thoại</label>
+                            <label class="left" for="phoneNumber">Số điện thoại</label>
                             <input type="tel" name="phone" class="right" id="phoneNumber" value="{{ $customer->phone }}" autocomplete="new-phone" disabled>
                         </div>
                         @if ($customer->id == auth()->user()->id)
