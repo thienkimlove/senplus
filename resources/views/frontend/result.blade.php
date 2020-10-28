@@ -54,7 +54,11 @@
                         </div>
                     </div>
                     <article class="articleResult">
-                        @include('frontend.partials.general_result_explain', ['explain' => $explain])
+                        @if (\App\Helpers::currentFrontendUserIsManager())
+                            @include('frontend.partials.general_result_explain', ['explain' => $explain])
+                        @else
+                            @include('frontend.partials.small_result_explain', ['explain' => $explain])
+                        @endif
                     </article>
                 </div>
             </div>
