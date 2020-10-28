@@ -54,6 +54,8 @@
                             <label class="left" for="showPermission">Phân quyền</label>
                             <input type="text" class="right" id="showPermission" value="{{ \App\Helpers::mapLevel()[$customer->level] }}" disabled>
                         </div>
+                        
+
                         <div class="form-group">
                             <button type="button" onclick="window.location.reload(); return false;">Bỏ qua</button>
                             <button type="button" class="myBtn btnSave">Lưu / Tạo mới</button>

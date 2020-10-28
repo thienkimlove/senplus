@@ -28,8 +28,8 @@ class RegisterFacebook extends Mailable
     public function build()
     {
         $customer = $this->customer;
-        return $this->from('support@mg.casonline.vn')
-            ->subject('Bã đã đăng ký tài khoản tại Sen Cộng')
+        return $this->from('support@mg.casonline.vn', 'CAS Team')
+            ->subject('Bã đã đăng ký tài khoản tại CASONLINE')
             ->view('emails.register_facebook', compact('customer'));
     }
 }

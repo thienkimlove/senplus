@@ -434,6 +434,19 @@ class Helpers
             ->get();
     }
 
+    public static function getSurveyEndForLoginUser($customer = null)
+    {
+        if (!$customer) {
+            $customer = auth()->user();
+        }
+
+        return Survey::where('company_id', $customer->company_id)
+            ->where('status', true)
+            ->where('end_time' , '<', Carbon::now()->toDateTimeString())
+            ->orderBy('created_at', 'DESC')
+            ->get();
+    }
+
     public static function getCustomerFilterValue($customer, $filter)
     {
         if (!$customer->options) {
@@ -619,7 +632,7 @@ class Helpers
     {
         try {
             Mail::to($customer->email)
-                ->cc(['thienkimlove@gmail.com'])
+                //->cc(['thienkimlove@gmail.com'])
                 ->send(new RegisterConfirm($customer));
         } catch (\Exception $exception) {
             self::log($exception->getMessage());
@@ -631,7 +644,7 @@ class Helpers
     {
         try {
             Mail::to($customer->email)
-                ->cc(['thienkimlove@gmail.com'])
+                //->cc(['thienkimlove@gmail.com'])
                 ->send(new RegisterGoogle($customer));
         } catch (\Exception $exception) {
             self::log($exception->getMessage());
@@ -643,7 +656,7 @@ class Helpers
     {
         try {
             Mail::to($customer->email)
-                ->cc(['thienkimlove@gmail.com'])
+                //->cc(['thienkimlove@gmail.com'])
                 ->send(new RegisterFacebook($customer));
         } catch (\Exception $exception) {
             self::log($exception->getMessage());
@@ -656,7 +669,7 @@ class Helpers
     {
         try {
             Mail::to($customer->email)
-                ->cc(['thienkimlove@gmail.com'])
+                //->cc(['thienkimlove@gmail.com'])
                 ->send(new ForgotPassword($customer));
         } catch (\Exception $exception) {
             self::log($exception->getMessage());

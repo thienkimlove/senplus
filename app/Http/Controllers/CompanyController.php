@@ -642,9 +642,33 @@ class CompanyController extends Controller
             }
         }
 
-
-
         if ($file = $request->file('logo')) {
+
+            $data = $request->only('logo');
+
+            $rules = [
+                'logo' => 'max:1024|mimes:jpg,png,bmp,jpeg,gif'
+            ];
+
+            $messages = [
+                'mimes' => 'File :attribute là file ảnh',
+                'max' => 'File :attribute phải nhỏ hơn hoặc bằng 1MB',
+            ];
+
+            $attributes = [
+                'logo' => 'Logo',
+            ];
+
+            $validator = Validator::make($data , $rules, $messages, $attributes);
+
+            if ($validator->fails()) {
+                return redirect()
+                    ->back()
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+
+
             $filename = $file->getClientOriginalName();
             $destinationPath = public_path('uploads');
             $file->move($destinationPath, $filename);

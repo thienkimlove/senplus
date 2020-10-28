@@ -11,23 +11,31 @@
                     <img src="/frontend/assets/img/i_pen.png" alt="" class="imgFull">
                 </a>
                 <div class="box">
+                    <div id="error" class="warning {{ count($errors) ? 'showWarning' : '' }}">
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                    </div>
                     <form action="{{ route('frontend.post_profile') }}" method="POST" id="CorInfo" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <input type="hidden" name="company_id" value="{{ $company->id }}" />
                         <div class="form-group">
-                            <label class="left" for="nameOfCor">* Tên doanh nghiệp</label>
+                            <label class="left" for="nameOfCor">* Tên doanh nghiệp (viết tắt)</label>
                             <input type="text" name="name" class="right" id="nameOfCor" value="{{ $company->name }}" disabled style="font-weight: bold;">
                         </div>
-                        <div class="form-group">
-                            <label class="left" for="nameOfBrand">Tên thương hiệu</label>
-                            <input type="text" name="brand_name" class="right" id="nameOfBrand" value="{{ $company->brand_name }}" disabled>
-                        </div>
+
                         <div class="form-group">
                             <label class="left" for="mainOffice">Trụ sở chính</label>
                             <input type="text" name="main_address" class="right" id="mainOffice" value="{{ $company->main_address }}" disabled>
                         </div>
                         <div class="form-group">
-                            <label class="left" for="phoneNumber">* Số điện thoại</label>
+                            <label class="left" for="phoneNumber">Số điện thoại</label>
                             <input type="tel" name="contact_phone" class="right" id="phoneNumber" value="{{ $company->contact_phone }}" disabled>
                         </div>
                         <div class="form-group db">
@@ -40,7 +48,6 @@
                                 @endif
                             </div>
                             <div class="edit disabled" id="editLogoCor">
-                                <label class="left" for="uploadBlock">* Logo</label>
                                 <div id="uploadBlock" class="right">
                                     <p><strong>Cập nhật logo doanh nghiệp</strong></p>
                                     <p>
@@ -69,22 +76,22 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label class="left" for="averageRevenue">Doanh thu bình quân năm</label>
-                            <select type="text" name="average_income_id" class="right" id="averageRevenue" disabled>
-                                @foreach (\App\Models\Income::all() as $content)
-                                    <option value="{{ $content->id }}">{{ $content->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="left" for="totalResources">Tổng nguồn vốn</label>
-                            <select type="text" id="total_fund_id" class="right" id="totalResources" disabled>
-                                @foreach (\App\Models\Fund::all() as $content)
-                                    <option value="{{ $content->id }}">{{ $content->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                        {{--<div class="form-group">--}}
+                            {{--<label class="left" for="averageRevenue">Doanh thu bình quân năm</label>--}}
+                            {{--<select type="text" name="average_income_id" class="right" id="averageRevenue" disabled>--}}
+                                {{--@foreach (\App\Models\Income::all() as $content)--}}
+                                    {{--<option value="{{ $content->id }}">{{ $content->name }}</option>--}}
+                                {{--@endforeach--}}
+                            {{--</select>--}}
+                        {{--</div>--}}
+                        {{--<div class="form-group">--}}
+                            {{--<label class="left" for="totalResources">Tổng nguồn vốn</label>--}}
+                            {{--<select type="text" id="total_fund_id" class="right" id="totalResources" disabled>--}}
+                                {{--@foreach (\App\Models\Fund::all() as $content)--}}
+                                    {{--<option value="{{ $content->id }}">{{ $content->name }}</option>--}}
+                                {{--@endforeach--}}
+                            {{--</select>--}}
+                        {{--</div>--}}
 
                         <div class="form-group">
                             <button type="button" onclick="window.location.reload(); return false;">Bỏ qua</button>
@@ -100,6 +107,25 @@
 @section('after_scripts')
     <script>
         $(function(){
+            $('input[type=file]').change(function () {
+                let val = $(this).val().toLowerCase(),
+                    regex = new RegExp("(.*?)\.(jpg|png|gif|jpeg|bmp)$");
+
+                let numb = $(this)[0].files[0].size/1024/1024;
+                numb = numb.toFixed(2);
+
+                if (!(regex.test(val)) || (numb > 1)) {
+                    $(this).val('');
+                    $('#error')
+                        .removeClass('showWarning')
+                        .addClass('showWarning')
+                        .html('Logo phải là file ảnh tối đa 1MB!');
+                } else {
+                    $('#error')
+                        .removeClass('showWarning')
+                        .html('');
+                }
+            });
             $('.btnSave').click(function(){
                 $('#CorInfo').submit();
                 return false;

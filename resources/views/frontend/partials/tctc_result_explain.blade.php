@@ -42,7 +42,7 @@
 
 @if ($explain['details'][6]['lessThan'])
     <div>
-        Có {{ count($explain['details'][6]['lessThan']) }} sự chênh lệch lớn hơn hoặc bằng 10, thể hiện nhu cầu thay đổi cần lưu ý của họ đó là:
+        Có {{ count($explain['details'][6]['lessThan']) }} sự chênh lệch nhỏ hơn 10 và lớn hơn hoặc bằng 5, thể hiện nhu cầu thay đổi cần lưu ý của họ đó là:
     </div>
     <div>
         <ul>

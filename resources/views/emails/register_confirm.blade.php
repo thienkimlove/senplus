@@ -3,16 +3,20 @@
         <td>
             <p>Xin chào {{ $customer->name }},</p>
             <p>
-                Bạn hoặc ai đó đã đăng ký tài khoản tại Sen Cộng với email <b>{{ $customer->email }}</b>.
+                Bạn hoặc ai đó vừa sử dụng email này để đăng ký tài khoản CASONLINE – Hệ thống Khảo sát và Đánh giá Môi trường Văn hoá Doanh nghiệp.
             </p>
             <p>
-                <strong>Để hoàn thành quá trình đăng ký</strong>, hãy bấm vào link sau: <br>
+                Bấm vào link dưới đây để hoàn thành việc đăng ký: <br>
             </p>
             <p>
                 <a href="{{ url('active?token='.$customer->token) }}">Account Activation</a>
             </p>
             <p>Xin cảm ơn,</p>
-            <p>Công ty cổ phần Sen Cộng</p>
+            <p>
+                -----------------<br/>
+                <b>HỆ THỐNG KHẢO SÁT VÀ ĐÁNH GIÁ MÔI TRƯỜNG VĂN HOÁ DOANH NGHIỆP – CASONLINE</b><br/>
+                Hotline: 0967 573 573 | Email: info@casonline.vn | http://casonline.vn
+            </p>
         </td>
     </tr>
     </tbody>

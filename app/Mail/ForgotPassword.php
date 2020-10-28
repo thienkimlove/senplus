@@ -28,8 +28,8 @@ class ForgotPassword extends Mailable
     public function build()
     {
         $customer = $this->customer;
-        return $this->from('support@mg.casonline.vn')
-            ->subject('Quên mật khẩu tại Sen Cộng')
+        return $this->from('support@mg.casonline.vn', 'CAS Team')
+            ->subject('Quên mật khẩu tại CASONLINE')
             ->view('emails.forgot_pass', compact('customer'));
     }
 }

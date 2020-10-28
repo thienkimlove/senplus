@@ -34,15 +34,22 @@ class CustomerController extends Controller
 
         $rules = [
             'email' => 'required',
-            'password' => 'required',
+            'password' => 'required|min:6',
             'name' => 'required',
         ];
 
         $messages = [
             'required' => ':attribute bắt buộc nhập.',
+            'min' => 'Độ dài :attribute phải ít nhất 6 ký tự.',
         ];
 
-        $validator = Validator::make($data , $rules, $messages);
+        $attributes = [
+            'email' => 'Email đăng nhập',
+            'password' => 'Mật khẩu',
+            'name' => 'Họ Tên',
+        ];
+
+        $validator = Validator::make($data , $rules, $messages, $attributes);
         // if the validator fails, redirect back to the form
         if ($validator->fails()) {
             return redirect(route('frontend.register'))
@@ -256,7 +263,7 @@ class CustomerController extends Controller
 
         auth()->login($customer);
 
-        return redirect(route('frontend.home'));
+        return redirect(route('frontend.home').'?init=1');
     }
 
     public function postForgot(Request $request)
@@ -342,7 +349,8 @@ class CustomerController extends Controller
         if (!auth()->check()) {
             return redirect(route('frontend.index'));
         }
-        $surveys = Helpers::getSurveyForLoginUser();
+        // hien thi khao sat da ket thuc
+        $surveys = Helpers::getSurveyEndForLoginUser();
         $latestCanDoSurvey = Helpers::getLatestSurveyCanDoForUser();
         return view('frontend.home', compact( 'page', 'surveys', 'latestCanDoSurvey'))
             ->with(['section' => 'home', 'title' => 'Home']);
@@ -416,7 +424,6 @@ class CustomerController extends Controller
         ];
 
         $customerId = auth()->user()->id;
-
         if ($request->input('customer_id') != $customerId) {
             return redirect(route('frontend.home'));
         }
@@ -438,13 +445,34 @@ class CustomerController extends Controller
             }
         }
 
+        if ($data = $request->only('avatar')) {
+
+            $rules = [
+                'avatar' => 'max:1024|mimes:jpg,png,bmp,jpeg,gif'
+            ];
+
+            $messages = [
+                'mimes' => 'File :attribute là file ảnh',
+                'max' => 'File :attribute phải nhỏ hơn hoặc bằng 1MB',
+            ];
+
+            $attributes = [
+                'avatar' => 'Ảnh đại diện',
+            ];
+
+            $validator = Validator::make($data , $rules, $messages, $attributes);
+
+            if ($validator->fails()) {
+                return redirect()
+                    ->back()
+                    ->withErrors($validator)
+                    ->withInput();
+            }
 
 
-        if ($file = $request->file('avatar')) {
-            $filename = $file->getClientOriginalName();
+            $filename = $request->file('avatar')->getClientOriginalName();
             $destinationPath = public_path('uploads');
-            $file->move($destinationPath, $filename);
-
+            $request->file('avatar')->move($destinationPath, $filename);
             try  {
                 $customer->update([
                     'avatar' => 'uploads/'.$filename

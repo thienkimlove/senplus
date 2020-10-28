@@ -102,6 +102,7 @@ class SurveyCrudController extends CrudController
 
         CRUD::field('name')->label('Tên Chiến Dịch Khảo Sát');
         CRUD::field('link')->label('Mã Link Chiến Dịch Khảo Sát');
+        CRUD::field('desc')->label('Mô Tả Chiến Dịch Khảo Sát')->type('textarea');
 
         CRUD::addField([
             'label'     => "Doanh Nghiệp",

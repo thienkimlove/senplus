@@ -68,7 +68,9 @@ class FilterCrudController extends CrudController
             Company::pluck('name', 'id')->toArray(),
             function ($value) { // if the filter is active
                 CRUD::addClause('where', function($q) use($value) {
-                    $q->where('company_id', $value);
+                    $q->whereHas('company', function($query) use($value) {
+                        $query->where('id', $value);
+                    });
                 });
             }
         );

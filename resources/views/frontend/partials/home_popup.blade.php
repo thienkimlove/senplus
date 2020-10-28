@@ -124,7 +124,7 @@
             <img src="/frontend/assets/img/i_x.png" alt="" class="imgFull">
         </a>
         <div class="avatar">
-            <img src="/frontend/assets/img/demo-logo1.jpg" alt="" class="imgFull">
+            <img src="{{ \App\Helpers::getLoginCustomerAvatar() }}" alt="" class="imgFull">
         </div>
         <div class="userName">{{ auth()->user()->name }}</div>
         <div class="email">{{ auth()->user()->email }}</div>
@@ -147,7 +147,7 @@
     <a href="javascript:void(0)" class="closePopup pa" title="Đóng" aria-label="Close">
         <img src="/frontend/assets/img/i_x.png" alt="" class="imgFull"></a>
     <div class="logoSM bdb">
-        <img src="/frontend/assets/img/logo-sm.png" alt="" class="imgFull">
+        <img src="{{ \App\Helpers::getLoginCompanyLogo() }}" alt="" class="imgFull">
     </div>
     <a href="{{ route('frontend.home') }}" class="link hasBg" title="Hệ thống đánh giá văn hóa doanh nghiệp" aria-label="CAS">
         <strong>Hệ thống đánh giá văn hóa doanh nghiệp</strong>
@@ -157,7 +157,7 @@
     @if (\App\Helpers::currentFrontendUserIsManager())
 
         <a href="{{ route('frontend.home') }}" class="link bdt" title="Tên công ty" aria-label="Home page">
-            <strong>{{ \App\Helpers::getLoginCompany()->name }} (?)</strong>
+            <strong>{{ \App\Helpers::getLoginCompany()->name }}</strong>
         </a>
 
         <a href="{{ route('frontend.profile') }}" class="link bdt" title="Hồ sơ doanh nghiêp" aria-label="Corporate Profile">

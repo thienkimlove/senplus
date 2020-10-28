@@ -18,6 +18,19 @@
                     <h3 class="turnName">Vòng {{$question->round}}</h3>
                     <a href="javascript:void(0)" class="myBtn viewGuiding" title="Tạo chiến dịch" onclick="showPopupGuiding('#popupGuidings2')">Hướng dẫn khảo sát</a>
                 </div>
+
+                <div id="error" class="warning {{ count($errors) ? 'showWarning' : '' }}">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                </div>
+
                 <form id="answerSubmitForm" action="{{ route('frontend.answer') }}" method="POST">
                     {{ csrf_field() }}
                     <input type="hidden" name="question_id" value="{{ $question->id }}">
@@ -66,7 +79,7 @@
                         </div>
                     </div>
                         <div class="popupBot">
-                            <a id="back_step" href="javascript:void(0)" class="btn-back" title="Quay lại">
+                            <a id="back_step" href="{{ route('frontend.back') }}?question_id={{ $question->id }}" class="btn-back" title="Quay lại">
                                 <img src="/frontend/assets/img/btn-back.png" alt="" class="imgFull">
                             </a>
                             <div id="processing">
@@ -97,33 +110,42 @@
 
             let totalVal = option1 + option2 + option3 + option4;
 
-            if (totalVal> 100) {
-                $('#total_warning').show();
-                $('#total').val(totalVal);
-            } else {
+            if (option1 > 0 && option2 > 0 && option3 > 0 && option4 === 0 && totalVal < 100) {
+                $('#value_option4').val(100 - totalVal);
+                $('#total').val(100);
                 $('#total_warning').hide();
-
-                if (option1 > 0 && option2 > 0 && option3 > 0 && option4 === 0 && totalVal < 100) {
-                    $('#value_option4').val(100 - totalVal);
-                    $('#total').val(100);
+            } else {
+                $('#total').val(totalVal);
+                if (totalVal !== 100) {
+                    $('#total_warning').show();
                 } else {
-                    $('#total').val(totalVal);
+                    $('#total_warning').hide();
                 }
             }
 
         }
         $(function(){
             generate();
+
             $('#value_option1, #value_option2, #value_option3, #value_option4').change(function(){
                 generate();
                 return false;
             });
+
+            $('#answerSubmitForm input[type="number"]:first').focus();
+
+            $('input').keypress(function(event){
+                if(event.which === 13){
+                    event.preventDefault();
+                    $('#answerSubmitForm').submit();
+                    return false;
+                }
+            });
+
+
+
             $('#next_step').click(function(){
                 $('#answerSubmitForm').submit();
-                return false;
-            });
-            $('#back_step').click(function(){
-                $('#backQuestionForm').submit();
                 return false;
             });
 

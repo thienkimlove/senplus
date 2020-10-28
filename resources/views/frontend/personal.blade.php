@@ -22,7 +22,19 @@
                         <img src="/frontend/assets/img/i_pen.png" alt="" class="imgFull">
                     </a>
                 @endif
+
                 <div class="box">
+                    <div id="error" class="warning {{ count($errors) ? 'showWarning' : '' }}">
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                    </div>
                     <form action="{{ route('frontend.post_personal') }}" method="POST" id="CorInfo" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <input type="hidden" name="customer_id" value="{{ $customer->id }}" />
@@ -47,7 +59,6 @@
                                 </div>
                             </div>
                             <div class="edit disabled" id="editLogoCor">
-                                <label class="left" for="uploadBlock">* Avatar</label>
                                 <div id="uploadBlock" class="right">
                                     <p><strong>Cập nhật avatar</strong></p>
                                     <p>
@@ -59,12 +70,12 @@
                         </div>
                         <div class="form-group">
                             <label class="left" for="phoneNumber">* Số điện thoại</label>
-                            <input type="tel" name="phone" class="right" id="phoneNumber" value="{{ $customer->phone }}" disabled>
+                            <input type="tel" name="phone" class="right" id="phoneNumber" value="{{ $customer->phone }}" autocomplete="new-phone" disabled>
                         </div>
                         @if ($customer->id == auth()->user()->id)
                         <div class="form-group">
                             <label class="left" for="password">* Mật khẩu</label>
-                            <input type="password" name="password" class="right" id="password" value="" disabled>
+                            <input type="password" name="password" class="right" autocomplete="new-password" id="password" value="{{ $customer->phone }}" disabled>
                         </div>
                         @endif
                         <div class="form-group">
@@ -79,7 +90,29 @@
 @endsection
 @section('after_scripts')
     <script>
+
         $(function(){
+
+            $('input[type=file]').change(function () {
+                let val = $(this).val().toLowerCase(),
+                regex = new RegExp("(.*?)\.(jpg|png|gif|jpeg|bmp)$");
+
+                let numb = $(this)[0].files[0].size/1024/1024;
+                numb = numb.toFixed(2);
+
+                if (!(regex.test(val)) || (numb > 1)) {
+                    $(this).val('');
+                    $('#error')
+                        .removeClass('showWarning')
+                        .addClass('showWarning')
+                        .html('Ảnh đại diện phải là file ảnh tối đa 1MB!');
+                } else {
+                    $('#error')
+                        .removeClass('showWarning')
+                        .html('');
+                }
+            });
+
             $('.btnSave').click(function(){
                 $('#CorInfo').submit();
                 return false;

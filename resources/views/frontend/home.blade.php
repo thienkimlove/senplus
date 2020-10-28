@@ -12,7 +12,7 @@
                 <img src="{{ \App\Helpers::getLoginCustomerAvatar() }}" alt="" class="imgFull">
             </div>
             <div class="txt">
-                Chào mừng [{{ auth()->user()->name }}] <br> quay lại với CAS online
+                Chào mừng {{ auth()->user()->name }} <br> quay lại với CAS online
             </div>
         </div>
         @if (\App\Helpers::currentFrontendUserIsManager())
@@ -53,8 +53,7 @@
                                         <h4><a href="javascript:void(0)"
                                                class="titleCampaign"
                                                title="{{ $survey->name }}"
-                                               aria-label="{{ $survey->name }}"
-                                               data-popup=".popupCampaign{{ $index }}">{{ $survey->name }} ({{ $survey->start_time? $survey->start_time->format('d/m/Y') : $survey->created_at->format('d/m/Y') }})</a></h4>
+                                               aria-label="{{ $survey->name }}">{{ $survey->name }} ({{ $survey->start_time? $survey->start_time->format('d/m/Y') : $survey->created_at->format('d/m/Y') }})</a></h4>
                                         <div class="popupCampaign pa popupCampaign{{ $index }}">
                                             <h3 class="titlePopup">[{{ $survey->name }}]</h3>
                                             <div class="charts">
@@ -89,4 +88,14 @@
             </div>
         </div>
     </main>
+@endsection
+
+@section('after_scripts')
+    <script>
+        $(function(){
+            @if (request()->input('init') == 1)
+            showPopupGuiding($('#popupGuidings'));
+            @endif
+        });
+    </script>
 @endsection

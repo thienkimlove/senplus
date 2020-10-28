@@ -44,7 +44,7 @@
                         <input type="email" placeholder="Email" class="email" name="email" value="{{ old('email') }}" id="email">
                     </div>
                     <div class="form-group">
-                        <input type="password" placeholder="Mật khẩu 6 kí tự" class="password" name="password" id="password">
+                        <input type="password" placeholder="Mật khẩu ít nhất 6 kí tự" class="password" name="password" id="password">
                     </div>
                     <div class="form-group">
                         <input type="checkbox" class="checkbox" checked> Duy trì đăng nhập
@@ -118,7 +118,20 @@
 
 @section('after_scripts')
     <script>
+
         $(function(){
+
+            $('#email').focus();
+
+            $('input').keypress(function(event){
+                if(event.which === 13){
+                    event.preventDefault();
+                    $('#loginForm').submit();
+                    return false;
+                }
+            });
+
+
             $('#btnLogin').click(function(){
                 let email = $('#email').val();
                 let pass = $('#password').val();

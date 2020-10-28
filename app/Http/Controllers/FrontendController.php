@@ -83,18 +83,57 @@ class FrontendController extends Controller
         if (!auth()->check()) {
             return redirect(route('frontend.index'));
         }
-        $questionId = $request->input('question_id');
 
-        if (!$questionId) {
-            Helpers::setFlashMessage('Câu hỏi không tồn tại!');
-            return redirect(route('frontend.home'));
-        }
+        $data =  $request->only(['question_id', 'option1', 'option2', 'option3', 'option4', 'random']);
 
-        $question = Question::find($questionId);
+        $question = Question::find($data['question_id']);
 
         if (!$question) {
             Helpers::setFlashMessage('Câu hỏi không tồn tại!');
             return redirect(route('frontend.home'));
+        }
+
+        if ($request->input('random') == 1) {
+            Helpers::generateAnswerForUser($question->survey);
+            return redirect(route('frontend.result').'?id='.$question->survey->id);
+        }
+
+        $rules = [
+            'option1' => 'required|numeric|min:0|max:100',
+            'option2' => 'required|numeric|min:0|max:100',
+            'option3' => 'required|numeric|min:0|max:100',
+            'option4' => 'required|numeric|min:0|max:100',
+        ];
+
+        $messages = [
+            'required' => ':attribute bắt buộc nhập.',
+            'numeric' => 'Giá trị :attribute phải là số',
+            'min' => 'Giá trị :attribute phải lớn hơn hoặc bằng 0',
+            'max' => 'Giá trị :attribute phải nhỏ hơn hoặc bằng 100',
+        ];
+
+        $attributes = [
+            'option1' => 'Lựa chọn 1',
+            'option2' => 'Lựa chọn 2',
+            'option3' => 'Lựa chọn 3',
+            'option4' => 'Lựa chọn 4',
+        ];
+
+        $validator = Validator::make($data , $rules, $messages, $attributes);
+        // if the validator fails, redirect back to the form
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        if (($data['option1'] + $data['option2'] + $data['option3'] + $data['option4']) != 100) {
+            $validator->getMessageBag()->add('option1', 'Tổng số điểm phải bằng 100');
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
         }
 
         $existedAnswer = Answer::where('customer_id', auth()->user()->id)
@@ -102,26 +141,21 @@ class FrontendController extends Controller
             ->first();
 
 
-        if ($request->input('random') == 1) {
-            Helpers::generateAnswerForUser($question->survey);
-            return redirect(route('frontend.result').'?id='.$question->survey->id);
-        }
-
         if ($existedAnswer) {
             $existedAnswer->update([
-                'option1' => $request->input('option1') ? $request->input('option1') : 0,
-                'option2' => $request->input('option2') ? $request->input('option2') : 0,
-                'option3' => $request->input('option3') ? $request->input('option3') : 0,
-                'option4' => $request->input('option4') ? $request->input('option4') : 0,
+                'option1' => $data['option1'],
+                'option2' => $data['option2'],
+                'option3' => $data['option3'],
+                'option4' => $data['option4'],
             ]);
         } else {
             Answer::create([
                 'customer_id' => auth()->user()->id,
                 'question_id' => $question->id,
-                'option1' => $request->input('option1') ? $request->input('option1') : 0,
-                'option2' => $request->input('option2') ? $request->input('option2') : 0,
-                'option3' => $request->input('option3') ? $request->input('option3') : 0,
-                'option4' => $request->input('option4') ? $request->input('option4') : 0,
+                'option1' => $data['option1'],
+                'option2' => $data['option2'],
+                'option3' => $data['option3'],
+                'option4' => $data['option4'],
             ]);
         }
         if ($question->order == 6) {

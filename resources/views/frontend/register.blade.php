@@ -40,10 +40,10 @@
                         <input type="text" placeholder="Họ và tên" class="username" name="name" id="name" value="{{ old('name') }}">
                     </div>
                     <div class="form-group">
-                        <input type="email" placeholder="Email" class="email" name="email" id="email" value="{{ old('email') }}">
+                        <input type="email" placeholder="Email đăng nhập" class="email" name="email" id="email" value="{{ old('email') }}">
                     </div>
                     <div class="form-group">
-                        <input type="password" placeholder="Mật khẩu 6 kí tự" class="password" name="password" id="password">
+                        <input type="password" placeholder="Mật khẩu ít nhất 6 kí tự" class="password" name="password" id="password">
                     </div>
                     <div class="form-group fz13px">
                         <input type="checkbox" class="checkbox" checked> Đồng ý với
@@ -64,6 +64,32 @@
 @section('after_scripts')
     <script>
         $(function(){
+
+            $('#email').focus();
+
+            $('input').keypress(function(event){
+                if(event.which === 13){
+                    event.preventDefault();
+                    $('#registerForm').submit();
+                    return false;
+                }
+            });
+
+            $('#password').change(function(){
+                let passwordValue = $(this).val();
+
+                if (passwordValue.length < 6) {
+                    $('#error')
+                        .removeClass('showWarning')
+                        .addClass('showWarning')
+                        .html('Mật khẩu phải ít nhất 6 ký tự!');
+                } else {
+                    $('#error')
+                        .removeClass('showWarning')
+                        .html('');
+                }
+            });
+
             $('#btnRegister').click(function(){
                 let name = $('#name').val();
                 let email = $('#email').val();
