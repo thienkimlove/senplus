@@ -717,4 +717,10 @@ class Helpers
     {
         return substr(md5(Str::uuid()), 0, $length);
     }
+
+    public static function truncateWords($string, $width, $etc = ' ..')
+    {
+        $wrapped = explode('$trun$', wordwrap($string, $width, '$trun$', false), 2);
+        return $wrapped[0] . (isset($wrapped[1]) ? $etc : '');
+    }
 }
