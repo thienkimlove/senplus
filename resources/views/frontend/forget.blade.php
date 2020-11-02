@@ -15,7 +15,8 @@
                         <h1 class="smLogo"><img src="/frontend/assets/img/logo-sm.png" alt="" class="imgFull"></h1>
                         <div class="txt">Hệ thống đánh giá văn hóa doanh nghiệp</div>
                     </div>
-                    <div id="error" class="warning {{ count($errors) ? 'showWarning' : '' }}">
+                    <br><br>
+                    <div id="error" class="warning {{ count($errors) ? 'showWarning' : '' }}" style="margin-top: 0;height: 19px;">
                         @if ($errors->any())
                             <div class="alert alert-danger">
                                 <ul>
@@ -27,19 +28,15 @@
                         @endif
                     </div>
                     <div class="form-group">
-                        <div class="txtBlue"><a href="{{ route('frontend.index') }}">Đăng nhập</a></div>
-                        <div class="txtBlue"><a href="{{ route('frontend.register') }}">Đăng ký</a></div>
-                    </div>
-                    <div class="form-group">
                         <input type="password" placeholder="Mật khẩu mới" class="password" name="password" id="password">
                         <input type="hidden" name="forget_token" value="{{ $token }}">
                     </div>
-                    <div class="txtNote">Nhập mật khẩu mới</div>
+                    {{--<div class="txtNote">Nhập mật khẩu mới</div>--}}
 
                     <div class="form-group">
                         <input type="password" placeholder="Nhập lại mật khẩu mới" class="password" name="password_confirm" id="password_confirm">
                     </div>
-                    <div class="txtNote">Nhập lại mật khẩu mới</div>
+                    {{--<div class="txtNote">Nhập lại mật khẩu mới</div>--}}
 
 
 

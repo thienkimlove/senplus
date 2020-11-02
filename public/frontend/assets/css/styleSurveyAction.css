@@ -266,10 +266,8 @@ body::-webkit-scrollbar {
   overflow: hidden;
 }
 
-@media (max-width: 1024px) {
-  body.fixed {
-    overflow: hidden;
-  }
+body.fixed {
+  overflow: hidden;
 }
 
 #root, .Root_1Kcx {
@@ -509,78 +507,6 @@ main {
   font-style: italic;
 }
 
-@-webkit-keyframes changeBg {
-  0%, 100% {
-    background: url("../../assets/img/bg1.jpg") center center no-repeat;
-  }
-  20% {
-    background: url("../../assets/img/bg3.jpg") center center no-repeat;
-  }
-  40% {
-    background: url("../../assets/img/bg2.jpg") center center no-repeat;
-  }
-  60% {
-    background: url("../../assets/img/bg5.jpg") center center no-repeat;
-  }
-  80% {
-    background: url("../../assets/img/bg4.jpg") center center no-repeat;
-  }
-}
-
-@-moz-keyframes changeBg {
-  0%, 100% {
-    background: url("../../assets/img/bg1.jpg") center center no-repeat;
-  }
-  20% {
-    background: url("../../assets/img/bg3.jpg") center center no-repeat;
-  }
-  40% {
-    background: url("../../assets/img/bg2.jpg") center center no-repeat;
-  }
-  60% {
-    background: url("../../assets/img/bg5.jpg") center center no-repeat;
-  }
-  80% {
-    background: url("../../assets/img/bg4.jpg") center center no-repeat;
-  }
-}
-
-@-o-keyframes changeBg {
-  0%, 100% {
-    background: url("../../assets/img/bg1.jpg") center center no-repeat;
-  }
-  20% {
-    background: url("../../assets/img/bg3.jpg") center center no-repeat;
-  }
-  40% {
-    background: url("../../assets/img/bg2.jpg") center center no-repeat;
-  }
-  60% {
-    background: url("../../assets/img/bg5.jpg") center center no-repeat;
-  }
-  80% {
-    background: url("../../assets/img/bg4.jpg") center center no-repeat;
-  }
-}
-
-@keyframes changeBg {
-  0%, 100% {
-    background: url("../../assets/img/bg1.jpg") center center no-repeat;
-  }
-  20% {
-    background: url("../../assets/img/bg3.jpg") center center no-repeat;
-  }
-  40% {
-    background: url("../../assets/img/bg2.jpg") center center no-repeat;
-  }
-  60% {
-    background: url("../../assets/img/bg5.jpg") center center no-repeat;
-  }
-  80% {
-    background: url("../../assets/img/bg4.jpg") center center no-repeat;
-  }
-}
-
 .contain {
   position: absolute;
   top: 0;
@@ -589,6 +515,29 @@ main {
   width: 100%;
   height: 100%;
   background: #00000091;
+}
+
+.alert-block {
+  position: fixed;
+  z-index: 1000;
+  background: #ffffff;
+  border-top: 3px solid #bce8f1;
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+          border-radius: 5px;
+  color: #3aadbb;
+  font-size: 15px;
+  padding: 17px;
+  top: 100px;
+  left: 50%;
+  margin-left: -190px;
+  width: 380px;
+}
+
+.alert-block strong {
+  display: block;
+  font-weight: 400;
+  text-align: center;
 }
 
 .box {
@@ -730,7 +679,7 @@ main {
   padding: 0 20px;
 }
 
-.box #btnLogin {
+.box #btnLogin, .box #btnRegister {
   float: right;
 }
 
@@ -871,6 +820,10 @@ main {
 .loginBox input[type=checkbox] {
   display: inline-block;
   margin: 0;
+}
+
+.loginBox .warning {
+  margin-top: 20px;
 }
 
 .wrapper {
@@ -1288,7 +1241,7 @@ main {
   }
 }
 
-#popupCorporateCulture, #popupProfile {
+#popupCorporateCulture, #popupProfile, #popupHelpCenter {
   display: none;
 }
 
@@ -1358,6 +1311,14 @@ main {
   .box .topForm .txt {
     height: auto;
   }
+}
+
+#error .alert-danger {
+  color: #ff0000;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
 }
 
 header, main {
@@ -1433,6 +1394,10 @@ footer {
 
 .showOnMb {
   display: none !important;
+}
+
+.pd20 {
+  padding-top: 20px;
 }
 
 header {
@@ -1618,10 +1583,6 @@ footer .fixCen .socialMedia {
      -moz-box-direction: normal;
       -ms-flex-flow: row wrap;
           flex-flow: row wrap;
-  background: url("../../assets/img/social-media.jpg") no-repeat;
-  -webkit-background-size: 100% 100%;
-     -moz-background-size: 100%;
-          background-size: 100%;
   width: 100px;
   height: 30px;
 }
@@ -1631,10 +1592,13 @@ footer .fixCen .socialMedia a {
   display: block;
   width: 25%;
   height: 100%;
+  -webkit-filter: grayscale(1);
+          filter: grayscale(1);
 }
 
 footer .fixCen .socialMedia a:hover {
-  border: thin solid #c5cbc5;
+  -webkit-filter: grayscale(0);
+          filter: grayscale(0);
 }
 
 .logo {
@@ -2048,7 +2012,13 @@ footer .fixCen .socialMedia a:hover {
 
 #topMenu .userBlock .avatar {
   width: 30px;
+  height: 30px;
   margin-right: 5px;
+  background: #69cad3;
+  -webkit-border-radius: 100%;
+     -moz-border-radius: 100%;
+          border-radius: 100%;
+  overflow: hidden;
 }
 
 #topMenu .userBlock .userName {
@@ -2122,7 +2092,12 @@ footer .fixCen .socialMedia a:hover {
   display: block;
   margin: 0 auto 15px;
   width: 80px;
+  height: 80px;
   background: #69cad3;
+  -webkit-border-radius: 100%;
+     -moz-border-radius: 100%;
+          border-radius: 100%;
+  overflow: hidden;
 }
 
 #popupProfile .topInfo .userName {
@@ -2242,6 +2217,97 @@ footer .fixCen .socialMedia a:hover {
 
 #popupCorporateCulture .bottomInfo .btnLogin:hover {
   color: #ffffff;
+}
+
+#popupHelpCenter {
+  background: #ffffff;
+  -webkit-transition: 0.5s;
+  -o-transition: 0.5s;
+  -moz-transition: 0.5s;
+  transition: 0.5s;
+  z-index: 999;
+  right: -360px;
+  top: 0;
+  width: 350px;
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+          border-radius: 5px;
+  -webkit-box-shadow: 0px 0px 15px 1px #00000042;
+     -moz-box-shadow: 0px 0px 15px 1px #00000042;
+          box-shadow: 0px 0px 15px 1px #00000042;
+  border: thin solid #d9d9d9;
+  font-size: 16px;
+  text-align: center;
+  height: 100%;
+}
+
+#popupHelpCenter.showPop {
+  right: 0;
+}
+
+#popupHelpCenter .content {
+  height: -webkit-calc(100% - 65px);
+  height: -moz-calc(100% - 65px);
+  height: calc(100% - 65px);
+  overflow: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+#popupHelpCenter .content::-webkit-scrollbar {
+  width: 0;
+}
+
+#popupHelpCenter .logoSM {
+  height: 64px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+     -moz-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-left: 25px;
+}
+
+#popupHelpCenter .logoSM img {
+  width: 66px;
+}
+
+#popupHelpCenter .link {
+  display: block;
+  padding: 15px 25px 15px 50px;
+  background: url("../../assets/img/i_help.png") 25px center no-repeat;
+  -webkit-background-size: 15px 15px !important;
+     -moz-background-size: 15px !important;
+          background-size: 15px !important;
+  text-align: left;
+}
+
+#popupHelpCenter .link:hover {
+  background: url("../../assets/img/i_help.png") 25px center no-repeat #f2f2f2;
+}
+
+#popupHelpCenter .link.bdb:last-child {
+  border: none;
+}
+
+#popupHelpCenter a {
+  color: #333333;
+}
+
+#popupHelpCenter a:hover {
+  color: #69cad3 !important;
+}
+
+@media (max-width: 1024px) {
+  #popupHelpCenter {
+    width: 100%;
+    right: -100%;
+  }
 }
 
 #secondMenu {
@@ -2402,9 +2468,6 @@ footer .fixCen .socialMedia a:hover {
   display: block;
   height: 100%;
   text-indent: -999em;
-}
-
-#secondMenu .rightMenu .btnGroup .btn_more:first-child, #secondMenu .rightMenu .btnGroup .btn_question:first-child {
   width: 37%;
 }
 
@@ -2686,11 +2749,11 @@ footer .fixCen .socialMedia a:hover {
 }
 
 .tableList a {
-  color: #000000;
+  color: #69cad3;
 }
 
 .tableList a:hover {
-  color: #69cad3;
+  color: #666666;
 }
 
 .tableList .bgEdit {
@@ -2905,9 +2968,9 @@ footer .fixCen .socialMedia a:hover {
   #secondMenu .rightMenu .btnGroup #showMenuGuideMb {
     display: block;
     background: url("../../assets/img/i_ques.jpg") no-repeat;
-    -webkit-background-size: 20px 20px;
-       -moz-background-size: 20px;
-            background-size: 20px;
+    -webkit-background-size: 100% 100%;
+       -moz-background-size: 100%;
+            background-size: 100%;
     width: 20px;
     height: 20px;
   }
@@ -3063,6 +3126,14 @@ footer .fixCen .socialMedia a:hover {
   .popupGuidings .popupContent .content {
     padding: 0 20px;
   }
+}
+
+#error .alert-danger {
+  color: #ff0000;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
 }
 
 .btnEdit {
@@ -3992,8 +4063,24 @@ footer .fixCen .socialMedia a:hover {
   background: #eeeeee;
 }
 
+.editBlock #error .alert-danger {
+  background: none;
+  border: none;
+  padding: 0;
+  color: red;
+  text-align: center;
+}
+
 .editBlock .fixCen {
   padding-bottom: 100px;
+}
+
+.editBlock #editLogoCor {
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+     -moz-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
 }
 
 .tableListMember .btnSort {

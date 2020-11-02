@@ -60,6 +60,7 @@
 @endsection    
 
 @section('after_scripts')
+    <script src="/frontend/assets/js/page_survey.js?v=1" type="text/javascript"></script>
     <script>
         $(function(){
             $('#cancelForm').click(function(){

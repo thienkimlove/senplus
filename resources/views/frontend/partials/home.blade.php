@@ -50,8 +50,10 @@
                             <ul>
                                 @foreach ($surveys->take(2) as $index => $survey)
                                     <li>
-                                        <h4>
-                                            <a href="javascript:void(0)" class="titleCampaign" title="{{ $survey->name }}" aria-label="{{ $survey->name }}" data-popup=".popupCampaign{{ $index }}">{{ $survey->name }} ({{ $survey->start_time? $survey->start_time->format('d/m/Y') : $survey->created_at->format('d/m/Y') }})</a></h4>
+                                        <h4><a href="javascript:void(0)"
+                                               class="titleCampaign"
+                                               title="{{ $survey->name }}"
+                                               aria-label="{{ $survey->name }}">{{ $survey->name }} ({{ $survey->start_time? $survey->start_time->format('d/m/Y') : $survey->created_at->format('d/m/Y') }})</a></h4>
                                         <div class="popupCampaign pa popupCampaign{{ $index }}">
                                             <h3 class="titlePopup">[{{ $survey->name }}]</h3>
                                             <div class="charts">

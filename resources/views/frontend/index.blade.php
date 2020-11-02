@@ -106,7 +106,7 @@
                         Sản phẩm phát triển bởi Senplus
                     </div>
                     <div class="rightInfo">
-                        <strong>0902 088 246</strong>
+                        <a href="tel:0967573573"><strong>0967 573 573</strong></a>
                         Gọi ngay để trải nghiệm
                     </div>
                 </div>
