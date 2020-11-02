@@ -679,12 +679,12 @@ class Helpers
 
     public static function getLoginCustomerAvatar()
     {
-        return auth()->user()->avatar ? url(auth()->user()->avatar) : '/frontend/assets/img/demo-logo1.jpg';
+        return auth()->user()->avatar ? url(auth()->user()->avatar) : '';
     }
 
     public static function getCustomerAvatar($customer)
     {
-        return $customer->avatar ? url($customer->avatar) : '/frontend/assets/img/demo-logo1.jpg';
+        return $customer->avatar ? url($customer->avatar) : '';
     }
 
     public static function getLoginCompany()
@@ -700,7 +700,7 @@ class Helpers
 
         $company = Customer::find($customerId)->company;
 
-        return ($company->logo) ? url($company->logo) : '/frontend/assets/img/logo-sm.png';
+        return ($company->logo) ? url($company->logo) : '';
     }
 
     public static function setFlashMessage($msg)

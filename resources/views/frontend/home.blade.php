@@ -53,7 +53,7 @@
                                         <h4>
                                             <a href="javascript:void(0)" class="titleCampaign" title="{{ $survey->name }}" aria-label="{{ $survey->name }}" data-popup=".popupCampaign{{ $index }}">{{ $survey->name }} ({{ $survey->start_time? $survey->start_time->format('d/m/Y') : $survey->created_at->format('d/m/Y') }})</a></h4>
                                         <div class="popupCampaign pa popupCampaign{{ $index }}">
-                                            <h3 class="titlePopup">[{{ $survey->name }}]</h3>
+                                            <h3 class="titlePopup">{{ $survey->name }}</h3>
                                             <div class="charts">
                                                 <div class="leftSide">
                                                     <img src="/frontend/assets/img/demo-bd1.jpg" alt="" class="imgFull">
@@ -79,7 +79,7 @@
                     <h2 class="title">Khảo sát mới</h2>
                     @if ($latestCanDoSurvey)
                         <h3 class="newestCampaignName">{{ $latestCanDoSurvey->name }}</h3>
-                        <div class="desNewestCampaign">{{ \Illuminate\Support\Str::limit($latestCanDoSurvey->desc, 25) }}</div>
+                        <div class="desNewestCampaign">{{ \App\Helpers::truncateWords($latestCanDoSurvey->desc, 14) }}</div>
                         <a href="{{ route('frontend.survey') }}?id={{ $latestCanDoSurvey->id }}" class="myBtn" title="Khảo sát ngay" aria-label="Survey now">Khảo sát ngay</a>
                     @endif
                 </div>
