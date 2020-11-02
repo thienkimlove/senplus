@@ -5,7 +5,7 @@
         @include('frontend.partials.sort_block')
         <div class="topBlock">
             <div class="fixCen hasBefore">
-                <h2 class="title">Hệ thống đánh giá VHDN</h2>
+                <h2 class="title">Tất cả khảo sát</h2>
                 @if (\App\Helpers::currentFrontendUserIsManager())
                     <a href="{{ route('frontend.campaign_create') }}" class="myBtn addNewUser" title="Tạo chiến dịch">+ Tạo chiến dịch</a>
                 @endif

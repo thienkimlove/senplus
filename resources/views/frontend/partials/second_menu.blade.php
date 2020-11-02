@@ -39,11 +39,11 @@
                 </button>
             </form>
             <div class="btnGroup">
-                <a href="javascript:void(0)" id="showMenuGuideMb" class="btn_question" title="Hướng dẫn" aria-label="Guiding" onclick="showPopupGuiding('#popupGuidings2')">Hướng dẫn</a>
+                <a href="javascript:void(0)" id="showMenuGuideMb" class="btn_question" title="Hướng dẫn" aria-label="Guiding">Hướng dẫn</a>
                 <a href="javascript:void(0)" id="showMenuGuide" class="btn_question" title="Hướng dẫn" aria-label="Guiding">Hướng dẫn</a>
                 <a href="javascript:void(0)" class="btn_more" title="Xem thêm" aria-label="View More">Xem thêm</a>
                 <ul id="menuQuestion">
-                    <li><a href="javascript:void(0)" title="Trung tâm trợ giúp" aria-label="Support">Trung tâm trợ giúp</a></li>
+                    <li><a href="javascript:void(0)" class="btnHelpCenter" title="Trung tâm trợ giúp" aria-label="Support">Trung tâm trợ giúp</a></li>
                     <li><a href="javascript:void(0)" title="Hướng dẫn khảo sát" aria-label="Survey Guiding" onclick="showPopupGuiding('#popupGuidings2')">Hướng dẫn khảo sát</a></li>
                 </ul>
             </div>

@@ -64,6 +64,7 @@
                                     <p>
                                         <input name="avatar" type="file" id="btnEditImg"/>
                                         <span>File ảnh không quá 1mb</span>
+                                        <span><i>* Sử dụng ảnh vuông để có hiển thị tốt nhất</i></span>
                                     </p>
                                 </div>
                             </div>

@@ -266,10 +266,8 @@ body::-webkit-scrollbar {
   overflow: hidden;
 }
 
-@media (max-width: 1024px) {
-  body.fixed {
-    overflow: hidden;
-  }
+body.fixed {
+  overflow: hidden;
 }
 
 #root, .Root_1Kcx {
@@ -584,6 +582,10 @@ footer {
   display: none !important;
 }
 
+.pd20 {
+  padding-top: 20px;
+}
+
 header {
   width: 100%;
   background: #fff;
@@ -767,10 +769,6 @@ footer .fixCen .socialMedia {
      -moz-box-direction: normal;
       -ms-flex-flow: row wrap;
           flex-flow: row wrap;
-  background: url("../../assets/img/social-media.jpg") no-repeat;
-  -webkit-background-size: 100% 100%;
-     -moz-background-size: 100%;
-          background-size: 100%;
   width: 100px;
   height: 30px;
 }
@@ -780,10 +778,13 @@ footer .fixCen .socialMedia a {
   display: block;
   width: 25%;
   height: 100%;
+  -webkit-filter: grayscale(1);
+          filter: grayscale(1);
 }
 
 footer .fixCen .socialMedia a:hover {
-  border: thin solid #c5cbc5;
+  -webkit-filter: grayscale(0);
+          filter: grayscale(0);
 }
 
 .logo {
@@ -1197,7 +1198,13 @@ footer .fixCen .socialMedia a:hover {
 
 #topMenu .userBlock .avatar {
   width: 30px;
+  height: 30px;
   margin-right: 5px;
+  background: #69cad3;
+  -webkit-border-radius: 100%;
+     -moz-border-radius: 100%;
+          border-radius: 100%;
+  overflow: hidden;
 }
 
 #topMenu .userBlock .userName {
@@ -1271,7 +1278,12 @@ footer .fixCen .socialMedia a:hover {
   display: block;
   margin: 0 auto 15px;
   width: 80px;
+  height: 80px;
   background: #69cad3;
+  -webkit-border-radius: 100%;
+     -moz-border-radius: 100%;
+          border-radius: 100%;
+  overflow: hidden;
 }
 
 #popupProfile .topInfo .userName {
@@ -1391,6 +1403,97 @@ footer .fixCen .socialMedia a:hover {
 
 #popupCorporateCulture .bottomInfo .btnLogin:hover {
   color: #ffffff;
+}
+
+#popupHelpCenter {
+  background: #ffffff;
+  -webkit-transition: 0.5s;
+  -o-transition: 0.5s;
+  -moz-transition: 0.5s;
+  transition: 0.5s;
+  z-index: 999;
+  right: -360px;
+  top: 0;
+  width: 350px;
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+          border-radius: 5px;
+  -webkit-box-shadow: 0px 0px 15px 1px #00000042;
+     -moz-box-shadow: 0px 0px 15px 1px #00000042;
+          box-shadow: 0px 0px 15px 1px #00000042;
+  border: thin solid #d9d9d9;
+  font-size: 16px;
+  text-align: center;
+  height: 100%;
+}
+
+#popupHelpCenter.showPop {
+  right: 0;
+}
+
+#popupHelpCenter .content {
+  height: -webkit-calc(100% - 65px);
+  height: -moz-calc(100% - 65px);
+  height: calc(100% - 65px);
+  overflow: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+#popupHelpCenter .content::-webkit-scrollbar {
+  width: 0;
+}
+
+#popupHelpCenter .logoSM {
+  height: 64px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+     -moz-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-left: 25px;
+}
+
+#popupHelpCenter .logoSM img {
+  width: 66px;
+}
+
+#popupHelpCenter .link {
+  display: block;
+  padding: 15px 25px 15px 50px;
+  background: url("../../assets/img/i_help.png") 25px center no-repeat;
+  -webkit-background-size: 15px 15px !important;
+     -moz-background-size: 15px !important;
+          background-size: 15px !important;
+  text-align: left;
+}
+
+#popupHelpCenter .link:hover {
+  background: url("../../assets/img/i_help.png") 25px center no-repeat #f2f2f2;
+}
+
+#popupHelpCenter .link.bdb:last-child {
+  border: none;
+}
+
+#popupHelpCenter a {
+  color: #333333;
+}
+
+#popupHelpCenter a:hover {
+  color: #69cad3 !important;
+}
+
+@media (max-width: 1024px) {
+  #popupHelpCenter {
+    width: 100%;
+    right: -100%;
+  }
 }
 
 #secondMenu {
@@ -1551,9 +1654,6 @@ footer .fixCen .socialMedia a:hover {
   display: block;
   height: 100%;
   text-indent: -999em;
-}
-
-#secondMenu .rightMenu .btnGroup .btn_more:first-child, #secondMenu .rightMenu .btnGroup .btn_question:first-child {
   width: 37%;
 }
 
@@ -1835,11 +1935,11 @@ footer .fixCen .socialMedia a:hover {
 }
 
 .tableList a {
-  color: #000000;
+  color: #69cad3;
 }
 
 .tableList a:hover {
-  color: #69cad3;
+  color: #666666;
 }
 
 .tableList .bgEdit {
@@ -2054,9 +2154,9 @@ footer .fixCen .socialMedia a:hover {
   #secondMenu .rightMenu .btnGroup #showMenuGuideMb {
     display: block;
     background: url("../../assets/img/i_ques.jpg") no-repeat;
-    -webkit-background-size: 20px 20px;
-       -moz-background-size: 20px;
-            background-size: 20px;
+    -webkit-background-size: 100% 100%;
+       -moz-background-size: 100%;
+            background-size: 100%;
     width: 20px;
     height: 20px;
   }
@@ -2214,6 +2314,83 @@ footer .fixCen .socialMedia a:hover {
   }
 }
 
+#error .alert-danger {
+  color: #ff0000;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+form.feedBack {
+  width: 100%;
+}
+
+form.feedBack p {
+  color: #000000;
+  margin-bottom: 10px;
+}
+
+form.feedBack textarea {
+  width: 100%;
+  height: 100px;
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+          border-radius: 5px;
+  background: #f0f2f5;
+  padding: 10px;
+  outline: none;
+  margin-bottom: 20px;
+  border: thin solid #cccccc;
+}
+
+form.feedBack textarea:focus {
+  border: thin solid #69cad3;
+  -webkit-box-shadow: 0px 0px 5px #69cad3;
+     -moz-box-shadow: 0px 0px 5px #69cad3;
+          box-shadow: 0px 0px 5px #69cad3;
+}
+
+form.feedBack input[type=file] {
+  margin-bottom: 5px;
+  outline: none;
+  border: none;
+  -webkit-box-shadow: none;
+     -moz-box-shadow: none;
+          box-shadow: none;
+}
+
+form.feedBack .txt {
+  margin-top: 20px;
+  padding: 20px 10px;
+  border-top: thin solid #cccccc;
+}
+
+form.feedBack .btnHelpCenter {
+  text-decoration: underline;
+}
+
+form.feedBack .form-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+     -moz-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+form.feedBack .form-group button {
+  margin-left: 10px;
+}
+
+form.feedBack .form-group button.btnSend {
+  padding: 0 30px;
+}
+
 .btnMainGoup .fixCen, .campaignBlock .fixCen {
   width: 83%;
 }
@@ -2225,10 +2402,12 @@ footer .fixCen .socialMedia a:hover {
 .helloBlock .avatar {
   background: #b8e6ea;
   width: 104px;
+  height: 104px;
   -webkit-border-radius: 100%;
      -moz-border-radius: 100%;
           border-radius: 100%;
   margin: auto;
+  overflow: hidden;
 }
 
 .helloBlock .txt {
@@ -2420,10 +2599,6 @@ footer .fixCen .socialMedia a:hover {
 
 .campaignBlock .fixCen .popupCampaign {
   background: #ffffff;
-  -webkit-transition: 0.5s;
-  -o-transition: 0.5s;
-  -moz-transition: 0.5s;
-  transition: 0.5s;
   z-index: 99;
   right: -570px;
   top: -35px;
@@ -2506,6 +2681,10 @@ footer .fixCen .socialMedia a:hover {
   color: #000000;
   margin-top: 20px;
   width: 100%;
+}
+
+.campaignBlock .fixCen .popupCampaign .rightSide:after {
+  display: none;
 }
 
 .campaignBlock .fixCen .surveyList {
@@ -2593,6 +2772,7 @@ footer .fixCen .socialMedia a:hover {
   -webkit-border-radius: 100%;
      -moz-border-radius: 100%;
           border-radius: 100%;
+  overflow: hidden;
   margin-right: 20px;
 }
 
@@ -2604,6 +2784,14 @@ footer .fixCen .socialMedia a:hover {
 .editBlock {
   background: #eeeeee;
   padding-bottom: 100px;
+}
+
+.editBlock #error .alert-danger {
+  background: none;
+  border: none;
+  padding: 0;
+  color: red;
+  text-align: center;
 }
 
 .editBlock .left {
@@ -2760,6 +2948,10 @@ footer .fixCen .socialMedia a:hover {
           box-shadow: none;
 }
 
+.editBlock textarea {
+  outline: none;
+}
+
 .editBlock textarea::-webkit-input-placeholder {
   color: #999999;
 }
@@ -2867,6 +3059,14 @@ footer .fixCen .socialMedia a:hover {
           box-shadow: none;
   padding: 0;
   outline: none;
+}
+
+.editBlock #editLogoCor {
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+     -moz-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
 }
 
 .searchBlock {

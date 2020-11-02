@@ -1,12 +1,5 @@
-/*!
- * project_shg
- * 
- * 
- * @author Thuclfc
- * @version 2.0.0
- * Copyright 2020. MIT licensed.
- */
 $(document).ready(function () {
+    //...................js all page----------------------
     $(window).on('DOMMouseScroll mousewheel', function (event) {
         if (event.originalEvent.wheelDelta > 0) {
             if ($(this).scrollTop() >= 50) {
@@ -18,54 +11,6 @@ $(document).ready(function () {
             $('header').removeClass('fixed');
         }
     });
-
-    // js page home user
-    let popup = '';
-    $('.titleCampaign').hover(function () {
-        popup = $(this).data('popup');
-        $('.popupCampaign').removeClass('showPopup');
-        $(popup).addClass('showPopup').mouseover(function () {
-            $(this).addClass('showPopup');
-        }).mouseout(function () {
-            $(this).removeClass('showPopup');
-        });
-    });
-    $('.btnEditHomeUser').click(function () {
-        editHomeUserPage($(this));
-    });
-    $('#inputSearchDemo').mousedown(function () {
-        $('#searchUserBlock').addClass('showSearchUserBlock').mouseleave(function () {
-            $(this).removeClass('showSearchUserBlock');
-        });
-    });
-
-    // page survey js
-
-    $('.btnEditSurvey').click(function () {
-        editSurveyType($(this));
-    });
-
-    if ($('.datepicker').length > 0) {
-        $('.datepicker').datetimepicker({
-            format: 'DD/MM/YYYY HH:mm:ss'
-        });
-    }
-
-    $('#showMenuGuide').click(function () {
-        $('#menuQuestion').toggleClass('showMenu').mouseleave(function () {
-            $(this).removeClass('showMenu');
-        });
-    });
-
-    let hasIconEdit = $('.hasIconEdit');
-
-    if (hasIconEdit.length > 0) {
-        hasIconEdit.click(function () {
-            showPopup($(this));
-        });
-    }
-
-
     $('.userBlock').click(function () {
         $('#popupProfile').toggleClass('showPopProfile');
         $('#popupProfile .closePopup').click(function () {
@@ -89,7 +34,68 @@ $(document).ready(function () {
         $('#filterDataBox .btnView').click(function () {
             $('#filterDataBox').removeClass('showSearchUserBlock');
         });
+        $('#searchUserBlock').addClass('showSearchUserBlock').mouseleave(function () {
+            $(this).removeClass('showSearchUserBlock');
+        });
     });
+
+    $('.btnHelpCenter').click(function () {
+        $('#popupHelpCenter').addClass('showPop');
+        $('body').addClass('fixed');
+        $('#popupHelpCenter').mouseleave(function () {
+            $(this).removeClass('showPop');
+            $('body').removeClass('fixed');
+        });
+        $('#popupHelpCenter .closePopup').click(function () {
+            $('#popupHelpCenter').removeClass('showPop');
+            $('body').removeClass('fixed');
+        });
+    });
+
+    // js page home user
+    let popup = '';
+    $('.titleCampaign').hover(function () {
+        popup = $(this).data('popup');
+        $('.popupCampaign').removeClass('showPopup');
+        $(popup).addClass('showPopup').mouseover(function () {
+            $(this).addClass('showPopup');
+        }).mouseout(function () {
+            $(this).removeClass('showPopup');
+        });
+    });
+
+    $('.btnEdit').click(function () {
+        edit($(this));
+    });
+
+    // page survey js
+
+    if ($('.datepicker').length > 0) {
+        $('.datepicker').datetimepicker({
+            format: 'DD/MM/YYYY HH:mm:ss'
+        });
+    }
+
+    $('#showMenuGuide,#showMenuGuideMb').click(function () {
+        $('#menuQuestion').toggleClass('showMenu').mouseleave(function () {
+            $(this).removeClass('showMenu');
+        });
+    });
+
+    let hasIconEdit = $('.hasIconEdit');
+
+    if (hasIconEdit.length > 0) {
+        hasIconEdit.click(function () {
+            showPopup($(this));
+        });
+    }
+
+    //..................js result page --------------//
+
+    if($('.multiSeclect').length){
+        $('.multiSeclect').val(0);
+        $('.multiSeclect').selectpicker('refresh')
+    }
 
 });
 
@@ -132,34 +138,22 @@ function showPopupNotify(popup) {
     });
 }
 
-function editHomeUserPage(btnEdit) {
-    let dataNeedEdit = $(btnEdit).data('edit');
-    $(dataNeedEdit).find('*').removeAttr('disabled').removeAttr('readonly');
-    $(dataNeedEdit).find('*').removeClass('disabled');
-    $('.form-group:last-child').addClass('showBtn');
-    $('.btnSave').click(function () {
-        $(dataNeedEdit).find('*').not('button').attr('disabled', 'disabled');
-        $(dataNeedEdit).find('*').addClass('disabled');
-        $('.form-group:last-child').removeClass('showBtn');
-    });
-}
-
-function editSurveyType(btnEdit) {
-    let dataNeedEdit = $(btnEdit).data('edit');
-    $(dataNeedEdit).find('*').removeAttr('disabled').removeAttr('readonly');
-    $(dataNeedEdit).find('*').removeClass('disabled');
-    $(dataNeedEdit).find('#formButton').addClass('showBtn');
-    $('.btnCancel').click(function () {
-        $(dataNeedEdit).find('*').not('button').attr('disabled', 'disabled');
-        $(dataNeedEdit).find('*').addClass('disabled');
-        $(dataNeedEdit).find('#formButton').removeClass('showBtn');
-    });
-}
-
 function copyLink(linkNeedCopy) {
     let copyText = $(linkNeedCopy);
     copyText.attr('value');
     document.execCommand("copy");
+}
+
+function edit(btnEdit) {
+    var dataNeedEdit = $(btnEdit).data('edit');
+    $(dataNeedEdit).find('*').removeAttr('disabled').removeAttr('readonly');
+    $(dataNeedEdit).find('*').removeClass('disabled');
+    $('.form-group:last-child').addClass('showBtn');
+    $('.btnSave').click(function () {
+        $(dataNeedEdit).find('*').not('button').attr('disabled','disabled');
+        $(dataNeedEdit).find('*').addClass('disabled');
+        $('.form-group:last-child').removeClass('showBtn');
+    })
 }
 
 function showPopupNotifyWithParams(surveyId) {

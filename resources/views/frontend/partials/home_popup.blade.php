@@ -1,4 +1,5 @@
 <div class="popup px popupGuidings" id="popupGuidings">
+    <div class="bg_drop pa"></div>
     <div class="popupContent pa">
         <a href="{{ route('frontend.home') }}" class="closePopup pa" title="Đóng lại" aria-label="Close">
             <img src="/frontend/assets/img/i_x.png" alt="" class="imgFull">
@@ -218,5 +219,43 @@
             <button type="button" class="skip myBtn">Bỏ qua</button>
             <button type="button" id="popup_button_del_survey" class="myBtn btnDelete">Xóa</button>
         </div>
+    </div>
+</div>
+<div id="popupHelpCenter" class="px">
+    <a href="javascript:void(0)" class="closePopup pa" title="Đóng" aria-label="Close"><img src="/frontend/assets/img/i_x.png" alt="" class="imgFull"></a>
+    <div class="logoSM bdb">
+        <img src="{{ \App\Helpers::getLoginCompanyLogo() }}" alt="" class="imgFull">
+    </div>
+    <div class="content">
+        <ul>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát Làm sao để thực hiện khảo sát ?</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát Làm sao để thực hiện khảo sát?</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát Làm sao để thực hiện khảo sát ?</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát Làm sao để thực hiện khảo sát?</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát Làm sao để thực hiện khảo sát ?</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát Làm sao để thực hiện khảo sát?</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát Làm sao để thực hiện khảo sát ?</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát Làm sao để thực hiện khảo sát?</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+        </ul>
     </div>
 </div>
