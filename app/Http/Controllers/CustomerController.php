@@ -8,6 +8,7 @@ use App\Models\Company;
 use App\Models\Customer;
 use App\Models\Question;
 use App\Models\Survey;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -263,7 +264,7 @@ class CustomerController extends Controller
 
         auth()->login($customer);
 
-        return redirect(route('frontend.home').'?init=1');
+        return redirect(route('frontend.home'));
     }
 
     public function postForgot(Request $request)
@@ -349,10 +350,28 @@ class CustomerController extends Controller
         if (!auth()->check()) {
             return redirect(route('frontend.index'));
         }
+        // check if first login
+
+        $firstLogin = false;
+
+        if (!auth()->user()->first_login_time) {
+            try {
+                Customer::find(auth()->user()->id)->update([
+                    'first_login_time' => Carbon::now()->toDateTimeString()
+                ]);
+            } catch (\Exception $exception) {
+
+            }
+            $firstLogin = true;
+
+            auth()->user()->first_login_time = Carbon::now()->toDateTimeString();
+        }
+
+
         // hien thi khao sat da ket thuc
-        $surveys = Helpers::getSurveyEndForLoginUser();
+        $surveys = Helpers::getSurveyForLoginUser();
         $latestCanDoSurvey = Helpers::getLatestSurveyCanDoForUser();
-        return view('frontend.home', compact( 'page', 'surveys', 'latestCanDoSurvey'))
+        return view('frontend.home', compact( 'page', 'surveys', 'latestCanDoSurvey', 'firstLogin'))
             ->with(['section' => 'home', 'title' => 'Home']);
     }
 
@@ -421,6 +440,7 @@ class CustomerController extends Controller
             'phone',
             //'avatar',
             'gender',
+            'password'
         ];
 
         $customerId = auth()->user()->id;

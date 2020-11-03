@@ -34,7 +34,8 @@ class Customer extends Authenticatable
         'level',
         'gender',
         'avatar',
-        'token'
+        'token',
+        'first_login_time'
     ];
     protected $hidden = ['password'];
     // protected $dates = [];

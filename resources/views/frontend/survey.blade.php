@@ -108,6 +108,21 @@
             let option3 = $('#value_option3').val() > 0 ? parseInt($('#value_option3').val(), 10) : 0;
             let option4 = $('#value_option4').val() > 0 ? parseInt($('#value_option4').val(), 10) : 0;
 
+            if (option1 === 0) {
+                $('#value_option1').val(0);
+            }
+
+            if (option2 === 0) {
+                $('#value_option2').val(0);
+            }
+
+            if (option3 === 0) {
+                $('#value_option3').val(0);
+            }
+            if (option4 === 0) {
+                $('#value_option4').val(0);
+            }
+
             let totalVal = option1 + option2 + option3 + option4;
 
             if (option1 > 0 && option2 > 0 && option3 > 0 && option4 === 0 && totalVal < 100) {

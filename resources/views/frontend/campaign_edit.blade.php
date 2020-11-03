@@ -33,9 +33,7 @@
                         </div>
                         <div class="form-group">
                             <label class="left" for="description">Mô tả</label>
-                            <textarea name="desc" class="right" rows="4" type="text" id="description" placeholder="">
-                                {{ $survey->desc }}
-                            </textarea>
+                            <textarea name="desc" class="right" rows="4" type="text" id="description">{{ $survey->desc }}</textarea>
                         </div>
                         <div class="form-group">
                             <label class="left" for="beginDate">Ngày bắt đầu</label>
@@ -47,7 +45,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="left" for="surveyLink">Linh khảo sát</label>
+                            <label class="left" for="surveyLink">Link khảo sát</label>
                             <input type="text" name="link" id="surveyLink" class="right" value="{{ $survey->link? url($survey->link) : ''}}">
                         </div>
                         <div id="formButton" class="form-group showBtn">

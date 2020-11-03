@@ -139,7 +139,7 @@
                         $('#titleRight').text(res.title);
                         $('#article').html(res.detail);
                         $('#mainTableBody').html(res.table);
-                        $('#customers').html(res.debug);
+                        //$('#customers').html(res.debug);
 
                         if (res.object) {
                             $('#objectCustomer').show().html(res.object)

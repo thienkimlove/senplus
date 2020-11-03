@@ -206,7 +206,6 @@ class CompanyController extends Controller
             return redirect(route('frontend.home'));
         }
 
-
         $data =  $request->only(['name', 'link', 'start_time', 'end_time', 'desc']);
 
         $rules = [
@@ -220,7 +219,14 @@ class CompanyController extends Controller
             'required' => ':attribute bắt buộc nhập.',
         ];
 
-        $validator = Validator::make($data , $rules, $messages);
+        $attributes = [
+            'name' => 'Tên chiến dịch',
+            'link' => 'Link khảo sát',
+            'start_time' => 'Thời gian bắt đầu',
+            'end_time' => 'Thời gian kết thúc',
+        ];
+
+        $validator = Validator::make($data , $rules, $messages, $attributes);
         // if the validator fails, redirect back to the form
         if ($validator->fails()) {
             return redirect(route('frontend.campaign_create'))
@@ -266,7 +272,7 @@ class CompanyController extends Controller
 
         try {
             Survey::create($createData);
-            Helpers::setFlashMessage('Tạo chiến dịch khảo sát thành công!');
+            Helpers::setFlashMessage('Tạo chiến dịch khảo sát thành công! Cần thêm bộ câu hỏi cho chiến dịch khảo sát');
             return redirect(route('frontend.home'));
 
         } catch (\Exception $exception) {

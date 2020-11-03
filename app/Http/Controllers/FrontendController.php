@@ -24,21 +24,35 @@ class FrontendController extends Controller
         $surveyId = $request->input('id');
 
         if (!$surveyId) {
-            $request->session()->flash('general_message', 'Chiến dịch khảo sát không tồn tại hoặc không được kích hoạt!');
+            Helpers::setFlashMessage('Chiến dịch khảo sát không tồn tại hoặc không được kích hoạt!');
             return redirect(route('frontend.home'));
         }
 
         $survey = Survey::find($surveyId);
 
         if (!$survey || !$survey->status) {
-            $request->session()->flash('general_message', 'Chiến dịch khảo sát không tồn tại hoặc không được kích hoạt!');
+            Helpers::setFlashMessage('Chiến dịch khảo sát không tồn tại hoặc không được kích hoạt!');
+            return redirect(route('frontend.home'));
+        }
+
+
+        if (!Helpers::userCanDoSurvey($survey)) {
+            Helpers::setFlashMessage('Bạn không thể thực hiện khảo sát này!');
             return redirect(route('frontend.home'));
         }
 
         $round = $request->input('round', 1);
         $order = $request->input('order', 1);
 
-        list($question, $roundPercent, $answer) = Helpers::getQuestion($survey, $round, $order);
+        $isJump = false;
+
+        if ($round ==  1 && $order == 1 && !$request->filled('back')) {
+            // khong phai from back button
+            // go to question not answer order by order and round
+            $isJump = true;
+        }
+
+        list($question, $roundPercent, $answer) = Helpers::getQuestion($survey, $round, $order, $isJump);
 
         if (!$question) {
             Helpers::setFlashMessage('Câu hỏi không tồn tại!');
@@ -75,7 +89,7 @@ class FrontendController extends Controller
             return redirect(route('frontend.survey').'?id='.$question->survey->id.'&order=6');
         }
 
-        return redirect(route('frontend.survey').'?id='.$question->survey->id.'&round='.$question->round.'&order='.($question->order - 1));
+        return redirect(route('frontend.survey').'?id='.$question->survey->id.'&round='.$question->round.'&order='.($question->order - 1).'&back=1');
     }
 
     public function answer(Request $request)

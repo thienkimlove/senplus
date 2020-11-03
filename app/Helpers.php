@@ -133,6 +133,32 @@ class Helpers
         ];
 
     }
+    /*
+     * Main function to get list of customer Ids which completed answer the survey
+     */
+
+    public static function getOnlyCompletedCustomers($survey, $customerIds = [])
+    {
+
+        if (!$customerIds) {
+            $customerIds = Customer::where('company_id', $survey->company_id)->pluck('id')->all();
+        }
+
+        $questionIds = $survey->questions->pluck('id')->all();
+        $completedUserIds = [];
+
+        foreach ($customerIds as $customerId) {
+            $countAnswers = Answer::whereIn('question_id', $questionIds)
+                ->where('customer_id', $customerId)
+                ->count();
+
+            if ($countAnswers == 12) {
+                $completedUserIds[] = $customerId;
+            }
+        }
+
+        return $completedUserIds;
+    }
 
     public static function getResultForSurvey($survey, $customerIds, $type)
     {
@@ -152,6 +178,7 @@ class Helpers
                 'option4' => 0,
             ]
         ];
+
 
         foreach ($arAverage as $round => $options) {
 
@@ -188,13 +215,13 @@ class Helpers
 
     public static function getResultExplainForSurveyAll($survey, $customerIds)
     {
+        // only customer completed the survey can count.
+        $customerIds = self::getOnlyCompletedCustomers($survey, $customerIds);
 
         // check if have result for survey with $customerIds
-
-        if (!self::checkIfSurveyHaveResultForUsers($survey, $customerIds)) {
+        if (!$customerIds) {
             return [];
         }
-
 
         $explains = [
             'company_name' => $survey->company->name,
@@ -205,7 +232,6 @@ class Helpers
         ];
 
         for ($i = 1; $i < 8; $i++) {
-
             $result = self::getResultForSurvey($survey, $customerIds, $i);
             $explains['details'][$i] = self::explainResult($result);
         }
@@ -330,15 +356,6 @@ class Helpers
         ];
     }
 
-    public static function checkIfSurveyHaveResultForUsers($survey, $customerIds)
-    {
-        $questionIds = $survey->questions->pluck('id')->all();
-        $answerCount = Answer::whereIn('customer_id', $customerIds)
-            ->whereIn('question_id', $questionIds)
-            ->count();
-
-        return ($answerCount > 0);
-    }
 
     public static function checkIfSurveyHaveResultForUser($survey, $customerId = null)
     {
@@ -347,23 +364,12 @@ class Helpers
             $customerId = auth()->user()->id;
         }
 
-        $questionIds = $survey->questions->pluck('id')->all();
-        $answerCount = Answer::where('customer_id', $customerId)
-            ->whereIn('question_id', $questionIds)
-            ->count();
-
-        return ($answerCount > 0);
+        return (count(self::getOnlyCompletedCustomers($survey, [$customerId])) > 0);
     }
 
     public static function checkIfSurveyHaveAnyResult($survey)
     {
-        $questionIds = Question::where('survey_id', $survey->id)
-            ->pluck('id')
-            ->all();
-        $answerCount = Answer::whereIn('question_id', $questionIds)
-            ->count();
-
-        return ($answerCount > 0);
+        return (count(self::getOnlyCompletedCustomers($survey)) > 0);
     }
 
 
@@ -388,7 +394,7 @@ class Helpers
     }
 
 
-    public static function getQuestion($survey, $round, $order)
+    public static function getQuestion($survey, $round, $order, $isJump = false)
     {
 
         if (!$survey || !$survey->status) {
@@ -397,11 +403,41 @@ class Helpers
 
         $roundAnswerPercent = 0;
 
-        $question = $survey->questions->where('round', $round)
-            ->where('order', $order)
-            ->first();
-
         $questionIds = $survey->questions->pluck('id')->all();
+        $questionLoop = null;
+
+        if ($isJump) {
+            for ($i = 1; $i< 13; $i++) {
+                if ($i < 7) {
+                    $roundLoop = 1;
+                    $orderLoop = $i;
+                } else {
+                    $roundLoop = 2;
+                    $orderLoop = $i - 6;
+                }
+
+                $questionLoop = Question::whereIn('id', $questionIds)
+                    ->where('round', $roundLoop)
+                    ->where('order', $orderLoop)
+                    ->first();
+
+                $answerYet = Answer::where('customer_id', auth()->user()->id)
+                    ->where('question_id', $questionLoop->id)
+                    ->count();
+
+                if ($answerYet == 0) {
+                    break;
+                }
+            }
+        }
+
+        if ($questionLoop) {
+            $question = $questionLoop;
+        } else {
+            $question = $survey->questions->where('round', $round)
+                ->where('order', $order)
+                ->first();
+        }
 
         $answerRound = Answer::where('customer_id', auth()->user()->id)
             ->whereIn('question_id', $questionIds)
@@ -430,22 +466,11 @@ class Helpers
 
         return Survey::where('company_id', $customer->company_id)
             ->where('status', true)
+            ->has('questions')
             ->orderBy('created_at', 'DESC')
             ->get();
     }
 
-    public static function getSurveyEndForLoginUser($customer = null)
-    {
-        if (!$customer) {
-            $customer = auth()->user();
-        }
-
-        return Survey::where('company_id', $customer->company_id)
-            ->where('status', true)
-            ->where('end_time' , '<', Carbon::now()->toDateTimeString())
-            ->orderBy('created_at', 'DESC')
-            ->get();
-    }
 
     public static function getCustomerFilterValue($customer, $filter)
     {
@@ -592,11 +617,7 @@ class Helpers
 
     public static function getTotalAnswerForSurvey($survey)
     {
-        $questionIds = Question::where('survey_id', $survey->id)
-            ->pluck('id')
-            ->all();
-        $userIds = Answer::whereIn('question_id', $questionIds)->pluck('customer_id')->all();
-        return count(array_unique($userIds));
+        return count(self::getOnlyCompletedCustomers($survey));
     }
 
     public static function getTotalUserNotAnswer($survey)
@@ -722,5 +743,14 @@ class Helpers
     {
         $wrapped = explode('$trun$', wordwrap($string, $width, '$trun$', false), 2);
         return $wrapped[0] . (isset($wrapped[1]) ? $etc : '');
+    }
+
+    public static function limitText($text, $limit) {
+        if (str_word_count($text, 0) > $limit) {
+            $words = str_word_count($text, 2);
+            $pos   = array_keys($words);
+            $text  = substr($text, 0, $pos[$limit]) . '...';
+        }
+        return $text;
     }
 }
