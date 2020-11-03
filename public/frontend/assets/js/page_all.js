@@ -240,9 +240,9 @@ function makeChart(ctx, mapOption, mapRound, eResult) {
 
         // Configuration options go here
         options: {
-            responsive: true,
+            responsive: false,
             legend: {
-                position: 'top'
+                position: 'bottom'
             },
             spanGaps: true,
             scale: {
