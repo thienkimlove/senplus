@@ -5,7 +5,7 @@
     <meta http-equiv="content-language" content="vi"/>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=5"/>
-    <title data-react-helmet="true">{{ isset($title)? $title : 'Home' }}</title>
+    <title data-react-helmet="true">{{ isset($title)? $title : 'Khảo sát và đánh giá môi trường Văn hoá doanh nghiệp' }}</title>
     <link rel="shortcut icon" href="/frontend/assets/img/favicon.png"/>
     <link rel="icon" href="/frontend/assets/img/favicon.png" type="image/x-icon"/>
     <link rel="shortcut icon" href="/frontend/assets/img/favicon.png" type="image/vnd.microsoft.icon"/>

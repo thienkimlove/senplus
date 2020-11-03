@@ -507,6 +507,10 @@ main {
   font-style: italic;
 }
 
+.fw500 {
+  font-weight: 500 !important;
+}
+
 .contain {
   position: absolute;
   top: 0;

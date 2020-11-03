@@ -28,18 +28,18 @@
                         @endif
                     </div>
                     <div class="form-group">
+                        <div class="txtBlue">Nhập mật khẩu mới</div>
+                    </div>
+                    <div class="form-group">
+                        {{--<div class="txtNote">Nhập mật khẩu mới</div>--}}
                         <input type="password" placeholder="Mật khẩu mới" class="password" name="password" id="password">
                         <input type="hidden" name="forget_token" value="{{ $token }}">
                     </div>
-                    {{--<div class="txtNote">Nhập mật khẩu mới</div>--}}
 
                     <div class="form-group">
+                        {{--<div class="txtNote">Nhập lại mật khẩu mới</div>--}}
                         <input type="password" placeholder="Nhập lại mật khẩu mới" class="password" name="password_confirm" id="password_confirm">
                     </div>
-                    {{--<div class="txtNote">Nhập lại mật khẩu mới</div>--}}
-
-
-
                     <div class="form-group">
                         <button id="btnSend" type="button">Gửi</button>
                     </div>

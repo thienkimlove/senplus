@@ -151,7 +151,7 @@
         <img src="{{ \App\Helpers::getLoginCompanyLogo() }}" alt="" class="imgFull">
     </div>
     <a href="{{ route('frontend.home') }}" class="link hasBg" title="Hệ thống đánh giá văn hóa doanh nghiệp" aria-label="CAS">
-        <strong>Hệ thống đánh giá văn hóa doanh nghiệp</strong>
+        <strong class="fw500">Hệ thống đánh giá văn hóa doanh nghiệp</strong>
     </a>
     <a href="javascript:void(0)" class="link bdt" title="Giới thiệu" aria-label="Introduce">Giới thiệu</a>
 
