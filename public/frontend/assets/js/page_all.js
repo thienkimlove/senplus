@@ -226,13 +226,13 @@ function makeChart(ctx, mapOption, mapRound, eResult) {
                 {
                     label: mapRound[1],
                     //backgroundColor: 'green',
-                    borderColor: '#3aadbb',
+                    borderColor: '#c1ad79',
                     data: [null, eResult[1]['option2'], null, eResult[1]['option3'], null, eResult[1]['option4'], null, eResult[1]['option1']]
                 },
                 {
                     label: mapRound[2],
                     //backgroundColor: 'pink',
-                    borderColor: '#c1ad79',
+                    borderColor: '#3aadbb',
                     data: [null, eResult[2]['option2'], null, eResult[2]['option3'], null, eResult[2]['option4'], null, eResult[2]['option1']]
                 }
             ],

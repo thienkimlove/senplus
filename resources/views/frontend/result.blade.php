@@ -2,7 +2,20 @@
 
 @section('content')
     <main>
-        @include('frontend.partials.sort_block')
+        @if ($survey->company->name != 'Default')
+            @include('frontend.partials.sort_block')
+        @else
+            <div class="sortInfoBlock">
+                <div class="fixCen">
+                    <div class="avatar">
+                        <img src="{{ \App\Helpers::getLoginCustomerAvatar() }}" alt="" class="imgFull">
+                    </div>
+                    <div class="txt">
+                        {{ auth()->user()->name }}
+                    </div>
+                </div>
+            </div>
+        @endif
         <div class="topBlock">
             <div class="fixCen hasBefore">
                 <div class="descriptionRusult">
@@ -44,7 +57,7 @@
                         </div>
                         <div class="rightSide">
                             <h3 class="title">Tổng quan</h3>
-                            <div class="name">{{ $survey->company->name }}</div>
+                            <div class="name">{{ $survey->company->name != 'Default' ? $survey->company->name : "" }}</div>
                             <div class="content">
 
                                 <div class="radaChart">

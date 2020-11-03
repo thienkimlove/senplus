@@ -76,7 +76,7 @@
                         @if ($customer->id == auth()->user()->id)
                         <div class="form-group">
                             <label class="left" for="password">* Mật khẩu</label>
-                            <input type="password" name="password" class="right" autocomplete="new-password" id="password" value="{{ $customer->phone }}" disabled>
+                            <input type="password" name="password" class="right" autocomplete="new-password" id="password" value="{{ $customer->password }}" disabled>
                         </div>
                         @endif
                         <div class="form-group">
@@ -112,6 +112,28 @@
                         .removeClass('showWarning')
                         .html('');
                 }
+            });
+
+            $('#phoneNumber').change(function(){
+                let val = $(this).val();
+                let regex = new RegExp('^[0-9]+$');
+                val = val.replace('+', '');
+                val = val.replace('(', '');
+                val = val.replace(')', '');
+                val = val.replace(/\s/g, '');
+
+                if (!(regex.test(val))) {
+                    $(this).val('');
+                    $('#error')
+                        .removeClass('showWarning')
+                        .addClass('showWarning')
+                        .html('Số điện thoại chỉ gồm số và các ký tự + ()!');
+                } else {
+                    $('#error')
+                        .removeClass('showWarning')
+                        .html('');
+                }
+
             });
 
             $('.btnSave').click(function(){

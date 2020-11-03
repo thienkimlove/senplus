@@ -1,7 +1,7 @@
 <div class="popup px popupGuidings" id="popupGuidings">
     <div class="bg_drop pa"></div>
     <div class="popupContent pa">
-        <a href="{{ route('frontend.home') }}" class="closePopup pa" title="Đóng lại" aria-label="Close">
+        <a href="javascript:void(0)" class="closePopup pa" title="Đóng lại" aria-label="Close">
             <img src="/frontend/assets/img/i_x.png" alt="" class="imgFull">
         </a>
         <div class="content">

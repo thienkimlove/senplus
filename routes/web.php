@@ -20,7 +20,7 @@ Route::post('register', 'CustomerController@postReg')->name('frontend.post_reg')
 Route::get('active', 'CustomerController@active')->name('frontend.active');
 
 Route::get('login', 'CustomerController@login')->name('frontend.login');
-Route::post('login', 'CustomerController@postLogin')->name('frontend.post_login');
+Route::post('login-submit', 'CustomerController@postLogin')->name('frontend.post_login');
 
 
 Route::post('forgot', 'CustomerController@postForgot')->name('frontend.post_forgot');
