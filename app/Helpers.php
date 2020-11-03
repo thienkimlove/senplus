@@ -375,7 +375,7 @@ class Helpers
 
     public static function currentFrontendUserIsManager()
     {
-        return auth()->user()->level != self::FRONTEND_USER_LEVEL;
+        return in_array(auth()->user()->level, [self::FRONTEND_ADMIN_LEVEL, self::FRONTEND_MANAGER_LEVEL]);
     }
 
     public static function currentFrontendUserIsAdmin()
