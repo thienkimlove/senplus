@@ -111,12 +111,38 @@
             return parseInt(ele.val(), 10);
         }
 
+
+
         function generate() {
 
             let option1 = $('#value_option1');
             let option2 = $('#value_option2');
             let option3 = $('#value_option3');
             let option4 = $('#value_option4');
+
+            if ((getVal(option1) === 100) && isEmpty(option2) && isEmpty(option3) && isEmpty(option4)) {
+                option2.val(0);
+                option3.val(0);
+                option4.val(0);
+            }
+
+            if ((getVal(option2) === 100) && isEmpty(option1) && isEmpty(option3) && isEmpty(option4)) {
+                option1.val(0);
+                option3.val(0);
+                option4.val(0);
+            }
+
+            if ((getVal(option3) === 100) && isEmpty(option1) && isEmpty(option2) && isEmpty(option4)) {
+                option1.val(0);
+                option2.val(0);
+                option4.val(0);
+            }
+
+            if ((getVal(option4) === 100) && isEmpty(option1) && isEmpty(option2) && isEmpty(option3)) {
+                option1.val(0);
+                option2.val(0);
+                option3.val(0);
+            }
 
             if (!isEmpty(option1) && !isEmpty(option2) && !isEmpty(option3) && isEmpty(option4)) {
                 //auto fill
@@ -134,6 +160,8 @@
                     $('#total_warning').hide();
                 }
             }
+
+
 
         }
         $(function(){
