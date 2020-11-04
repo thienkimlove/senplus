@@ -48,7 +48,7 @@
                                             {{ $question->{$opt} }}
                                         </div>
                                         <div class="lstRight">
-                                            <input type="number" value="{{ $answer? $answer->{$opt} : "" }}" id="value_{{$opt}}" name="{{ $opt }}">
+                                            <input type="number" min="0" max="100" value="{{ $answer? $answer->{$opt} : "" }}" id="value_{{$opt}}" name="{{ $opt }}">
                                         </div>
                                     </li>
                                 @endforeach
@@ -102,34 +102,31 @@
 
 @section('after_scripts')
     <script>
+
+        function isEmpty(ele) {
+            return (ele.val().length === 0);
+        }
+
+        function getVal(ele) {
+            return parseInt(ele.val(), 10);
+        }
+
         function generate() {
-            let option1 = $('#value_option1').val() > 0 ? parseInt($('#value_option1').val(), 10) : 0;
-            let option2 = $('#value_option2').val() > 0 ? parseInt($('#value_option2').val(), 10) : 0;
-            let option3 = $('#value_option3').val() > 0 ? parseInt($('#value_option3').val(), 10) : 0;
-            let option4 = $('#value_option4').val() > 0 ? parseInt($('#value_option4').val(), 10) : 0;
 
-            if (option1 === 0) {
-                $('#value_option1').val(0);
+            let option1 = $('#value_option1');
+            let option2 = $('#value_option2');
+            let option3 = $('#value_option3');
+            let option4 = $('#value_option4');
+
+            if (!isEmpty(option1) && !isEmpty(option2) && !isEmpty(option3) && isEmpty(option4)) {
+                //auto fill
+                let option4Value = 100 - (getVal(option1) + getVal(option2) + getVal(option3));
+                option4.val(option4Value);
             }
 
-            if (option2 === 0) {
-                $('#value_option2').val(0);
-            }
+            if (!isEmpty(option1) && !isEmpty(option2) && !isEmpty(option3) && !isEmpty(option4)) {
+                let totalVal = getVal(option1) + getVal(option2) + getVal(option3) + getVal(option4);
 
-            if (option3 === 0) {
-                $('#value_option3').val(0);
-            }
-            if (option4 === 0) {
-                $('#value_option4').val(0);
-            }
-
-            let totalVal = option1 + option2 + option3 + option4;
-
-            if (option1 > 0 && option2 > 0 && option3 > 0 && option4 === 0 && totalVal < 100) {
-                $('#value_option4').val(100 - totalVal);
-                $('#total').val(100);
-                $('#total_warning').hide();
-            } else {
                 $('#total').val(totalVal);
                 if (totalVal !== 100) {
                     $('#total_warning').show();
