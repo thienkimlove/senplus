@@ -3,7 +3,7 @@
 </div>
 
 <div>
-    Số liệu này thể hiện nhận thức của nhóm đối tượng khảo sát về đặc điểm của môi trường làm việc tại {{ $explain['company_name'] }}.
+    Số liệu này thể hiện nhận thức của nhóm về đặc điểm của môi trường làm việc tại {{ $explain['company_name'] }}.
 </div>
 
 <div>
@@ -15,11 +15,11 @@
 </div>
 
 <div>
-    <h4>SỰ KHÁC NHAU GIỮA HIỆN TẠI VÀ MONG MUỐN</h4>
+    <h4>KHOẢNG CÁCH GIỮA HIỆN TẠI VÀ MONG MUỐN</h4>
 </div>
 
 <div>
-    Chênh lệch điểm số giữa hiện tại và mong muốn thể hiện nhu cầu thay đổi của nhóm đối tượng khảo sát.
+    Chênh lệch điểm số giữa hiện tại và mong muốn thể hiện nhu cầu thay đổi của nhóm.
 </div>
 
 @if ($explain['details'][1]['moreThan'])
@@ -86,28 +86,28 @@
 </div>
 
 <div>
-    Môi trường làm việc hiện tại {{ \App\Helpers::getMatchName($explain['extends'][1]['percentMatch']) }}({{$explain['extends'][1]['percentMatch']}}%)
+    Theo đánh giá của nhóm thì môi trường làm việc hiện tại {{ \App\Helpers::getMatchName($explain['extends'][1]['percentMatch']) }} ({{$explain['extends'][1]['percentMatch']}}%)
 
-    @if (count($explain['extends'][1]['bigThan']) == 0) do cả 4 giá trị cột chênh lệch đều nhỏ hơn 5. @endif
+    @if (count($explain['extends'][1]['bigThan']) == 0) do cả 4 giá trị cột chênh lệch đều < 5. @endif
 
-    @if (count($explain['extends'][1]['bigThan']) == 3) do có 3 giá trị của cột chênh lệch lớn hơn hoặc = 5, tương ứng với
+    @if (count($explain['extends'][1]['bigThan']) == 3) do có 3 giá trị của cột chênh lệch lớn hơn hoặc >= 5, tương ứng với
     @foreach ($explain['extends'][1]['bigThan'] as $option)
-        {{ $explain['all']->where('option', $option)->first()->ten_van_hoa }} ({{ \App\Helpers::getXValue($explain, 1, $option) }} điểm),
+        {{ $explain['all']->where('option', $option)->first()->ten_van_hoa }} ({{ \App\Helpers::getXValue($explain, 1, $option) }} điểm).
     @endforeach
     @endif
 
-    @if (count($explain['extends'][1]['bigThan']) == 2) do có 2 giá trị của cột chênh lệch lớn hơn hoặc = 5, tương ứng với
+    @if (count($explain['extends'][1]['bigThan']) == 2) do có 2 giá trị của cột chênh lệch lớn hơn hoặc >= 5, tương ứng với
     @foreach ($explain['extends'][1]['bigThan'] as $option)
-        {{ $explain['all']->where('option', $option)->first()->ten_van_hoa }} ({{ \App\Helpers::getXValue($explain, 1, $option) }} điểm),
+        {{ $explain['all']->where('option', $option)->first()->ten_van_hoa }} ({{ \App\Helpers::getXValue($explain, 1, $option) }} điểm).
     @endforeach
     @endif
 
-    @if (count($explain['extends'][1]['bigThan']) == 1) do có 1 giá trị của cột chênh lệch lớn hơn hoặc = 5, tương ứng với
+    @if (count($explain['extends'][1]['bigThan']) == 1) do có 1 giá trị của cột chênh lệch lớn hơn hoặc >= 5, tương ứng với
     @foreach ($explain['extends'][1]['bigThan'] as $option)
-        {{ $explain['all']->where('option', $option)->first()->ten_van_hoa }} ({{ \App\Helpers::getXValue($explain, 1, $option) }} điểm),
+        {{ $explain['all']->where('option', $option)->first()->ten_van_hoa }} ({{ \App\Helpers::getXValue($explain, 1, $option) }} điểm).
     @endforeach
     @endif
 
-    @if (count($explain['extends'][1]['bigThan']) == 4) do cả 4 giá trị của cột chênh lệch đều lớn hơn hoặc = 5. @endif
+    @if (count($explain['extends'][1]['bigThan']) == 4) do cả 4 giá trị của cột chênh lệch đều lớn hơn hoặc >= 5. @endif
 
 </div>

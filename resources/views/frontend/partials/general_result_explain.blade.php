@@ -1,6 +1,6 @@
     <div>
-        Trên đây là nhận thức về văn hóa {{$explain['company_name'] }} của nhóm đối tượng mà anh/chị đã chọn.
-        Trên biểu đồ, đường màu xanh thể hiện Văn hóa hiện tại, đường màu đỏ thể hiện Văn hóa mong muốn.
+	Trong phạm vi của báo cáo này, chúng tôi dùng từ "nhóm" để đại diện cho nhóm đối tượng khảo sát mà anh/chị đã chọn ra.
+        Trên đây này là nhận thức của họ về văn hóa của {{ $explain['company_name'] }}
         Kết quả này có ý nghĩa như sau:
     </div>
 
@@ -9,7 +9,7 @@
     </div>
 
     <div>
-        Văn hóa nổi trội quyết định năng lực cạnh tranh chính của doanh nghiệp, được xác định bởi giá trị lớn nhất của mỗi cột. Một doanh nghiệp có văn hóa đồng nhắt và mạnh mẽ thường là khi giá trị lớn nhất đó thực sự nổi trội so với phần còn lại. Nghiên cứu của chúng tôi cho thấy, nhân viên của những doanh nghiệp như vậy luôn có ý thức rõ ràng về mục tiêu, đồng nhất về nỗ lực và hướng đi.
+        Văn hóa nổi trội quyết định năng lực cạnh tranh chính của doanh nghiệp, được xác định bởi giá trị lớn nhất của mỗi cột. Một doanh nghiệp có văn hóa đồng nhất và mạnh mẽ thường là khi giá trị lớn nhất đó thực sự nổi trội so với phần còn lại. Nghiên cứu của chúng tôi cho thấy, nhân viên của những doanh nghiệp như vậy luôn có ý thức rõ ràng về mục tiêu, đồng nhất về nỗ lực và hướng đi.
     </div>
 
     <div>
@@ -21,7 +21,7 @@
     </div>
 
     <div>
-        Hiện tại, văn hóa nối trội của ({{ $explain['company_name'] }}) là {{ $explain['details'][7]['explainMax']->ten_van_hoa }} – {{ $explain['details'][7]['maxValue'] }} điểm. Năng lực cạnh tranh chính của doanh nghiệp là {{ $explain['details'][7]['explainMax']->nang_luc_canh_tranh }}. (Tham khảo phụ lục). Giá trị chính mà loại hình văn hóa này đem lại là {{ $explain['details'][7]['explainMax']->gia_tri_dem_lai }} (Tham khảo phụ lục)
+        Văn hóa nối trội của {{ $explain['company_name'] }} trong thời gian qua theo đánh giá của nhóm là {{ $explain['details'][7]['explainMax']->ten_van_hoa }} – {{ $explain['details'][7]['maxValue'] }} điểm. Năng lực cạnh tranh chính của doanh nghiệp là {{ $explain['details'][7]['explainMax']->nang_luc_canh_tranh }}. Giá trị chính mà loại hình văn hóa này đem lại là {{ $explain['details'][7]['explainMax']->gia_tri_dem_lai }}.
     </div>
 
     <div>
@@ -29,7 +29,7 @@
     </div>
 
     <div>
-        <b>Kết luận: Nhận thức của nhóm đối tượng khảo sát về văn hóa hiện tại của ({{ $explain['company_name'] }}) được diễn giải như sau:</b>
+        <b>Kết luận: Văn hóa của {{ $explain['company_name'] }} theo đánh giá của nhóm có đặc điểm như sau:</b>
     </div>
 
     <div>
@@ -69,19 +69,19 @@
     </div>
 
     <div>
-        <h4>SỰ KHÁC NHAU GIỮA VĂN HÓA HIỆN TẠI VÀ MONG MUỐN</h4>
+        <h4>KHOẢNG CÁCH GIỮA VĂN HÓA HIỆN TẠI VÀ MONG MUỐN</h4>
     </div>
 
     <div>
-        Sự khác nhau giữa văn hóa hiện tại và mong muốn thể hiện nhu cầu thay đổi của nhóm đối tượng khảo sát. Những giá trị lớn hơn 10 theo lý thuyết của Khung năng lực cạnh tranh, thể hiện sự quan trọng và mức độ cấp thiết của các hành động nhằm tạo ra sự thay đổi đó.
+        Khoảng cách giữa văn hóa hiện tại và mong muốn thể hiện nhu cầu thay đổi của nhóm. Những giá trị lớn hơn 10 theo lý thuyết của Khung năng lực cạnh tranh, thể hiện sự quan trọng và mức độ cấp thiết của các hành động nhằm tạo ra sự thay đổi đó.
     </div>
 
     <div>
-        Những giá trị nhỏ hơn 10 thể hiện cho những sự thay đổi nhỏ mà doanh nghiệp cần lưu ý. Doanh nghiệp cần tổ chức những cuộc trao đổi giữa đội ngũ lãnh đạo và nhóm đối tượng khảo sát để đi sâu tìm hiểu điều chúng ta muốn thay đổi là gì.
+        Những giá trị nhỏ hơn 10 thể hiện cho những nhu cầu thay đổi mà doanh nghiệp cần lưu ý. Doanh nghiệp nên tổ chức những cuộc trao đổi giữa đội ngũ lãnh đạo và cán bộ nhân viên để đi sâu tìm hiểu điều chúng ta muốn thay đổi là gì.
     </div>
 
     <div>
-        Đối với những thay đổi cấp thiết, doanh nghiệp có thể liên hệ với Senplus để nhận tư vấn chuyên sâu hoặc kết nối những chuyên gia trong lĩnh vực mà mình mong muốn.
+        Đối với những thay đổi cấp thiết, doanh nghiệp có thể liên hệ với Senplus để nhận tư vấn chuyên sâu.
     </div>
 
     <div>
@@ -90,7 +90,7 @@
 
     @if ($explain['details'][7]['moreThan'])
         <div>
-            Có {{ count($explain['details'][7]['moreThan']) }} sự thay đổi cấp thiết đó là:
+            Có {{ count($explain['details'][7]['moreThan']) }} nhu cầu cấp thiết đó là:
         </div>
         <div>
             <ul>
@@ -108,7 +108,7 @@
 
     @if ($explain['details'][7]['lessThan'])
         <div>
-            Có {{ count($explain['details'][7]['lessThan']) }} sự thay đổi cần lưu ý đó là:
+            Có {{ count($explain['details'][7]['lessThan']) }} nhu cầu cần lưu ý đó là:
         </div>
         <div>
             <ul>
@@ -129,7 +129,7 @@
     </div>
 
     <div>
-        Mức độ nhất quán của văn hóa doanh nghiệp được thể hiện qua sự nhất quán của những yếu tố nội tại tạo nên nó. Có nghĩa là giá trị lớn nhất của từng yếu tố tạo nên văn hóa doanh nghiệp bao gồm: Đặc điểm nổi trội, Phong cách lãnh đạo, Quản lý nhân viên, Sự gắn kết, Chiến lược, Tiêu chí thành công cần có sự tương đồng.
+        Mức độ nhất quán của văn hóa doanh nghiệp được thể hiện qua sự nhất quán của những yếu tố thành phần. Có nghĩa là giá trị lớn nhất của từng yếu tố tạo nên văn hóa doanh nghiệp bao gồm: Đặc điểm nổi trội, Phong cách lãnh đạo, Quản lý nhân viên, Sự gắn kết, Chiến lược, Tiêu chí thành công cần có sự tương đồng.
     </div>
 
     <div>
@@ -149,13 +149,13 @@
     </div>
 
     <div>
-        <h4>MỨC ĐỘ PHÙ HỢP CỦA VĂN HÓA HIỆN TẠI</h4>
+        <h4>MỨC ĐỘ PHÙ HỢP CỦA VĂN HÓA TRONG THỜI GIAN QUA</h4>
     </div>
 
     <div>
-        Mức độ phù hợp của văn hóa hiện tại chính là tổng hợp của mức độ phù hợp của từng yếu tố thành phần tạo nên nó.
+        Theo lý thuyết của khung năng lực cạnh tranh, văn hóa được coi là phù hợp khi các yếu tố cấu thành nó phù hợp.
     </div>
 
     <div>
-        Như vậy, sau khi nghiên cứu kỹ lưỡng trường hợp của {{ $explain['company_name'] }}, với tổng điểm là {{ $explain['avgPercentMatch'] }}%. Văn hóa hiện tại là {{ \App\Helpers::getMatchName($explain['avgPercentMatch']) }} so với mong muốn của nhóm.
+        Như vậy, sau khi nghiên cứu kỹ lưỡng trường hợp của {{ $explain['company_name'] }}, với tổng điểm là {{ $explain['avgPercentMatch'] }}%. Văn hóa trong thời gian qua là {{ \App\Helpers::getMatchName($explain['avgPercentMatch']) }} theo nhận định của nhóm.
     </div>
