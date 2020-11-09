@@ -55,7 +55,7 @@
                             <div class="current">
                                 <label class="left" for="logoOfCor">* Avatar</label>
                                 <div class="imgThumb right">
-                                    <img src="{{ $customer->avatar? url($customer->avatar) : '/frontend/assets/img/logo3.png' }}">
+                                    <img src="{{ $customer->avatar? url($customer->avatar) : '' }}">
                                 </div>
                             </div>
                             <div class="edit disabled" id="editLogoCor">

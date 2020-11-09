@@ -12,7 +12,7 @@
                 <img src="{{ \App\Helpers::getLoginCustomerAvatar() }}" alt="" class="imgFull">
             </div>
             <div class="txt">
-                Chào mừng {{ auth()->user()->name }} <br> {{ $firstLogin? 'đến':'quay lại' }} với CAS Survey
+                Chào mừng {{ auth()->user()->name }} <br> {{ $firstLogin? 'đến':'quay lại' }} với CAS
             </div>
         </div>
         @if (\App\Helpers::currentFrontendUserIsManager())
@@ -44,14 +44,14 @@
         <div class="campaignBlock">
             <div class="fixCen">
                 <div class="leftSide">
-                    <h2 class="title">Danh sách khảo sát</h2>
+                    <h2 class="title">Khảo sát của tôi</h2>
                     <div class="surveyList">
                         @if ($surveys)
                             <ul>
                                 @foreach ($surveys->take(2) as $index => $survey)
                                     <li>
                                         <h4>
-                                            <a href="javascript:void(0)" class="titleCampaign" title="{{ $survey->name }}" aria-label="{{ $survey->name }}">{{ $survey->name }} ({{ $survey->start_time? $survey->start_time->format('d/m/Y') : $survey->created_at->format('d/m/Y') }})</a></h4>
+                                            <a href="javascript:void(0)" class="titleCampaign" title="{{ $survey->name }}" aria-label="{{ $survey->name }}">{{ $survey->name }} ({{ $survey->start_time? $survey->start_time->format('d/m/Y') : "" }} - {{ $survey->end_time? $survey->end_time->format('d/m/Y') : "" }})</a></h4>
 
                                     </li>
                                 @endforeach
