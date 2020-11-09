@@ -31,6 +31,8 @@ class Helpers
     public const FRONTEND_MANAGER_LEVEL = 1;
     public const FRONTEND_USER_LEVEL = 0;
 
+    public const DEFAULT_COMPANY_NAME = "Khảo sát miễn phí";
+
     public const ARRAY_OPTIONS = ['option1', 'option2', 'option3', 'option4'];
 
     public const ARRAY_TYPES = [
@@ -637,12 +639,12 @@ class Helpers
 
     public static function getDefaultCompany()
     {
-        $default = Company::where('name', 'Default')->first();
+        $default = Company::where('name', self::DEFAULT_COMPANY_NAME)->first();
 
         if (!$default) {
 
             $default = Company::create([
-                'name' => 'Default'
+                'name' => self::DEFAULT_COMPANY_NAME
             ]);
         }
 

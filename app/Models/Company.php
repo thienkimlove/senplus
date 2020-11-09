@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 
@@ -29,6 +30,7 @@ class Company extends Model
         'employee_number_id',
         'average_income_id',
         'total_fund_id',
+        'is_default'
     ];
     // protected $hidden = [];
     // protected $dates = [];
@@ -39,7 +41,7 @@ class Company extends Model
 
     public function getIsDefaultAttribute()
     {
-        return ($this->name == 'Default');
+        return ($this->name == Helpers::DEFAULT_COMPANY_NAME);
     }
 
     /*

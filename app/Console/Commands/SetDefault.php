@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Helpers;
 use App\Models\Company;
 use App\Models\Customer;
 use App\Models\Survey;
@@ -42,13 +43,7 @@ class SetDefault extends Command
     {
         //return 0;
         // check if have company default
-        $company = Company::where('name', 'Default')->first();
-
-        if (!$company) {
-            $company = Company::create([
-                'name' => 'Default'
-            ]);
-        }
+        $company = Helpers::getDefaultCompany();
 
         $customerNotHaveCompany = Customer::whereNull('company_id')->get();
 
