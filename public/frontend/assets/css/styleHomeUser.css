@@ -183,6 +183,11 @@ form {
 }
 
 @font-face {
+  font-family: "NotoSerif-Regular";
+  src: url("../../assets/font/NotoSerif-Regular.ttf");
+}
+
+@font-face {
   font-family: FontAwesome;
   src: url("../../assets/font/fontawesome-webfont.eot?v=4.4.0");
   src: url("../../assets/font/fontawesome-webfont.eot?#iefix&v=4.4.0") format("embedded-opentype"), url(../../assets/font/fontawesome-webfont.woff2?v=4.4.0) format("woff2"), url(../../assets/font/fontawesome-webfont.woff?v=4.4.0) format("woff"), url(../../assets/font/fontawesome-webfont.ttf?v=4.4.0) format("truetype"), url(../../assets/font/fontawesome-webfont.svg?v=4.4.0#fontawesomeregular) format("svg");
@@ -511,17 +516,6 @@ main {
   font-weight: 500 !important;
 }
 
-header, main {
-  position: relative;
-  z-index: 1;
-  color: #666666;
-}
-
-footer {
-  background: #ffffff;
-  z-index: 0;
-}
-
 .bdb {
   border-bottom: thin solid #d9d9d9;
 }
@@ -638,8 +632,29 @@ header .fixCen {
           flex-flow: row wrap;
 }
 
+header, main {
+  position: relative;
+  z-index: 1;
+  color: #666666;
+}
+
 footer {
+  background: #ffffff;
+  z-index: 0;
   border-top: thin solid #c5cbc5;
+  position: relative;
+}
+
+footer:before {
+  content: '';
+  display: block;
+  height: 2px;
+  background: #69cad3;
+  width: 100px;
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  margin-left: -50px;
 }
 
 footer .fixCen {
@@ -673,7 +688,7 @@ footer .fixCen {
 
 footer .fixCen h3 {
   font-size: 15px;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 footer .fixCen a {
@@ -690,6 +705,7 @@ footer .fixCen a.link {
 }
 
 footer .fixCen strong {
+  font-weight: 600;
   font-size: 15px;
 }
 
