@@ -60,6 +60,7 @@ Route::post('member-create', 'CompanyController@postMemberCreate')->name('fronte
 Route::get('member-detail', 'CompanyController@memberDetail')->name('frontend.member_detail');
 Route::get('member-edit', 'CompanyController@memberEdit')->name('frontend.member_edit');
 Route::post('member-edit', 'CompanyController@postMemberEdit')->name('frontend.post_member_edit');
+Route::post('member-remind', 'CompanyController@postMemberRemind')->name('frontend.post_member_remind');
 
 
 Route::post('detail', 'CompanyController@postDetail')->name('frontend.post_detail');

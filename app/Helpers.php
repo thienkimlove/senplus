@@ -12,6 +12,7 @@ use App\Mail\ForgotPassword;
 use App\Mail\RegisterConfirm;
 use App\Mail\RegisterFacebook;
 use App\Mail\RegisterGoogle;
+use App\Mail\RemindSurvey;
 use App\Models\Answer;
 use App\Models\Company;
 use App\Models\Customer;
@@ -43,6 +44,13 @@ class Helpers
         5 => 'cl',
         6 => 'tctc',
         7 => 'general'
+    ];
+
+    public const TEMPLATE_QUESTION_TYPES = [
+        0 => 'Khảo sát năng lực cạnh tranh',
+//        1 => 'Khảo sát tuyên bố giá trị',
+//        2 => 'Khảo sát nhận diện thương hiệu',
+//        3 => 'Đo lường hiệu quả',
     ];
 
 
@@ -160,6 +168,24 @@ class Helpers
         }
 
         return $completedUserIds;
+    }
+
+    public static function getNotCompletedCustomers($survey, $customerIds = [])
+    {
+        if (!$customerIds) {
+            $customerIds = Customer::where('company_id', $survey->company_id)->pluck('id')->all();
+        }
+
+        $completedIds = self::getOnlyCompletedCustomers($survey, $customerIds);
+
+        $notCompletedIds = [];
+
+        foreach ($customerIds as $customerId) {
+            if (!in_array($customerId, $completedIds)) {
+                $notCompletedIds[] = $customerId;
+            }
+        }
+        return $notCompletedIds;
     }
 
     public static function getResultForSurvey($survey, $customerIds, $type)
@@ -694,6 +720,17 @@ class Helpers
             Mail::to($customer->email)
                 //->cc(['thienkimlove@gmail.com'])
                 ->send(new ForgotPassword($customer));
+        } catch (\Exception $exception) {
+            self::log($exception->getMessage());
+        }
+
+    }
+
+    public static function sendMailRemindSurvey($customer, $survey)
+    {
+        try {
+            Mail::to($customer->email)
+                ->send(new RemindSurvey($customer, $survey));
         } catch (\Exception $exception) {
             self::log($exception->getMessage());
         }

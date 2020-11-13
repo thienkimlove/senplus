@@ -43,6 +43,15 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="left" for="position">Chọn loại khảo sát</label>
+                            <select name="template_type" id="position" class="right">
+                                @foreach (\App\Helpers::TEMPLATE_QUESTION_TYPES as $index => $value)
+                                    <option value="{{ $index }}">{{ $value }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group">
                             <label class="left" for="surveyLink">Link khảo sát</label>
                             <input type="text" name="link" id="surveyLink" class="right" value="{{ old('link', url('/').'/'.\App\Helpers::getRandomLinkSurvey())  }}">
                         </div>

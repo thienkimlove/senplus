@@ -12,11 +12,10 @@
 
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('customer') }}"><i class="nav-icon la la-confluence"></i> <span>Người Dùng</span></a></li>
 
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('question') }}'><i class='nav-icon la la-quora'></i> <span>Bộ Câu Hỏi</span> </a></li>
-
-
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('survey') }}'><i class='nav-icon la la-columns'></i> Chiến Dịch</a></li>
 
+
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('template') }}'><i class='nav-icon la la-question'></i>Câu Hỏi Mẫu</a></li>
 
 <li class="nav-item nav-dropdown">
     <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-columns"></i> Static Content </a>
@@ -34,6 +33,8 @@
 
 @if (backpack_user()->hasRole('admin'))
 
+
+
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('explain') }}'><i class='nav-icon la la-exchange'></i> Giải Thích </a></li>
 
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('setting') }}'><i class='nav-icon fa fa-cog'></i> Thiết Lập</a></li>
@@ -50,5 +51,3 @@
     </ul>
 </li>
 @endif
-
-

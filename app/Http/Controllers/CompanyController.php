@@ -10,6 +10,7 @@ use App\Models\Question;
 use App\Models\Survey;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -206,13 +207,14 @@ class CompanyController extends Controller
             return redirect(route('frontend.home'));
         }
 
-        $data =  $request->only(['name', 'link', 'start_time', 'end_time', 'desc']);
+        $data =  $request->only(['name', 'link', 'start_time', 'end_time', 'desc', 'template_type']);
 
         $rules = [
             'name' => 'required',
             'link' => 'required',
             'start_time' => 'required',
             'end_time' => 'required',
+            'template_type' => 'required',
         ];
 
         $messages = [
@@ -224,6 +226,7 @@ class CompanyController extends Controller
             'link' => 'Link khảo sát',
             'start_time' => 'Thời gian bắt đầu',
             'end_time' => 'Thời gian kết thúc',
+            'template_type' => 'Loại khảo sát',
         ];
 
         $validator = Validator::make($data , $rules, $messages, $attributes);
@@ -248,6 +251,27 @@ class CompanyController extends Controller
                 ->withErrors($validator);
         }
 
+        // check if company have template or not.
+
+        $company = Helpers::getLoginCompany();
+
+        $template = null;
+
+        foreach ($company->templates as $item) {
+            if ($item->type == $data['template_type']) {
+                $template = $item;
+                break;
+            }
+        }
+
+        if (!$template)  {
+            $validator->getMessageBag()->add('template_type', 'Doanh nghiệp chưa có bộ câu hỏi mẫu nào thuộc loại khảo sát đã chọn!');
+            return redirect(route('frontend.campaign_create'))
+                ->withErrors($validator);
+
+        }
+
+
         $update_fields = [
             'name',
             'link',
@@ -257,7 +281,7 @@ class CompanyController extends Controller
         ];
 
         $createData = [
-            'company_id' => auth()->user()->company_id
+            'company_id' => $company->id
         ];
 
         foreach ($update_fields as $field) {
@@ -270,12 +294,36 @@ class CompanyController extends Controller
             }
         }
 
+        DB::beginTransaction();
+
         try {
-            Survey::create($createData);
-            Helpers::setFlashMessage('Tạo chiến dịch khảo sát thành công! Cần thêm bộ câu hỏi cho chiến dịch khảo sát');
+            $survey = Survey::create($createData);
+
+            foreach (json_decode($template->questions) as $index => $question) {
+
+                $round = ($index < 6)? 1 : 2;
+                $order = ($index < 6)? $index+1 : $index - 5;
+
+                Question::create([
+                    'survey_id' => $survey->id,
+                    'name' => $question->name,
+                    'option1' => $question->option1,
+                    'option2' => $question->option2,
+                    'option3' => $question->option3,
+                    'option4' => $question->option4,
+                    'order' => $order,
+                    'round' => $round,
+                ]);
+            }
+
+            DB::commit();
+
+            Helpers::setFlashMessage('Tạo chiến dịch khảo sát thành công!');
             return redirect(route('frontend.home'));
 
         } catch (\Exception $exception) {
+            Helpers::log($exception->getMessage());
+            DB::rollBack();
             $validator->getMessageBag()->add('name', 'Có lỗi xảy ra xin thử lại sau!');
             return redirect(route('frontend.campaign_create'))
                 ->withErrors($validator);
@@ -328,25 +376,37 @@ class CompanyController extends Controller
         $company = Helpers::getLoginCompany();
 
         $q = $request->input('q', '');
+        $isNotCompleteSurveyId = $request->input('is_not_complete');
 
-        if ($q) {
-            $customers = Customer::where('company_id', $company->id)
-                //->where('level', '!=', Helpers::FRONTEND_ADMIN_LEVEL)
-                ->where('status', true)
-                ->where(function($query) use($q) {
-                     $query->where('email', 'like', '%'.$q.'%');
-                     $query->orWhere('name', 'like', '%'.$q.'%');
-                })
-                ->paginate(10);
-            $customers->setPath('?q='.$q);
-        } else {
-            $customers = Customer::where('company_id', $company->id)
-                //->where('level', '!=', Helpers::FRONTEND_ADMIN_LEVEL)
-                ->where('status', true)
-                ->paginate(10);
+        $customers = Customer::where('company_id', $company->id)
+            ->where('status', true);
+
+
+        if ($isNotCompleteSurveyId) {
+            $survey = Survey::find($isNotCompleteSurveyId);
+            $notCompletedIds = Helpers::getNotCompletedCustomers($survey);
+            $customers = $customers->whereIn('id', $notCompletedIds);
         }
 
-        return view('frontend.member', compact('company', 'customers', 'q'))
+
+        if ($q) {
+            $customers = $customers->where(function($query) use($q) {
+                     $query->where('email', 'like', '%'.$q.'%');
+                     $query->orWhere('name', 'like', '%'.$q.'%');
+                });
+        }
+
+        $customers = $customers->paginate(10);
+
+        if ($q) {
+            $customers->setPath('?q='.$q);
+        }
+
+        if ($isNotCompleteSurveyId) {
+            $customers->setPath('?is_not_complete='.$isNotCompleteSurveyId);
+        }
+
+        return view('frontend.member', compact('company', 'customers', 'q', 'isNotCompleteSurveyId'))
             ->with(['section' => 'member', 'title' => 'Dữ liệu người dùng', 'isStyleSurvey' => true]);
     }
 
@@ -488,6 +548,40 @@ class CompanyController extends Controller
         }
 
         return redirect(route('frontend.member_detail').'?id='.$customerId);
+    }
+
+
+    public function postMemberRemind(Request $request)
+    {
+        if (!Helpers::currentFrontendUserIsManager()) {
+            return redirect(route('frontend.home'));
+        }
+        $surveyId = $request->input('survey_id');
+
+        if (!$surveyId) {
+            Helpers::setFlashMessage('Không có ID Chiến dịch!');
+            return redirect(route('frontend.home'));
+        }
+
+        $survey = Survey::find($surveyId);
+
+        if (!$survey) {
+            Helpers::setFlashMessage('Chiến dịch không tồn tại!');
+            return redirect(route('frontend.home'));
+        }
+
+        // remind emails
+        $notCompletedIds = Helpers::getNotCompletedCustomers($survey);
+
+        if ($notCompletedIds) {
+            $customers = Customer::whereIn('id', $notCompletedIds)->get();
+            foreach ($customers as $customer) {
+                Helpers::sendMailRemindSurvey($customer, $survey);
+            }
+        }
+        Helpers::setFlashMessage('Đã gửi email nhắc nhở!');
+
+        return redirect(route('frontend.member').'?is_not_complete='.$surveyId);
     }
 
 

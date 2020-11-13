@@ -77,8 +77,8 @@ class SurveyCrudController extends CrudController
             'label' => 'Thời gian kết thúc'
         ]);
 
-        CRUD::addButtonFromView('top', 'template_excel_question', 'template_excel_question', 'beginning');
-        CRUD::addButtonFromView('line', 'import_excel_question', 'import_excel_question', 'end');
+        //CRUD::addButtonFromView('top', 'template_excel_question', 'template_excel_question', 'beginning');
+        //CRUD::addButtonFromView('line', 'import_excel_question', 'import_excel_question', 'end');
         CRUD::addButtonFromView('line', 'clear_result', 'clear_result', 'end');
 
         CRUD::addFilter(

@@ -4,11 +4,25 @@
     <main>
         @include('frontend.partials.sort_block')
         <div class="topBlock">
-            <div class="fixCen hasBefore" id="filterMember">
-                <h2 class="title">Danh sách thành viên</h2>
-                <a href="{{ route('frontend.member_create') }}" class="myBtn addNewUser" title="Thêm mới">+ Thêm mới</a>
+            @if ($isNotCompleteSurveyId)
+                <div class="fixCen hasBefore" id="filterMember">
+                    <h2 class="title">Chưa hoàn thành khảo sát</h2>
+                    <button type="button" id="remindButton" class="myBtn btnSave">Nhắc nhở</button>
+                    <form id="remindForm" action="{{ route('frontend.post_member_remind') }}" method="POST">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="survey_id" value="{{ $isNotCompleteSurveyId }}">
+                    </form>
+                </div>
 
-            </div>
+            @else
+                <div class="fixCen hasBefore" id="filterMember">
+                    <h2 class="title">Danh sách thành viên</h2>
+                    <a href="{{ route('frontend.member_create') }}" class="myBtn addNewUser" title="Thêm mới">+ Thêm mới</a>
+                    <form action="{{ route('frontend.member') }}" method="GET" class="searchUser">
+                        <input type="text" placeholder="Tên/email" id="inputSearchDemo" name="q">
+                    </form>
+                </div>
+            @endif
         </div>
         <div class="editSurveyBlock editBlock">
             <div class="fixCen">
@@ -57,4 +71,14 @@
     </main>
 
 @endsection
+
+@section('after_scripts')
+    <script>
+        $(function(){
+            $('#remindButton').click(function(){
+                $('#remindForm').submit();
+                return false;
+            });
+        });
+    </script>
 

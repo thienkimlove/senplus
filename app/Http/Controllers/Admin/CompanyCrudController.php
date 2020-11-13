@@ -103,6 +103,15 @@ class CompanyCrudController extends CrudController
             'model'     => 'App\Models\Filter',
         ]);
 
+        CRUD::addColumn([
+            'label'     => 'Các Bộ Mẫu Câu Hỏi',
+            'type'      => 'select_multiple',
+            'name'      => 'templates',
+            'entity'    => 'templates',
+            'attribute' => 'name',
+            'model'     => 'App\Models\Template',
+        ]);
+
         CRUD::addButtonFromView('line', 'template_excel_user', 'template_excel_user', 'end');
         CRUD::addButtonFromView('line', 'import_excel_user', 'import_excel_user', 'end');
         CRUD::addButtonFromView('line', 'add_admin', 'add_admin', 'end');
@@ -163,6 +172,16 @@ class CompanyCrudController extends CrudController
             'name'      => 'filters',
             'entity'    => 'filters',
             'model'     => "App\Models\Filter",
+            'attribute' => 'name',
+            'select_all' => true,
+        ]);
+
+        CRUD::addField([
+            'label'     => "Các Bộ Mẫu Câu Hỏi",
+            'type'      => 'select2_multiple',
+            'name'      => 'templates',
+            'entity'    => 'templates',
+            'model'     => "App\Models\Template",
             'attribute' => 'name',
             'select_all' => true,
         ]);
