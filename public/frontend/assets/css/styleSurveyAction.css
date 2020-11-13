@@ -2458,7 +2458,7 @@ footer .fixCen .socialMedia a:hover {
 }
 
 #secondMenu .rightMenu .btnGroup #menuQuestion {
-  width: 186px;
+  width: 200px;
   top: 46px;
   right: -43px;
   -webkit-border-radius: 3px;
@@ -3845,6 +3845,48 @@ footer .fixCen .socialMedia a:hover {
   width: 100%;
   margin-top: 50px;
   text-align: justify;
+  color: #333333;
+}
+
+.contentBlock .articleResult table {
+  font-size: 14px;
+  width: 100%;
+}
+
+.contentBlock .articleResult table th, .contentBlock .articleResult table td {
+  border: thin solid #ffffff;
+}
+
+.contentBlock .articleResult table th {
+  text-align: center;
+  font-weight: 500;
+  height: 66px;
+}
+
+.contentBlock .articleResult table thead {
+  text-transform: uppercase;
+  text-align: center;
+  background: #c1ad79;
+  font-weight: bold;
+}
+
+.contentBlock .articleResult table tbody tr td {
+  height: 50px;
+  text-align: center;
+}
+
+.contentBlock .articleResult table tbody tr td:first-child {
+  padding-left: 10px;
+  text-align: left;
+  font-weight: bold;
+}
+
+.contentBlock .articleResult table tbody tr:nth-child(odd) {
+  background: #8ad9de;
+}
+
+.contentBlock .articleResult table tbody tr:nth-child(even) {
+  background: #39bfc7;
 }
 
 .topBlock {
@@ -4269,6 +4311,18 @@ footer .fixCen .socialMedia a:hover {
   font-size: 14px;
 }
 
+.tableListMember .bootstrap-select:after {
+  display: none;
+}
+
+#filerSelectSubmit {
+  float: right;
+  position: absolute;
+  bottom: 0;
+  right: 50%;
+  margin-right: -36px;
+}
+
 .pagination {
   margin-top: 40px;
   width: 100%;
@@ -4330,7 +4384,6 @@ footer .fixCen .socialMedia a:hover {
 }
 
 .bootstrap-select::after {
-  display: inline-block;
   margin-left: .255em;
   vertical-align: .255em;
   content: "";
@@ -4342,6 +4395,7 @@ footer .fixCen .socialMedia a:hover {
   top: 50%;
   left: 100px;
   z-index: 2;
+  display: none;
 }
 
 .selectGroup .bootstrap-select::after {
