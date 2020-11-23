@@ -294,20 +294,18 @@ class CompanyController extends Controller
 
             $survey = Survey::create($createData);
 
-            foreach ($template->questions as $index => $question) {
+            foreach ($template->questions as $question) {
 
-                $round = ($index < 6)? 1 : 2;
-                $order = ($index < 6)? $index+1 : $index - 5;
 
                 Question::create([
                     'survey_id' => $survey->id,
-                    'name' => $question->name,
-                    'option1' => $question->option1,
-                    'option2' => $question->option2,
-                    'option3' => $question->option3,
-                    'option4' => $question->option4,
-                    'order' => $order,
-                    'round' => $round,
+                    'name' => $question['name'],
+                    'option1' => $question['option1'],
+                    'option2' => $question['option2'],
+                    'option3' => $question['option3'],
+                    'option4' => $question['option4'],
+                    'order' => $question['order'],
+                    'round' => $question['round'],
                 ]);
             }
 
@@ -317,8 +315,7 @@ class CompanyController extends Controller
             return redirect(route('frontend.home'));
 
         } catch (\Exception $exception) {
-            Helpers::log($template);
-            Helpers::log($exception->getTraceAsString());
+            Helpers::log($exception->getMessage());
             DB::rollBack();
             $validator->getMessageBag()->add('name', 'Có lỗi xảy ra xin thử lại sau!');
             return redirect(route('frontend.campaign_create'))

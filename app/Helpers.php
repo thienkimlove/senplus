@@ -20,7 +20,6 @@ use App\Models\Explain;
 use App\Models\Filter;
 use App\Models\Question;
 use App\Models\Survey;
-use App\Models\Template;
 use Carbon\Carbon;
 use Illuminate\Mail\Transport\SesTransport;
 use Illuminate\Support\Facades\Mail;
@@ -69,20 +68,18 @@ class Helpers
     {
         $company = Helpers::getLoginCompany();
 
-        $templateId = null;
+        $template = null;
 
         foreach ($company->templates as $item) {
             if ($item->type == $data['template_type']) {
-                $templateId = $item->id;
+                $template = $item;
                 break;
             }
         }
 
-        if (!$templateId) {
+        if (!$template) {
             return null;
         }
-
-        $template = Template::find($templateId);
 
         if (!$template->questions) {
             return null;
