@@ -36,7 +36,13 @@
                     <input type="hidden" name="question_id" value="{{ $question->id }}">
                     <div class="box surveyContent">
                     <div class="content">
-                        <p>Thể hiện những đánh giá/cảm nhận của anh/chị về công ty tới thời điểm hiện tại</p>
+                        <p>
+                            @if ($question->round == 1)
+                                {{ $survey->round_1_desc }}
+                            @else
+                               {{ $survey->round_2_desc }}
+                            @endif
+                        </p>
                         <div class="ruleOne rule">
                             <h4 class="question"><span>Câu {{ $question->order }}</span>
                                 <div class="txt">{{ $question['name'] }}</div>

@@ -66,12 +66,9 @@
     <table border="1">
         <thead>
         <tr>
-            <th>SỰ PHÙ HỢP</th>
-
-            <th>Nhu cầu thay đổi tổng quan</th>
-
-            <th>Nhu cầu thay đổi về chiến lược</th>
-
+            <th>VĂN HÓA / THAY ĐỔI</th>
+            <th>Tổng quan</th>
+            <th>Chiến lược</th>
             <th>Chênh lệch</th>
         </tr>
         </thead>

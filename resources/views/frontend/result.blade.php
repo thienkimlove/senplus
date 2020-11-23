@@ -31,7 +31,9 @@
             <div class="fixCen">
 
                 <div class="box resultBox">
-                    <div class="txt">* Sử dụng bộ lọc dữ liệu để nhận kết quả đa chiều</div>
+                    @if (\App\Helpers::currentFrontendUserIsManager())
+                        <div class="txt">* Sử dụng bộ lọc dữ liệu để nhận kết quả đa chiều</div>
+                    @endif
                     <div class="tableAndChart">
                         <div class="leftSide">
                             <table class="tableResult">

@@ -64,31 +64,89 @@ class Helpers
         @file_put_contents(storage_path('logs/debug.log'), $message . "\n", FILE_APPEND);
     }
 
-    public static function mapCustomer()
+    public static function getTemplateForCurrentLogin($data)
+    {
+        $company = Helpers::getLoginCompany();
+
+        $template = null;
+
+        foreach ($company->templates as $item) {
+            if ($item->type == $data['template_type']) {
+                $template = $item;
+                break;
+            }
+        }
+
+        if (!$template) {
+            return null;
+        }
+
+        if (!$template->questions) {
+            return null;
+        }
+
+        return $template;
+    }
+
+    public static function mapTemplateQuestion()
     {
         return [
             0 => [
                 'name' => 'name',
-                'value' => 'Họ và Tên'
+                'value' => 'Câu Hỏi'
             ],
             1 => [
-                'name' => 'email',
-                'value' => 'Email'
+                'name' => 'round',
+                'value' => 'Vòng (1 hoặc 2)'
             ],
             2 => [
-                'name' => 'phone',
-                'value' => 'Phone'
+                'name' => 'order',
+                'value' => 'Thứ tự (1 đến 6)'
             ],
             3 => [
-                'name' => 'address',
-                'value' => 'Địa chỉ'
+                'name' => 'option1',
+                'value' => 'Lựa chọn 1'
             ],
             4 => [
-                'name' => 'password',
-                'value' => 'Mật khẩu'
+                'name' => 'option2',
+                'value' => 'Lựa chọn 2'
+            ],
+            5 => [
+                'name' => 'option3',
+                'value' => 'Lựa chọn 3'
+            ],
+            6 => [
+                'name' => 'option4',
+                'value' => 'Lựa chọn 4'
             ]
         ];
     }
+
+    public static function mapCustomer()
+{
+    return [
+        0 => [
+            'name' => 'name',
+            'value' => 'Họ và Tên'
+        ],
+        1 => [
+            'name' => 'email',
+            'value' => 'Email'
+        ],
+        2 => [
+            'name' => 'phone',
+            'value' => 'Phone'
+        ],
+        3 => [
+            'name' => 'address',
+            'value' => 'Địa chỉ'
+        ],
+        4 => [
+            'name' => 'password',
+            'value' => 'Mật khẩu'
+        ]
+    ];
+}
 
     public static function explainResult($result)
     {
@@ -356,10 +414,10 @@ class Helpers
     public static function mapOption()
     {
         return [
-            'option1' => 'Clan',
-            'option2' => 'Adhocracy',
-            'option3' => 'Market',
-            'option4' => 'Hierarchy',
+            'option1' => 'Đội nhóm',
+            'option2' => 'Tiên phong',
+            'option3' => 'Thị trường',
+            'option4' => 'Kiểm soát',
         ];
     }
 

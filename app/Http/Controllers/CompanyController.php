@@ -253,19 +253,10 @@ class CompanyController extends Controller
 
         // check if company have template or not.
 
-        $company = Helpers::getLoginCompany();
-
-        $template = null;
-
-        foreach ($company->templates as $item) {
-            if ($item->type == $data['template_type']) {
-                $template = $item;
-                break;
-            }
-        }
+        $template = Helpers::getTemplateForCurrentLogin($data);
 
         if (!$template)  {
-            $validator->getMessageBag()->add('template_type', 'Doanh nghiệp chưa có bộ câu hỏi mẫu nào thuộc loại khảo sát đã chọn!');
+            $validator->getMessageBag()->add('template_type', 'Doanh nghiệp chưa cấu hình bộ câu hỏi mẫu thuộc loại khảo sát đã chọn!');
             return redirect(route('frontend.campaign_create'))
                 ->withErrors($validator);
 
@@ -281,7 +272,7 @@ class CompanyController extends Controller
         ];
 
         $createData = [
-            'company_id' => $company->id
+            'company_id' => auth()->user()->company_id
         ];
 
         foreach ($update_fields as $field) {
@@ -297,9 +288,13 @@ class CompanyController extends Controller
         DB::beginTransaction();
 
         try {
+
+            $createData['round_1_desc'] = $template->round_1_desc;
+            $createData['round_2_desc'] = $template->round_2_desc;
+
             $survey = Survey::create($createData);
 
-            foreach (json_decode($template->questions) as $index => $question) {
+            foreach ($template->questions as $index => $question) {
 
                 $round = ($index < 6)? 1 : 2;
                 $order = ($index < 6)? $index+1 : $index - 5;

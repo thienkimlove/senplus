@@ -26,7 +26,9 @@ class Survey extends Model
         'start_time',
         'end_time',
         'link',
-        'desc'
+        'desc',
+        'round_1_desc',
+        'round_2_desc',
     ];
     // protected $hidden = [];
     // protected $dates = [];

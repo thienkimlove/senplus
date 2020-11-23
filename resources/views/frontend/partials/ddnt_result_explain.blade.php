@@ -66,9 +66,9 @@
     <table border="1">
         <thead>
         <tr>
-            <th>SỰ PHÙ HỢP</th>
-            <th>Nhu cầu thay đổi tổng quan</th>
-            <th>Nhu cầu thay đổi về môi trường làm việc</th>
+            <th>VĂN HÓA / THAY ĐỔI</th>
+            <th>Tổng quan</th>
+            <th>Môi trường làm việc</th>
             <th>Chênh lệch</th>
         </tr>
         </thead>

@@ -66,9 +66,9 @@
     <table border="1">
         <thead>
         <tr>
-            <th>SỰ PHÙ HỢP</th>
-            <th>Nhu cầu thay đổi tổng quan</th>
-            <th>Nhu cầu thay đổi về phong cách lãnh đạo</th>
+            <th>VĂN HÓA / THAY ĐỔI</th>
+            <th>Tổng quan</th>
+            <th>Phong cách lãnh đạo</th>
             <th>Chênh lệch</th>
         </tr>
         </thead>

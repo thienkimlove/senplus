@@ -77,6 +77,18 @@ class SurveyCrudController extends CrudController
             'label' => 'Thời gian kết thúc'
         ]);
 
+        CRUD::addColumn([
+            'name' => 'round_1_desc',
+            'label' => 'Mô tả vòng 1',
+            'type' => 'textarea'
+        ]);
+
+        CRUD::addColumn([
+            'name' => 'round_2_desc',
+            'label' => 'Mô tả vòng 2',
+            'type' => 'textarea'
+        ]);
+
         //CRUD::addButtonFromView('top', 'template_excel_question', 'template_excel_question', 'beginning');
         //CRUD::addButtonFromView('line', 'import_excel_question', 'import_excel_question', 'end');
         CRUD::addButtonFromView('line', 'clear_result', 'clear_result', 'end');
@@ -122,6 +134,18 @@ class SurveyCrudController extends CrudController
             'name' => 'end_time',
             'type' => 'datetime',
             'label' => 'Thời gian kết thúc'
+        ]);
+
+        CRUD::addField([
+            'name' => 'round_1_desc',
+            'label' => 'Mô tả vòng 1',
+            'type' => 'textarea'
+        ]);
+
+        CRUD::addField([
+            'name' => 'round_2_desc',
+            'label' => 'Mô tả vòng 2',
+            'type' => 'textarea'
         ]);
     }
 

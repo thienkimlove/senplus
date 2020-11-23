@@ -22,7 +22,9 @@ class Template extends Model
     protected $fillable = [
         'name',
         'type',
-        'questions'
+        'questions',
+        'round_1_desc',
+        'round_2_desc'
     ];
 
     public $casts = [

@@ -1,3 +1,3 @@
-<a  href="{{ url($crud->route.'/downloadExcelQuestion') }}" class="btn btn-xs btn-dropbox">
-    <i class="fa fa-balance-scale"></i>Tải mẫu câu hỏi
+<a  href="{{ url($crud->route.'/templateExcelQuestion') }}" class="btn btn-xs btn-pinterest">
+    <i class="fa fa-balance-scale"></i>Tải mẫu Excel Câu Hỏi
 </a>

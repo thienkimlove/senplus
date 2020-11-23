@@ -62,7 +62,9 @@
                 </div>
 
                 <div class="box resultBox">
-                    <div class="txt">* Sử dụng bộ lọc dữ liệu để nhận kết quả đa chiều</div>
+                    @if (\App\Helpers::currentFrontendUserIsManager())
+                        <div class="txt">* Sử dụng bộ lọc dữ liệu để nhận kết quả đa chiều</div>
+                    @endif
                     <div class="txt" id="customers"></div>
                     <div class="tableAndChart">
                         <div class="leftSide">

@@ -66,9 +66,9 @@
     <table border="1">
         <thead>
         <tr>
-            <th>SỰ PHÙ HỢP</th>
-            <th>Nhu cầu thay đổi tổng quan</th>
-            <th>Nhu cầu thay đổi về sự gắn kết</th>
+            <th>VĂN HÓA / THAY ĐỔI</th>
+            <th>Tổng quan</th>
+            <th>Sự gắn kết</th>
             <th>Chênh lệch</th>
         </tr>
         </thead>
