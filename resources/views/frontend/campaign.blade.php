@@ -41,7 +41,7 @@
                                 </td>
                                 <td>{{ $survey->start_time ? $survey->start_time->format('d/m/Y') : '' }}</td>
                                 <td>{{ $survey->end_time ? $survey->end_time->format('d/m/Y') : '' }}</td>
-                                <td>{{ \App\Helpers::getTotalAnswerForSurvey($survey) }}</td>
+                                <td>{{ \App\Helpers::getTotalUserJoin($survey) }}</td>
                                 <td class="red">
                                     <a href="{{ route('frontend.member') }}?is_not_complete={{$survey->id}}">
                                         {{ \App\Helpers::getTotalUserNotAnswer($survey) }}

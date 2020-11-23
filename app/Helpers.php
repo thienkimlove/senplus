@@ -706,6 +706,11 @@ class Helpers
         return count(self::getOnlyCompletedCustomers($survey));
     }
 
+    public static function getTotalUserJoin($survey)
+    {
+        return Customer::where('company_id', $survey->company_id)->count();
+    }
+
     public static function getTotalUserNotAnswer($survey)
     {
         $totalCompanyUser = Customer::where('company_id', $survey->company_id)->count();
