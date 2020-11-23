@@ -317,7 +317,7 @@ class CompanyController extends Controller
             return redirect(route('frontend.home'));
 
         } catch (\Exception $exception) {
-            Helpers::log($exception->getMessage());
+            Helpers::log($exception->getTraceAsString());
             DB::rollBack();
             $validator->getMessageBag()->add('name', 'Có lỗi xảy ra xin thử lại sau!');
             return redirect(route('frontend.campaign_create'))
