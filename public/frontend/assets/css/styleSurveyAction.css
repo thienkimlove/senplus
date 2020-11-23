@@ -2374,10 +2374,6 @@ footer .fixCen .socialMedia a:hover {
 #secondMenu {
   background: #ffffff;
   height: 55px;
-  border-bottom: thin solid #c5c5c5;
-  -webkit-box-shadow: 0 2px 5px #c5c5c5;
-     -moz-box-shadow: 0 2px 5px #c5c5c5;
-          box-shadow: 0 2px 5px #c5c5c5;
 }
 
 #secondMenu .fixCen {
@@ -3909,6 +3905,11 @@ footer .fixCen .socialMedia a:hover {
 
 .contentBlock .articleResult table tbody tr:nth-child(even) {
   background: #39bfc7;
+}
+
+.contentBlock .articleResult h4 {
+  color: #69cad3;
+  font-weight: bold;
 }
 
 .topBlock {

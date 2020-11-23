@@ -29,11 +29,11 @@
     </div>
 
     <div>
-        <b>Kết luận: Văn hóa của {{ $explain['company_name'] }} theo đánh giá của nhóm có đặc điểm như sau:</b>
+        <h4><b>Kết luận: <i style="color: #333333; font-style: normal;">Văn hóa của {{ $explain['company_name'] }} theo đánh giá của nhóm có đặc điểm như sau:</i></b></h4>
     </div>
 
     <div>
-        <h4>Xu hướng</h4>
+        <h5 style="color: #333333;font-weight: bold;font-size: 16px;">Xu hướng</h5>
     </div>
 
     <div>
@@ -45,7 +45,7 @@
     </div>
 
     <div>
-        <h4>Ưu Điểm</h4>
+        <h5 style="color: #333333;font-weight: bold;font-size: 16px;">Ưu Điểm</h5>
     </div>
 
     <div>
@@ -57,7 +57,7 @@
     </div>
 
     <div>
-        <h4>Nhược điểm</h4>
+        <h5 style="color: #333333;font-size: 16px;font-weight: bold;">Nhược điểm</h5>
     </div>
 
     <div>
