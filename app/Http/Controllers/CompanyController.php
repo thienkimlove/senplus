@@ -285,6 +285,7 @@ class CompanyController extends Controller
             }
         }
 
+
         DB::beginTransaction();
 
         try {
@@ -294,7 +295,7 @@ class CompanyController extends Controller
 
             $survey = Survey::create($createData);
 
-            foreach ($template->questions as $question) {
+            foreach (json_decode($template->questions, true) as $question) {
 
 
                 Question::create([
