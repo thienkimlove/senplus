@@ -68,7 +68,7 @@
                                     </div>
                                 </li>
 
-                                    @if (\App\Helpers::currentFrontendUserIsManager())
+                                    @if (\App\Helpers::currentFrontendUserIsDemo())
 
                                         <li>
                                             <div class="lstLeft">

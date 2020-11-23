@@ -469,6 +469,11 @@ class Helpers
         return auth()->user()->level == self::FRONTEND_ADMIN_LEVEL;
     }
 
+    public static function currentFrontendUserIsDemo()
+    {
+        return auth()->user()->id == 1;
+    }
+
     public static function getListManagerForCurrentUser()
     {
 
