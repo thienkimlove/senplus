@@ -29,6 +29,7 @@ class Survey extends Model
         'desc',
         'round_1_desc',
         'round_2_desc',
+        'template_type'
     ];
     // protected $hidden = [];
     // protected $dates = [];

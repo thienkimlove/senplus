@@ -64,9 +64,12 @@ class Helpers
         @file_put_contents(storage_path('logs/debug.log'), $message . "\n", FILE_APPEND);
     }
 
-    public static function getTemplateForCurrentLogin($data)
+    public static function getTemplateForCurrentLogin($data, $company = null)
     {
-        $company = Helpers::getLoginCompany();
+        if (!$company) {
+            $company = Helpers::getLoginCompany();
+        }
+
 
         $template = null;
 
@@ -86,6 +89,40 @@ class Helpers
         }
 
         return $template;
+    }
+
+    public static function adminAddTemplateQuestionWhenSurvey($content)
+    {
+        if ($content->questions->count() == 0) {
+
+            $template = self::getTemplateForCurrentLogin(['template_type' => $content->template_type], $content->company);
+
+
+            if ($template) {
+                try  {
+                    $questions = json_decode($template->questions, true);
+                } catch (\Exception $exception) {
+                    $questions = $template->questions;
+                }
+
+
+
+                foreach ($questions as $question) {
+
+                    Question::create([
+                        'survey_id' => $content->id,
+                        'name' => $question['name'],
+                        'option1' => $question['option1'],
+                        'option2' => $question['option2'],
+                        'option3' => $question['option3'],
+                        'option4' => $question['option4'],
+                        'order' => $question['order'],
+                        'round' => $question['round'],
+                    ]);
+                }
+
+            }
+        }
     }
 
     public static function mapTemplateQuestion()

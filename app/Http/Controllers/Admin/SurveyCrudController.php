@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Exports\QuestionExport;
+use App\Helpers;
 use App\Http\Requests\SurveyRequest;
 use App\Imports\QuestionImport;
 use App\Models\Answer;
 use App\Models\Company;
+use App\Models\Question;
 use App\Models\Survey;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -25,6 +27,7 @@ class SurveyCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { update as traitUpdate; }
 
 
     public function setup()
@@ -152,6 +155,19 @@ class SurveyCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    public function update()
+    {
+        // do something before validation, before save, before everything
+        $response = $this->traitUpdate();
+        // do something after save
+
+        $content = $this->data['entry'];
+
+        Helpers::adminAddTemplateQuestionWhenSurvey($content);
+
+        return $response;
     }
 
     protected function setupModerateRoutes($segment, $routeName, $controller)
