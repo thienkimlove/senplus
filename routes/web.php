@@ -54,6 +54,7 @@ Route::get('profile', 'CompanyController@profile')->name('frontend.profile');
 Route::post('profile', 'CompanyController@postProfile')->name('frontend.post_profile');
 // user data
 Route::get('member', 'CompanyController@member')->name('frontend.member');
+Route::get('ajax', 'CompanyController@ajax')->name('frontend.ajax');
 Route::get('member-create', 'CompanyController@memberCreate')->name('frontend.member_create');
 Route::post('member-create', 'CompanyController@postMemberCreate')->name('frontend.post_member_create');
 

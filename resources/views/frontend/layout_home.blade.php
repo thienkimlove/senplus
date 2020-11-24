@@ -18,6 +18,8 @@
         <link rel="stylesheet" type="text/css" href="/frontend/assets/css/styleHomeUser.css">
     @endif
 
+    @yield('after_styles')
+
 </head>
 <body class="">
 @include('frontend.partials.home_header')

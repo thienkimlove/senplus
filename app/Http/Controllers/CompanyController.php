@@ -410,6 +410,37 @@ class CompanyController extends Controller
             ->with(['section' => 'member', 'title' => 'Dữ liệu người dùng', 'isStyleSurvey' => true]);
     }
 
+    public function ajax(Request $request)
+    {
+        $q = mb_strtolower($request->input('q'));
+
+
+
+        $company = Helpers::getLoginCompany();
+
+        $customerEmails = Customer::where('company_id', $company->id)
+            ->where('status', true)
+            ->where(DB::raw("LOWER(email)"), 'LIKE BINARY', '%'.$q.'%')
+            ->pluck('email')
+            ->all();
+
+
+        $customerNames = Customer::where('company_id', $company->id)
+            ->where('status', true)
+            ->where(DB::raw('LOWER(name)'), 'LIKE BINARY', '%'.$q.'%')
+            ->pluck('name')
+            ->all();
+
+        if ($customerNames) {
+            foreach ($customerNames as $customerName) {
+                $customerEmails[] = $customerName;
+            }
+        }
+
+        return response()->json(['customers' => $customerEmails, 'q' => $q]);
+
+    }
+
     public function memberDetail(Request $request)
     {
         if (!auth()->check()) {
