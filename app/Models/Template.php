@@ -27,7 +27,7 @@ class Template extends Model
         'round_2_desc'
     ];
 
-    public $casts = [
+    protected $casts = [
         'questions' => 'array'
     ];
     // protected $hidden = [];

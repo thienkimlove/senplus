@@ -35,7 +35,7 @@ class TemplateImport implements ToCollection
         if ($questions) {
            try {
                Template::find($this->templateId)->update([
-                   'questions' => json_encode($questions)
+                   'questions' => $questions
                ]);
            } catch (\Exception $exception) {
 

@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Customer;
 use App\Models\Question;
 use App\Models\Template;
 use Illuminate\Console\Command;
@@ -35,29 +36,37 @@ class FixTemplate extends Command
 
     protected function createFirstTemplateQuestion()
     {
-        DB::table('templates')->truncate();
+        $templates = DB::table('templates')->get();
 
-        $questions = Question::where('survey_id', 5)
-            ->orderBy('round', 'asc')
-            ->orderBy('order', 'asc')
-            ->get();
+        foreach ($templates as $template) {
+            $question = $template->questions;
 
-        $questionJson = [];
-        foreach ($questions as $question) {
-            $questionJson[] = [
-                'name' => $question->name,
-                'option1' => $question->option1,
-                'option2' => $question->option2,
-                'option3' => $question->option3,
-                'option4' => $question->option4,
-            ];
+            if (gettype($question) == 'string') {
+                $question = json_decode($question, true);
+
+                Template::find($template->id)->update([
+                    'questions' => $question
+                ]);
+
+                $this->line('done with id='.$template->id);
+            }
         }
 
-        Template::create([
-            'name' => 'Bộ câu hỏi mẫu QuanDM',
-            'type' => 0,
-            'questions' => json_encode($questionJson, true)
-        ]);
+        $users = DB::table('customers')->get();
+
+        foreach ($users as $user) {
+            $option = $user->options;
+
+            if (gettype($option) == 'string') {
+                $option = json_decode($option, true);
+
+                Customer::find($user->id)->update([
+                    'options' => $option
+                ]);
+
+                $this->line('done with id='.$user->id);
+            }
+        }
     }
 
     /**
@@ -69,5 +78,8 @@ class FixTemplate extends Command
     {
         //return 0;
         // find company which not have
+        //$this->createFirstTemplateQuestion();
+
+        echo gettype(Customer::find(106)->options);
     }
 }

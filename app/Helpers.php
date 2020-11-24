@@ -610,11 +610,17 @@ class Helpers
             return null;
         }
 
-        foreach ($customer->options as $option) {
+        $customerOptions = is_array($customer->options)? $customer->options : json_decode($customer->options, true);
+
+        foreach ($customerOptions as $option) {
             if ($option['att_id'] == $filter->id) {
                 return $option['att_value'];
             }
         }
+
+        return null;
+
+
     }
 
     public static function getCustomerListByManager($survey)

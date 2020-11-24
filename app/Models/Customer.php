@@ -42,7 +42,7 @@ class Customer extends Authenticatable
 
     public $appends = ['display_level'];
 
-    public $casts = [
+    protected $casts = [
         'options' => 'array'
     ];
 

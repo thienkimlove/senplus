@@ -295,11 +295,9 @@ class CompanyController extends Controller
 
             $survey = Survey::create($createData);
 
-            try  {
-                $questions = json_decode($template->questions, true);
-            } catch (\Exception $exception) {
-                $questions = $template->questions;
-            }
+
+            $questions = is_array($template->questions)? $template->questions : json_decode($template->questions, true);
+
 
             foreach ($questions as $question) {
 

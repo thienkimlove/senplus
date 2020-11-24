@@ -72,7 +72,7 @@ class UserImport implements ToCollection
                    }
                    if ($jsonAttrs) {
                        $customer->update([
-                           'options' => json_encode($jsonAttrs, true)
+                           'options' => $jsonAttrs
                        ]);
                    }
                 }
