@@ -160,30 +160,34 @@ class Helpers
     }
 
     public static function mapCustomer()
-{
-    return [
-        0 => [
-            'name' => 'name',
-            'value' => 'Họ và Tên'
-        ],
-        1 => [
-            'name' => 'email',
-            'value' => 'Email'
-        ],
-        2 => [
-            'name' => 'phone',
-            'value' => 'Phone'
-        ],
-        3 => [
-            'name' => 'address',
-            'value' => 'Địa chỉ'
-        ],
-        4 => [
-            'name' => 'password',
-            'value' => 'Mật khẩu'
-        ]
-    ];
-}
+    {
+        return [
+            0 => [
+                'name' => 'name',
+                'value' => 'Họ và Tên'
+            ],
+            1 => [
+                'name' => 'email',
+                'value' => 'Email'
+            ],
+            2 => [
+                'name' => 'phone',
+                'value' => 'Phone'
+            ],
+            3 => [
+                'name' => 'address',
+                'value' => 'Địa chỉ'
+            ],
+            4 => [
+                'name' => 'password',
+                'value' => 'Mật khẩu'
+            ],
+            5 => [
+                'name' => 'gender',
+                'value' => 'Giới tính'
+            ]
+        ];
+    }
 
     public static function explainResult($result)
     {

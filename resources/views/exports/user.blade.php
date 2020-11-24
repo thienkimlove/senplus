@@ -13,10 +13,10 @@
     <tbody>
         <tr>
             @foreach (\App\Helpers::mapCustomer() as $index => $customer)
-                <th>N/A</th>
+                <th></th>
             @endforeach
             @foreach ($company->filters as $filter)
-                <td>Giá trị thuộc tính {{ $filter->name }}</td>
+                <td></td>
             @endforeach
         </tr>
     </tbody>
