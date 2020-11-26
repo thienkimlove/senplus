@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="content-language" content="vi"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=5"/>
+
+    <link rel="shortcut icon" href="./assets/img/favicon.png"/>
+    <link rel="icon" href="./assets/img/favicon.png" type="image/x-icon"/>
+    <link rel="shortcut icon" href="./assets/img/favicon.png" type="image/vnd.microsoft.icon"/>
+
+    <title data-react-helmet="true">Tìm kiếm tags</title>
+
+    <link rel="stylesheet" type="text/css" href="./assets/css/bootstrap.min2.css">
+
+    <!--CSS nhúng riêng cho trang này-->
+    <link rel="stylesheet" type="text/css" href="./assets/css/bootstrap-select.css">
+    <link rel="stylesheet" type="text/css" href="./assets/css/styleArticleDetail.css">
+</head>
+<body class="">
+
+    <header>
+    <div class="fixCen">
+        <h1 class="logo">
+            <a href="index.html" title="CAS" aria-label="CAS">
+                <img src="assets/img/logo-sm.png" alt="" class="imgFull">
+            </a>
+        </h1>
+        <nav id="topMenu">
+            <ul>
+                <li><a href="javascript:void(0)" title="Về chúng tôi" aria-label="About us">Về chúng tôi</a></li>
+                <li><a href="javascript:void(0)" title="Các sản phẩm" aria-label="Products">Các sản phẩm</a></li>
+                <li><a href="javascript:void(0)" title="Văn hóa doanh nghiệp" aria-label="Corporate Culture">Văn hóa doanh nghiệp</a></li>
+                <li><a href="javascript:void(0)" title="Blog" aria-label="Blog">Blog</a></li>
+            </ul>
+            <div class="userBlock">
+                <div class="avatar">
+                    <img src="assets/img/demo-logo1.jpg" alt="" class="imgFull">
+                </div>
+                <div class="userName">Linh Giang</div>
+            </div>
+        </nav>
+    </div>
+</header>
+    
+<div id="secondMenu">
+    <div class="fixCen">
+        <div class="leftSide leftMenu">
+            <a href="javascript:void(0)" id="btnShowMainMenu" title="Menu">
+                <img src="assets/img/btn-menu.png" alt="Menu" class="imgFull">
+            </a>
+            <nav class="tabs breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                <ul>
+                    <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="tim-kiem-tag.html" itemid="tim-kiem-tag.html" class="link" title="Tag" aria-label="Tag">
+                            <span itemprop="name">Tag/Search</span>
+                        </a>
+                    </li>
+                    <li class="active hasBgTag" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="blog.html" itemid="blog.html" class="link" title="Truyền thông nội bộ" aria-label="Truyền thông nội bộ">
+                            <span itemprop="name">Truyền thông nội bộ</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="rightSide rightMenu">
+    <form action="" class="formSearchTop">
+        <input type="text" id="searchInput" placeholder="Tìm kiếm">
+        <button id="btnSearchTop">
+            <img src="assets/img/i_search.jpg" alt="Menu" class="imgFull">
+        </button>
+    </form>
+    <div class="btnGroup">
+        <a href="javascript:void(0)" id="showMenuGuideMb" class="btn_question" title="Hướng dẫn" aria-label="Guiding">Hướng dẫn</a>
+        <a href="javascript:void(0)" id="showMenuGuide" class="btn_question" title="Hướng dẫn" aria-label="Guiding">Hướng dẫn</a>
+        <a href="javascript:void(0)" class="btn_more" title="Xem thêm" aria-label="View More">Xem thêm</a>
+        <ul id="menuQuestion">
+            <li><a href="javascript:void(0)" title="Trung tâm trợ giúp" aria-label="Support" class="btnHelpCenter">Trung tâm trợ giúp</a></li>
+            <li><a href="javascript:void(0)" title="Hướng dẫn khảo sát" aria-label="Survey Guiding" onclick="showPopupGuiding('#popupGuidings2')">Hướng dẫn khảo sát</a></li>
+        </ul>
+    </div>
+</div>
+
+    </div>
+</div>
+<main>
+    <div class="relatedNews relatedNews2 tagSearch">
+        <div class="fixCen2">
+            <div class="post">
+                <a href="bai-viet.html" class="imgThumb" title="" style="background: url('assets/img/demo-img2.jpg') center center no-repeat;"></a>
+                <a href="bai-viet.html" class="title" title="Xu hướng truyền thông">Xu hướng truyền thông nội bộ 2021</a>
+            </div>
+            <div class="post">
+                <a href="bai-viet.html" class="imgThumb" title="" style="background: url('assets/img/demo-img2.jpg') center center no-repeat;"></a>
+                <a href="bai-viet.html" class="title" title="Xu hướng truyền thông">Xu hướng truyền thông nội bộ 2021 Xu hướng truyền thông nội bộ 2021</a>
+            </div>
+            <div class="post">
+                <a href="bai-viet.html" class="imgThumb" title="" style="background: url('assets/img/demo-img2.jpg') center center no-repeat;"></a>
+                <a href="bai-viet.html" class="title" title="Xu hướng truyền thông">Xu hướng truyền thông nội bộ 2021</a>
+            </div>
+            <div class="post">
+                <a href="bai-viet.html" class="imgThumb" title="" style="background: url('assets/img/demo-img2.jpg') center center no-repeat;"></a>
+                <a href="bai-viet.html" class="title" title="Xu hướng truyền thông">Xu hướng truyền thông nội bộ 2021</a>
+            </div>
+            <div class="post">
+                <a href="bai-viet.html" class="imgThumb" title="" style="background: url('assets/img/demo-img2.jpg') center center no-repeat;"></a>
+                <a href="bai-viet.html" class="title" title="Xu hướng truyền thông">Xu hướng truyền thông nội bộ 2021 Xu hướng truyền thông nội bộ 2021</a>
+            </div>
+            <div class="post">
+                <a href="bai-viet.html" class="imgThumb" title="" style="background: url('assets/img/demo-img2.jpg') center center no-repeat;"></a>
+                <a href="bai-viet.html" class="title" title="Xu hướng truyền thông">Xu hướng truyền thông nội bộ 2021</a>
+            </div>
+            <div class="post">
+                <a href="bai-viet.html" class="imgThumb" title="" style="background: url('assets/img/demo-img2.jpg') center center no-repeat;"></a>
+                <a href="bai-viet.html" class="title" title="Xu hướng truyền thông">Xu hướng truyền thông nội bộ 2021</a>
+            </div>
+            <div class="post">
+                <a href="bai-viet.html" class="imgThumb" title="" style="background: url('assets/img/demo-img2.jpg') center center no-repeat;"></a>
+                <a href="bai-viet.html" class="title" title="Xu hướng truyền thông">Xu hướng truyền thông nội bộ 2021 Xu hướng truyền thông nội bộ 2021</a>
+            </div>
+            <div class="post">
+                <a href="bai-viet.html" class="imgThumb" title="" style="background: url('assets/img/demo-img2.jpg') center center no-repeat;"></a>
+                <a href="bai-viet.html" class="title" title="Xu hướng truyền thông">Xu hướng truyền thông nội bộ 2021</a>
+            </div>
+            <div class="post">
+                <a href="bai-viet.html" class="imgThumb" title="" style="background: url('assets/img/demo-img2.jpg') center center no-repeat;"></a>
+                <a href="bai-viet.html" class="title" title="Xu hướng truyền thông">Xu hướng truyền thông nội bộ 2021</a>
+            </div>
+            <div class="post">
+                <a href="bai-viet.html" class="imgThumb" title="" style="background: url('assets/img/demo-img2.jpg') center center no-repeat;"></a>
+                <a href="bai-viet.html" class="title" title="Xu hướng truyền thông">Xu hướng truyền thông nội bộ 2021 Xu hướng truyền thông nội bộ 2021</a>
+            </div>
+            <div class="post">
+                <a href="bai-viet.html" class="imgThumb" title="" style="background: url('assets/img/demo-img2.jpg') center center no-repeat;"></a>
+                <a href="bai-viet.html" class="title" title="Xu hướng truyền thông">Xu hướng truyền thông nội bộ 2021</a>
+            </div>
+            <div class="post">
+                <a href="bai-viet.html" class="imgThumb" title="" style="background: url('assets/img/demo-img2.jpg') center center no-repeat;"></a>
+                <a href="bai-viet.html" class="title" title="Xu hướng truyền thông">Xu hướng truyền thông nội bộ 2021</a>
+            </div>
+            <div class="post">
+                <a href="bai-viet.html" class="imgThumb" title="" style="background: url('assets/img/demo-img2.jpg') center center no-repeat;"></a>
+                <a href="bai-viet.html" class="title" title="Xu hướng truyền thông">Xu hướng truyền thông nội bộ 2021 Xu hướng truyền thông nội bộ 2021</a>
+            </div>
+            <div class="post">
+                <a href="bai-viet.html" class="imgThumb" title="" style="background: url('assets/img/demo-img2.jpg') center center no-repeat;"></a>
+                <a href="bai-viet.html" class="title" title="Xu hướng truyền thông">Xu hướng truyền thông nội bộ 2021</a>
+            </div>
+        </div>
+        <a href="javascript:void(0)" class="btnPlus" title="Xem thêm" aria-label="View more">
+            <img src="assets/img/i_plus.png" alt="" class="imgFull">
+        </a>
+    </div>
+</main>
+
+
+    <footer>
+    <div class="fixCen flex">
+        <div class="leftSide">
+            <h2 class="logoSm">
+                <a href="/" title="CAS"><img src="assets/img/logo-sm.png" alt="" class="imgFull"></a>
+            </h2>
+            <div class="txt">
+                <p>Địa chỉ  trụ sở chính, Hanoi, Vietnam</p>
+                <p>Tel: <a href="tel:0967573573" title="Tel" aria-label="Tel">0967 573 573</a>  | <a href="mailto:info@domain" title="Email" aria-label="Email">info@domain</a></p>
+            </div>
+        </div>
+        <div class="rightSide">
+            <div class="col">
+                <h3>CAS</h3>
+                <a href="javascript:void(0)" class="link" title="Giới thiệu" aria-label="Introduce">Giới thiệu</a>
+                <a href="javascript:void(0)" class="link" title="Hướng dẫn khảo sát" aria-label="Survey Guiding">Hướng dẫn khảo sát</a>
+                <a href="javascript:void(0)" class="link" title="Quy tắc tính điểm" aria-label="Scoring Rules">Quy tắc tính điểm</a>
+            </div>
+            <div class="col">
+                <a href="javascript:void(0)" class="link" title="Văn hoá doanh nghiệp" aria-label="Corporate Culture"><strong>Văn hoá doanh nghiệp</strong></a>
+                <a href="javascript:void(0)" class="link" title="Các sản phẩm" aria-label="Products"><strong>Các sản phẩm</strong></a>
+                <a href="javascript:void(0)" class="link" title="Blog" aria-label="Blog"><strong>Blog</strong></a>
+                <a href="javascript:void(0)" class="link" title="Về chúng tôi" aria-label="About Us"><strong>Về chúng tôi</strong></a>
+            </div>
+            <div class="col">
+                <h3>Kết nối với chúng tôi</h3>
+                <div class="socialMedia">
+                    <a href="javascript:void(0)" title="Facebook" aria-label="Facebook">
+                        <img src="assets/img/i_fb2.png" alt="" class="imgFull">
+                    </a>
+                    <a href="javascript:void(0)" title="Instagram" aria-label="Instagram">
+                        <img src="assets/img/i_insta.png" alt="" class="imgFull">
+                    </a>
+                    <a href="javascript:void(0)" title="LinkedIn" aria-label="LinkedIn">
+                        <img src="assets/img/i_in.png" alt="" class="imgFull">
+                    </a>
+                    <a href="javascript:void(0)" title="Youtube" aria-label="Youtube">
+                        <img src="assets/img/i_yt.png" alt="" class="imgFull">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+    <div class="popup px popupGuidings" id="popupGuidings">
+    <div class="popupContent pa">
+        <a href="home-user.html" class="closePopup pa" title="Đóng lại" aria-label="Close"><img src="assets/img/i_x.png" alt="" class="imgFull"></a>
+        <div class="content">
+            <h2>Trước khi bắt đầu</h2>
+            <div class="ruleOne rule">
+                <div class="num"><span>1</span>Quy tắc 2 vòng</div>
+                <div class="txt">
+                    <p>Chúng ta sẽ trải qua 2 vòng chấm điểm:</p>
+                    <p><strong>• Vòng 1:</strong> nhằm đánh giá và nhận diện văn hóa doanh nghiệp hiện tại.</p>
+                    <p><strong>• Vòng 2:</strong> giúp định hướng và lựa chọn văn hóa phù hợp cho tương lai.</p>
+                    <p>Mỗi vòng chấm điểm gồm <strong>6 câu hỏi</strong> nhằm khảo sát <strong>6 yếu tố</strong> nội tại của doanh nghiệp, đó là:</p>
+                    <p style="font-weight: bold;">• Đặc điểm nổi trội</p>
+                    <p style="font-weight: bold;">• Phong cách lãnh đạo</p>
+                    <p style="font-weight: bold;">• Quản lý nhân viên</p>
+                    <p style="font-weight: bold;">• Sự gắn kết</p>
+                    <p style="font-weight: bold;">• Chiến lược</p>
+                    <p style="font-weight: bold;">• Tiêu chí thành công</p>
+                </div>
+            </div>
+            <div class="ruleTwo rule">
+                <div class="num"><span>2</span>Quy tắc chấm điểm.</div>
+                <p><span class="left">• Tương ứng với mỗi câu hỏi, sẽ có 4 câu trả lời</span><span class="right"><input value="56" type="text" disabled></span></p>
+                <p><span class="left">• Bạn có quỹ 100 điểm để phân chia vào từng câu trả lời</span><span class="right"><input value="0" type="text" disabled></span></p>
+                <p><span class="left">• Hãy để số điểm cao nhất cho câu trả lời giống nhất với doanh nghiệp của bạn.</span><span class="right"><input value="34" type="text" disabled></span></p>
+                <p><span class="left">• Bạn có thể để số điểm thấp nhất cho câu trả lời không giống với doanh nghiệp của bạn</span><span class="right"><input value="10" type="text" disabled></span></p>
+                <p><span class="left">• Có thể cho điểm 0 nếu muốn</span></p>
+                <p><span class="right"><strong>Tổng điểm: </strong><input value="100" type="text" disabled></span></p>
+            </div>
+            <div class="getReady">
+                <div class="left"><span class="iconTick"><img src="assets/img/tick.png" alt="" class="imgFull"></span><span>và .. bạn đã sẵn sàng</span></div>
+                <a href="home-user.html" class="btn_Next" title="Tiếp theo"><img src="assets/img/i_next.png" alt="" class="imgFull"></a>
+            </div>
+        </div>
+        <div class="popupBot">
+            <a href="javascript:void(0)" class="btn-back" title="Quay lại" onclick="window.history.back()"><img src="assets/img/btn-back.png" alt="" class="imgFull"></a>
+            <div id="processing">
+                <span class="moc moc0"><i>Login</i></span>
+                <span class="moc moc1 active"><i>Hướng dẫn</i></span>
+                <span class="moc moc2"><i>Vòng 1</i></span>
+                <span class="moc moc3"><i>Vòng 2</i></span>
+                <span class="moc moc4"><i>Báo cáo</i></span>
+            </div>
+            <a href="home-user.html" class="btn-next" title="Tiếp tục"><img src="assets/img/btn-next.png" alt="" class="imgFull"></a>
+        </div>
+    </div>
+</div>
+<div class="popup px popupGuidings" id="popupGuidings2">
+    <div class="bg_drop pa"></div>
+    <div class="popupContent pa">
+        <a href="javascript:void(0)" class="closePopup pa" title="Đóng lại" aria-label="Close"><img src="assets/img/i_x.png" alt="" class="imgFull"></a>
+        <div class="content">
+            <h2>Trước khi bắt đầu</h2>
+            <div class="ruleOne rule">
+                <div class="num"><span>1</span>Quy tắc 2 vòng</div>
+                <div class="txt">
+                    <p>Chúng ta sẽ trải qua 2 vòng chấm điểm:</p>
+                    <p><strong>• Vòng 1:</strong> nhằm đánh giá và nhận diện văn hóa doanh nghiệp hiện tại.</p>
+                    <p><strong>• Vòng 2:</strong> giúp định hướng và lựa chọn văn hóa phù hợp cho tương lai.</p>
+                    <p>Mỗi vòng chấm điểm gồm <strong>6 câu hỏi</strong> nhằm khảo sát <strong>6 yếu tố</strong> nội tại của doanh nghiệp, đó là:</p>
+                    <p style="font-weight: bold;">• Đặc điểm nổi trội</p>
+                    <p style="font-weight: bold;">• Phong cách lãnh đạo</p>
+                    <p style="font-weight: bold;">• Quản lý nhân viên</p>
+                    <p style="font-weight: bold;">• Sự gắn kết</p>
+                    <p style="font-weight: bold;">• Chiến lược</p>
+                    <p style="font-weight: bold;">• Tiêu chí thành công</p>
+                </div>
+            </div>
+            <div class="ruleTwo rule">
+                <div class="num"><span>2</span>Quy tắc chấm điểm.</div>
+                <p><span class="left">• Tương ứng với mỗi câu hỏi, sẽ có 4 câu trả lời</span><span class="right"><input value="56" type="text" disabled></span></p>
+                <p><span class="left">• Bạn có quỹ 100 điểm để phân chia vào từng câu trả lời</span><span class="right"><input value="0" type="text" disabled></span></p>
+                <p><span class="left">• Hãy để số điểm cao nhất cho câu trả lời giống nhất với doanh nghiệp của bạn.</span><span class="right"><input value="34" type="text" disabled></span></p>
+                <p><span class="left">• Bạn có thể để số điểm thấp nhất cho câu trả lời không giống với doanh nghiệp của bạn</span><span class="right"><input value="10" type="text" disabled></span></p>
+                <p><span class="left">• Có thể cho điểm 0 nếu muốn</span></p>
+                <p><span class="right"><strong>Tổng điểm: </strong><input value="100" type="text" disabled></span></p>
+            </div>
+            <div class="getReady">
+                <div class="left"><span class="iconTick"><img src="assets/img/tick.png" alt="" class="imgFull"></span><span>và .. bạn đã sẵn sàng</span></div>
+                <a href="javascript:void(0)" class="btn_Next" title="Tiếp theo"><img src="assets/img/i_next.png" alt="" class="imgFull"></a>
+            </div>
+        </div>
+        <div class="popupBot">
+            <a href="javascript:void(0)" class="btn-back" title="Quay lại" onclick="window.history.back()"><img src="assets/img/btn-back.png" alt="" class="imgFull"></a>
+            <div id="processing">
+                <span class="moc moc0"><i>Login</i></span>
+                <span class="moc moc1 active"><i>Hướng dẫn</i></span>
+                <span class="moc moc2"><i>Vòng 1</i></span>
+                <span class="moc moc3"><i>Vòng 2</i></span>
+                <span class="moc moc4"><i>Báo cáo</i></span>
+            </div>
+            <a href="javascript:void(0)" class="btn-next" title="Tiếp tục"><img src="assets/img/btn-next.png" alt="" class="imgFull"></a>
+        </div>
+    </div>
+</div>
+<div id="popupProfile" class="px">
+    <div class="topInfo bdb">
+        <a href="javascript:void(0)" class="closePopup pa" title="Đóng" aria-label="Close"><img src="assets/img/i_x.png" alt="" class="imgFull"></a>
+        <div class="avatar">
+            <img src="assets/img/demo-logo1.jpg" alt="" class="imgFull">
+        </div>
+        <div class="userName">Phan Linh Giang</div>
+        <div class="email">email@xxx.com</div>
+    </div>
+    <a href="feedback.html" class="link bdb" title="Góp ý cải thiện sản phẩm" aria-label="Suggestions for product improvement">Góp ý cải thiện sản phẩm</a>
+    <a href="thong-tin-tai-khoan.html" class="link" title="Thông tin tài khoản" aria-label="Profile"><strong>Thông tin tài khoản</strong></a>
+    <a href="javascript:void(0)" class="btnLogout" title="Đăng xuất" aria-label="Logout">Đăng xuất</a>
+    <div class="bottomInfo bdt">
+        <a href="javascript:void(0)" class="link" title="Chính sách bảo mật" aria-label="Privacy policy">Chính sách bảo mật</a>
+        <a href="javascript:void(0)" class="link" title="Điều khoản sử dụng" aria-label="Terms of use">Điều khoản sử dụng</a>
+    </div>
+</div>
+<div id="popupCorporateCulture" class="px">
+    <a href="javascript:void(0)" class="closePopup pa" title="Đóng" aria-label="Close"><img src="assets/img/i_x.png" alt="" class="imgFull"></a>
+    <div class="logoSM bdb">
+        <img src="assets/img/logo-sm.png" alt="" class="imgFull">
+    </div>
+    <a href="javascript:void(0)" class="link hasBg" title="Hệ thống đánh giá văn hóa doanh nghiệp" aria-label="CAS"><strong>Hệ thống đánh giá văn hóa doanh nghiệp</strong></a>
+    <a href="javascript:void(0)" class="link bdt" title="Giới thiệu" aria-label="Introduce">Giới thiệu</a>
+    <a href="home-user.html" class="link bdt" title="Tên công ty" aria-label="Home page"><strong>Tên công ty (?)</strong></a>
+    <a href="ho-so-doanh-nghiep.html" class="link bdt" title="Hồ sơ doanh nghiêp" aria-label="Corporate Profile">Hồ sơ doanh nghiêp</a>
+    <a href="danh-sach-thanh-vien.html" class="link" title="Dữ liệu người dùng" aria-label="User Data">Dữ liệu người dùng</a>
+    <a href="danh-sach-chien-dich.html" class="link bdb" aria-label="Survey Campaign" title="Danh sách khảo sát">Danh sách khảo sát</a>
+    <a href="javascript:void(0)" class="link hasBg bdb showOnMb" title="Blog" aria-label="Blog">Blog</a>
+    <a href="javascript:void(0)" class="link hasBg bdb showOnMb" title="Các sản phẩm" aria-label="Products">Các sản phẩm</a>
+    <a href="javascript:void(0)" class="link hasBg bdb showOnMb" title="Về chúng tôi" aria-label="About us">Về chúng tôi</a>
+    <div class="bottomInfo">
+        <div class="txt">Đăng nhập để thực hiện khảo sát</div>
+        <a href="javascript:void(0)" class="btnLogin" title="Đăng nhập" aria-label="Login">Đăng nhập</a>
+    </div>
+</div>
+<div class="popup px popupNotify" id="popupDelSurvey">
+    <div class="bg_drop pa"></div>
+    <div class="popupContent pa box">
+        <a href="javascript:void(0)" class="closePopup pa" title="Đóng lại" aria-label="Close"><img src="assets/img/i_x.png" alt="" class="imgFull"></a>
+        <div class="notify">Dữ liệu chiến dịch không thể phục hồi sau khi xoá</div>
+        <div class="colorBlue fwb fz18px">Chắc chắn xoá chiến dịch? </div>
+        <div class="form-group">
+            <button type="button" class="skip myBtn">Bỏ qua</button>
+            <button type="button" class="myBtn btnDelete">Xóa</button>
+        </div>
+    </div>
+</div>
+<div class="popup px popupNotify" id="popupSuccess">
+    <div class="bg_drop pa"></div>
+    <div class="popupContent pa box">
+        <a href="javascript:void(0)" class="closePopup pa" title="Đóng lại" aria-label="Close"><img src="assets/img/i_x.png" alt="" class="imgFull"></a>
+        <div class="colorBlue fz18px">Chúc mừng bạn đã hoàn thành khảo sát </div>
+        <input id="linkCopy" type="text" value="http://senplus.bosana.vn/abcxyz">
+        <div class="form-group">
+            <button type="button" class="skip myBtn">Bỏ qua</button>
+            <button type="button" class="myBtn btnCopy" onclick="copyLink('#linkCopy')">Copy link</button>
+        </div>
+    </div>
+</div>
+<div id="popupHelpCenter" class="px">
+    <a href="javascript:void(0)" class="closePopup pa" title="Đóng" aria-label="Close"><img src="assets/img/i_x.png" alt="" class="imgFull"></a>
+    <div class="logoSM bdb">
+        <img src="assets/img/logo-sm.png" alt="" class="imgFull">
+    </div>
+    <div class="content">
+        <ul>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát Làm sao để thực hiện khảo sát ?</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát Làm sao để thực hiện khảo sát?</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát Làm sao để thực hiện khảo sát ?</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát Làm sao để thực hiện khảo sát?</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát Làm sao để thực hiện khảo sát ?</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát Làm sao để thực hiện khảo sát?</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát Làm sao để thực hiện khảo sát ?</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát Làm sao để thực hiện khảo sát?</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+            <li><a href="javascript:void(0)" class="link bdb" title="Làm sao để thực hiện khảo sát">Làm sao để thực hiện khảo sát</a></li>
+        </ul>
+    </div>
+</div>
+
+    <script src="./assets/js/jquery-2.2.4.min.js" type="text/javascript"></script>
+    <script src="./assets/js/bootstrap.bundle.min.js" type="text/javascript"></script>
+    <script src="./assets/js/bootstrap-select.min.js" type="text/javascript"></script>
+    <script src="./assets/js/page_all.js" type="text/javascript"></script>
+</body>
+</html>
