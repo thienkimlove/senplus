@@ -18,8 +18,11 @@ use App\Models\Company;
 use App\Models\Customer;
 use App\Models\Explain;
 use App\Models\Filter;
+use App\Models\Post;
 use App\Models\Question;
 use App\Models\Survey;
+use App\Models\Topic;
+use Backpack\Settings\app\Models\Setting;
 use Carbon\Carbon;
 use Illuminate\Mail\Transport\SesTransport;
 use Illuminate\Support\Facades\Mail;
@@ -32,9 +35,113 @@ class Helpers
     public const FRONTEND_MANAGER_LEVEL = 1;
     public const FRONTEND_USER_LEVEL = 0;
 
+    public const SETTINGS = [
+        [
+            'key'         => 'meta_index_title',
+            'name'        => 'Meta Index Title',
+            'description' => 'For SEO',
+            'value'       => 'casonline.vn',
+            'field'       => '{"name":"value","label":"Value","type":"text"}', //text, textarea
+            'active'      => 1,
+        ],
+        [
+            'key'         => 'meta_index_desc',
+            'name'        => 'Meta Index Description',
+            'description' => 'For SEO',
+            'value'       => 'casonline.vn',
+            'field'       => '{"name":"value","label":"Value","type":"textarea"}', //text, textarea
+            'active'      => 1,
+        ],
+        [
+            'key'         => 'meta_index_keywords',
+            'name'        => 'Meta Index Keywords',
+            'description' => 'For SEO',
+            'value'       => 'casonline.vn',
+            'field'       => '{"name":"value","label":"Value","type":"text"}', //text, textarea
+            'active'      => 1,
+        ],
+
+
+
+        [
+            'key'         => 'facebook_app_id',
+            'name'        => 'Facebook App ID',
+            'description' => 'For SEO',
+            'value'       => '',
+            'field'       => '{"name":"value","label":"Value","type":"text"}', //text, textarea
+            'active'      => 1,
+        ],
+        [
+            'key'         => 'website_name',
+            'name'        => 'Website Name',
+            'description' => 'For SEO',
+            'value'       => 'Hệ thống đánh giá văn hóa doanh nghiệp',
+            'field'       => '{"name":"value","label":"Value","type":"text"}', //text, textarea
+            'active'      => 1,
+        ],
+
+        [
+            'key'         => 'youtube_link',
+            'name'        => 'Youtube Link',
+            'description' => 'For SEO',
+            'value'       => '#',
+            'field'       => '{"name":"value","label":"Value","type":"text"}', //text, textarea
+            'active'      => 1,
+        ],
+        [
+            'key'         => 'google_link',
+            'name'        => 'Google Link',
+            'description' => 'For SEO',
+            'value'       => '#',
+            'field'       => '{"name":"value","label":"Value","type":"text"}', //text, textarea
+            'active'      => 1,
+        ],
+
+        [
+            'key'         => 'facebook_link',
+            'name'        => 'Facebook Link',
+            'description' => 'For SEO',
+            'value'       => '#',
+            'field'       => '{"name":"value","label":"Value","type":"text"}', //text, textarea
+            'active'      => 1,
+        ],
+        [
+            'key'         => 'analytics',
+            'name'        => 'Analytics Code',
+            'description' => 'For SEO',
+            'value'       => '',
+            'field'       => '{"name":"value","label":"Value","type":"textarea"}', //text, textarea
+            'active'      => 1,
+        ],
+        [
+            'key'         => 'webmaster',
+            'name'        => 'Webmaster Code',
+            'description' => 'For SEO',
+            'value'       => '',
+            'field'       => '{"name":"value","label":"Value","type":"textarea"}', //text, textarea
+            'active'      => 1,
+        ],
+
+        [
+            'key'         => 'endpage',
+            'name'        => 'End Page HTML',
+            'description' => 'For SEO',
+            'value'       => '',
+            'field'       => '{"name":"value","label":"Value","type":"textarea"}', //text, textarea
+            'active'      => 1,
+        ],
+
+
+    ];
+
     public const DEFAULT_COMPANY_NAME = "Khảo sát miễn phí";
 
     public const ARRAY_OPTIONS = ['option1', 'option2', 'option3', 'option4'];
+
+    public const YES_NO = [
+        1 => 'Kích hoạt',
+        0 => 'Không kích hoạt'
+    ];
 
     public const ARRAY_TYPES = [
         1 => 'ddnt',
@@ -52,6 +159,112 @@ class Helpers
 //        2 => 'Khảo sát nhận diện thương hiệu',
 //        3 => 'Đo lường hiệu quả',
     ];
+
+    public static function getImgType($image_path){
+
+        $extension  = array(IMAGETYPE_GIF => "gif",
+            IMAGETYPE_JPEG => "jpeg",
+            IMAGETYPE_PNG => "png",
+            IMAGETYPE_SWF => "swf",
+            IMAGETYPE_PSD => "psd",
+            IMAGETYPE_BMP => "bmp",
+            IMAGETYPE_TIFF_II => "tiff",
+            IMAGETYPE_TIFF_MM => "tiff",
+            IMAGETYPE_JPC => "jpc",
+            IMAGETYPE_JP2 => "jp2",
+            IMAGETYPE_JPX => "jpx",
+            IMAGETYPE_JB2 => "jb2",
+            IMAGETYPE_SWC => "swc",
+            IMAGETYPE_IFF => "iff",
+            IMAGETYPE_WBMP => "wbmp",
+            IMAGETYPE_XBM => "xbm",
+            IMAGETYPE_ICO => "ico");
+
+        return $extension[exif_imagetype($image_path)];
+    }
+
+    public static function configGet($key)
+    {
+        return Setting::get($key);
+    }
+
+    public static function getLatestPost()
+    {
+        return Post::where('status', true)->orderBy('created_at', 'DESC')->first();
+    }
+
+    public static function getPopularTopics($limit = 10)
+    {
+        return Topic::limit($limit)->get();
+    }
+
+    public static function getSameAuthorPosts($post, $limit=2)
+    {
+        return Post::where('author_id', $post->author->id)
+            ->where('status', true)
+            ->where('id', '!=', $post->id)
+            ->orderBy('created_at', 'desc')
+            ->limit($limit)
+            ->get();
+    }
+
+    public static function getPopularPosts($limit=8)
+    {
+        return Post::where('status', true)
+            ->orderBy('created_at', 'desc')
+            ->limit($limit)
+            ->get();
+    }
+
+    public static function getRelatedPosts($post, $limit=6)
+    {
+        $postMainTopicIds = $post->mainTopics->pluck('id')->all();
+
+        return Post::where('status', true)
+            ->whereHas('mainTopics', function($q) use ($postMainTopicIds){
+                $q->whereIn('id', $postMainTopicIds);
+            })
+            ->where('id', '!=', $post->id)
+            ->orderBy('created_at', 'desc')
+            ->limit($limit)
+            ->get();
+    }
+
+
+    public static function transformImageContent($post)
+    {
+        $content = $post->content;
+
+
+        $dom = new \DOMDocument();
+        $dom->loadHTML(mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'));
+        $dom->preserveWhiteSpace = false;
+        $images = $dom->getElementsByTagName('img');
+
+        foreach ($images as $image)
+        {
+            $imageUrl = $image->getAttribute('src');
+
+            if (strpos($imageUrl, 'casonline.vn') === false) {
+                // download image
+                $extension = self::getImgType($imageUrl);
+
+                $fileName = $post->id.'-'.uniqid().'.'.$extension;
+                $path =  public_path('uploads/'.$fileName);
+
+                $ok = @file_put_contents($path, file_get_contents($imageUrl));
+                if ($ok) {
+                    $image->setAttribute('src', '/uploads/'.$fileName);
+                }
+            }
+        }
+
+        return $dom->saveHTML();
+
+
+
+
+    }
 
 
     public static function log($msg)

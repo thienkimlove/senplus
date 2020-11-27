@@ -14,6 +14,8 @@
     <link rel="stylesheet" type="text/css" href="/frontend/assets/css/bootstrap-select.css">
     @if (isset($isStyleSurvey) && $isStyleSurvey)
         <link rel="stylesheet" type="text/css" href="/frontend/assets/css/styleSurveyAction.css">
+    @elseif (isset($isStyleBlog) && $isStyleBlog)
+        <link rel="stylesheet" type="text/css" href="/frontend/assets/css/styleArticleDetail.css">
     @else
         <link rel="stylesheet" type="text/css" href="/frontend/assets/css/styleHomeUser.css">
     @endif
@@ -22,12 +24,22 @@
 
 </head>
 <body class="">
+
 @include('frontend.partials.home_header')
-@include('frontend.partials.second_menu')
+
+@if (isset($isStyleBlog) && $isStyleBlog)
+    @include('frontend.partials.blog_second_menu')
+@else
+    @include('frontend.partials.second_menu')
+@endif
+
 @include('frontend.flash-message')
 @yield('content')
 @include('frontend.partials.home_footer')
-@include('frontend.partials.home_popup')
+@if (isset($isStyleBlog) && $isStyleBlog)
+@else
+    @include('frontend.partials.home_popup')
+@endif
 <script src="/frontend/assets/js/jquery-2.2.4.min.js" type="text/javascript"></script>
 <script src="/frontend/assets/js/bootstrap.min2.js" type="text/javascript"></script>
 <script src="/frontend/assets/js/moment.js" type="text/javascript"></script>
@@ -35,6 +47,7 @@
 <script src="/frontend/assets/js/bootstrap-select.min.js" type="text/javascript"></script>
 <script src="/frontend/assets/js/Chart.min.js"></script>
 <script src="/frontend/assets/js/page_all.js?v=2" type="text/javascript"></script>
+<script src="/frontend/assets/js/index.js?v=2" type="text/javascript"></script>
 @yield('after_scripts')
 </body>
 </html>

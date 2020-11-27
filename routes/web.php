@@ -88,3 +88,10 @@ Route::post('filter', 'FrontendController@filter')->name('frontend.filter');
 
 Route::get('remove-manager', 'FrontendController@removeManager')->name('frontend.remove_manager');
 Route::post('add-manager', 'FrontendController@addManager')->name('frontend.add_manager');
+
+
+Route::get('blog', 'PostController@blog')->name('frontend.blog');
+
+Route::get('chu-de/{value}', 'PostController@topic')->name('frontend.topic');
+Route::get('tim-kiem', 'PostController@search')->name('frontend.search');
+Route::get('{value}', 'PostController@main')->name('frontend.main');

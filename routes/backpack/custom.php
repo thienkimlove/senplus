@@ -33,4 +33,7 @@ Route::group([
     Route::crud('income', 'IncomeCrudController');
     Route::crud('fund', 'FundCrudController');
     Route::crud('template', 'TemplateCrudController');
+    Route::crud('author', 'AuthorCrudController');
+    Route::crud('topic', 'TopicCrudController');
+    Route::crud('post', 'PostCrudController');
 }); // this should be the absolute last line of this file

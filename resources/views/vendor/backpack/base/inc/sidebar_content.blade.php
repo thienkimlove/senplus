@@ -31,6 +31,21 @@
 @endif
 
 
+@if (backpack_user()->hasRole('admin') || backpack_user()->hasRole('editor'))
+    <li class='nav-item'>
+        <a class='nav-link' href='{{ backpack_url('author') }}'>
+            <i class='nav-icon la la-book'></i> Các Tác Giả
+        </a>
+    </li>
+    <li class='nav-item'>
+        <a class='nav-link' href='{{ backpack_url('topic') }}'><i class='nav-icon la la-tags'></i> Các Chủ Đề </a>
+    </li>
+    <li class='nav-item'>
+        <a class='nav-link' href='{{ backpack_url('post') }}'><i class='nav-icon la la-pencil'></i> Bài Viết </a>
+    </li>
+@endif
+
+
 @if (backpack_user()->hasRole('admin'))
 
 
