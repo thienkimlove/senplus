@@ -8,11 +8,11 @@ class PostObserve
 {
     public function created(Post $content)
     {
-        return $content->afterCreated();
+        return $content->transform();
     }
 
     public function updated(Post $content)
     {
-        return $content->afterCreated();
+        return $content->transform();
     }
 }

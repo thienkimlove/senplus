@@ -7,6 +7,7 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+use Illuminate\Support\Facades\DB;
 
 class Post extends Model
 {
@@ -53,10 +54,13 @@ class Post extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function afterCreated()
+    public function transform()
     {
         $content = Helpers::transformImageContent($this);
-        $this->update(['content' =>  $content]);
+
+        DB::table('posts')->update([
+            'content' =>  $content
+        ]);
     }
 
     /*
