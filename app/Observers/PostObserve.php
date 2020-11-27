@@ -8,6 +8,6 @@ class PostObserve
 {
     public function created(Post $content)
     {
-        return $this->afterCreated();
+        return $content->afterCreated();
     }
 }
