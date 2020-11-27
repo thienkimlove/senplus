@@ -241,6 +241,8 @@ class Helpers
         $dom->preserveWhiteSpace = false;
         $images = $dom->getElementsByTagName('img');
 
+        Helpers::log($images);
+
         foreach ($images as $image)
         {
             $imageUrl = $image->getAttribute('src');

@@ -61,6 +61,8 @@ class Post extends Model
         DB::table('posts')->update([
             'content' =>  $content
         ]);
+
+        Helpers::log($content);
     }
 
     /*
