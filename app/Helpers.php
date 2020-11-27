@@ -245,7 +245,7 @@ class Helpers
         {
             $imageUrl = $image->getAttribute('src');
 
-            if (strpos($imageUrl, 'casonline.vn') === false) {
+            if (strpos($imageUrl, 'http://') === true || strpos($imageUrl, 'http://') === true) {
                 // download image
                 $extension = self::getImgType($imageUrl);
 
