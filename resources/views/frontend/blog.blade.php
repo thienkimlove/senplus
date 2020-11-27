@@ -80,13 +80,18 @@
             @endif
         </div>
         <div class="relatedNews relatedNews2">
+            @if ($popularPosts = \App\Helpers::getPopularPosts())
             <div class="fixCen2">
-                <div class="post">
-                    <a href="bai-viet.html" class="imgThumb" title="" style="background: url('/frontend/assets/img/demo-img2.jpg') center center no-repeat;"></a>
-                    <div class="parentCategory">Truyền thông nội bộ</div>
-                    <a href="bai-viet.html" class="title" title="Xu hướng truyền thông">Xu hướng truyền thông nội bộ 2021</a>
-                </div>
+                @foreach ($popularPosts as $popularPost)
+                    <div class="post">
+                        <a href="{{ url($popularPost->slug.'.html') }}" class="imgThumb" title="" style="background: url({{ url($popularPost->square_image) }}) center center no-repeat #3aadbb;"></a>
+                        <a href="{{ url($popularPost->slug.'.html') }}" class="title" title="{{ $popularPost->name }}">
+                            {{ $popularPost->name }}
+                        </a>
+                    </div>
+                @endforeach
             </div>
+            @endforeach
             <a href="javascript:void(0)" class="btnPlus" title="Xem thêm" aria-label="View more">
                 <img src="/frontend/assets/img/i_plus.png" alt="" class="imgFull">
             </a>
