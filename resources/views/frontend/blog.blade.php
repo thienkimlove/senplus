@@ -91,7 +91,7 @@
                     </div>
                 @endforeach
             </div>
-            @endforeach
+            @endif
             <a href="javascript:void(0)" class="btnPlus" title="Xem thêm" aria-label="View more">
                 <img src="/frontend/assets/img/i_plus.png" alt="" class="imgFull">
             </a>
