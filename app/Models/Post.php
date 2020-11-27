@@ -62,7 +62,6 @@ class Post extends Model
             'content' =>  $content
         ]);
 
-        Helpers::log($content);
     }
 
     /*

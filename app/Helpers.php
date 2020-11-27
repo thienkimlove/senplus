@@ -230,6 +230,11 @@ class Helpers
             ->get();
     }
 
+    public static function contains($needle, $haystack)
+    {
+        return strpos($haystack, $needle) !== false;
+    }
+
 
     public static function transformImageContent($post)
     {
@@ -241,13 +246,11 @@ class Helpers
         $dom->preserveWhiteSpace = false;
         $images = $dom->getElementsByTagName('img');
 
-        Helpers::log($images);
 
         foreach ($images as $image)
         {
             $imageUrl = $image->getAttribute('src');
-
-            if (strpos($imageUrl, 'http://') === true || strpos($imageUrl, 'https://') === true) {
+            if (self::contains('http://', $imageUrl) || self::contains('https://', $imageUrl)) {
                 // download image
                 $extension = self::getImgType($imageUrl);
 
