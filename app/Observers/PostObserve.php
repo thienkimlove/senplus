@@ -11,7 +11,7 @@ class PostObserve
         return $content->afterCreated();
     }
 
-    public function updated(Post $content)
+    public function saved(Post $content)
     {
         return $content->afterCreated();
     }
