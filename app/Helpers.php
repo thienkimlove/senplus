@@ -245,7 +245,7 @@ class Helpers
         {
             $imageUrl = $image->getAttribute('src');
 
-            if (strpos($imageUrl, 'http://') === true || strpos($imageUrl, 'http://') === true) {
+            if (strpos($imageUrl, 'http://') === true || strpos($imageUrl, 'https://') === true) {
                 // download image
                 $extension = self::getImgType($imageUrl);
 
