@@ -43,7 +43,7 @@
                 @endforeach
 
                 <div class="card-footer">
-                    <input type="submit" class="btn btn-success" value="Upload">
+                    <input type="submit" class="btn btn-success" value="Tính toán lại">
                 </div><!-- /.card-footer-->
             </div><!-- /.card -->
             </form>
