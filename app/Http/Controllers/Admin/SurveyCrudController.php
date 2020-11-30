@@ -8,6 +8,7 @@ use App\Http\Requests\SurveyRequest;
 use App\Imports\QuestionImport;
 use App\Models\Answer;
 use App\Models\Company;
+use App\Models\Customer;
 use App\Models\Question;
 use App\Models\Survey;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
@@ -95,6 +96,7 @@ class SurveyCrudController extends CrudController
         //CRUD::addButtonFromView('top', 'template_excel_question', 'template_excel_question', 'beginning');
         //CRUD::addButtonFromView('line', 'import_excel_question', 'import_excel_question', 'end');
         CRUD::addButtonFromView('line', 'clear_result', 'clear_result', 'end');
+        CRUD::addButtonFromView('line', 'download_pdf', 'download_pdf', 'end');
 
         CRUD::addFilter(
             [
@@ -183,7 +185,65 @@ class SurveyCrudController extends CrudController
             'operation' => 'importExcelQuestion',
         ]);
 
+        \Route::get($segment.'/{id}/downloadPdf', [
+            'as'        => $routeName.'.downloadPdf',
+            'uses'      => $controller.'@downloadPdf',
+            'operation' => 'downloadPdf',
+        ]);
+        \Route::post($segment.'/{id}/downloadPdf', [
+            'as'        => $routeName.'.postDownloadPdf',
+            'uses'      => $controller.'@postDownloadPdf',
+            'operation' => 'postDownloadPdf',
+        ]);
+
     }
+
+    public function downloadPdf($id)
+    {
+        $this->crud->hasAccessOrFail('update');
+        $this->crud->setOperation('downloadPdf');
+
+        $content = Survey::find($id);
+
+        $customers = Customer::where('company_id', $content->company_id)
+            ->where('status', true)
+            ->pluck('id')
+            ->all();
+
+        // get the info for that entry
+        $this->data['entry'] = $this->crud->getEntry($id);
+        $this->data['crud'] = $this->crud;
+        $this->data['title'] = 'downloadPdf '.$this->crud->entity_name;
+        $this->data['filterCounts'] = Helpers::getRealWeightForSurvey($content, $customers);
+
+        return view('vendor.backpack.crud.download_pdf', $this->data);
+    }
+
+    public function postDownloadPdf($id, Request $request)
+    {
+
+        $content = Survey::find($id);
+
+        $this->crud->hasAccessOrFail('update');
+        $weighConfig = $request->all();
+
+        $customers = Customer::where('company_id', $content->company_id)
+            ->where('status', true)
+            ->pluck('id')
+            ->all();
+
+        $this->data['entry'] = $this->crud->getEntry($id);
+        $this->data['crud'] = $this->crud;
+        $this->data['title'] = 'downloadPdf '.$this->crud->entity_name;
+
+        $this->data['realResult'] = Helpers::getResultExplainForSurveyAll($content, $customers);
+        $this->data['modifyResult'] = Helpers::getResultExplainForSurveyAll($content, $customers, $weighConfig);
+        $this->data['weighConfig'] = $weighConfig;
+        $this->data['filterCounts'] = Helpers::getRealWeightForSurvey($content, $customers);
+
+        return view('vendor.backpack.crud.download_pdf_sample', $this->data);
+    }
+
 
     public function importExcelQuestion($id)
     {

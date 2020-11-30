@@ -558,7 +558,100 @@ class Helpers
         return round($explains['details'][$i]['result'][2][$option] - $explains['details'][$i]['result'][1][$option], 2) - round($explains['details'][7]['result'][2][$option] - $explains['details'][7]['result'][1][$option], 2);
     }
 
-    public static function getResultExplainForSurveyAll($survey, $customerIds)
+    public static function getRealWeightForSurvey($survey, $customerIds)
+    {
+        // only customer completed the survey can count.
+        $customerIds = self::getOnlyCompletedCustomers($survey, $customerIds);
+
+        //Số thành viên có thuộc tính tương đương/tổng số người hoàn thành khảo sát) * 100%
+
+        $filterLevel = $survey->company->filters->where('is_level', true)->first();
+
+        if (!$filterLevel) {
+            return [];
+        }
+
+        $customers = Customer::whereIn('id', $customerIds)->get();
+
+        if ($customers->count() == 0) {
+            return [];
+        }
+        $filterCounts = [];
+
+        foreach ($customers as $customer) {
+
+            $levelValue = str_replace(' ', '_', self::getCustomerFilterValue($customer, $filterLevel));
+
+            if (!isset($filterCounts[$levelValue])) {
+                $filterCounts[$levelValue] = [
+                    'percent' => 0,
+                    'count' => 0,
+                    'customerIds' => [],
+                    'realResult' => []
+                ];
+            }
+            $filterCounts[$levelValue]['count']++;
+            $filterCounts[$levelValue]['customerIds'][] = $customer->id;
+
+        }
+
+        if ($filterCounts) {
+            foreach (array_keys($filterCounts) as $value) {
+                $filterCounts[$value]['percent'] = round(($filterCounts[$value]['count']/$customers->count()), 2)*100;
+            }
+        }
+
+        return $filterCounts;
+
+    }
+
+    public static function getResultWeightForSurvey($survey, $customerIds, $i, $weighConfig)
+    {
+        $filterCounts = self::getRealWeightForSurvey($survey, $customerIds);
+
+        if (!$filterCounts) {
+            return self::getResultForSurvey($survey, $customerIds, $i);
+        }
+
+        foreach ($filterCounts as $value => $filterCount) {
+            // get result for each type
+            $filterCounts[$value]['realResult'] = self::getResultForSurvey($survey, $filterCount['customerIds'], $i);
+        }
+
+        $arAverage = [
+            1 => [
+                'option1' => 0,
+                'option2' => 0,
+                'option3' => 0,
+                'option4' => 0,
+            ],
+            2 => [
+                'option1' => 0,
+                'option2' => 0,
+                'option3' => 0,
+                'option4' => 0,
+            ]
+        ];
+
+
+
+        $arDetails = $arAverage;
+
+        foreach ($arAverage as $round => $options) {
+            foreach ($options as $option => $val) {
+                $arDetails[$round][$option] = 0;
+                foreach ($filterCounts as $value => $filterCount) {
+                    if (isset($filterCount['realResult'][$round][$option]) && isset($weighConfig[$value])) {
+                        $arDetails[$round][$option] += round($filterCount['realResult'][$round][$option]*$weighConfig[$value]/100, 2);
+                    }
+                }
+            }
+        }
+
+        return $arDetails;
+    }
+
+    public static function getResultExplainForSurveyAll($survey, $customerIds, $weighConfig = [])
     {
         // only customer completed the survey can count.
         $customerIds = self::getOnlyCompletedCustomers($survey, $customerIds);
@@ -577,7 +670,8 @@ class Helpers
         ];
 
         for ($i = 1; $i < 8; $i++) {
-            $result = self::getResultForSurvey($survey, $customerIds, $i);
+            $result = $weighConfig ? self::getResultWeightForSurvey($survey, $customerIds, $i, $weighConfig)
+                : self::getResultForSurvey($survey, $customerIds, $i);
             $explains['details'][$i] = self::explainResult($result);
         }
 
