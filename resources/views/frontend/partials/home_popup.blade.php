@@ -1,4 +1,4 @@
-<div class="popup px popupGuidings" id="popupGuidings">
+<div class="popup px popupGuidings" id="popupGuidings" style="display: none">
     <div class="bg_drop pa"></div>
     <div class="popupContent pa">
         <a href="javascript:void(0)" class="closePopup pa" title="Đóng lại" aria-label="Close">
