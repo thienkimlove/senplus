@@ -50,6 +50,11 @@ class FilterCrudController extends CrudController
         CRUD::column('is_level')
             ->type('boolean')
             ->label('Phân Cấp?');
+
+        CRUD::column('is_title')
+            ->type('boolean')
+            ->label('Cấp Bậc?');
+
         CRUD::addColumn([
             'name' => 'options',
             'label' => 'Các giá trị',
@@ -88,6 +93,11 @@ class FilterCrudController extends CrudController
             [
                 'name' => 'is_level',
                 'label' => 'Phân Cấp?',
+                'type' => 'boolean'
+            ],
+            [
+                'name' => 'is_title',
+                'label' => 'Cấp Bậc?',
                 'type' => 'boolean'
             ],
             [ // Table

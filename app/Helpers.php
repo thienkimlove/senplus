@@ -565,7 +565,7 @@ class Helpers
 
         //Số thành viên có thuộc tính tương đương/tổng số người hoàn thành khảo sát) * 100%
 
-        $filterLevel = $survey->company->filters->where('is_level', true)->first();
+        $filterLevel = $survey->company->filters->where('is_title', true)->first();
 
         if (!$filterLevel) {
             return [];

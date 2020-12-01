@@ -22,7 +22,8 @@ class Filter extends Model
     protected $fillable = [
         'name',
         'options',
-        'is_level'
+        'is_level',
+        'is_title'
     ];
     // protected $hidden = [];
     // protected $dates = [];
