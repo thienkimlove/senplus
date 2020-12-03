@@ -183,7 +183,7 @@ form {
 }
 
 @font-face {
-  font-family: "NotoSerif-Regular", sans-serif;
+  font-family: "NotoSerif-Regular";
   src: url("../../assets/font/NotoSerif-Regular.ttf");
 }
 

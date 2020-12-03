@@ -1691,6 +1691,7 @@ footer .fixCen .socialMedia a:hover {
   padding: 0 20px;
   height: 36px;
   line-height: 36px;
+  z-index: 2;
 }
 
 .myBtn:hover {
@@ -2374,10 +2375,6 @@ footer .fixCen .socialMedia a:hover {
 #secondMenu {
   background: #ffffff;
   height: 55px;
-  border-bottom: thin solid #c5c5c5;
-  -webkit-box-shadow: 0 2px 5px #c5c5c5;
-     -moz-box-shadow: 0 2px 5px #c5c5c5;
-          box-shadow: 0 2px 5px #c5c5c5;
 }
 
 #secondMenu .fixCen {
@@ -3349,6 +3346,12 @@ footer .fixCen .socialMedia a:hover {
   padding: 25px 0 10px;
   margin-bottom: 10px;
   position: relative;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
 }
 
 .articleDetail h1.title:after {
@@ -3502,6 +3505,12 @@ footer .fixCen .socialMedia a:hover {
   display: block;
   width: 152px;
   color: #000000;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
 }
 
 .colRight .popularList .post .title:hover {
@@ -3557,8 +3566,13 @@ footer .fixCen .socialMedia a:hover {
 }
 
 .topBlog .rightSide .title {
-  height: 82px;
+  height: 85px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
   overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
 }
 
 .topBlog .rightSide .title a {
@@ -3569,9 +3583,15 @@ footer .fixCen .socialMedia a:hover {
 
 .topBlog .rightSide .des {
   font-family: NotoSerif-Regular;
-  margin-top: 32px;
+  margin-top: 29px;
   font-size: 18px;
   text-align: justify;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
 }
 
 .topBlog .rightSide .author {
@@ -3713,6 +3733,12 @@ footer .fixCen .socialMedia a:hover {
   padding: 0 15px;
   display: block;
   line-height: 1.3;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
 }
 
 .relatedNews .post .title:hover {

@@ -836,6 +836,7 @@ footer .fixCen .socialMedia a:hover {
   padding: 0 20px;
   height: 36px;
   line-height: 36px;
+  z-index: 2;
 }
 
 .myBtn:hover {
@@ -1519,10 +1520,6 @@ footer .fixCen .socialMedia a:hover {
 #secondMenu {
   background: #ffffff;
   height: 55px;
-  border-bottom: thin solid #c5c5c5;
-  -webkit-box-shadow: 0 2px 5px #c5c5c5;
-     -moz-box-shadow: 0 2px 5px #c5c5c5;
-          box-shadow: 0 2px 5px #c5c5c5;
 }
 
 #secondMenu .fixCen {
