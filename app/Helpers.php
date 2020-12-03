@@ -225,11 +225,11 @@ class Helpers
 
     public static function getRelatedPosts($post, $limit=6)
     {
-        $postMainTopicIds = $post->mainTopics->pluck('id')->all();
+        $postTopicIds = $post->topics->pluck('id')->all();
 
         return Post::where('status', true)
-            ->whereHas('mainTopics', function($q) use ($postMainTopicIds){
-                $q->whereIn('id', $postMainTopicIds);
+            ->whereHas('topics', function($q) use ($postTopicIds){
+                $q->whereIn('id', $postTopicIds);
             })
             ->where('id', '!=', $post->id)
             ->orderBy('created_at', 'desc')

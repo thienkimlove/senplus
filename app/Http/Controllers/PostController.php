@@ -38,7 +38,7 @@ class PostController extends Controller
             $meta_keywords = "";
 
             $posts = Post::where('status', true)
-                ->whereHas('mainTopics', function ($q) use ($topic) {
+                ->whereHas('topics', function ($q) use ($topic) {
                     $q->where('id', $topic->id);
                 })
                 ->orderBy('updated_at', 'desc')
@@ -96,7 +96,7 @@ class PostController extends Controller
                 $meta['meta_title'] = $post->name;
                 $meta['meta_desc'] = $post->desc;
                 $meta['meta_keywords'] = ($post->tagList) ? implode(',', $post->tagList) : null;
-                $meta['meta_image'] = url($post->square_image);
+                $meta['meta_image'] = url($post->image);
                 $meta['meta_url'] = route('frontend.main', $post->slug.'.html');
 
                 return view('frontend.post', compact('post', 'page', 'isStyleBlog'))->with($meta);

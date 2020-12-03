@@ -45,7 +45,7 @@
             <div class="fixCen2">
                 @foreach ($posts as $post)
                 <div class="post">
-                    <a href="{{ url($post->slug.'.html') }}" class="imgThumb" title="" style="background: url({{ url($post->circle_image) }}) center center no-repeat;"></a>
+                    <a href="{{ url($post->slug.'.html') }}" class="imgThumb" title="" style="background: url({{ url($post->image) }}) center center no-repeat;"></a>
                     <a href="{{ url($post->slug.'.html') }}" class="title" title="{{ $post->name }}">
                         {{ $post->name }}
                     </a>

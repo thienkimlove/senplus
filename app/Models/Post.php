@@ -40,8 +40,7 @@ class Post extends Model
         'slug',
         'desc',
         'content',
-        'square_image',
-        'circle_image',
+        'image',
         'status',
         'author_id'
     ];
@@ -70,14 +69,9 @@ class Post extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function mainTopics()
+    public function topics()
     {
-        return $this->belongsToMany(Topic::class, 'main_topic_posts', 'post_id', 'topic_id');
-    }
-
-    public function otherTopics()
-    {
-        return $this->belongsToMany(Topic::class, 'other_topic_posts', 'post_id', 'topic_id');
+        return $this->belongsToMany(Topic::class);
     }
 
     public function author()
@@ -87,7 +81,7 @@ class Post extends Model
 
     public function getTagListAttribute()
     {
-        return $this->mainTopics()->pluck('name')->all();
+        return $this->topics()->pluck('name')->all();
     }
 
     /*

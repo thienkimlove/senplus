@@ -66,8 +66,7 @@ class PostCrudController extends CrudController
 
         CRUD::column('name')->label('Tiêu đề bài viết');
 
-        CRUD::addColumn(['name' => 'square_image', 'type' => 'image', 'label' => 'Ảnh Vuông']);
-        CRUD::addColumn(['name' => 'circle_image', 'type' => 'image', 'label' => 'Ảnh Tròn']);
+        CRUD::addColumn(['name' => 'image', 'type' => 'image', 'label' => 'Ảnh']);
 
         CRUD::addColumn([
             'name' => 'author_id',
@@ -79,23 +78,13 @@ class PostCrudController extends CrudController
         ]);
 
         CRUD::addColumn([
-            'label'     => 'Các chủ đề chính',
+            'label'     => 'Các chủ đề',
             'type'      => 'select_multiple',
-            'name'      => 'mainTopics',
-            'entity'    => 'mainTopics',
+            'name'      => 'topics',
+            'entity'    => 'topics',
             'attribute' => 'name',
             'model'     => 'App\Models\Topic'
         ]);
-
-        CRUD::addColumn([
-            'label'     => 'Các chủ đề phụ',
-            'type'      => 'select_multiple',
-            'name'      => 'otherTopics',
-            'entity'    => 'otherTopics',
-            'attribute' => 'name',
-            'model'     => 'App\Models\Topic'
-        ]);
-
 
         CRUD::addColumn([
             'name' => 'status',
@@ -114,9 +103,7 @@ class PostCrudController extends CrudController
             return Topic::pluck('name', 'id')->all();
         }, function ($value) { // if the filter is active
             CRUD::addClause('where', function($query) use ($value) {
-                $query->whereHas('mainTopics', function($q) use($value) {
-                    $q->where('id', $value);
-                })->orWhereHas('otherTopics', function($q) use($value) {
+                $query->whereHas('topics', function($q) use($value) {
                     $q->where('id', $value);
                 });
             });
@@ -162,8 +149,7 @@ class PostCrudController extends CrudController
                 ]
             ]
         );
-        CRUD::addField(['name' => 'square_image', 'type' => 'browse', 'label' => 'Ảnh Vuông']);
-        CRUD::addField(['name' => 'circle_image', 'type' => 'browse', 'label' => 'Ảnh Tròn']);
+        CRUD::addField(['name' => 'image', 'type' => 'browse', 'label' => 'Ảnh']);
 
         CRUD::addField([
             'name' => 'author_id',
@@ -179,22 +165,14 @@ class PostCrudController extends CrudController
 
 
         CRUD::addField([
-            'label'     => 'Các chủ đề chính',
+            'label'     => 'Các chủ đề',
             'type'      => 'select2_multiple',
-            'name'      => 'mainTopics',
-            'entity'    => 'mainTopics',
+            'name'      => 'topics',
+            'entity'    => 'topics',
             'attribute' => 'name',
             'model'     => 'App\Models\Topic'
         ]);
 
-        CRUD::addField([
-            'label'     => 'Các chủ đề phụ',
-            'type'      => 'select2_multiple',
-            'name'      => 'otherTopics',
-            'entity'    => 'otherTopics',
-            'attribute' => 'name',
-            'model'     => 'App\Models\Topic'
-        ]);
 
         CRUD::addField([
             'name' => 'status',

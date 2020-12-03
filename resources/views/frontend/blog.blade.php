@@ -43,8 +43,8 @@
         <div class="topBlog">
             @if ($latestPost = \App\Helpers::getLatestPost())
             <div class="fixCen2">
-                <a href="{{ url($latestPost->slug.'.html') }}" class="imgThumb" title="{{$latestPost->name}}" style="background: url({{ url($latestPost->square_image) }}) center top no-repeat;">
-                    <img src="{{ url($latestPost->square_image) }}" alt="" class="imgFull">
+                <a href="{{ url($latestPost->slug.'.html') }}" class="imgThumb" title="{{$latestPost->name}}" style="background: url({{ url($latestPost->image) }}) center top no-repeat;">
+                    <img src="{{ url($latestPost->image) }}" alt="" class="imgFull">
                 </a>
                 <div class="rightSide">
                     <h2 class="title">
@@ -57,10 +57,10 @@
                         <i>Tác giả:</i>  {{$latestPost->author->name }}
                     </div>
                     <div class="tagList">
-                        @foreach ($latestPost->mainTopics as $index => $latestPostTopic)
+                        @foreach ($latestPost->topics as $index => $latestPostTopic)
                             <a href="{{ url('chu-de/'.$latestPostTopic->slug) }}" title="{{ $latestPostTopic->name }}">
                                 {{ $latestPostTopic->name }}
-                            </a> {{ $index + 1 < $latestPost->mainTopics->count() ? '|' : '' }}
+                            </a> {{ $index + 1 < $latestPost->topics->count() ? '|' : '' }}
                         @endforeach
                     </div>
                 </div>
@@ -84,7 +84,7 @@
             <div class="fixCen2">
                 @foreach ($popularPosts as $popularPost)
                     <div class="post">
-                        <a href="{{ url($popularPost->slug.'.html') }}" class="imgThumb" title="" style="background: url({{ url($popularPost->square_image) }}) center center no-repeat #3aadbb;"></a>
+                        <a href="{{ url($popularPost->slug.'.html') }}" class="imgThumb" title="" style="background: url({{ url($popularPost->image) }}) center center no-repeat #3aadbb;"></a>
                         <a href="{{ url($popularPost->slug.'.html') }}" class="title" title="{{ $popularPost->name }}">
                             {{ $popularPost->name }}
                         </a>

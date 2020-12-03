@@ -48,10 +48,10 @@
                     {!! $post->content !!}
                 </article>
                 <div class="tagList">
-                    @foreach ($post->mainTopics as $index => $topic)
+                    @foreach ($post->topics as $index => $topic)
                         <a href="{{ url('chu-de/'.$topic->slug) }}" title="{{ $topic->name }}">
                             {{ $topic->name }}
-                        </a> {{ $index +1 < $post->mainTopics->count() ? '|' : '' }}
+                        </a> {{ $index +1 < $post->topics->count() ? '|' : '' }}
                     @endforeach
                 </div>
                 <div class="articleSameAuthority">
@@ -76,7 +76,7 @@
             <div class="colRight">
                 <h2 class="rightTitle">Tags</h2>
                 <div class="tagListRight">
-                    @foreach ($post->otherTopics as $otherTopic)
+                    @foreach ($post->topics as $otherTopic)
                         <a href="{{ url('chu-de/'.$otherTopic->slug) }}" title="{{ $otherTopic->name }}">{{ $otherTopic->name }}</a>
                     @endforeach
                 </div>
@@ -85,7 +85,7 @@
                 <div class="popularList">
                     @foreach ($popularPosts as $popularPost)
                     <div class="post">
-                        <a href="{{ url($popularPost->slug.'.html') }}" class="imgThumb" title="" style="background: url({{ url($popularPost->circle_image) }}) center center no-repeat #3aadbb;"></a>
+                        <a href="{{ url($popularPost->slug.'.html') }}" class="imgThumb" title="" style="background: url({{ url($popularPost->image) }}) center center no-repeat #3aadbb;"></a>
                         <a href="{{ url($popularPost->slug.'.html') }}" class="title" title="{{ $popularPost->name }}">
                             {{ $popularPost->name }}
                         </a>
@@ -100,8 +100,8 @@
             <div class="fixCen2">
                 @foreach ($relatedPosts as $relatedPost)
                 <div class="post">
-                    <a href="{{ url($relatedPost->slug.'.html') }}" class="imgThumb" title="" style="background: url({{ url($relatedPost->circle_image) }}) center center no-repeat;">
-                        <img src="{{ url($relatedPost->circle_image) }}" alt="" class="imgFull">
+                    <a href="{{ url($relatedPost->slug.'.html') }}" class="imgThumb" title="" style="background: url({{ url($relatedPost->image) }}) center center no-repeat;">
+                        <img src="{{ url($relatedPost->image) }}" alt="" class="imgFull">
                     </a>
                     <div class="parentCategory">{{ $relatedPost->author->name }}</div>
                     <a href="{{ url($relatedPost->slug.'.html') }}" class="title" title="{{ $relatedPost->name }}">
