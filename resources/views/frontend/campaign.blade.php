@@ -48,10 +48,18 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="javascript:void(0)"
-                                       class="btnDelete" title="Xóa"
-                                       onclick="showPopupNotifyWithParams({{ $survey->id }})">Xóa
-                                    </a>
+
+                                    @if (!\App\Helpers::isDemoCustomer())
+                                        <a href="javascript:void(0)"
+                                           class="btnDelete" title="Xóa"
+                                           onclick="showPopupNotifyWithParams({{ $survey->id }})">Xóa
+                                        </a>
+                                    @else
+                                        <a href="javascript:void(0)"
+                                           class="btnDelete" title="Xóa"
+                                           onclick="return false;">Xóa
+                                        </a>
+                                    @endif
                                 </td>
                                 <td>
                                     @if (\App\Helpers::checkIfSurveyHaveAnyResult($survey))

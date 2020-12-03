@@ -7,11 +7,14 @@
             @if ($isNotCompleteSurveyId)
                 <div class="fixCen hasBefore" id="filterMember">
                     <h2 class="title">Chưa hoàn thành khảo sát</h2>
-                    <button type="button" id="remindButton" class="myBtn btnSave">Nhắc nhở</button>
-                    <form id="remindForm" action="{{ route('frontend.post_member_remind') }}" method="POST">
-                        {{ csrf_field() }}
-                        <input type="hidden" name="survey_id"  value="{{ $isNotCompleteSurveyId }}">
-                    </form>
+
+                    @if (!\App\Helpers::isDemoCustomer())
+                        <button type="button" id="remindButton" class="myBtn btnSave">Nhắc nhở</button>
+                        <form id="remindForm" action="{{ route('frontend.post_member_remind') }}" method="POST">
+                            {{ csrf_field() }}
+                            <input type="hidden" name="survey_id"  value="{{ $isNotCompleteSurveyId }}">
+                        </form>
+                    @endif
                 </div>
 
             @else

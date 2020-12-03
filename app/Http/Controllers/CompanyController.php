@@ -105,6 +105,12 @@ class CompanyController extends Controller
         if (!Helpers::currentFrontendUserIsManager()) {
             return redirect(route('frontend.home'));
         }
+
+        if (Helpers::isDemoCustomer()) {
+            Helpers::setFlashMessage('Tài khoản Demo không có quyền thực hiện tác vụ này!');
+            return redirect(route('frontend.home'));
+        }
+
         $surveyId = $request->input('survey_id');
 
         if (!$surveyId) {
@@ -204,6 +210,11 @@ class CompanyController extends Controller
     public function postCampaignCreate(Request $request)
     {
         if (!Helpers::currentFrontendUserIsManager()) {
+            return redirect(route('frontend.home'));
+        }
+
+        if (Helpers::isDemoCustomer()) {
+            Helpers::setFlashMessage('Tài khoản Demo không có quyền thực hiện tác vụ này!');
             return redirect(route('frontend.home'));
         }
 
@@ -522,6 +533,12 @@ class CompanyController extends Controller
         if (!Helpers::currentFrontendUserIsManager()) {
             return redirect(route('frontend.home'));
         }
+
+        if (Helpers::isDemoCustomer()) {
+            Helpers::setFlashMessage('Tài khoản Demo không có quyền thực hiện tác vụ này!');
+            return redirect(route('frontend.home'));
+        }
+
         $customerId = $request->input('customer_id');
 
         if (!$customerId) {
@@ -624,7 +641,6 @@ class CompanyController extends Controller
             return redirect(route('frontend.home'));
         }
 
-
         $company = Helpers::getLoginCompany();
 
         return view('frontend.member_create', compact('company'))->with(['section' => 'member', 'title' => 'Tạo mới người dùng']);
@@ -634,6 +650,11 @@ class CompanyController extends Controller
     public function postMemberCreate(Request $request)
     {
         if (!Helpers::currentFrontendUserIsManager()) {
+            return redirect(route('frontend.home'));
+        }
+
+        if (Helpers::isDemoCustomer()) {
+            Helpers::setFlashMessage('Tài khoản Demo không có quyền thực hiện tác vụ này!');
             return redirect(route('frontend.home'));
         }
 
@@ -728,8 +749,16 @@ class CompanyController extends Controller
     public function postProfile(Request $request)
     {
         if (!Helpers::currentFrontendUserIsManager()) {
+            Helpers::setFlashMessage('Bạn không có quyền thực hiện tác vụ này!');
             return redirect(route('frontend.home'));
         }
+
+        if (Helpers::isDemoCustomer()) {
+            Helpers::setFlashMessage('Tài khoản Demo không có quyền thực hiện tác vụ này!');
+            return redirect(route('frontend.home'));
+        }
+
+
         $companyId = $request->input('company_id');
 
         if (!$companyId) {

@@ -35,6 +35,8 @@ class Helpers
     public const FRONTEND_MANAGER_LEVEL = 1;
     public const FRONTEND_USER_LEVEL = 0;
 
+    public const CAS_DEMO_USER = 'casdemo@casonline.vn';
+
     public const SETTINGS = [
         [
             'key'         => 'meta_index_title',
@@ -181,6 +183,11 @@ class Helpers
             IMAGETYPE_ICO => "ico");
 
         return $extension[exif_imagetype($image_path)];
+    }
+
+    public static function isDemoCustomer()
+    {
+        return (auth()->user()->email == self::CAS_DEMO_USER);
     }
 
     public static function configGet($key)
@@ -824,7 +831,7 @@ class Helpers
 
     public static function currentFrontendUserIsDemo()
     {
-        return auth()->user()->id == 1;
+        return auth()->user()->id == 1 || self::isDemoCustomer();
     }
 
     public static function getListManagerForCurrentUser()
