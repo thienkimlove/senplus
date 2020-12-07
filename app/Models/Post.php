@@ -57,7 +57,7 @@ class Post extends Model
     {
         $content = Helpers::transformImageContent($this);
 
-        DB::table('posts')->update([
+        DB::table('posts')->where('id', $this->id)->update([
             'content' =>  $content
         ]);
 
