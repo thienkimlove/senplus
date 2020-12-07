@@ -84,6 +84,7 @@ Route::get('back', 'FrontendController@back')->name('frontend.back');
 Route::get('result', 'FrontendController@result')->name('frontend.result');
 Route::get('general', 'FrontendController@general')->name('frontend.general');
 Route::post('filter', 'FrontendController@filter')->name('frontend.filter');
+Route::post('report', 'FrontendController@report')->name('frontend.report');
 
 
 Route::get('remove-manager', 'FrontendController@removeManager')->name('frontend.remove_manager');

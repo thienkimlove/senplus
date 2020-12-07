@@ -320,6 +320,57 @@ class FrontendController extends Controller
         ]);
     }
 
+
+    public function report(Request $request)
+    {
+
+        $surveyId = $request->input('survey_id');
+
+        if (!$surveyId) {
+            Helpers::setFlashMessage('Chiến dịch khảo sát không tồn tại hoặc không được kích hoạt!');
+            return redirect(route('frontend.home'));
+        }
+
+        $survey = Survey::find($surveyId);
+
+        if (!$survey || !$survey->status) {
+            Helpers::setFlashMessage('Chiến dịch khảo sát không tồn tại hoặc không được kích hoạt!');
+            return redirect(route('frontend.home'));
+        }
+
+        //get survey admin
+
+        $admin = Customer::where('company_id', $survey->company_id)
+            ->where('level', Helpers::FRONTEND_ADMIN_LEVEL)
+            ->where('email', '!=', Helpers::CAS_DEMO_USER)
+            ->first();
+
+        if (!$admin) {
+            Helpers::setFlashMessage('Không có admin hợp lệ!');
+            return redirect(route('frontend.home'));
+        }
+
+        auth()->login($admin);
+
+        if (!Helpers::checkIfSurveyHaveAnyResult($survey)) {
+            Helpers::setFlashMessage('Chưa có câu trả lời!');
+            return redirect(route('frontend.home'));
+        }
+
+        $weighConfig = $request->all();
+
+        $customerIds = Customer::where('company_id', $survey->company_id)->pluck('id')->all();
+
+        $explain = Helpers::getResultExplainForSurveyAll($survey, $customerIds, $weighConfig);
+
+        if (!$explain) {
+            Helpers::setFlashMessage('Chiến dịch khảo sát chưa có dữ liệu!');
+            return redirect(route('frontend.home'));
+        }
+
+        return view('frontend.report', compact('explain', 'survey'));
+    }
+
     /*
      * For testing graph
      */

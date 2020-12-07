@@ -27,7 +27,7 @@
 @section('content')
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <form method="POST" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('frontend.report') }}">
                 {{ csrf_field() }}
             <div class="card">
                 <div class="card-header">
@@ -43,7 +43,8 @@
                 @endforeach
 
                 <div class="card-footer">
-                    <input type="submit" class="btn btn-success" value="Tính toán lại">
+                    <input type="hidden" name="survey_id" value="{{ $entry->id }}">
+                    <input type="submit" class="btn btn-success" value="Báo Cáo">
                 </div><!-- /.card-footer-->
             </div><!-- /.card -->
             </form>
