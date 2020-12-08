@@ -512,7 +512,7 @@ class Helpers
         return $notCompletedIds;
     }
 
-    public static function getResultForSurvey($survey, $customerIds, $type)
+    public static function getResultForSurvey($survey, $customerIds, $type, $isRound = false)
     {
 
         $arDetails = [];
@@ -553,7 +553,7 @@ class Helpers
                     ->whereIn('customer_id', $customerIds)
                     ->avg($index);
 
-                $arDetails[$round][$index] = round($avgValue, 2);
+                $arDetails[$round][$index] = ($isRound)?  round($avgValue, 2) : $avgValue;
             }
         }
 
@@ -617,7 +617,7 @@ class Helpers
         $filterCounts = self::getRealWeightForSurvey($survey, $customerIds);
 
         if (!$filterCounts) {
-            return self::getResultForSurvey($survey, $customerIds, $i);
+            return self::getResultForSurvey($survey, $customerIds, $i, true);
         }
 
         foreach ($filterCounts as $value => $filterCount) {
@@ -649,9 +649,10 @@ class Helpers
                 $arDetails[$round][$option] = 0;
                 foreach ($filterCounts as $value => $filterCount) {
                     if (isset($filterCount['realResult'][$round][$option]) && isset($weighConfig[$value])) {
-                        $arDetails[$round][$option] += round($filterCount['realResult'][$round][$option]*$weighConfig[$value]/100, 2);
+                        $arDetails[$round][$option] += $filterCount['realResult'][$round][$option]*$weighConfig[$value]/100;
                     }
                 }
+                $arDetails[$round][$option] = round($arDetails[$round][$option], 2);
             }
         }
 
@@ -678,7 +679,7 @@ class Helpers
 
         for ($i = 1; $i < 8; $i++) {
             $result = $weighConfig ? self::getResultWeightForSurvey($survey, $customerIds, $i, $weighConfig)
-                : self::getResultForSurvey($survey, $customerIds, $i);
+                : self::getResultForSurvey($survey, $customerIds, $i, true);
             $explains['details'][$i] = self::explainResult($result);
         }
 
