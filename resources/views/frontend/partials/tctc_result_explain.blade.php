@@ -7,7 +7,7 @@
 </div>
 
 <div>
-    <b>{{ $explain['details'][6]['explainMax']->ten_van_hoa }}</b> được chấm điểm cao nhất ({{ $explain['details'][6]['maxValue'] }} điểm). Như vậy họ cho rằng:
+    <span class="red-text"><b>Loại hình {{ $explain['details'][6]['explainMax']->ten_van_hoa }}</b> được chấm điểm cao nhất ({{ $explain['details'][6]['maxValue'] }} điểm)</span>. Như vậy họ cho rằng:
 </div>
 
 <div>
@@ -19,12 +19,12 @@
 </div>
 
 <div>
-    Chênh lệch điểm số giữa hiện tại và mong muốn thể hiện nhu cầu thay đổi của nhóm đối tượng khảo sát.
+    Mức độ chênh lệch điểm số giữa hiện tại và mong muốn thể hiện nhu cầu thay đổi của nhóm đối tượng khảo sát.
 </div>
 
 @if ($explain['details'][6]['moreThan'])
     <div>
-        Có {{ count($explain['details'][6]['moreThan']) }} sự chênh lệch lớn hơn hoặc bằng 10, thể hiện nhu cầu thay đổi mạnh mẽ của họ đó là:
+        Có {{ count($explain['details'][6]['moreThan']) }} khoảng chênh lệch lớn hơn hoặc bằng 10, thể hiện nhu cầu thay đổi mạnh mẽ của họ đó là:
     </div>
     <div>
         <ul>
@@ -33,7 +33,7 @@
                     $tempValue = round($explain['details'][6]['result'][2][$option] - $explain['details'][6]['result'][1][$option], 2);
                 @endphp
 
-                <li>{{ ($tempValue > 0) ? 'Gia tăng' : 'Giảm bớt' }} tỉ trọng của {{ $explain['all']->where('option', $option)->first()->ten_van_hoa }} ({{ $tempValue }} điểm) tương ứng với tiêu chí {{ $explain['all']->where('option', $option)->first()->phong_cach_lanh_dao }}</li>
+                <li><span class="red-text">{{ ($tempValue > 0) ? 'Gia tăng' : 'Giảm bớt' }} tỉ trọng của {{ $explain['all']->where('option', $option)->first()->ten_van_hoa }} ({{ $tempValue }} điểm)</span></li>
             @endforeach
         </ul>
     </div>
@@ -42,7 +42,7 @@
 
 @if ($explain['details'][6]['lessThan'])
     <div>
-        Có {{ count($explain['details'][6]['lessThan']) }} sự chênh lệch nhỏ hơn 10 và lớn hơn hoặc bằng 5, thể hiện nhu cầu thay đổi cần lưu ý của họ đó là:
+        Có {{ count($explain['details'][6]['lessThan']) }} khoảng chênh lệch nhỏ hơn 10 và lớn hơn hoặc bằng 5, thể hiện nhu cầu thay đổi cần lưu ý của họ đó là:
     </div>
     <div>
         <ul>
@@ -51,7 +51,7 @@
                     $tempValue = round($explain['details'][6]['result'][2][$option] - $explain['details'][6]['result'][1][$option], 2);
                 @endphp
 
-                <li>{{ ($tempValue > 0) ? 'Gia tăng' : 'Giảm bớt' }} tỉ trọng của {{ $explain['all']->where('option', $option)->first()->ten_van_hoa }} ({{ $tempValue }} điểm) tương ứng với tiêu chí {{ $explain['all']->where('option', $option)->first()->phong_cach_lanh_dao }}</li>
+                <li><span class="red-text">{{ ($tempValue > 0) ? 'Gia tăng' : 'Giảm bớt' }} tỉ trọng của {{ $explain['all']->where('option', $option)->first()->ten_van_hoa }} ({{ $tempValue }} điểm)</span></li>
             @endforeach
         </ul>
     </div>
@@ -89,7 +89,7 @@
 </div>
 
 <div>
-    Theo đánh giá của nhóm thì tiêu chí thành công hiện tại {{ \App\Helpers::getMatchName($explain['extends'][6]['percentMatch']) }} ({{$explain['extends'][6]['percentMatch']}}%)
+    Theo đánh giá của nhóm thì <span class="red-text">tiêu chí thành công trong thời gian qua là {{ \App\Helpers::getMatchName($explain['extends'][6]['percentMatch']) }} ({{$explain['extends'][6]['percentMatch']}}%)</span>
 
     @if (count($explain['extends'][6]['bigThan']) == 0) do cả 4 giá trị cột chênh lệch đều < 5. @endif
 
