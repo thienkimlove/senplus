@@ -198,6 +198,13 @@ class SurveyCrudController extends CrudController
 
     }
 
+    public function downloadPdfTest($id)
+    {
+        exec("chromehtml2pdf --out /var/www/html/senplus/uploads/test.pdf --landscape=1 --executablePath=/usr/bin/chromium-browser ".url('uploads/page.html'));
+
+        return redirect(url('uploads/test.pdf'));
+    }
+
     public function downloadPdf($id)
     {
         $this->crud->hasAccessOrFail('update');

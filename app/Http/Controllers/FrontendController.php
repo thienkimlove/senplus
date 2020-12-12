@@ -11,6 +11,7 @@ use App\Models\Question;
 use App\Models\Survey;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Ramsey\Uuid\Uuid;
 
 class FrontendController extends Controller
 {
@@ -368,7 +369,12 @@ class FrontendController extends Controller
             return redirect(route('frontend.home'));
         }
 
-        return view('frontend.report', compact('explain', 'survey'));
+        $html = view('frontend.report', compact('explain', 'survey'))->render();
+
+
+        file_put_contents(public_path('uploads/page.html'), $html);
+
+        return "doke";
     }
 
     /*

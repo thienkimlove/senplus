@@ -37,18 +37,7 @@
             </th>
         </tr>
         </thead>
-        <tfoot class="report-footer">
-        <tr>
-            <td class="report-footer-cell">
-                <div class="bottomOfPage flex-end">
-                    <div class="left">© 2020 CASONLINE.VN</div>
-                    <div class="logo-bottom">
-                        <img src="/frontend/assets/img/logo-sm.png" alt="" class="imgFull">
-                    </div>
-                </div>
-            </td>
-        </tr>
-        </tfoot>
+
         <tbody class="report-content">
         <tr>
             <td class="report-content-cell">
@@ -82,7 +71,7 @@
                             </div>
                         </div>
                     </div>
-                    @foreach ([7, 6, 5, 4, 3, 2, 1] as $resultType)
+                    @foreach (array_keys(\App\Helpers::ARRAY_TYPES) as $resultType)
                         <div class="article">
                             <div class="contentPage">
                                 <h2 class="turnName ttUpper">Báo cáo {{\App\Helpers::mapOrder()[$resultType]}}</h2>
@@ -124,6 +113,19 @@
             </td>
         </tr>
         </tbody>
+
+        <tfoot class="report-footer">
+        <tr>
+            <td class="report-footer-cell">
+                <div class="bottomOfPage flex-end">
+                    <div class="left">© 2020 CASONLINE.VN</div>
+                    <div class="logo-bottom">
+                        <img src="/frontend/assets/img/logo-sm.png" alt="" class="imgFull">
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tfoot>
     </table>
 </main>
 
@@ -136,6 +138,7 @@
 <script src="/frontend/assets/js/Chart.min.js"></script>
 <script src="/frontend/assets/js/page_all.js?v=2" type="text/javascript"></script>
 <script src="/frontend/assets/js/index.js?v=2" type="text/javascript"></script>
+<script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
 <script>
     $(function(){
         let mapOption = JSON.parse(' @json(\App\Helpers::mapOption()) ');
@@ -146,4 +149,5 @@
     });
 </script>
 </body>
+
 </html>
