@@ -187,7 +187,7 @@ class SurveyCrudController extends CrudController
 
         \Route::get($segment.'/{id}/downloadPdf', [
             'as'        => $routeName.'.downloadPdf',
-            'uses'      => $controller.'@downloadPdf',
+            'uses'      => $controller.'@downloadPdfTest',
             'operation' => 'downloadPdf',
         ]);
         \Route::post($segment.'/{id}/downloadPdf', [
