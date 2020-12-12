@@ -65,6 +65,7 @@ class PostCrudController extends CrudController
          */
 
         CRUD::column('name')->label('Tiêu đề bài viết');
+        CRUD::column('views')->label('Lượt xem')->type('number');
 
         CRUD::addColumn(['name' => 'image', 'type' => 'image', 'label' => 'Ảnh']);
 

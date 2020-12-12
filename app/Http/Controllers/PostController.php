@@ -93,6 +93,7 @@ class PostController extends Controller
             $post = Post::findBySlug($matches[1]);
 
             if ($post) {
+                $post->update(['views' => (int) $post->views + 1]);
                 $meta['meta_title'] = $post->name;
                 $meta['meta_desc'] = $post->desc;
                 $meta['meta_keywords'] = ($post->tagList) ? implode(',', $post->tagList) : null;

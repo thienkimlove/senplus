@@ -12,6 +12,8 @@
     <link rel="stylesheet" type="text/css" href="/frontend/assets/css/bootstrap.min2.css">
     <link rel="stylesheet" type="text/css" href="/frontend/assets/css/styleIndex.css">
 
+    @yield('after_head')
+
 </head>
 <body class="">
 @include('frontend.flash-message')

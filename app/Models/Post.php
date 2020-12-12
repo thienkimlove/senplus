@@ -42,7 +42,8 @@ class Post extends Model
         'content',
         'image',
         'status',
-        'author_id'
+        'author_id',
+        'views'
     ];
     // protected $hidden = [];
     // protected $dates = [];

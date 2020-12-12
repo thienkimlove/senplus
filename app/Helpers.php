@@ -205,8 +205,16 @@ class Helpers
         return Topic::limit($limit)->get();
     }
 
+    public static function getAllTopics()
+    {
+        return Topic::all();
+    }
+
     public static function getSameAuthorPosts($post, $limit=2)
     {
+        if (!$post->author) {
+            return null;
+        }
         return Post::where('author_id', $post->author->id)
             ->where('status', true)
             ->where('id', '!=', $post->id)
@@ -273,9 +281,15 @@ class Helpers
 
         return $dom->saveHTML();
 
+    }
 
+    public static function getMainTopicPost($post)
+    {
+        if ($post->topics->count() > 0) {
+            return $post->topics->first()->name;
+        }
 
-
+        return null;
     }
 
 
@@ -1227,4 +1241,6 @@ class Helpers
         }
         return $text;
     }
+
+
 }
