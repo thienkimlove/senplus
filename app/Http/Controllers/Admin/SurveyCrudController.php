@@ -200,7 +200,7 @@ class SurveyCrudController extends CrudController
 
     public function downloadPdfTest($id)
     {
-        exec("chromehtml2pdf --out /var/www/html/senplus/uploads/test.pdf --landscape=1 --executablePath=/usr/bin/chromium-browser ".url('uploads/page.html'));
+        exec("chromehtml2pdf --out /var/www/html/senplus/public/uploads/test.pdf --landscape=1 --executablePath=/usr/bin/chromium-browser https://casonline.vn/uploads/page.html");
 
         return redirect(url('uploads/test.pdf'));
     }
