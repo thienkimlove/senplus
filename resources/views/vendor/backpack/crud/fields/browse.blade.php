@@ -4,11 +4,14 @@
 
     <label>{!! $field['label'] !!}</label>
     @include('crud::fields.inc.translatable_icon')
+
+    @if (isset($field['value']))
 	<div class="row">
 		<div class="col-sm-6" style="margin-bottom: 20px;">
 			<img data-handle="mainImage" src="{{ url($field['value']) }}" height="100" width="auto">
 		</div>
 	</div>
+	@endif
     <div class="controls">
 	    <div class="input-group">
 			<input
