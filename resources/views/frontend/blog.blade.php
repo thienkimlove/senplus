@@ -52,6 +52,7 @@
             @if ($popularPosts = \App\Helpers::getPopularPosts())
             <div class="fixCen2">
                 @foreach ($popularPosts as $popularPost)
+                    @if ($popularPost->id != $latestPost->id)
                     <div class="post">
                         <a href="{{ url($popularPost->slug.'.html') }}" class="imgThumb" title="" style="background: url({{ url($popularPost->image) }}) center center no-repeat #3aadbb;"></a>
                         <div class="parentCategory">{{ \App\Helpers::getMainTopicPost($popularPost) }}</div>
@@ -59,6 +60,7 @@
                             {{ $popularPost->name }}
                         </a>
                     </div>
+                    @endif
                 @endforeach
             </div>
             @endif
