@@ -47,7 +47,7 @@
             <div class="colRight">
                 <h2 class="rightTitle">Tags</h2>
                 <div class="tagListRight">
-                    @foreach ($post->topics as $otherTopic)
+                    @foreach (\App\Helpers::getAllTopics() as $otherTopic)
                         <a href="{{ url('chu-de/'.$otherTopic->slug) }}" title="{{ $otherTopic->name }}">{{ $otherTopic->name }}</a>
                     @endforeach
                 </div>
