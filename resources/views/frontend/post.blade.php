@@ -56,7 +56,7 @@
                 <div class="popularList">
                     @foreach ($popularPosts as $popularPost)
                     <div class="post">
-                        <a href="{{ url($popularPost->slug.'.html') }}" class="imgThumb" title="" style="background: url({{ url($popularPost->anh2) }}) center center no-repeat #3aadbb;"></a>
+                        <a href="{{ url($popularPost->slug.'.html') }}" class="imgThumb" title="" style="background: url({{ $popularPost->anh2 ? url($popularPost->anh2) : url($popularPost->image) }}) center center no-repeat #3aadbb;"></a>
                         <a href="{{ url($popularPost->slug.'.html') }}" class="title" title="{{ $popularPost->name }}">
                             {{ $popularPost->name }}
                         </a>
