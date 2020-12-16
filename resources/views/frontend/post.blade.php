@@ -52,7 +52,7 @@
                     @endforeach
                 </div>
                 <h2 class="rightTitle">Popular</h2>
-                @if ($popularPosts = \App\Helpers::getPopularPosts())
+                @if ($popularPosts = \App\Helpers::getPopularPosts(5))
                 <div class="popularList">
                     @foreach ($popularPosts as $popularPost)
                     <div class="post">
