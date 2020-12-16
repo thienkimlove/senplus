@@ -11,7 +11,7 @@
     if (isset($field['value'])) {
        $currentArs = [];
        foreach ($field['value'] as $val) {
-           $currentArs[] = ['id' => $val->id, 'pivot' => $val->pivot->id];
+           $currentArs[] = ['id' => $val->id, 'pivot' => $val->pivot->extend_id];
        }
        $field['options'] = $field['options']->sort(function($a, $b) use($currentArs) {
 

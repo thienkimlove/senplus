@@ -14,7 +14,7 @@ class AddTimeToTopicPosts extends Migration
     public function up()
     {
         Schema::create('post_topic_extends', function (Blueprint $table) {
-            $table->id();
+            $table->id('extend_id');
             $table->unsignedBigInteger('post_id');
             $table->unsignedBigInteger('topic_id');
             $table->unique(['topic_id', 'post_id'], 'unique_topic_and_post_extend');

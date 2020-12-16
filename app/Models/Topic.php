@@ -54,7 +54,7 @@ class Topic extends Model
 
     public function posts()
     {
-        return $this->belongsToMany(Post::class, 'post_topic_extends')->withPivot('id');
+        return $this->belongsToMany(Post::class, 'post_topic_extends')->withPivot('extend_id');
     }
 
     /*
