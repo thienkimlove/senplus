@@ -5,18 +5,7 @@
                 <img src="/frontend/assets/img/btn-menu.png" alt="Menu" class="imgFull">
             </a>
 
-            @if (isset($contentBlogUrl))
-                <nav class="tabs breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
-                    <ul>
-                        <li class="active hasBgTag" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-                            <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="{{ $contentBlogUrl }}" itemid="{{ $contentBlogUrl }}" class="link" title="{{ $contentBlogName }}" aria-label="{{ $contentBlogName }}">
-                                <span itemprop="name">{{ $contentBlogName }}</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            @else
-                <nav class="tabs breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+            <nav class="tabs breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
                 <ul>
                     <li class="{{ isset($section) && $section == 'home' ? 'active' : '' }}" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
                         <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="{{ route('frontend.home') }}" itemid="home-user" class="link" title="CAS" aria-label="CAS">
@@ -42,7 +31,6 @@
                     @endif
                 </ul>
             </nav>
-            @endif
         </div>
         <div class="rightSide rightMenu">
             <form action="" class="formSearchTop">
