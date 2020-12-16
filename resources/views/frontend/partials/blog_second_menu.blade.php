@@ -6,9 +6,14 @@
             </a>
             <nav class="tabs breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
                 <ul>
-                    <li class="active" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                    <li class="{{ isset($contentBlogUrl)? '' : 'active' }}" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
                         <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="{{ route('frontend.blog') }}" itemid="blog.html" class="link" title="Blog" aria-label="Blog">
                             <span itemprop="name">Blog</span>
+                        </a>
+                    </li>
+                    <li class="hasBgTag {{ isset($contentBlogUrl) ? 'active' : '' }}" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="{{ $contentBlogUrl }}" itemid="{{ $contentBlogUrl }}" class="link" title="{{ $contentBlogName }}" aria-label="{{ $contentBlogName }}">
+                            <span itemprop="name">{{ $contentBlogName }}</span>
                         </a>
                     </li>
                 </ul>
