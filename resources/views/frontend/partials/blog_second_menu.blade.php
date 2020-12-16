@@ -11,11 +11,13 @@
                             <span itemprop="name">Blog</span>
                         </a>
                     </li>
-                    <li class="hasBgTag {{ isset($contentBlogUrl) ? 'active' : '' }}" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                    @if (isset($contentBlogUrl))
+                    <li class="hasBgTag active" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
                         <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="{{ $contentBlogUrl }}" itemid="{{ $contentBlogUrl }}" class="link" title="{{ $contentBlogName }}" aria-label="{{ $contentBlogName }}">
                             <span itemprop="name">{{ $contentBlogName }}</span>
                         </a>
                     </li>
+                    @endif
                 </ul>
             </nav>
         </div>
