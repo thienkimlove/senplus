@@ -291,11 +291,7 @@ class Helpers
 
     public static function getMainTopicPost($post)
     {
-        foreach ($post->topics as $topic) {
-            return $topic->name;
-        }
-
-        return null;
+        return $post->topics->first() ? $post->topics->first()->name : null;
     }
 
 
