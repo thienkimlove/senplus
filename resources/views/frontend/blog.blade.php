@@ -8,7 +8,7 @@
 @section('content')
     <main>
         <div class="topBlog">
-            @if ($latestPost = \App\Helpers::getLatestPost())
+            @if ($latestPost)
             <div class="fixCen2">
                 <a href="{{ url($latestPost->slug.'.html') }}" class="imgThumb" title="{{$latestPost->name}}" style="background: url({{ $latestPost->anh2 ? url($latestPost->anh2) : url($latestPost->image) }}) center top no-repeat;">
                     <img src="{{ $latestPost->anh2 ? url($latestPost->anh2) : url($latestPost->image) }}" alt="" class="imgFull">
@@ -49,7 +49,7 @@
             @endif
         </div>
         <div class="relatedNews relatedNews2">
-            @if ($popularPosts = \App\Helpers::getPopularPosts())
+            @if ($popularPosts->count() > 0)
             <div class="fixCen2">
                 @foreach ($popularPosts as $popularPost)
                     @if ($popularPost->id != $latestPost->id)
@@ -64,7 +64,7 @@
                 @endforeach
             </div>
             @endif
-            <a href="javascript:void(0)" class="btnPlus" title="Xem thêm" aria-label="View more">
+            <a href="{{ route('frontend.blog') }}?p={{ request()->input('page')?  request()->input('page') +1 : 2 }}" class="btnPlus" title="Xem thêm" aria-label="View more">
                 <img src="/frontend/assets/img/i_plus.png" alt="" class="imgFull">
             </a>
         </div>

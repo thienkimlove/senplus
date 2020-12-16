@@ -21,7 +21,11 @@ class PostController extends Controller
         $meta['meta_image'] = url('frontend/assets/img/logo-sm.png');
         $meta['meta_url'] = route('frontend.blog');
         $isStyleBlog = true;
-        return view('frontend.blog', compact('page', 'isStyleBlog'))->with($meta);
+        $latestPost = Helpers::getLatestPost();
+
+        $popularPosts = Post::where('status', true)->where('id', '<>', $latestPost->id)->orderBy('updated_at', 'desc')->paginate(9);
+
+        return view('frontend.blog', compact('page', 'isStyleBlog', 'latestPost', 'popularPosts'))->with($meta);
     }
 
     public function topic($slug)
