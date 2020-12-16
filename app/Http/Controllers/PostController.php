@@ -28,6 +28,27 @@ class PostController extends Controller
         return view('frontend.blog', compact('page', 'isStyleBlog', 'latestPost', 'popularPosts'))->with($meta);
     }
 
+    public function ajax(Request $request)
+    {
+        $page = $request->input('page');
+        $latestPost = Helpers::getLatestPost();
+        $popularPosts = Post::where('status', true)->where('id', '<>', $latestPost->id)->orderBy('updated_at', 'desc')->paginate(9);
+
+        $page = $popularPosts->count() == 9 ? $page+1: 0;
+
+        if ($popularPosts) {
+            return response()->json([
+                'html' => view('frontend.partials.index_posts', compact('popularPosts'))->render(),
+                'page' => $page
+            ]);
+        } else {
+            return response()->json([
+                'html' => "",
+                'page' => $page
+            ]);
+        }
+    }
+
     public function topic($slug)
     {
 

@@ -92,6 +92,7 @@ Route::post('add-manager', 'FrontendController@addManager')->name('frontend.add_
 
 
 Route::get('blog', 'PostController@blog')->name('frontend.blog');
+Route::get('ajax', 'PostController@ajax')->name('frontend.ajax');
 
 Route::get('chu-de/{value}', 'PostController@topic')->name('frontend.topic');
 Route::get('tim-kiem', 'PostController@search')->name('frontend.search');

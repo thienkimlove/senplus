@@ -50,21 +50,11 @@
         </div>
         <div class="relatedNews relatedNews2">
             @if ($popularPosts->count() > 0)
-            <div class="fixCen2">
-                @foreach ($popularPosts as $popularPost)
-                    @if ($popularPost->id != $latestPost->id)
-                    <div class="post">
-                        <a href="{{ url($popularPost->slug.'.html') }}" class="imgThumb" title="" style="background: url({{ url($popularPost->image) }}) center center no-repeat #3aadbb;"></a>
-                        <div class="parentCategory">{{ \App\Helpers::getMainTopicPost($popularPost) }}</div>
-                        <a href="{{ url($popularPost->slug.'.html') }}" class="title" title="{{ $popularPost->name }}">
-                            {{ $popularPost->name }}
-                        </a>
-                    </div>
-                    @endif
-                @endforeach
+            <div class="fixCen2" id="postContents">
+                @include('frontend.partials.index_posts', ['popularPosts' => $popularPosts])
             </div>
             @endif
-            <a href="{{ route('frontend.blog') }}?p={{ request()->input('page')?  request()->input('page') +1 : 2 }}" class="btnPlus" title="Xem thêm" aria-label="View more">
+            <a href="javascript:void(0)" class="btnPlus" id="loadMore" data-page="2" title="Xem thêm" aria-label="View more">
                 <img src="/frontend/assets/img/i_plus.png" alt="" class="imgFull">
             </a>
         </div>
@@ -81,4 +71,26 @@
             @endif
         </div>
     </main>
+@endsection
+
+@section('after_scripts')
+    <script>
+        $(function(){
+            $('#loadMore').click(function(){
+                 let page = $('#loadMore').attr('data-page');
+
+                 $.get('{{ route('frontend.ajax').'?page=' }}' + page, function(res) {
+                     if (res.html) {
+                         $('#postContents').append(res.html);
+
+                     }
+                     if (res.page === 0) {
+                         $('#loadMore').hide();
+                     } else {
+                         $('#loadMore').attr('data-page', res.page);
+                     }
+                 });
+            });
+        });
+    </script>
 @endsection
