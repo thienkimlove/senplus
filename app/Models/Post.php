@@ -73,7 +73,7 @@ class Post extends Model
 
     public function topics()
     {
-        return $this->belongsToMany(Topic::class, 'post_topic_extends')->withPivot('extend_id');
+        return $this->belongsToMany(Topic::class, 'post_topic_extends')->withPivot('extend_id')->orderBy('post_topic_extends.extend_id');
     }
 
     public function author()
