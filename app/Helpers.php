@@ -231,7 +231,7 @@ class Helpers
             ->get();
     }
 
-    public static function getRelatedPosts($post, $limit=6)
+    public static function getRelatedPosts($post, $limit=3)
     {
         $postTopicIds = $post->topics->pluck('id')->all();
 
