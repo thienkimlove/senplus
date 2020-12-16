@@ -173,7 +173,15 @@ class PostCrudController extends CrudController
             'name'      => 'topics',
             'entity'    => 'topics',
             'attribute' => 'name',
-            'model'     => 'App\Models\Topic'
+            'model'     => 'App\Models\Topic',
+            'pivot'     => true, // on create&update, do you need to add/delete pivot table entries?
+            'sort' => true,
+            'optionSorts'   => (function ($query) {
+                return $query->with(['posts' => function ($q) {
+                    $q->orderBy('pivot_id', 'asc');
+                }]);
+            }), // force th
+
         ]);
 
 

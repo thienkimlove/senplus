@@ -6,6 +6,49 @@
         $field['options'] = call_user_func($field['options'], $field['model']::query());
     }
 
+
+
+    if (isset($field['value'])) {
+       $currentArs = [];
+       foreach ($field['value'] as $val) {
+           $currentArs[] = ['id' => $val->id, 'pivot' => $val->pivot->id];
+       }
+       $field['options'] = $field['options']->sort(function($a, $b) use($currentArs) {
+
+        $isInSortA = null;
+        $isInSortB = null;
+
+        foreach ($currentArs as $currentAr) {
+            if ($a->id == $currentAr['id']) {
+               $isInSortA = $currentAr['pivot'];
+            }
+            if ($b->id == $currentAr['id']) {
+               $isInSortB = $currentAr['pivot'];
+            }
+
+        }
+
+        if (!$isInSortA && !$isInSortB) {
+                return 0;
+        }
+
+        if ($isInSortA && !$isInSortB) {
+            return 1;
+        }
+
+        if ($isInSortB && !$isInSortA) {
+            return -1;
+        }
+
+        if ($isInSortB && $isInSortA) {
+           return ($isInSortA < $isInSortB) ? -1 : 1;
+        }
+    });
+
+    }
+
+
+
     //build option keys array to use with Select All in javascript.
     $model_instance = new $field['model'];
     $options_ids_array = $field['options']->pluck($model_instance->getKeyName())->toArray();
@@ -81,7 +124,7 @@
                 if (!element.hasClass("select2-hidden-accessible"))
                     {
                         var $obj = element.select2({
-                            theme: "bootstrap"
+                            theme: "bootstrap",
                         });
 
                         //get options ids stored in the field.
@@ -97,7 +140,7 @@
                         }
                     }
 
-                element.on("select2:select", function (evt) {
+                element.on("select2:select select2:unselect", function (evt) {
                     var element = evt.params.data.element;
                     var $element = $(element);
 
