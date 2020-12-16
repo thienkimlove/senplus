@@ -52,11 +52,11 @@
                     @endforeach
                 </div>
                 <h2 class="rightTitle">Popular</h2>
-                @if ($popularPosts = \App\Helpers::getPopularPosts(3))
+                @if ($popularPosts = \App\Helpers::getPopularPosts())
                 <div class="popularList">
                     @foreach ($popularPosts as $popularPost)
                     <div class="post">
-                        <a href="{{ url($popularPost->slug.'.html') }}" class="imgThumb" title="" style="background: url({{ url($popularPost->image) }}) center center no-repeat #3aadbb;"></a>
+                        <a href="{{ url($popularPost->slug.'.html') }}" class="imgThumb" title="" style="background: url({{ url($popularPost->anh2) }}) center center no-repeat #3aadbb;"></a>
                         <a href="{{ url($popularPost->slug.'.html') }}" class="title" title="{{ $popularPost->name }}">
                             {{ $popularPost->name }}
                         </a>

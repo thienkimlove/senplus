@@ -68,6 +68,7 @@ class PostCrudController extends CrudController
         CRUD::column('views')->label('Lượt xem')->type('number');
 
         CRUD::addColumn(['name' => 'image', 'type' => 'image', 'label' => 'Ảnh']);
+        CRUD::addColumn(['name' => 'anh2', 'type' => 'image', 'label' => 'Ảnh 2']);
 
         CRUD::addColumn([
             'name' => 'author_id',
@@ -151,6 +152,7 @@ class PostCrudController extends CrudController
             ]
         );
         CRUD::addField(['name' => 'image', 'type' => 'browse', 'label' => 'Ảnh']);
+        CRUD::addField(['name' => 'anh2', 'type' => 'browse', 'label' => 'Ảnh 2']);
 
         CRUD::addField([
             'name' => 'author_id',
