@@ -78,7 +78,7 @@
 
                     <div class="parentCategory">
                         @if ($topicMain = \App\Helpers::getMainTopicPost($relatedPost))
-                            <a href="{{ route('frontend.topic').'/'.$topicMain->slug }}">{{ $topicMain->name }}</a>
+                            <a href="{{ url('frontend.topic').'/'.$topicMain->slug }}">{{ $topicMain->name }}</a>
                         @endif
                     </div>
 
