@@ -86,8 +86,10 @@
                      }
                      if (res.page === 0) {
                          $('#loadMore').hide();
+                         $('#loadMore').focus();
                      } else {
                          $('#loadMore').attr('data-page', res.page);
+                         $('#loadMore').focus();
                      }
                  });
             });
