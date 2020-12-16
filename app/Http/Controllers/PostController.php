@@ -109,7 +109,7 @@ class PostController extends Controller
         $meta['meta_image'] = url('frontend/assets/img/logo-sm.png');
         $meta['meta_url'] = route('frontend.search').'?q='.$slug;
 
-        $contentBlogUrl = route('frontend.topic', $slug).'?q='.$slug;
+        $contentBlogUrl = route('frontend.search').'?q='.$slug;
         $contentBlogName = $slug;
 
         return view('frontend.topic', compact('posts', 'page', 'contentBlogUrl', 'contentBlogName', 'isStyleBlog'))->with($meta);
