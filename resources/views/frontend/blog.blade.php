@@ -11,7 +11,7 @@
             @if ($latestPost = \App\Helpers::getLatestPost())
             <div class="fixCen2">
                 <a href="{{ url($latestPost->slug.'.html') }}" class="imgThumb" title="{{$latestPost->name}}" style="background: url({{ url($latestPost->image) }}) center top no-repeat;">
-                    <img src="{{ url($latestPost->anh2) }}" alt="" class="imgFull">
+                    <img src="{{ $latestPost->anh2 ? url($latestPost->anh2) : url($latestPost->image) }}" alt="" class="imgFull">
                 </a>
                 <div class="rightSide">
                     <h2 class="title">
