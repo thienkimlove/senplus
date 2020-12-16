@@ -6,6 +6,7 @@
 
 
 @section('content')
+
     <main>
         <div class="relatedNews relatedNews2 tagSearch">
             @if ($posts->count() > 0)
