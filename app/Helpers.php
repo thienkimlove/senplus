@@ -215,12 +215,18 @@ class Helpers
         if (!$post->author) {
             return null;
         }
-        return Post::where('author_id', $post->author->id)
+        $posts =  Post::where('author_id', $post->author->id)
             ->where('status', true)
             ->where('id', '!=', $post->id)
             ->orderBy('created_at', 'desc')
             ->limit($limit)
             ->get();
+
+        if ($posts->count() == 0) {
+            return null;
+        }
+
+        return $posts;
     }
 
     public static function getPopularPosts($limit=8)
