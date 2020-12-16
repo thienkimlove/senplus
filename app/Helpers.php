@@ -291,7 +291,7 @@ class Helpers
 
     public static function getMainTopicPost($post)
     {
-        return $post->topics->first() ? $post->topics->first()->name : null;
+        return $post->topics->first() ? $post->topics->first() : null;
     }
 
 

@@ -74,7 +74,14 @@
                     <a href="{{ url($relatedPost->slug.'.html') }}" class="imgThumb" title="" style="background: url({{ url($relatedPost->image) }}) center center no-repeat;">
                         <img src="{{ url($relatedPost->image) }}" alt="" class="imgFull">
                     </a>
-                    <div class="parentCategory">{{ \App\Helpers::getMainTopicPost($relatedPost) }}</div>
+
+
+                    <div class="parentCategory">
+                        @if ($topicMain = \App\Helpers::getMainTopicPost($relatedPost))
+                            <a href="{{ route('frontend.topic') }}/{{ $topicMain->slug }}">{{ $topicMain->name }}</a>
+                        @endif
+                    </div>
+
                     <a href="{{ url($relatedPost->slug.'.html') }}" class="title" title="{{ $relatedPost->name }}">
                         {{ $relatedPost->name }}
                     </a>
