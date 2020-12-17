@@ -290,12 +290,8 @@ class FrontendController extends Controller
             $chooseCustomers = $request->input('choose_customers');
             //Helpers::log($chooseCustomers);
             $customerIds = Helpers::getCustomerByChooseList($survey, $chooseCustomers, $customerIds);
-
             $objectCustomerNames = Helpers::getTotalFilterNames($chooseCustomers, $objectCustomerNames);
         }
-
-
-
 
         $explain = Helpers::getResultExplainForSurveyAll($survey, $customerIds);
 
@@ -315,8 +311,7 @@ class FrontendController extends Controller
             'detail' => view('frontend.partials.'.Helpers::ARRAY_TYPES[$chooseType].'_result_explain')
                 ->with(['explain' => $explain])
                 ->render(),
-            'debug' => $customerIds? implode(',', Customer::whereIn('id', $customerIds)->pluck('name')->all()) : '',
-            'total' => 'Số lượng : '. count($customerIds),
+            'total' => 'Số lượng : '. Helpers::getTotalAnswerForSurvey($survey),
             'object' => $objectCustomerNames? 'Đối tượng : '.$objectCustomerNames : ""
         ]);
     }
