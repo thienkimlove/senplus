@@ -38,8 +38,8 @@
                         <div class="form-group">
                             <label class="left" for="gender">Giới tính</label>
                             <div class="right checkBoxGroup" id="gender" data-show="#showGender">
-                                <label><input type="checkbox" name="gender" {{  old('gender') == 'male' ? 'checked' : '' }} value="male" class="male">Nam</label>
-                                <label><input type="checkbox" name="gender" {{  old('gender') == 'female' ? 'checked' : '' }} value="female" class="female">Nữ</label>
+                                <label><input type="radio" name="gender" {{  old('gender') == 'male' ? 'checked' : '' }} value="male" class="male">Nam</label>
+                                <label><input type="radio" name="gender" {{  old('gender') == 'female' ? 'checked' : '' }} value="female" class="female">Nữ</label>
                             </div>
                         </div>
 
