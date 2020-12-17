@@ -14,10 +14,13 @@ class RegisterConfirm extends Mailable
 
     public $customer;
 
+    public $isAdminCreate;
 
-    public function __construct(Customer $customer)
+
+    public function __construct(Customer $customer, $isAdminCreate)
     {
         $this->customer = $customer;
+        $this->isAdminCreate = $isAdminCreate;
     }
 
     /**
@@ -28,8 +31,17 @@ class RegisterConfirm extends Mailable
     public function build()
     {
         $customer = $this->customer;
-        return $this->from('support@mg.casonline.vn', 'CAS Team')
-            ->subject('Kích hoạt tài khoản tại CASONLINE')
-            ->view('emails.register_confirm', compact('customer'));
+
+        if ($this->isAdminCreate) {
+            return $this->from('support@mg.casonline.vn', 'CAS Team')
+                ->subject('Kích hoạt tài khoản tại CASONLINE')
+                ->view('emails.register_confirm_with_pass', compact('customer'));
+        } else {
+            return $this->from('support@mg.casonline.vn', 'CAS Team')
+                ->subject('Kích hoạt tài khoản tại CASONLINE')
+                ->view('emails.register_confirm', compact('customer'));
+        }
+
+
     }
 }

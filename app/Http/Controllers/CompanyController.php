@@ -720,7 +720,7 @@ class CompanyController extends Controller
 
         try {
             $customer = Customer::create($createArray);
-            Helpers::sendMailNewRegister($customer);
+            Helpers::sendMailNewRegister($customer, true);
             Helpers::setFlashMessage('Đăng ký thành công xin kiểm tra email kích hoạt!');
             return redirect(route('frontend.member'));
         } catch (\Exception $exception) {

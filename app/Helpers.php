@@ -1128,12 +1128,12 @@ class Helpers
         return $default;
     }
 
-    public static function sendMailNewRegister($customer)
+    public static function sendMailNewRegister($customer, $isAdminCreate = false)
     {
         try {
             Mail::to($customer->email)
                 //->cc(['thienkimlove@gmail.com'])
-                ->send(new RegisterConfirm($customer));
+                ->send(new RegisterConfirm($customer, $isAdminCreate));
         } catch (\Exception $exception) {
             self::log($exception->getMessage());
         }

@@ -45,13 +45,13 @@
                 @endif
             </div>
             <div class="colRight">
-                <h2 class="rightTitle">Tags</h2>
+                <h2 class="rightTitle">Các chủ đề</h2>
                 <div class="tagListRight">
                     @foreach (\App\Helpers::getAllTopics() as $otherTopic)
                         <a href="{{ url('chu-de/'.$otherTopic->slug) }}" title="{{ $otherTopic->name }}">{{ $otherTopic->name }}</a>
                     @endforeach
                 </div>
-                <h2 class="rightTitle">Popular</h2>
+                <h2 class="rightTitle">Đang được quan tâm</h2>
                 @if ($popularPosts = \App\Helpers::getPopularPosts(5))
                 <div class="popularList">
                     @foreach ($popularPosts as $popularPost)
