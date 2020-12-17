@@ -484,17 +484,18 @@ class Helpers
         ];
 
     }
+
+    public static function getOnlyCompletedCustomerCanAll($survey) {
+        $customerIds = Customer::where('company_id', $survey->company_id)->pluck('id')->all();
+        return self::getOnlyCompletedCustomers($survey, $customerIds);
+    }
+
     /*
      * Main function to get list of customer Ids which completed answer the survey
      */
 
-    public static function getOnlyCompletedCustomers($survey, $customerIds = [])
+    public static function getOnlyCompletedCustomers($survey, $customerIds)
     {
-
-        if (!$customerIds) {
-            $customerIds = Customer::where('company_id', $survey->company_id)->pluck('id')->all();
-        }
-
         $questionIds = $survey->questions->pluck('id')->all();
         $completedUserIds = [];
 
@@ -833,7 +834,7 @@ class Helpers
 
     public static function checkIfSurveyHaveAnyResult($survey)
     {
-        return (count(self::getOnlyCompletedCustomers($survey)) > 0);
+        return (count(self::getOnlyCompletedCustomerCanAll($survey)) > 0);
     }
 
 
@@ -1092,7 +1093,7 @@ class Helpers
 
     public static function getTotalAnswerForSurvey($survey)
     {
-        return count(self::getOnlyCompletedCustomers($survey));
+        return count(self::getOnlyCompletedCustomerCanAll($survey));
     }
 
     public static function getTotalUserJoin($survey)

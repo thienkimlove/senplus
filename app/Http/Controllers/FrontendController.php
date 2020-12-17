@@ -290,6 +290,10 @@ class FrontendController extends Controller
             $chooseCustomers = $request->input('choose_customers');
             //Helpers::log($chooseCustomers);
             $customerIds = Helpers::getCustomerByChooseList($survey, $chooseCustomers, $customerIds);
+
+            //Helpers::log("By Choose LIst");
+            //Helpers::log($customerIds);
+
             $objectCustomerNames = Helpers::getTotalFilterNames($chooseCustomers, $objectCustomerNames);
         }
 
