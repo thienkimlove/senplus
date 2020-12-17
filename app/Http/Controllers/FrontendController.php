@@ -315,7 +315,7 @@ class FrontendController extends Controller
             'detail' => view('frontend.partials.'.Helpers::ARRAY_TYPES[$chooseType].'_result_explain')
                 ->with(['explain' => $explain])
                 ->render(),
-            'total' => 'Số lượng : '. Helpers::getOnlyCompletedCustomers($survey, $customerIds),
+            'total' => 'Số lượng : '. count(Helpers::getOnlyCompletedCustomers($survey, $customerIds)),
             'object' => $objectCustomerNames? 'Đối tượng : '.$objectCustomerNames : ""
         ]);
     }
