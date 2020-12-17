@@ -41,10 +41,10 @@
                     </div>
 
                     <div class="form-group">
-                        <input type="email" placeholder="Email" class="email" name="email" value="{{ old('email') }}" id="email">
+                        <input type="email" placeholder="Email" class="email" name="email" value="{{ request()->input('demo')? \App\Helpers::CAS_DEMO_USER : old('email') }}" id="email">
                     </div>
                     <div class="form-group">
-                        <input type="password" placeholder="Mật khẩu ít nhất 6 kí tự" class="password" name="password" id="password">
+                        <input type="password" placeholder="Mật khẩu ít nhất 6 kí tự"  value="{{ request()->input('demo')? \App\Helpers::CAS_DEMO_PASS :"" }}" class="password" name="password" id="password">
                     </div>
                     <div class="form-group">
                         <input type="checkbox" class="checkbox" checked> Duy trì đăng nhập

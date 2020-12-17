@@ -387,6 +387,13 @@ class CustomerController extends Controller
 
     public function logout()
     {
+
+        //clear demo survey
+
+        if (Helpers::isDemoCustomer()) {
+            Answer::where('customer_id', auth()->user()->id)->delete();
+        }
+
         auth()->logout();
         return redirect(route('frontend.index'));
     }

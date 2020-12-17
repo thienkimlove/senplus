@@ -36,6 +36,7 @@ class Helpers
     public const FRONTEND_USER_LEVEL = 0;
 
     public const CAS_DEMO_USER = 'casdemo@casonline.vn';
+    public const CAS_DEMO_PASS = '123456';
 
     public const SETTINGS = [
         [
