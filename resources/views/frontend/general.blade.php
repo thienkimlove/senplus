@@ -19,7 +19,7 @@
                         <p id="objectCustomer" style="display: none"></p>
                     @endif
 
-                    <p id="totalCustomer">Số lượng: {{ count($customerIds) }}</p>
+                    <p id="totalCustomer">Số lượng: {{ count(\App\Helpers::getOnlyCompletedCustomers($survey, $customerIds)) }}</p>
                 </div>
             </div>
         </div>
