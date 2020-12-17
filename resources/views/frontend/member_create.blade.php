@@ -59,8 +59,8 @@
                         <div class="form-group">
                             <label class="left" for="showPermission">Phân quyền</label>
                             <div class="right checkBoxGroup" id="permission" data-show="#showPermission">
-                                <label><input type="checkbox" {{  old('level') == \App\Helpers::FRONTEND_USER_LEVEL ? 'checked' : '' }} name="level" value="{{ \App\Helpers::FRONTEND_USER_LEVEL }}" class="female">Nhân viên</label>
-                                <label><input type="checkbox" name="level" {{  old('level') == \App\Helpers::FRONTEND_MANAGER_LEVEL ? 'checked' : '' }} value="{{ \App\Helpers::FRONTEND_MANAGER_LEVEL }}" class="male">Quản lý</label>
+                                <label><input type="radio" {{  old('level') == \App\Helpers::FRONTEND_USER_LEVEL ? 'checked' : '' }} name="level" value="{{ \App\Helpers::FRONTEND_USER_LEVEL }}" class="female">Nhân viên</label>
+                                <label><input type="radio" name="level" {{  old('level') == \App\Helpers::FRONTEND_MANAGER_LEVEL ? 'checked' : '' }} value="{{ \App\Helpers::FRONTEND_MANAGER_LEVEL }}" class="male">Quản lý</label>
                             </div>
                         </div>
                         <div class="form-group showBtn">

@@ -37,8 +37,8 @@
                         <div class="form-group">
                             <label class="left" for="gender">Giới tính</label>
                             <div class="right checkBoxGroup" id="gender" data-show="#showGender">
-                                <label><input type="checkbox" name="gender" {{  $customer->gender == 'male' ? 'checked' : '' }} value="male" class="male">Nam</label>
-                                <label><input type="checkbox" name="gender" {{  $customer->gender == 'female' ? 'checked' : '' }} value="female" class="female">Nữ</label>
+                                <label><input type="radio" name="gender" {{  $customer->gender == 'male' ? 'checked' : '' }} value="male" class="male">Nam</label>
+                                <label><input type="radio" name="gender" {{  $customer->gender == 'female' ? 'checked' : '' }} value="female" class="female">Nữ</label>
                             </div>
                         </div>
 
@@ -60,8 +60,8 @@
                         <div class="form-group">
                             <label class="left" for="showPermission">Phân quyền</label>
                             <div class="right checkBoxGroup" id="permission" data-show="#showPermission">
-                                <label><input type="checkbox" {{  $customer->level == \App\Helpers::FRONTEND_USER_LEVEL ? 'checked' : '' }} name="level" value="{{ \App\Helpers::FRONTEND_USER_LEVEL }}" class="female">Nhân viên</label>
-                                <label><input type="checkbox" name="level" {{  $customer->level == \App\Helpers::FRONTEND_MANAGER_LEVEL ? 'checked' : '' }} value="{{ \App\Helpers::FRONTEND_MANAGER_LEVEL }}" class="male">Quản lý</label>
+                                <label><input type="radio" {{  $customer->level == \App\Helpers::FRONTEND_USER_LEVEL ? 'checked' : '' }} name="level" value="{{ \App\Helpers::FRONTEND_USER_LEVEL }}" class="female">Nhân viên</label>
+                                <label><input type="radio" name="level" {{  $customer->level == \App\Helpers::FRONTEND_MANAGER_LEVEL ? 'checked' : '' }} value="{{ \App\Helpers::FRONTEND_MANAGER_LEVEL }}" class="male">Quản lý</label>
                             </div>
                         </div>
                         @endif

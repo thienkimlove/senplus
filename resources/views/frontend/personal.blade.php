@@ -46,8 +46,8 @@
                             <label class="left" for="gender">Giới tính</label>
                             <input type="text" class="right" id="showGender" value="{{ $customer->gender ? \App\Helpers::getGenders()[$customer->gender] : "" }}" disabled>
                             <div class="right checkBoxGroup disabled" id="gender" data-show="#showGender">
-                                <label><input type="checkbox" name="gender" {{  $customer->gender == 'male' ? 'checked' : '' }} value="male" class="male">Nam</label>
-                                <label><input type="checkbox" name="gender" {{  $customer->gender == 'female' ? 'checked' : '' }}  value="female" class="female">Nữ</label>
+                                <label><input type="radio" name="gender" {{  $customer->gender == 'male' ? 'checked' : '' }} value="male" class="male">Nam</label>
+                                <label><input type="radio" name="gender" {{  $customer->gender == 'female' ? 'checked' : '' }}  value="female" class="female">Nữ</label>
                             </div>
                         </div>
 
