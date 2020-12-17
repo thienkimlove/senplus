@@ -63,7 +63,7 @@
                         </div>
                         <div class="form-group">
                             <label class="left" for="businessSector">* Lĩnh vực kinh doanh</label>
-                            <select type="text" name="business_field_id" class="right" id="businessSector" disabled>
+                            <select type="text" name="business_field_id" class="right" id="businessSector">
                                 @foreach (\App\Models\Business::all() as $content)
                                     <option value="{{ $content->id }}">{{ $content->name }}</option>
                                 @endforeach
@@ -71,7 +71,7 @@
                         </div>
                         <div class="form-group">
                             <label class="left" for="numberOfStaff">* Số lượng nhân viên</label>
-                            <select type="text" name="employee_number_id" class="right" id="numberOfStaff" disabled>
+                            <select type="text" name="employee_number_id" class="right" id="numberOfStaff">
                                 @foreach (\App\Models\Employee::all() as $content)
                                     <option value="{{ $content->id }}">{{ $content->name }}</option>
                                 @endforeach
