@@ -65,7 +65,7 @@
                             <label class="left" for="businessSector">* Lĩnh vực kinh doanh</label>
                             <select type="text" name="business_field_id" class="right" id="businessSector" disabled>
                                 @foreach (\App\Models\Business::all() as $content)
-                                    <option value="{{ $content->id }}">{{ $content->name }}</option>
+                                    <option value="{{ $content->id }}" {{ $content->id == $company->business_field_id ? 'selected': '' }}>{{ $content->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -73,7 +73,7 @@
                             <label class="left" for="numberOfStaff">* Số lượng nhân viên</label>
                             <select type="text" name="employee_number_id" class="right" id="numberOfStaff" disabled>
                                 @foreach (\App\Models\Employee::all() as $content)
-                                    <option value="{{ $content->id }}">{{ $content->name }}</option>
+                                    <option value="{{ $content->id }}" {{ $content->id == $company->employee_number_id ? 'selected': '' }}>{{ $content->name }}</option>
                                 @endforeach
                             </select>
                         </div>

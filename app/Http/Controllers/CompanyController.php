@@ -781,9 +781,10 @@ class CompanyController extends Controller
             //'logo',
             'business_field_id',
             'employee_number_id',
-            'average_income_id',
-            'total_fund_id',
+            //'average_income_id',
+            //'total_fund_id',
         ];
+
 
         foreach ($update_fields as $field) {
 
@@ -795,7 +796,7 @@ class CompanyController extends Controller
                         $field => $value
                     ]);
                 } catch (\Exception $exception) {
-                    //pass
+
                 }
             }
         }
