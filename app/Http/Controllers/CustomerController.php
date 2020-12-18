@@ -440,6 +440,11 @@ class CustomerController extends Controller
             return redirect(route('frontend.index'));
         }
 
+        if (Helpers::isDemoCustomer()) {
+            Helpers::setFlashMessage('Tài khoản Demo không có quyền thực hiện tác vụ này!');
+            return redirect(route('frontend.home'));
+        }
+
         //Helpers::log($request->all());
 
         $update_fields = [
