@@ -11,6 +11,7 @@ use App\Models\Question;
 use App\Models\Survey;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Ramsey\Uuid\Uuid;
 
 class FrontendController extends Controller
@@ -368,12 +369,22 @@ class FrontendController extends Controller
             return redirect(route('frontend.home'));
         }
 
-        $html = view('frontend.report', compact('explain', 'survey'))->render();
+        //$html = view('frontend.main_report', compact('explain', 'survey'))->render();
+
+        $filterCounts = Helpers::getRealWeightForSurvey($survey, $customerIds);
 
 
-        file_put_contents(public_path('uploads/page.html'), $html);
+        $html = view('frontend.main_report', compact('explain', 'survey', 'filterCounts', 'weighConfig'))->render();
 
-        return "doke";
+        $uuid  = Str::uuid();
+
+        file_put_contents(public_path('uploads/'.$uuid.'.html'), $html);
+
+        exec("chromehtml2pdf --out /var/www/html/senplus/public/uploads/".$uuid.".pdf --landscape=0 --format=A4 --executablePath=/usr/bin/chromium-browser https://casonline.vn/uploads/".$uuid.".html");
+
+        return redirect(url('uploads/'.$uuid.'.pdf'));
+
+
     }
 
     /*
