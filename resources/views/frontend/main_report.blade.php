@@ -37,7 +37,7 @@
         <div class="fsItalic clGray fz12 mt45">Chiến dịch</div>
         <div class="fz20 fwb mt10">{{ $survey->name }}</div>
         <div class="fsItalic clGray fz12 mt45">Phạm vi khảo sát:</div>
-        <div class="fz14 fwb">Nội bộ CSS Group</div>
+        <div class="fz14 fwb">Nội bộ {{ $survey->company->name }}</div>
         <div class="fsItalic clGray fz12 mt5">Thời gian khảo sát:</div>
         <div class="fz14 fwb">{{ $survey->start_time? $survey->start_time->format('d/m/Y') : "" }}  - {{ $survey->end_time? $survey->end_time->format('d/m/Y') : "" }}</div>
     </article>
@@ -106,7 +106,7 @@
             <strong>Trụ sở chính:</strong> {{ $survey->company->main_address }} <br>
             <strong>Số điện thoại:</strong> {{ $survey->company->contact_phone }} <br>
             <strong>Lĩnh vực kinh doanh:</strong> {{ $survey->company->business->name }} <br>
-            <strong>Số lượng nhân viên:</strong> > {{ $survey->company->employee->name }}
+            <strong>Số lượng nhân viên:</strong> {{ $survey->company->employee->name }}
         </p>
         <h2 class="mt30 pl30">CƠ SỞ LUẬN</h2>
         <p class="fwb mt30">Xây dựng văn hóa doanh nghiệp dựa trên khung giá trị cạnh tranh:</p>
@@ -129,7 +129,7 @@
         <h2 class="mt30 pl30">THÔNG TIN CHIẾN DỊCH KHẢO SÁT</h2>
         <p style="margin-top: 30px;line-height: 40px;">
             <strong>Tên chiến dịch khảo sát:</strong> {{ $survey->name }} <br>
-            <strong>Phạm vi khảo sát:</strong> Nội bộ CSS Group <br>
+            <strong>Phạm vi khảo sát:</strong> Nội bộ {{ $survey->company->name }} <br>
             <strong>Thời hạn khảo sát:</strong> {{ $survey->start_time? $survey->start_time->format('d/m/Y') : "" }}  - {{ $survey->end_time? $survey->end_time->format('d/m/Y') : "" }} <br>
             <strong>Số lượng thành viên được mời tham gia:</strong> {{ \App\Helpers::getTotalUserJoin($survey) }} <br>
             <strong>Số lượng thành viên hoàn thành khảo sát:</strong> {{ \App\Helpers::getTotalAnswerForSurvey($survey) }} <br>
@@ -174,13 +174,13 @@
                                 <th>Nhu cầu thay đổi</th>
                             </tr>
                             </thead>
-                            <tbody id="mainTableBody">
+                            <tbody>
                             @include('frontend.partials.table', ['result' => $explain['details'][$resultType]['result']])
                             </tbody>
                         </table>
                     </div>
                     <div class="rightSide">
-                        <h3 class="title" id="titleRight">Tổng quan</h3>
+                        <h3 class="title">{{\App\Helpers::mapOrder()[$resultType]}}</h3>
                         <div class="name">{{ $survey->company->name }}</div>
                         <div class="content">
                             <div class="radaChart">
@@ -189,7 +189,7 @@
                         </div>
                     </div>
                 </div>
-                <article class="articleResult" id="article">
+                <article class="articleResult">
                     @include('frontend.partials.'.\App\Helpers::ARRAY_TYPES[$resultType].'_result_explain', ['explain' => $explain])
                 </article>
             </div>
