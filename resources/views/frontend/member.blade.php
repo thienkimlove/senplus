@@ -7,7 +7,7 @@
             @if ($isNotCompleteSurveyId)
                 <div class="fixCen hasBefore" id="filterMember">
                     <h2 class="title">Chưa hoàn thành khảo sát</h2>
-
+                    @if (\App\Helpers::currentFrontendUserIsAdmin())
                     @if (!\App\Helpers::isDemoCustomer())
                         <button type="button" id="remindButton" class="myBtn btnSave">Nhắc nhở</button>
                         <form id="remindForm" action="{{ route('frontend.post_member_remind') }}" method="POST">
@@ -15,12 +15,16 @@
                             <input type="hidden" name="survey_id"  value="{{ $isNotCompleteSurveyId }}">
                         </form>
                     @endif
+                    @endif
                 </div>
 
             @else
                 <div class="fixCen hasBefore" id="filterMember">
                     <h2 class="title">Danh sách thành viên</h2>
+                    @if (\App\Helpers::currentFrontendUserIsAdmin())
                     <a href="{{ route('frontend.member_create') }}" class="myBtn addNewUser" title="Thêm mới">+ Thêm mới</a>
+
+                    @endif
 
 
                     <form action="{{ route('frontend.member') }}" method="GET" class="searchUser">
@@ -57,7 +61,11 @@
                             <td>{{ $index+1 }}</td>
                             <td>
                                 <a href="{{ route('frontend.personal').'?id='.$customer->id }}" class="link" title="Tên thành viên">{{ $customer->name }}</a>
+
+                                @if (\App\Helpers::currentFrontendUserIsAdmin())
+
                                 <a href="{{ route('frontend.member_detail').'?id='.$customer->id }}" class="btnEditMember" title="Sửa thông tin"></a>
+                                @endif
                             </td>
                             <td>{{ $customer->email }}</td>
 

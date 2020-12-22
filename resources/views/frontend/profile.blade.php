@@ -6,10 +6,14 @@
         <div class="editInfoBlock editBlock">
             <div class="fixCen">
                 <h2 class="title">Thông tin doanh nghiệp</h2>
+
+                @if (\App\Helpers::currentFrontendUserIsAdmin())
                 <a href="javascript:void(0)" class="btnEdit btnEditHomeUser" data-edit="#CorInfo" title="Chỉnh sửa">
                     <span>Chỉnh sửa</span>
                     <img src="/frontend/assets/img/i_pen.png" alt="" class="imgFull">
                 </a>
+
+                @endif
                 <div class="box">
                     <div id="error" class="warning {{ count($errors) ? 'showWarning' : '' }}">
                         @if ($errors->any())

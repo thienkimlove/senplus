@@ -6,10 +6,12 @@
         <div class="topBlock">
             <div class="fixCen hasBefore">
                 <h2 class="title">{{ $survey->name }}</h2>
+                @if (\App\Helpers::currentFrontendUserIsAdmin())
                 <a href="{{ route('frontend.campaign_create')  }}" class="myBtn addNewUser" title="Tạo chiến dịch">+ Tạo chiến dịch</a>
                 <a href="{{ route('frontend.campaign_edit').'?id='.$survey->id  }}" class="btnEdit" title="Chỉnh sửa"><span>Chỉnh sửa</span>
                     <img src="/frontend/assets/img/i_pen.png" alt="" class="imgFull">
                 </a>
+               @endif
             </div>
         </div>
 

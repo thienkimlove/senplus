@@ -76,7 +76,7 @@ class CompanyController extends Controller
             return redirect(route('frontend.index'));
         }
 
-        if (!Helpers::currentFrontendUserIsManager()) {
+        if (!Helpers::currentFrontendUserIsAdmin()) {
             return redirect(route('frontend.home'));
         }
 
@@ -102,7 +102,7 @@ class CompanyController extends Controller
 
     public function postCampaignEdit(Request $request)
     {
-        if (!Helpers::currentFrontendUserIsManager()) {
+        if (!Helpers::currentFrontendUserIsAdmin()) {
             return redirect(route('frontend.home'));
         }
 
@@ -197,7 +197,7 @@ class CompanyController extends Controller
             return redirect(route('frontend.index'));
         }
 
-        if (!Helpers::currentFrontendUserIsManager()) {
+        if (!Helpers::currentFrontendUserIsAdmin()) {
             return redirect(route('frontend.home'));
         }
 
@@ -209,7 +209,7 @@ class CompanyController extends Controller
 
     public function postCampaignCreate(Request $request)
     {
-        if (!Helpers::currentFrontendUserIsManager()) {
+        if (!Helpers::currentFrontendUserIsAdmin()) {
             return redirect(route('frontend.home'));
         }
 
@@ -360,6 +360,10 @@ class CompanyController extends Controller
             return response()->json(['error' => 'Không có quyền xóa chiến dịch khảo sát']);
         }
 
+        if (Helpers::isDemoCustomer()) {
+            return response()->json(['error' => 'Tài khoản Demo không có quyền thực hiện tác vụ này']);
+        }
+
         $survey->update([
             'status' => false
         ]);
@@ -505,7 +509,7 @@ class CompanyController extends Controller
             return redirect(route('frontend.index'));
         }
 
-        if (!Helpers::currentFrontendUserIsManager()) {
+        if (!Helpers::currentFrontendUserIsAdmin()) {
             return redirect(route('frontend.home'));
         }
 
@@ -530,7 +534,7 @@ class CompanyController extends Controller
 
     public function postMemberEdit(Request $request)
     {
-        if (!Helpers::currentFrontendUserIsManager()) {
+        if (!Helpers::currentFrontendUserIsAdmin()) {
             return redirect(route('frontend.home'));
         }
 
@@ -599,9 +603,15 @@ class CompanyController extends Controller
 
     public function postMemberRemind(Request $request)
     {
-        if (!Helpers::currentFrontendUserIsManager()) {
+        if (!Helpers::currentFrontendUserIsAdmin()) {
             return redirect(route('frontend.home'));
         }
+
+        if (Helpers::isDemoCustomer()) {
+            Helpers::setFlashMessage('Tài khoản Demo không có quyền thực hiện tác vụ này!');
+            return redirect(route('frontend.home'));
+        }
+
         $surveyId = $request->input('survey_id');
 
         if (!$surveyId) {
@@ -637,7 +647,7 @@ class CompanyController extends Controller
             return redirect(route('frontend.index'));
         }
 
-        if (!Helpers::currentFrontendUserIsManager()) {
+        if (!Helpers::currentFrontendUserIsAdmin()) {
             return redirect(route('frontend.home'));
         }
 
@@ -649,7 +659,7 @@ class CompanyController extends Controller
 
     public function postMemberCreate(Request $request)
     {
-        if (!Helpers::currentFrontendUserIsManager()) {
+        if (!Helpers::currentFrontendUserIsAdmin()) {
             return redirect(route('frontend.home'));
         }
 
@@ -748,7 +758,7 @@ class CompanyController extends Controller
     }
     public function postProfile(Request $request)
     {
-        if (!Helpers::currentFrontendUserIsManager()) {
+        if (!Helpers::currentFrontendUserIsAdmin()) {
             Helpers::setFlashMessage('Bạn không có quyền thực hiện tác vụ này!');
             return redirect(route('frontend.home'));
         }

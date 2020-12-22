@@ -6,7 +6,7 @@
         <div class="searchBlock">
             <div class="fixCen hasBefore">
                 
-                @if (\App\Helpers::currentFrontendUserIsManager())                
+                @if (\App\Helpers::currentFrontendUserIsAdmin())
                     <a href="{{ route('frontend.member_create') }}" class="myBtn addNewUser" title="Thêm mới">+ Thêm mới</a>
 
                     <a href="{{ route('frontend.member_edit') }}?id={{$customer->id}}" class="btnEdit" title="Chỉnh sửa">
