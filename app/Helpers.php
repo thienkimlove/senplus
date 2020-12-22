@@ -188,7 +188,7 @@ class Helpers
 
     public static function isDemoCustomer()
     {
-        return (auth()->user()->email == self::CAS_DEMO_USER);
+        return (auth()->user()->email == self::CAS_DEMO_USER || auth()->user()->demo);
     }
 
     public static function configGet($key)

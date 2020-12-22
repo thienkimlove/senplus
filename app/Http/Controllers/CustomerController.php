@@ -262,6 +262,50 @@ class CustomerController extends Controller
                 ->withInput($request->except('password'));
         }
 
+        if ($customer->email == Helpers::CAS_DEMO_USER) {
+            try {
+
+                // create demo user.
+
+                $uuid = Str::uuid();
+
+                $demoData = [
+                    'email' => $uuid.'@casonline.vn',
+                    'password' => md5($uuid),
+                    'demo' => true
+                ];
+
+                $fieldArrays  = [
+                    'name',
+                    'phone',
+                    'address',
+                    'company_id',
+                    'options',
+                    'status',
+                    'level',
+                    'gender',
+                    'avatar',
+                ];
+
+                foreach ($fieldArrays as $fieldArray) {
+                    $demoData[$fieldArray] = $customer->{$fieldArray};
+                }
+                $demoUser = Customer::create($demoData);
+                auth()->login($demoUser);
+
+                return redirect(route('frontend.home'));
+
+            } catch (\Exception $exception) {
+
+                Helpers::log($exception->getMessage());
+
+                $validator->getMessageBag()->add('password', 'Có lỗi xảy ra xin thử lại !');
+                return redirect(route('frontend.index'))
+                    ->withErrors($validator)
+                    ->withInput($request->except('password'));
+            }
+        }
+
         auth()->login($customer);
 
         return redirect(route('frontend.home'));
