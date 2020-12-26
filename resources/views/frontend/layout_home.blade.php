@@ -41,6 +41,7 @@
 @yield('content')
 @include('frontend.partials.home_footer')
 @if (isset($isStyleBlog) && $isStyleBlog)
+    @include('frontend.partials.home_popup')
 @else
     @include('frontend.partials.home_popup')
 @endif
