@@ -125,7 +125,9 @@
             <img src="/frontend/assets/img/i_x.png" alt="" class="imgFull">
         </a>
         <div class="avatar">
+            @if (auth()->check())
             <img src="{{ \App\Helpers::getLoginCustomerAvatar() }}" alt="" class="imgFull">
+            @endif
         </div>
         <div class="userName">{{ auth()->user()->name }}</div>
         <div class="email">{{ auth()->user()->email }}</div>
