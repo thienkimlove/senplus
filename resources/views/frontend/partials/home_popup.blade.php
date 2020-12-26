@@ -148,7 +148,9 @@
     <a href="javascript:void(0)" class="closePopup pa" title="Đóng" aria-label="Close">
         <img src="/frontend/assets/img/i_x.png" alt="" class="imgFull"></a>
     <div class="logoSM bdb">
+        @if (auth()->check())
         <img src="{{ \App\Helpers::getLoginCompanyLogo() }}" alt="" class="imgFull">
+        @endif
     </div>
     <a href="{{ route('frontend.home') }}" class="link hasBg" title="Hệ thống đánh giá văn hóa doanh nghiệp" aria-label="CAS">
         <strong class="fw500">Hệ thống đánh giá văn hóa doanh nghiệp</strong>
