@@ -840,11 +840,18 @@ class Helpers
 
     public static function currentFrontendUserIsManager()
     {
+        if (!auth()->check()) {
+            return false;
+        }
+
         return in_array(auth()->user()->level, [self::FRONTEND_ADMIN_LEVEL, self::FRONTEND_MANAGER_LEVEL]);
     }
 
     public static function currentFrontendUserIsAdmin()
     {
+        if (!auth()->check()) {
+            return false;
+        }
         return auth()->user()->level == self::FRONTEND_ADMIN_LEVEL;
     }
 
