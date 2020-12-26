@@ -129,8 +129,8 @@
             <img src="{{ \App\Helpers::getLoginCustomerAvatar() }}" alt="" class="imgFull">
             @endif
         </div>
-        <div class="userName">{{ auth()->user()->name }}</div>
-        <div class="email">{{ auth()->user()->email }}</div>
+        <div class="userName">{{ auth()->check()? auth()->user()->name : "" }}</div>
+        <div class="email">{{ auth()->check()? auth()->user()->email : "" }}</div>
     </div>
     <a href="javascript:void(0)" class="link bdb" title="Góp ý cải thiện sản phẩm" aria-label="Suggestions for product improvement">
         Góp ý cải thiện sản phẩm
