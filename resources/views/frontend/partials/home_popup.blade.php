@@ -228,7 +228,9 @@
 <div id="popupHelpCenter" class="px">
     <a href="javascript:void(0)" class="closePopup pa" title="Đóng" aria-label="Close"><img src="/frontend/assets/img/i_x.png" alt="" class="imgFull"></a>
     <div class="logoSM bdb">
+        @if (auth()->check())
         <img src="{{ \App\Helpers::getLoginCompanyLogo() }}" alt="" class="imgFull">
+        @endif
     </div>
     <div class="content">
         <ul>
