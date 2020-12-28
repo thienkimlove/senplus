@@ -18,7 +18,7 @@
             </div>
             <div class="col">
                 <a href="{{ url('/') }}/home" class="link" title="Văn hoá doanh nghiệp" aria-label="Corporate Culture"><strong>Văn hoá doanh nghiệp</strong></a>
-                <a href="{{ url('/') }}" class="link" title="Các sản phẩm" aria-label="Products"><strong>Các sản phẩm</strong></a>
+                <a href="{{ url('/') }}" class="link" title="Các sản phẩm" aria-label="Products"><strong>{{ \App\Helpers::configGet('menu_product') }}</strong></a>
                 <a href="{{ url('/') }}/blog" class="link" title="Blog" aria-label="Blog"><strong>Blog</strong></a>
                 <a href="{{ url('/') }}" class="link" title="Về chúng tôi" aria-label="About Us"><strong>Về chúng tôi</strong></a>
             </div>

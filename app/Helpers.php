@@ -134,6 +134,15 @@ class Helpers
             'active'      => 1,
         ],
 
+        [
+            'key'         => 'menu_product',
+            'name'        => 'Text menu sản phẩm',
+            'description' => 'For SEO',
+            'value'       => 'Các sản phẩm',
+            'field'       => '{"name":"value","label":"Value","type":"text"}', //text, textarea
+            'active'      => 1,
+        ],
+
 
     ];
 
