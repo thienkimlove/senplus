@@ -66,6 +66,18 @@
                 @endif
             </div>
         </div>
+        <div class="manyTags detail">
+            <h2 class="rightTitle">Các chủ đề phổ biến</h2>
+            @if ($popularTopics = \App\Helpers::getPopularTopics())
+                <div class="fixCen2">
+                    @foreach ($popularTopics as $popularTopic)
+                        <a href="{{ url('chu-de/'.$popularTopic->slug) }}" title="{{ $popularTopic->name }}">
+                            {{ $popularTopic->name }}
+                        </a>
+                    @endforeach
+                </div>
+            @endif
+        </div>
         <div class="relatedNews">
             @if ($relatedPosts = \App\Helpers::getRelatedPosts($post))
             <div class="fixCen2">

@@ -176,9 +176,9 @@
         </a>
 
     @endif
-    <a href="javascript:void(0)" class="link hasBg bdb showOnMb" title="Blog" aria-label="Blog">Blog</a>
-    <a href="javascript:void(0)" class="link hasBg bdb showOnMb" title="Các sản phẩm" aria-label="Products">Các sản phẩm</a>
-    <a href="javascript:void(0)" class="link hasBg bdb showOnMb" title="Về chúng tôi" aria-label="About us">Về chúng tôi</a>
+    <a href="{{ url('/') }}/blog" class="link hasBg bdb showOnMb" title="Blog" aria-label="Blog">Blog</a>
+    <a href="{{ url('/') }}" class="link hasBg bdb showOnMb" title="Các sản phẩm" aria-label="Products">Các sản phẩm</a>
+    <a href="{{ url('/') }}" class="link hasBg bdb showOnMb" title="Về chúng tôi" aria-label="About us">Về chúng tôi</a>
 
 </div>
 <div class="popup px popupNotify" id="popupDelSurvey">

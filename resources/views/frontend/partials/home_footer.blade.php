@@ -17,10 +17,10 @@
                 <a href="javascript:void(0)" class="link" title="Quy tắc tính điểm" aria-label="Scoring Rules" onclick="showPopupGuiding('#popupGuidings2')">Quy tắc tính điểm</a>
             </div>
             <div class="col">
-                <a href="{{ url('/') }}" class="link" title="Văn hoá doanh nghiệp" aria-label="Corporate Culture"><strong>Văn hoá doanh nghiệp</strong></a>
-                <a href="javascript:void(0)" class="link" title="Các sản phẩm" aria-label="Products"><strong>Các sản phẩm</strong></a>
-                <a href="javascript:void(0)" class="link" title="Blog" aria-label="Blog"><strong>Blog</strong></a>
-                <a href="javascript:void(0)" class="link" title="Về chúng tôi" aria-label="About Us"><strong>Về chúng tôi</strong></a>
+                <a href="{{ url('/') }}/home" class="link" title="Văn hoá doanh nghiệp" aria-label="Corporate Culture"><strong>Văn hoá doanh nghiệp</strong></a>
+                <a href="{{ url('/') }}" class="link" title="Các sản phẩm" aria-label="Products"><strong>Các sản phẩm</strong></a>
+                <a href="{{ url('/') }}/blog" class="link" title="Blog" aria-label="Blog"><strong>Blog</strong></a>
+                <a href="{{ url('/') }}" class="link" title="Về chúng tôi" aria-label="About Us"><strong>Về chúng tôi</strong></a>
             </div>
             <div class="col">
                 <h3>Kết nối với chúng tôi</h3>

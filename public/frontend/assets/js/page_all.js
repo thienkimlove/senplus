@@ -1,5 +1,8 @@
 $(document).ready(function () {
     //...................js all page----------------------
+    $('.manyTags .rightTitle').click(function () {
+        $('.manyTags .fixCen2').toggleClass('active');
+    });
     $(window).on('DOMMouseScroll mousewheel', function (event) {
         if (event.originalEvent.wheelDelta > 0) {
             if ($(this).scrollTop() >= 50) {
