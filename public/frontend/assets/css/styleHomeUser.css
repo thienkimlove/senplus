@@ -1481,30 +1481,27 @@ footer .fixCen .socialMedia a:hover {
   width: 66px;
 }
 
-#popupHelpCenter .link {
+#popupHelpCenter li {
   display: block;
-  padding: 15px 25px 15px 50px;
-  background: url("../../assets/img/i_help.png") 25px center no-repeat;
-  -webkit-background-size: 15px 15px !important;
-     -moz-background-size: 15px !important;
-          background-size: 15px !important;
+  padding: 0 25px;
   text-align: left;
 }
 
-#popupHelpCenter .link:hover {
-  background: url("../../assets/img/i_help.png") 25px center no-repeat #f2f2f2;
-}
-
-#popupHelpCenter .link.bdb:last-child {
+#popupHelpCenter li.bdb:last-child {
   border: none;
 }
 
-#popupHelpCenter a {
+#popupHelpCenter li summary {
   color: #333333;
+  padding: 15px 0;
 }
 
-#popupHelpCenter a:hover {
+#popupHelpCenter li summary:hover {
   color: #69cad3 !important;
+}
+
+#popupHelpCenter li summary:focus {
+  outline: none;
 }
 
 @media (max-width: 1024px) {
