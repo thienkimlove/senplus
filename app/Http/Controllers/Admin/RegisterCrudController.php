@@ -28,7 +28,7 @@ class RegisterCrudController extends CrudController
     public function setup()
     {
         CRUD::setModel(\App\Models\Register::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/register');
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/registered');
         CRUD::setEntityNameStrings('Đăng ký', 'Đăng ký');
 
         CRUD::denyAccess('create');
