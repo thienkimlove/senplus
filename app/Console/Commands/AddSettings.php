@@ -40,13 +40,15 @@ class AddSettings extends Command
      */
     public function handle()
     {
+        $i = 0;
         //DB::table('settings')->truncate();
         foreach (Helpers::SETTINGS as $index => $setting) {
             if (DB::table('settings')->where('key', $setting['key'])->count() == 0) {
+                $i++;
                 DB::table('settings')->insert($setting);
             }
 
         }
-        $this->line('Inserted '.count(Helpers::SETTINGS).' records.');
+        $this->line('Inserted '.$i.' records.');
     }
 }

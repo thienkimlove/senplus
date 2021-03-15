@@ -14,6 +14,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'CustomerController@index')->name('frontend.index');
+Route::get('/product', 'CustomerController@product')->name('frontend.product');
+Route::get('/contact', 'CustomerController@contact')->name('frontend.contact');
+Route::post('/contact', 'CustomerController@postContact')->name('frontend.post_contact');
+Route::post('/', 'CustomerController@postRegister')->name('frontend.post_register');
+
+
+
+
+
+Route::get('/inspire', 'CustomerController@inspire')->name('frontend.inspire');
 
 Route::get('register', 'CustomerController@register')->name('frontend.register');
 Route::post('register', 'CustomerController@postReg')->name('frontend.post_reg');

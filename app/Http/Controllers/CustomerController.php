@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Helpers;
 use App\Models\Answer;
 use App\Models\Company;
+use App\Models\Contact;
 use App\Models\Customer;
 use App\Models\Question;
+use App\Models\Register;
 use App\Models\Survey;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -15,6 +17,71 @@ use Illuminate\Support\Str;
 
 class CustomerController extends Controller
 {
+
+    public function index()
+    {
+        $page = 'index';
+        return view('frontend.cas.index', compact('page'));
+
+    }
+
+    public function product()
+    {
+        $page = 'product';
+        return view('frontend.cas.product', compact('page'));
+
+    }
+
+
+    public function contact()
+    {
+        $page = 'contact';
+        return view('frontend.cas.contact', compact('page'));
+
+    }
+
+
+    public function postContact(Request $request)
+    {
+        $data = $request->only([
+            'name',
+            'phone',
+            'email',
+            'option',
+            'content'
+        ]);
+
+        try {
+            Contact::create($data);
+        } catch (\Exception $exception) {
+
+        }
+
+        return redirect(route('frontend.index'));
+    }
+
+    public function postRegister(Request $request)
+    {
+        $data = $request->only([
+            'name',
+            'phone',
+            'email',
+            'option',
+            'position'
+        ]);
+
+        try {
+            Register::create($data);
+        } catch (\Exception $exception) {
+
+        }
+
+        return redirect(route('frontend.index'));
+    }
+
+
+
+
     public function login()
     {
         if (auth()->check()) {
@@ -22,7 +89,7 @@ class CustomerController extends Controller
         }
         //return view('frontend.login');
         // now login and index in same page.
-        return redirect(route('frontend.index'));
+        return redirect(route('frontend.inspire'));
     }
 
     public function postReg(Request $request)
@@ -78,7 +145,7 @@ class CustomerController extends Controller
             //auth()->login($customer);
             Helpers::sendMailNewRegister($customer);
             Helpers::setFlashMessage('Đăng ký thành công xin kiểm tra email kích hoạt!');
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         } catch (\Exception $exception) {
             $validator->getMessageBag()->add('email', $exception->getMessage());
             return redirect(route('frontend.register'))
@@ -95,19 +162,19 @@ class CustomerController extends Controller
 
         if (!$token) {
             $request->session()->flash('general_message', 'Không có mã kích hoạt!');
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         }
 
         $customer = Customer::where('token', $token)->first();
 
         if (!$customer) {
             $request->session()->flash('general_message', 'Mã kích hoạt không hợp lệ!');
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         }
 
         if ($customer->status) {
             $request->session()->flash('general_message', 'Tài khoản đã được kích hoạt!');
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         }
 
         try {
@@ -116,10 +183,10 @@ class CustomerController extends Controller
                 'token' => null
             ]);
             $request->session()->flash('general_message', 'Tài khoản đã được kích hoạt thành công! Xin hãy đăng nhập!');
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         } catch (\Exception $exception) {
             $request->session()->flash('general_message', 'Có lỗi xảy ra khi kích hoạt : '.$exception->getMessage().'. Xin thử lại!');
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         }
 
     }
@@ -131,14 +198,14 @@ class CustomerController extends Controller
 
         if (!$token) {
             $request->session()->flash('general_message', 'Không có mã lấy lại mật khẩu!');
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         }
 
         $customer = Customer::where('token', $token)->first();
 
         if (!$customer || !$customer->status) {
             $request->session()->flash('general_message', 'Mã lấy lại mật khẩu không hợp lệ hoặc tài khoản chưa được kích hoạt!');
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         }
 
         $page = 'forget';
@@ -196,7 +263,7 @@ class CustomerController extends Controller
 
         if (!$customer || !$customer->status) {
             $request->session()->flash('general_message', 'Mã lấy lại mật khẩu không hợp lệ hoặc tài khoản chưa được kích hoạt!');
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         }
 
 
@@ -209,7 +276,7 @@ class CustomerController extends Controller
             ]);
 
             $request->session()->flash('general_message', 'Đổi mật khẩu mới thành công!');
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
 
         } catch (\Exception $exception) {
             $validator->getMessageBag()->add('password', 'Có lỗi xảy ra xin thử lại!');
@@ -241,7 +308,7 @@ class CustomerController extends Controller
         $validator = Validator::make($data , $rules, $messages);
         // if the validator fails, redirect back to the form
         if ($validator->fails()) {
-            return redirect(route('frontend.index'))
+            return redirect(route('frontend.inspire'))
                 ->withErrors($validator)
                 ->withInput($request->except('password'));
         }
@@ -250,14 +317,14 @@ class CustomerController extends Controller
 
         if (!$customer || !$customer->status) {
             $validator->getMessageBag()->add('email', 'Tài khoản không tồn tại hoặc chưa kích hoạt!');
-            return redirect(route('frontend.index'))
+            return redirect(route('frontend.inspire'))
                 ->withErrors($validator)
                 ->withInput($request->except('password'));
         }
 
         if ($data['password'] != $customer->password) {
             $validator->getMessageBag()->add('password', 'Mật khẩu không đúng xin thử lại!');
-            return redirect(route('frontend.index'))
+            return redirect(route('frontend.inspire'))
                 ->withErrors($validator)
                 ->withInput($request->except('password'));
         }
@@ -300,7 +367,7 @@ class CustomerController extends Controller
                 Helpers::log($exception->getMessage());
 
                 $validator->getMessageBag()->add('password', 'Có lỗi xảy ra xin thử lại !');
-                return redirect(route('frontend.index'))
+                return redirect(route('frontend.inspire'))
                     ->withErrors($validator)
                     ->withInput($request->except('password'));
             }
@@ -351,7 +418,7 @@ class CustomerController extends Controller
             $customer->save();
             Helpers::sendMailForgotPassword($customer);
             $request->session()->flash('general_message', 'Xin kiểm tra email để nhận mã lấy lại mật khẩu!');
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         } catch (\Exception $exception) {
             $validator->getMessageBag()->add('email', 'Có lỗi xảy ra xin thử lại!');
             return redirect(route('frontend.forgot_pass'))
@@ -378,13 +445,13 @@ class CustomerController extends Controller
         return view('frontend.forgot', compact('page'));
     }
 
-    public function index()
+    public function inspire()
     {
         if (auth()->check()) {
             return redirect(route('frontend.home'));
         }
-        $page = 'index';
-        return view('frontend.index', compact('page'));
+        $page = 'inspire';
+        return view('frontend.inspire', compact('page'));
 
     }
 
@@ -392,7 +459,7 @@ class CustomerController extends Controller
     {
         $page = 'home';
         if (!auth()->check()) {
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         }
         // check if first login
 
@@ -424,7 +491,7 @@ class CustomerController extends Controller
         $page = 'intro';
         $section = 'home';
         if (!auth()->check()) {
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         }
         return view('frontend.intro', compact( 'page', 'section'));
     }
@@ -439,13 +506,13 @@ class CustomerController extends Controller
         }
 
         auth()->logout();
-        return redirect(route('frontend.index'));
+        return redirect(route('frontend.inspire'));
     }
 
     public function individual()
     {
         if (!auth()->check()) {
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         }
 
         $customer = Customer::find(auth()->user()->id);
@@ -458,7 +525,7 @@ class CustomerController extends Controller
     public function personal(Request $request)
     {
         if (!auth()->check()) {
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         }
 
         $customerId = auth()->user()->id;
@@ -481,7 +548,7 @@ class CustomerController extends Controller
     public function postPersonal(Request $request)
     {
         if (!auth()->check()) {
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         }
 
         if (Helpers::isDemoCustomer()) {

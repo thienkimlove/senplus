@@ -18,6 +18,7 @@ use App\Models\Company;
 use App\Models\Customer;
 use App\Models\Explain;
 use App\Models\Filter;
+use App\Models\Partner;
 use App\Models\Post;
 use App\Models\Question;
 use App\Models\Survey;
@@ -40,111 +41,203 @@ class Helpers
 
     public const SETTINGS = [
         [
-            'key'         => 'meta_index_title',
-            'name'        => 'Meta Index Title',
+            'key' => 'meta_index_title',
+            'name' => 'Meta Index Title',
             'description' => 'For SEO',
-            'value'       => 'casonline.vn',
-            'field'       => '{"name":"value","label":"Value","type":"text"}', //text, textarea
-            'active'      => 1,
+            'value' => 'casonline.vn',
+            'field' => '{"name":"value","label":"Value","type":"text"}', //text, textarea
+            'active' => 1,
         ],
         [
-            'key'         => 'meta_index_desc',
-            'name'        => 'Meta Index Description',
+            'key' => 'meta_index_desc',
+            'name' => 'Meta Index Description',
             'description' => 'For SEO',
-            'value'       => 'casonline.vn',
-            'field'       => '{"name":"value","label":"Value","type":"textarea"}', //text, textarea
-            'active'      => 1,
+            'value' => 'casonline.vn',
+            'field' => '{"name":"value","label":"Value","type":"textarea"}', //text, textarea
+            'active' => 1,
         ],
         [
-            'key'         => 'meta_index_keywords',
-            'name'        => 'Meta Index Keywords',
+            'key' => 'meta_index_keywords',
+            'name' => 'Meta Index Keywords',
             'description' => 'For SEO',
-            'value'       => 'casonline.vn',
-            'field'       => '{"name":"value","label":"Value","type":"text"}', //text, textarea
-            'active'      => 1,
-        ],
-
-
-
-        [
-            'key'         => 'facebook_app_id',
-            'name'        => 'Facebook App ID',
-            'description' => 'For SEO',
-            'value'       => '',
-            'field'       => '{"name":"value","label":"Value","type":"text"}', //text, textarea
-            'active'      => 1,
-        ],
-        [
-            'key'         => 'website_name',
-            'name'        => 'Website Name',
-            'description' => 'For SEO',
-            'value'       => 'Hệ thống đánh giá văn hóa doanh nghiệp',
-            'field'       => '{"name":"value","label":"Value","type":"text"}', //text, textarea
-            'active'      => 1,
+            'value' => 'casonline.vn',
+            'field' => '{"name":"value","label":"Value","type":"text"}', //text, textarea
+            'active' => 1,
         ],
 
+
         [
-            'key'         => 'youtube_link',
-            'name'        => 'Youtube Link',
+            'key' => 'facebook_app_id',
+            'name' => 'Facebook App ID',
             'description' => 'For SEO',
-            'value'       => '#',
-            'field'       => '{"name":"value","label":"Value","type":"text"}', //text, textarea
-            'active'      => 1,
+            'value' => '',
+            'field' => '{"name":"value","label":"Value","type":"text"}', //text, textarea
+            'active' => 1,
         ],
         [
-            'key'         => 'google_link',
-            'name'        => 'Google Link',
+            'key' => 'website_name',
+            'name' => 'Website Name',
             'description' => 'For SEO',
-            'value'       => '#',
-            'field'       => '{"name":"value","label":"Value","type":"text"}', //text, textarea
-            'active'      => 1,
+            'value' => 'Hệ thống đánh giá văn hóa doanh nghiệp',
+            'field' => '{"name":"value","label":"Value","type":"text"}', //text, textarea
+            'active' => 1,
         ],
 
         [
-            'key'         => 'facebook_link',
-            'name'        => 'Facebook Link',
+            'key' => 'youtube_link',
+            'name' => 'Youtube Link',
             'description' => 'For SEO',
-            'value'       => '#',
-            'field'       => '{"name":"value","label":"Value","type":"text"}', //text, textarea
-            'active'      => 1,
+            'value' => '#',
+            'field' => '{"name":"value","label":"Value","type":"text"}', //text, textarea
+            'active' => 1,
         ],
         [
-            'key'         => 'analytics',
-            'name'        => 'Analytics Code',
+            'key' => 'google_link',
+            'name' => 'Google Link',
             'description' => 'For SEO',
-            'value'       => '',
-            'field'       => '{"name":"value","label":"Value","type":"textarea"}', //text, textarea
-            'active'      => 1,
-        ],
-        [
-            'key'         => 'webmaster',
-            'name'        => 'Webmaster Code',
-            'description' => 'For SEO',
-            'value'       => '',
-            'field'       => '{"name":"value","label":"Value","type":"textarea"}', //text, textarea
-            'active'      => 1,
+            'value' => '#',
+            'field' => '{"name":"value","label":"Value","type":"text"}', //text, textarea
+            'active' => 1,
         ],
 
         [
-            'key'         => 'endpage',
-            'name'        => 'End Page HTML',
+            'key' => 'facebook_link',
+            'name' => 'Facebook Link',
             'description' => 'For SEO',
-            'value'       => '',
-            'field'       => '{"name":"value","label":"Value","type":"textarea"}', //text, textarea
-            'active'      => 1,
+            'value' => '#',
+            'field' => '{"name":"value","label":"Value","type":"text"}', //text, textarea
+            'active' => 1,
+        ],
+        [
+            'key' => 'analytics',
+            'name' => 'Analytics Code',
+            'description' => 'For SEO',
+            'value' => '',
+            'field' => '{"name":"value","label":"Value","type":"textarea"}', //text, textarea
+            'active' => 1,
+        ],
+        [
+            'key' => 'webmaster',
+            'name' => 'Webmaster Code',
+            'description' => 'For SEO',
+            'value' => '',
+            'field' => '{"name":"value","label":"Value","type":"textarea"}', //text, textarea
+            'active' => 1,
         ],
 
         [
-            'key'         => 'menu_product',
-            'name'        => 'Text menu sản phẩm',
+            'key' => 'endpage',
+            'name' => 'End Page HTML',
             'description' => 'For SEO',
-            'value'       => 'Các sản phẩm',
-            'field'       => '{"name":"value","label":"Value","type":"text"}', //text, textarea
-            'active'      => 1,
+            'value' => '',
+            'field' => '{"name":"value","label":"Value","type":"textarea"}', //text, textarea
+            'active' => 1,
+        ],
+
+        [
+            'key' => 'menu_product',
+            'name' => 'Text menu sản phẩm',
+            'description' => 'For SEO',
+            'value' => 'Các sản phẩm',
+            'field' => '{"name":"value","label":"Value","type":"text"}', //text, textarea
+            'active' => 1,
+        ],
+
+
+        [
+            'key' => 'index_section1_quote',
+            'name' => 'Index Section1 Quote Text',
+            'description' => 'For SEO',
+            'value' => '',
+            'field' => '{"name":"value","label":"Value","type":"ckeditor"}', //text, textarea
+            'active' => 1,
+        ],
+
+
+        [
+            'key' => 'index_section1_desc',
+            'name' => 'Index Section1 Description Text',
+            'description' => 'For SEO',
+            'value' => '',
+            'field' => '{"name":"value","label":"Value","type":"ckeditor"}', //text, textarea
+            'active' => 1,
+        ],
+
+
+        [
+            'key' => 'index_section2_quote',
+            'name' => 'Index Section2 Quote Text',
+            'description' => 'For SEO',
+            'value' => '',
+            'field' => '{"name":"value","label":"Value","type":"ckeditor"}', //text, textarea
+            'active' => 1,
         ],
 
 
     ];
+
+    public const REG_OPT_1 = 1;
+    public const REG_OPT_2 = 2;
+    public const REG_OPT_3 = 3;
+
+
+    public const REG_OPTIONS = [
+        self::REG_OPT_1 => 'Khảo sát mô hình cạnh tranh',
+        self::REG_OPT_2 => 'Đo lường văn hóa doanh nghiệp',
+        self::REG_OPT_3 => 'Dịch vụ bổ trợ',
+    ];
+
+
+    public const REG_POSITION_1 = 1;
+    public const REG_POSITION_2 = 2;
+    public const REG_POSITION_3 = 3;
+    public const REG_POSITION_4 = 4;
+
+
+    public const REG_POSITIONS = [
+        self::REG_POSITION_1 => 'CEO/Founder',
+        self::REG_POSITION_2 => 'Quản lý/Leader/Manager',
+        self::REG_POSITION_3 => 'Nhân viên',
+        self::REG_POSITION_4 => 'Vị trí khác',
+    ];
+
+
+
+    public const CONTACT_OPT_1 = 1;
+    public const CONTACT_OPT_2 = 2;
+    public const CONTACT_OPT_3 = 3;
+
+
+    public const CONTACT_OPTIONS = [
+        self::CONTACT_OPT_1 => 'Tôi muốn mua sản phẩm',
+        self::CONTACT_OPT_2 => 'Tôi muốn tư vấn',
+        self::CONTACT_OPT_3 => 'Tôi muốn trở thành đối tác thương mại',
+    ];
+
+
+    public const STATUS_CREATE = 0;
+    public const STATUS_PROCESS = 1;
+    public const STATUS_DONE = 2;
+
+
+    public const STATUSES = [
+        self::STATUS_CREATE => 'Mới tạo',
+        self::STATUS_PROCESS => 'Đang xử lý',
+        self::STATUS_DONE => 'Đã xử lý',
+    ];
+
+
+    public static function getPartners()
+    {
+        return Partner::where('status', true)->limit(4)->get();
+    }
+
+
+    public static function getLatestPosts()
+    {
+        return Post::where('status', true)->orderBy('created_at', 'DESC')->skip(1)->limit(3)->get();
+    }
+
 
     public const DEFAULT_COMPANY_NAME = "Khảo sát miễn phí";
 

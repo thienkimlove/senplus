@@ -36,4 +36,7 @@ Route::group([
     Route::crud('author', 'AuthorCrudController');
     Route::crud('topic', 'TopicCrudController');
     Route::crud('post', 'PostCrudController');
+    Route::crud('partner', 'PartnerCrudController');
+    Route::crud('contact', 'ContactCrudController');
+    Route::crud('register', 'RegisterCrudController');
 }); // this should be the absolute last line of this file

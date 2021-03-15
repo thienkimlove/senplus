@@ -24,7 +24,7 @@ class CompanyController extends Controller
     public function campaign()
     {
         if (!auth()->check()) {
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         }
 
         if (!Helpers::currentFrontendUserIsManager()) {
@@ -42,7 +42,7 @@ class CompanyController extends Controller
     public function campaignDetail(Request $request)
     {
         if (!auth()->check()) {
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         }
 
         if (!Helpers::currentFrontendUserIsManager()) {
@@ -73,7 +73,7 @@ class CompanyController extends Controller
     public function campaignEdit(Request $request)
     {
         if (!auth()->check()) {
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         }
 
         if (!Helpers::currentFrontendUserIsAdmin()) {
@@ -194,7 +194,7 @@ class CompanyController extends Controller
     public function campaignCreate()
     {
         if (!auth()->check()) {
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         }
 
         if (!Helpers::currentFrontendUserIsAdmin()) {
@@ -379,7 +379,7 @@ class CompanyController extends Controller
     public function member(Request $request)
     {
         if (!auth()->check()) {
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         }
 
         if (!Helpers::currentFrontendUserIsManager()) {
@@ -457,7 +457,7 @@ class CompanyController extends Controller
     public function memberDetail(Request $request)
     {
         if (!auth()->check()) {
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         }
 
         if (!Helpers::currentFrontendUserIsManager()) {
@@ -506,7 +506,7 @@ class CompanyController extends Controller
     public function memberEdit(Request $request)
     {
         if (!auth()->check()) {
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         }
 
         if (!Helpers::currentFrontendUserIsAdmin()) {
@@ -644,7 +644,7 @@ class CompanyController extends Controller
     public function memberCreate()
     {
         if (!auth()->check()) {
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         }
 
         if (!Helpers::currentFrontendUserIsAdmin()) {
@@ -745,7 +745,7 @@ class CompanyController extends Controller
     public function profile()
     {
         if (!auth()->check()) {
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         }
 
         if (!Helpers::currentFrontendUserIsManager()) {

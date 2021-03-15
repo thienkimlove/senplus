@@ -20,7 +20,7 @@ class FrontendController extends Controller
     public function survey(Request $request)
     {
         if (!auth()->check()) {
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         }
         $page = 'survey';
         $surveyId = $request->input('id');
@@ -69,7 +69,7 @@ class FrontendController extends Controller
     public function back(Request $request)
     {
         if (!auth()->check()) {
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         }
         $questionId = $request->input('question_id');
 
@@ -97,7 +97,7 @@ class FrontendController extends Controller
     public function answer(Request $request)
     {
         if (!auth()->check()) {
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         }
 
         $data =  $request->only(['question_id', 'option1', 'option2', 'option3', 'option4', 'random']);
@@ -189,7 +189,7 @@ class FrontendController extends Controller
     public function result(Request $request)
     {
         if (!auth()->check()) {
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         }
 
         $surveyId = $request->input('id');
@@ -226,12 +226,12 @@ class FrontendController extends Controller
     {
 
         if (!auth()->check()) {
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         }
 
         if (!Helpers::currentFrontendUserIsManager()) {
             Helpers::setFlashMessage('Bạn không có quyền xem kết quả doanh nghiệp!');
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         }
 
         $surveyId = $request->input('id');
@@ -271,7 +271,7 @@ class FrontendController extends Controller
     public function filter(Request $request)
     {
         if (!auth()->check()) {
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         }
         $surveyId = $request->input('survey_id');
 
@@ -394,7 +394,7 @@ class FrontendController extends Controller
     public function removeManager(Request $request)
     {
         if (!auth()->check()) {
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         }
 
 
@@ -443,7 +443,7 @@ class FrontendController extends Controller
     }
     public function addManager(Request $request) {
         if (!auth()->check()) {
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.inspire'));
         }
 
 

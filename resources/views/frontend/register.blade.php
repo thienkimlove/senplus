@@ -51,7 +51,7 @@
                         <a href="javascript:void(0)"  class="blue" title="Chính sách bảo mật" aria-label="Chính sách bảo mật" target="_blank" rel="noreferrer">Chính sách bảo mật</a>
                     </div>
                     <div class="form-group">
-                        <div class="noAccount">Chưa đã tài khoản? <a href="{{ url('/') }}" class="registerLink" title="Đăng nhập" aria-label="Login">Đăng nhập</a></div>
+                        <div class="noAccount">Chưa đã tài khoản? <a href="{{ route('frontend.inspire') }}" class="registerLink" title="Đăng nhập" aria-label="Login">Đăng nhập</a></div>
                         <button id="btnRegister" type="button">Đăng Ký</button>
                     </div>
                 </form>
