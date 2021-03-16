@@ -228,9 +228,7 @@ class Helpers
 
     public static function getImageBySize($content, $w, $h)
     {
-        $image = $content->anh2? $content->anh2 : $content->image;
-
-        return $image? url('img/cache/'.$w.'x'.$h.'/'.str_replace('uploads/', '', $image)) : "";
+        return $content->image? url('img/cache/'.$w.'x'.$h.'/'.str_replace('uploads/', '', $content->image)) : "";
     }
 
 
