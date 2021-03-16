@@ -226,6 +226,13 @@ class Helpers
         self::STATUS_DONE => 'Đã xử lý',
     ];
 
+    public static function getImageBySize($content, $w, $h)
+    {
+        $image = $content->anh2? $content->anh2 : $content->image;
+
+        return $image? url('img/cache/'.$w.'x'.$h.'/'.str_replace('uploads/', '', $image)) : "";
+    }
+
 
     public static function getPartners()
     {

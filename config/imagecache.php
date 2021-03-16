@@ -138,6 +138,10 @@ return [
         '276x157' => function($image) {
             return $image->fit(276, 157);
         },
+        '350x195' => function($image) {
+            return $image->fit(350, 195);
+        },
+
     ],
 
     /*

@@ -230,7 +230,7 @@
                     @if ($latestNew = \App\Helpers::getLatestPost())
                     <div id="newestNews">
                         <a href="{{ url($latestNew->slug.'.html') }}" class="thumb" title="{{ $latestNew->name }}">
-                            <img src="{{ $latestNew->anh2 ? url($latestNew->anh2) : url($latestNew->image) }}" alt="" class="imgFull">
+                            <img src="{{ \App\Helpers::getImageBySize($latestNew, 350, 195) }}" alt="" class="imgFull">
                         </a>
                         <a href="{{ url($latestNew->slug.'.html') }}" class="title" title="{{ $latestNew->name }}">{{ $latestNew->name }}</a>
                         <div class="line">----------------</div>
