@@ -29,11 +29,11 @@
 </head>
 <body class="">
 
-@include('frontend.partials.home_header')
-
 @if (isset($isStyleBlog) && $isStyleBlog)
+    @include('frontend.partials.blog_header')
     @include('frontend.partials.blog_second_menu')
 @else
+    @include('frontend.partials.home_header')
     @include('frontend.partials.second_menu')
 @endif
 

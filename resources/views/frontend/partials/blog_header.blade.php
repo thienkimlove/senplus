@@ -23,10 +23,10 @@
                 </li>
             </ul>
             <div class="btnGroup flxc">
-                <form action="" class="formSearchTop">
-                    <input type="text" id="searchInput" placeholder="Tìm kiếm">
-                    <button id="btnSearchTop">
-                        <img src="/frontend/cas/assets/img/i_search.png" alt="Menu" class="imgFull">
+                <form id="searchForm" action="{{ route('frontend.search') }}" method="GET" class="formSearchTop">
+                    <input type="text" id="searchInput" name="q" value="{{ request()->input('q') }}" placeholder="Tìm kiếm">
+                    <button id="btnSearchTop" onclick="document.getElementById('searchForm').submit(); return false;">
+                        <img src="/frontend/assets/img/i_search.jpg" alt="Menu" class="imgFull">
                     </button>
                 </form>
                 <a href="javascript:void(0)" id="btnShowMainMenu" title="Menu">

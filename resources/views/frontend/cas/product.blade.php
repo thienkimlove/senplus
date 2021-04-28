@@ -8,7 +8,7 @@
                 <div class="leftContent">
                     <quote>Khảo sát Mô hình cạnh tranh</quote>
                     <div class="description">
-                        Được phát triển từ các học thuyết về khung năng lực cạnh tranh đang được ứng dụng hơn 10.000 doanh nghiệp toàn cầu, khảo sát Mô hình cạnh tranh giúp nhà quản lý.
+                        Được phát triển từ các học thuyết về khung năng lực cạnh tranh đang được ứng dụng tại hơn 10.000 doanh nghiệp toàn cầu, khảo sát Mô hình cạnh tranh giúp nhà quản lý:
                     </div>
                     <ul class="listHelp">
                         <li>Nhận diện mô hình cạnh tranh hiện tại</li>
@@ -53,7 +53,7 @@
                             <div class="card">
                                 <a href="javascript:void(0)" class="title" title="Loại bỏ mọi đánh giá cảm tính">Loại bỏ mọi đánh giá cảm tính</a>
                                 <p>Với các thuật toán được phát triển bởi nhóm nghiên cứu CAS và dữ liệu trả lời từ người dùng, khảo sát sẽ mang đến những
-                                    <span style="color: #62d7dd;">Số liệu trực quan, chính xác</span> nhất về năng lực cạnh tranh cốt lõi của văn hóa doanh nghiệp</p>
+                                    <span style="color: #62d7dd;" class="fwb">số liệu trực quan, chính xác</span> nhất về năng lực cạnh tranh cốt lõi của văn hóa doanh nghiệp</p>
                             </div>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
                 <h2 class="title hasBd tt">Các gói sản phẩm</h2>
                 <div class="content">
                     <div class="item">
-                        <a href="#" class="title" title="Free">Free</a>
+                        <h3 class="title" title="Free">Free</h3>
                         <div class="sum">
                             <ul>
                                 <li>Khách hàng cá nhân</li>
@@ -74,10 +74,10 @@
                             </ul>
                         </div>
                         <div class="fee">Miễn phí</div>
-                        <a href="https://casonline.vn/" class="myBtn" title="Khảo sát ngay">Khảo sát ngay</a>
+                        <a href="https://casonline.vn/inspire" class="myBtn" title="Khảo sát ngay">Khảo sát ngay</a>
                     </div>
                     <div class="item">
-                        <a href="#" class="title" title="CAS 25">CAS 25</a>
+                        <h3 class="title" title="CAS 25">CAS 25</h3>
                         <div class="sum">
                             <ul>
                                 <li>Phù hợp doanh nghiệp <= 25 người</li>
@@ -95,7 +95,7 @@
                         <a href="javascript:void(0)" class="myBtn" title="Đăng ký" data-popup="#popupRegister" onclick="showPopup($(this))">Đăng ký</a>
                     </div>
                     <div class="item">
-                        <a href="#" class="title" title="CAS 50">CAS 50</a>
+                        <h3 class="title" title="CAS 50">CAS 50</h3>
                         <div class="sum">
                             <ul>
                                 <li>Phù hợp doanh nghiệp <= 50 người</li>
@@ -113,7 +113,7 @@
                         <a href="javascript:void(0)" class="myBtn" title="Đăng ký" data-popup="#popupRegister" onclick="showPopup($(this))">Đăng ký</a>
                     </div>
                     <div class="item">
-                        <a href="#" class="title" title="CAS Preimium">CAS Preimium</a>
+                        <h3 class="title" title="CAS Preimium">CAS Preimium</h3>
                         <div class="sum">
                             <ul>
                                 <li>Phù hợp doanh nghiệp > 50 người</li>

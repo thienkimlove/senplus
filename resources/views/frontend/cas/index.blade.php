@@ -5,24 +5,24 @@
     <main>
         <section class="section pr" id="section1">
             <div class="fixCen">
-                <quote>
+                <quotes>
                     {!! \App\Helpers::configGet('index_section1_quote') !!}
-                </quote>
+                </quotes>
                 <div class="description">
                     {!! \App\Helpers::configGet('index_section1_desc') !!}
                 </div>
-                <a href="https://casonline.vn/" class="btnSurvey" title="Khảo sát miễn phí" aria-label="Free Survey">Khảo sát miễn phí</a>
+                <a href="https://casonline.vn/inspire" class="btnSurvey" title="Khảo sát miễn phí" aria-label="Free Survey">Khảo sát miễn phí</a>
             </div>
         </section>
         <section class="section pr" id="section2">
             <div class="fixCen">
-                <quote>
-                    {!! \App\Helpers::configGet('index_section2_quote') !!}
-                </quote>
+                <quotes id="sec2quotes">
+                    <div>{!! \App\Helpers::configGet('index_section2_quote') !!}</div>
+                </quotes>
                 <div class="circleGroup">
                     <div class="item">
                         <div class="circleWrapper bgOrange">
-                            <div class="circleInner pa"><div class="leftPercent" style="height: 28%;"></div></div>
+                            <div class="circleInner pa"><div class="leftPercent" id="cOrange"></div></div>
                             <div class="showPercent">72%</div>
                         </div>
                         <div class="name bgOrange"><span></span>Breathe</div>
@@ -30,7 +30,7 @@
                     </div>
                     <div class="item">
                         <div class="circleWrapper bgPurple">
-                            <div class="circleInner pa"><div class="leftPercent" style="height: 18%;"></div></div>
+                            <div class="circleInner pa"><div class="leftPercent" id="cPurple"></div></div>
                             <div class="showPercent">82%</div>
                         </div>
                         <div class="name bgPurple"><span></span>Deloitte</div>
@@ -38,7 +38,7 @@
                     </div>
                     <div class="item">
                         <div class="circleWrapper bgGreen">
-                            <div class="circleInner pa"><div class="leftPercent" style="height: 35%;"></div></div>
+                            <div class="circleInner pa"><div class="leftPercent" id="cGreen"></div></div>
                             <div class="showPercent">65%</div>
                         </div>
                         <div class="name bgGreen"><span></span>PwC</div>
@@ -46,7 +46,7 @@
                     </div>
                     <div class="item">
                         <div class="circleWrapper bgBlue">
-                            <div class="circleInner pa"><div class="leftPercent" style="height: 8%;"></div></div>
+                            <div class="circleInner pa"><div class="leftPercent" id="cBlue"></div></div>
                             <div class="showPercent">92%</div>
                         </div>
                         <div class="name bgBlue"><span></span>E&Y</div>
@@ -62,7 +62,7 @@
                     <div class="item card1">
                         <div class="card">
                             <div class="icon"><img src="/frontend/cas/assets/img/5.png" alt="" class="imgFull"></div>
-                            <a href="#" class="title" title="Kiệt sức">Kiệt sức</a>
+                            <h3 class="title" title="Kiệt sức">Kiệt sức</h3>
                             <div class="sum">24% nhân viên <br> thấy kiệt sức</div>
                             <div class="source">Viện lao động Mỹ, 2019</div>
                         </div>
@@ -70,7 +70,7 @@
                     <div class="item card2">
                         <div class="card">
                             <div class="icon"><img src="/frontend/cas/assets/img/6.png" alt="" class="imgFull"></div>
-                            <a href="#" class="title" title="Chảy máu chất xám">Chảy máu chất xám</a>
+                            <h3 class="title" title="Chảy máu chất xám">Chảy máu chất xám</h3>
                             <div class="sum">87% nhân viên <br> trên thế giới <br> không muốn gắn bó <br> với công ty</div>
                             <div class="source">Tập đoàn Gallup, 2017</div>
                         </div>
@@ -78,7 +78,7 @@
                     <div class="item card3">
                         <div class="card">
                             <div class="icon"><img src="/frontend/cas/assets/img/7.png" alt="" class="imgFull"></div>
-                            <a href="#" class="title" title="Giảm động lực">Giảm động lực</a>
+                            <h3 class="title" title="Giảm động lực">Giảm động lực</h3>
                             <div class="sum">48% nhân viên trên thế giới không yêu thích công việc, thấy căng thẳng và mất động lực làm việc nơi công sở.</div>
                             <div class="source">Forbes, 2014</div>
                         </div>
@@ -94,17 +94,17 @@
                     <div class="items">
                         <div class="item">
                             <div class="icon"><img src="/frontend/cas/assets/img/2.png" alt="" class="imgFull"></div>
-                            <a href="#" class="title" title="Đo lường">Đo lường</a>
+                            <h3 class="title" title="Đo lường">Đo lường</h3>
                             <div class="sum">Đo lường, đánh giá các chỉ số về môi trường văn hóa, mô hình cạnh tranh, mức độ hiệu quả của văn hóa doanh nghiệp</div>
                         </div>
                         <div class="item">
                             <div class="icon"><img src="/frontend/cas/assets/img/4.png" alt="" class="imgFull"></div>
-                            <a href="#" class="title" title="Tùy biến">Tùy biến</a>
+                            <h3 class="title" title="Tùy biến">Tùy biến</h3>
                             <div class="sum">Tùy biến các chiến dịch khảo sát riêng biệt, phù hợp với từng doanh nghiệp</div>
                         </div>
                         <div class="item">
                             <div class="icon"><img src="/frontend/cas/assets/img/3.png" alt="" class="imgFull"></div>
-                            <a href="#" class="title" title="Chủ động">Chủ động</a>
+                            <h3 class="title" title="Chủ động">Chủ động</h3>
                             <div class="sum">
                                 <p>Quản lý dữ liệu nhân viên</p>
                                 Thiết lập các chiến dịch khảo sát vào thời điểm thích hợp
@@ -112,7 +112,7 @@
                         </div>
                         <div class="item">
                             <div class="icon"><img src="/frontend/cas/assets/img/1.png" alt="" class="imgFull"></div>
-                            <a href="#" class="title" title="Hiệu quả">Hiệu quả</a>
+                            <h3 class="title" title="Hiệu quả">Hiệu quả</h3>
                             <div class="sum">
                                 <p>Thuật toán đảm bảo 100% câu trả lời hợp lệ</p>
                                 Rút ngắn 90% thời gian khảo sát
@@ -121,7 +121,6 @@
                     </div>
                 </div>
                 <div class="content content2">
-                    <h2 class="title">Kết nối nhu cầu các cấp trong doanh nghiệp</h2>
                     <div class="items" id="effect2">
                         <div class="item card4">
                             <div class="card">
@@ -157,6 +156,7 @@
                     <div class="banner">
                         <img src="/frontend/cas/assets/img/banner2.jpg" alt="" class="imgFull">
                     </div>
+                    <h2 class="title">Kết nối nhu cầu các cấp trong doanh nghiệp</h2>
                 </div>
             </div>
         </section>
@@ -166,8 +166,9 @@
                 <div class="content">
                     <div class="item">
                         <div class="icon">
-                            <img src="/frontend/cas/assets/img/8.png" alt="" class="imgFull"></div>
-                        <a href="#" class="title" title="Kiệt sức">Khảo sát <br>mô hình cạnh tranh</a>
+                            <img src="/frontend/cas/assets/img/8.png" alt="" class="imgFull">
+                        </div>
+                        <h3 class="title" title="Khảo sát mô hình cạnh tranh">Khảo sát <br>mô hình cạnh tranh</h3>
                         <div class="sum">
                             <ul>
                                 <li>Trải nghiệm MIỄN PHÍ với tài khoản cá nhân</li>
@@ -178,11 +179,11 @@
                             </ul>
                         </div>
                         <a href="#" class="linkDetail" title="Chi tiết">Chi tiết</a>
-                        <a href="https://casonline.vn/" class="myBtn" title="Khảo sát ngay">Khảo sát ngay</a>
+                        <a href="https://casonline.vn/inspire" class="myBtn" title="Khảo sát ngay">Khảo sát ngay</a>
                     </div>
                     <div class="item">
                         <div class="icon"><img src="/frontend/cas/assets/img/9.png" alt="" class="imgFull"></div>
-                        <a href="#" class="title" title="Chảy máu chất xám">Đo lường <br> văn hóa doanh nghiệp</a>
+                        <h3 class="title" title="Chảy máu chất xám">Đo lường <br> văn hóa doanh nghiệp</h3>
                         <div class="sum">
                             <ul>
                                 <li>Công cụ HIỆN ĐẠI đo lường CHÍNH XÁC hiệu quả của văn hóa doanh nghiệp</li>
@@ -196,7 +197,7 @@
                     </div>
                     <div class="item">
                         <div class="icon"><img src="/frontend/cas/assets/img/10.png" alt="" class="imgFull"></div>
-                        <a href="#" class="title" title="Giảm động lực">Dịch vụ bổ trợ</a>
+                        <h3 class="title" title="Giảm động lực">Dịch vụ bổ trợ</h3>
                         <div class="sum">Tư vấn, lập kế hoạch, triển khai hoạt động truyền thông nội bộ
                             <ul>
                                 <li>Tư vấn, xây dựng bộ quy chế ứng xử, văn bản nội quy liên quan đến văn hóa doanh nghiệp</li>
@@ -253,7 +254,7 @@
                         </div>
                         <div class="name">{{ $partner->name }}</div>
                         <div class="company">{{ $partner->company }}</div>
-                        <quote>{{ $partner->text }}</quote>
+                        <quotes>{{ $partner->text }}</quotes>
                     </div>
                    @endforeach
                 </div>

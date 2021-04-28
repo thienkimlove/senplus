@@ -18,7 +18,6 @@
             </div>
             <div class="form-group">
                 <select name="option" id="option">
-                    <option value="">Mong muốn của bạn *</option>
                     @foreach (\App\Helpers::CONTACT_OPTIONS as $key => $val)
                         <option value="{{ $key }}">{{ $val }}</option>
                     @endforeach
@@ -34,6 +33,7 @@
             <div class="form-group">
                 <button id="submitContactForm" type="button">Gửi</button>
             </div>
+            <p style="text-align: center;">Cảm ơn bạn đã liên hệ với CAS Online! Chúng tôi sẽ phản hồi trong thời gian sớm nhất.</p>
         </form>
     </main>
 @endsection

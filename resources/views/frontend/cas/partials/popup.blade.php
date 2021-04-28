@@ -15,25 +15,39 @@
         <a href="javascript:void(0)" class="link" title="Điều khoản sử dụng" aria-label="Terms of use">Điều khoản sử dụng</a>
     </div>
 </div>
-<div id="popupCorporateCulture" class="px">
+<div id="popupCorporateCulture" class="px menuHomePage">
     <a href="javascript:void(0)" class="closePopup pa" title="Đóng" aria-label="Close"><img src="/frontend/cas/assets/img/i_x.png" alt="" class="imgFull"></a>
     <div class="logoSM bdb">
         <img src="/frontend/cas/assets/img/logo.svg" alt="" class="imgFull">
     </div>
-    <a href="javascript:void(0)" class="link hasBg" title="Hệ thống đánh giá văn hóa doanh nghiệp" aria-label="CAS"><strong>Hệ thống đánh giá văn hóa doanh nghiệp</strong></a>
-    <a href="javascript:void(0)" class="link bdt" title="Giới thiệu" aria-label="Introduce">Giới thiệu</a>
-    <a href="home-user.html" class="link bdt" title="Tên công ty" aria-label="Home page"><strong>Tên công ty (?)</strong></a>
-    <a href="ho-so-doanh-nghiep.html" class="link bdt" title="Hồ sơ doanh nghiêp" aria-label="Corporate Profile">Hồ sơ doanh nghiêp</a>
-    <a href="danh-sach-thanh-vien.html" class="link" title="Dữ liệu người dùng" aria-label="User Data">Dữ liệu người dùng</a>
-    <a href="danh-sach-chien-dich.html" class="link bdb" aria-label="Survey Campaign" title="Danh sách khảo sát">Danh sách khảo sát</a>
-    <a href="javascript:void(0)" class="link hasBg bdb showOnMb" title="Blog" aria-label="Blog">Blog</a>
-    <a href="javascript:void(0)" class="link hasBg bdb showOnMb" title="Các sản phẩm" aria-label="Products">Các sản phẩm</a>
-    <a href="javascript:void(0)" class="link hasBg bdb showOnMb" title="Về chúng tôi" aria-label="About us">Về chúng tôi</a>
-    <div class="bottomInfo">
+    <a href="javascript:void(0)" class="link" title="Hệ thống đánh giá văn hóa doanh nghiệp" aria-label="CAS"><strong>Hệ thống đánh giá văn hóa doanh nghiệp</strong></a>
+    <ul class="showOnMobile">
+        <li><a href="javascript:void(0)" class="link bdt" title="Về chúng tôi" aria-label="About us">Về chúng tôi</a></li>
+        <li><a href="javascript:void(0)" class="link bdt" title="Sản phẩm" aria-label="Products">Sản phẩm</a>
+            <ol class="subMenu">
+                <li><a href="{{ route('frontend.product') }}" title="Khảo sát mô hình cạnh tranh">Khảo sát mô hình cạnh tranh</a></li>
+                <li><a href="{{ route('frontend.product') }}" title="Đo lường hiệu quả văn hóa doanh nghiệp">Đo lường hiệu quả văn hóa doanh nghiệp</a></li>
+                <li><a href="{{ route('frontend.product') }}" title="Dịch vụ bổ trợ">Dịch vụ bổ trợ</a></li>
+            </ol>
+        </li>
+        <li><a href="{{ route('frontend.index') }}/blog" class="link bdt" title="Blog" aria-label="Blog">Blog</a></li>
+        <li><a href="{{ route('frontend.contact') }}" class="link bdt" title="Liên hệ" aria-label="Contact">Liên hệ</a></li>
+    </ul>
+    <ul>
+        <li><a href="javascript:void(0)" class="link hasBg btnHelpCenter bdt bdb" title="Câu hỏi thường gặp" aria-label="Usual Questions">Câu hỏi thường gặp</a></li>
+        <li><a href="javascript:void(0)" class="link" title="Hướng dẫn" aria-label="Guiding">Hướng dẫn</a>
+            <ul class="subMenu">
+                <li><a href="javascript:void(0)" class="link bdb" title="Hướng dẫn khảo sát">Hướng dẫn khảo sát</a></li>
+                <li><a href="javascript:void(0)" class="link" title="Quy tắc tính điểm">Quy tắc tính điểm</a></li>
+            </ul>
+        </li>
+    </ul>
+    <div class="bottomInfo bdt">
         <div class="txt">Đăng nhập để thực hiện khảo sát</div>
         <a href="javascript:void(0)" class="btnLogin" title="Đăng nhập" aria-label="Login">Đăng nhập</a>
     </div>
 </div>
+
 <div class="popup px" id="popupRegister">
     <div class="bg_drop pa"></div>
     <div class="popupContent pa">
@@ -56,7 +70,6 @@
             </div>
             <div class="form-group">
                 <select name="position" id="position">
-                    <option value="">Vị trí công việc hiện tại *</option>
                     @foreach (\App\Helpers::REG_POSITIONS as $key =>  $val)
                         <option value="{{ $key }}">{{ $val }}</option>
                     @endforeach
@@ -64,7 +77,6 @@
             </div>
             <div class="form-group">
                 <select name="option" id="option">
-                    <option value="">Bạn muốn đăng ký dịch vụ *</option>
                     @foreach (\App\Helpers::REG_OPTIONS as $key =>  $val)
                         <option value="{{ $key }}">{{ $val }}</option>
                     @endforeach
@@ -73,11 +85,12 @@
             <div class="form-group acception">
                 <input type="checkbox" class="checkbox" checked> Bạn đã đọc <a href="javascript:void(0)"  class="blue" title="Chính sách bảo mật" aria-label="Chính sách bảo mật" target="_blank" rel="noreferrer">Chính sách bảo mật</a>
                 và <a href="javascript:void(0)" class="blue" title="Điều khoản dịch vụ" aria-label="Điều khoản dịch vụ" target="_blank" rel="noreferrer">Điều khoản dịch vụ</a> của chúng tôi.
-                <br> Hỗ trọ hotline <a href="tel:0967573573">0967 573 573</a>
+                <br> Hotline hỗ trợ <a href="tel:0967573573">0967 573 573</a>
             </div>
             <div class="form-group">
-                <button id="submitRegisterForm" type="button">Gửi đăng Ký</button>
+                <button id="submitRegisterForm" type="button">Gửi đăng ký</button>
             </div>
+            <p style="text-align: center;">Đăng ký được gửi về hòm mail của bạn Cảm ơn bạn đã đăng ký sử dụng dịch vụ của CAS Online!</p>
         </form>
     </div>
 </div>

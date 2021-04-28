@@ -147,8 +147,7 @@
     </div>
 </div>
 <div id="popupCorporateCulture" class="px">
-    <a href="javascript:void(0)" class="closePopup pa" title="Đóng" aria-label="Close">
-        <img src="/frontend/assets/img/i_x.png" alt="" class="imgFull"></a>
+    <a href="javascript:void(0)" class="closePopup pa" title="Đóng" aria-label="Close"><img src="/frontend/assets/img/i_x.png" alt="" class="imgFull"></a>
     <div class="logoSM bdb">
         @if (auth()->check())
         <img src="{{ \App\Helpers::getLoginCompanyLogo() }}" alt="" class="imgFull">
@@ -157,28 +156,27 @@
     <a href="{{ route('frontend.home') }}" class="link hasBg" title="Hệ thống đánh giá văn hóa doanh nghiệp" aria-label="CAS">
         <strong class="fw500">Hệ thống đánh giá văn hóa doanh nghiệp</strong>
     </a>
-    <a href="javascript:void(0)" class="link bdt" title="Giới thiệu" aria-label="Introduce">Giới thiệu</a>
-
-    @if (\App\Helpers::currentFrontendUserIsManager())
-
-        <a href="{{ route('frontend.home') }}" class="link bdt" title="Tên công ty" aria-label="Home page">
-            <strong>{{ \App\Helpers::getLoginCompany()->name }}</strong>
-        </a>
-
-        <a href="{{ route('frontend.profile') }}" class="link bdt" title="Hồ sơ doanh nghiêp" aria-label="Corporate Profile">
-            Hồ sơ doanh nghiêp
-        </a>
-        <a href="{{ route('frontend.member') }}" class="link" title="Dữ liệu người dùng" aria-label="User Data">
-            Dữ liệu người dùng
-        </a>
-        <a href="{{ route('frontend.campaign') }}" class="link bdb" aria-label="Survey Campaign" title="Danh sách khảo sát">
-            Danh sách khảo sát
-        </a>
-
-    @endif
-    <a href="{{ url('/') }}/blog" class="link hasBg bdb showOnMb" title="Blog" aria-label="Blog">Blog</a>
-    <a href="{{ url('/') }}" class="link hasBg bdb showOnMb" title="Các sản phẩm" aria-label="Products">Các sản phẩm</a>
-    <a href="{{ url('/') }}" class="link hasBg bdb showOnMb" title="Về chúng tôi" aria-label="About us">Về chúng tôi</a>
+    <ul class="showOnMobile">
+        <li><a href="{{ url('/') }}" class="link bdt" title="Về chúng tôi" aria-label="About us">Về chúng tôi</a></li>
+        <li><a href="javascript:void(0)" class="link bdt" title="Sản phẩm" aria-label="Products">Sản phẩm</a>
+            <ol class="subMenu">
+                <li><a href="{{ url('/') }}/product" title="Khảo sát mô hình cạnh tranh">Khảo sát mô hình cạnh tranh</a></li>
+                <li><a href="{{ url('/') }}/product" title="Đo lường hiệu quả văn hóa doanh nghiệp">Đo lường hiệu quả văn hóa doanh nghiệp</a></li>
+                <li><a href="{{ url('/') }}/product" title="Dịch vụ bổ trợ">Dịch vụ bổ trợ</a></li>
+            </ol>
+        </li>
+        <li><a href="{{ url('/') }}/blog" class="link bdt" title="Blog" aria-label="Blog">Blog</a></li>
+        <li><a href="{{ url('/') }}/contact" class="link bdt" title="Liên hệ" aria-label="Contact">Liên hệ</a></li>
+    </ul>
+    <ul>
+        <li><a href="javascript:void(0)" class="link hasBg btnHelpCenter bdt bdb" title="Câu hỏi thường gặp" aria-label="Usual Questions">Câu hỏi thường gặp</a></li>
+        <li><a href="javascript:void(0)" class="link" title="Hướng dẫn" aria-label="Guiding">Hướng dẫn</a>
+            <ul class="subMenu">
+                <li><a href="javascript:void(0)" class="link bdb" title="Hướng dẫn khảo sát">Hướng dẫn khảo sát</a></li>
+                <li><a href="https://casonline.vn/quy-tac-tinh-diem-cua-khao-sat-mo-hinh-canh-tranh.html" class="link" title="Quy tắc tính điểm">Quy tắc tính điểm</a></li>
+            </ul>
+        </li>
+    </ul>
 
 </div>
 <div class="popup px popupNotify" id="popupDelSurvey">
