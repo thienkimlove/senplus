@@ -33,6 +33,11 @@
 
 <script>
     $(function(){
+        $('#btnSearchTop').click(function(){
+            $('#formSearchTop').submit();
+            return false;
+        });
+
         $('#submitRegisterForm').click(function(){
 
             let name = $('#name');
