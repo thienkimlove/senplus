@@ -24,18 +24,18 @@
         </h1>
         <nav id="topMenu">
             <ul class="navi">
-                <li class="hideOnMobile"><a href="{{ route('frontend.index') }}" title="Về chúng tôi" aria-label="About us">Về chúng tôi</a></li>
-                <li class="hideOnMobile"><a href="{{ route('frontend.product') }}" title="Sản phẩm" aria-label="Products">Sản phẩm</a>
+                <li class="hideOnMobile"><a  class="{{ (isset($page) && $page == 'index')? 'active' : '' }}" href="{{ route('frontend.index') }}" title="Về chúng tôi" aria-label="About us">Về chúng tôi</a></li>
+                <li class="hideOnMobile"><a  class="{{ (isset($page) && $page == 'product')? 'active' : '' }}" href="{{ route('frontend.product') }}" title="Sản phẩm" aria-label="Products">Sản phẩm</a>
                     <ol class="subMenu">
                         <li><a href="{{ route('frontend.product') }}" title="Khảo sát mô hình cạnh tranh">Khảo sát mô hình cạnh tranh</a></li>
                         <li><a href="{{ route('frontend.product') }}" title="Đo lường hiệu quả văn hóa doanh nghiệp">Đo lường hiệu quả văn hóa doanh nghiệp</a></li>
                         <li><a href="{{ route('frontend.product') }}" title="Dịch vụ bổ trợ">Dịch vụ bổ trợ</a></li>
                     </ol>
                 </li>
-                <li class="hideOnMobile"><a href="{{ route('frontend.index') }}/blog" title="Blog" aria-label="Blog">Blog</a></li>
-                <li class="hideOnMobile"><a href="{{ route('frontend.contact') }}" title="Liên hệ" aria-label="Contact">Liên hệ</a></li>
+                <li class="hideOnMobile"><a  class="{{ (isset($page) && $page == 'blog')? 'active' : '' }}" href="{{ route('frontend.index') }}/blog" title="Blog" aria-label="Blog">Blog</a></li>
+                <li class="hideOnMobile"><a  class="{{ (isset($page) && $page == 'contact')? 'active' : '' }}" href="{{ route('frontend.contact') }}" title="Liên hệ" aria-label="Contact">Liên hệ</a></li>
                 <li>
-                    <a href="{{ route('frontend.inspire')  }}" class="btnSurvey" title="Khảo sát miễn phí" aria-label="Free Survey">Khảo sát miễn phí</a>
+                    <a href="{{ route('frontend.inspire')  }}" class="btnSurvey" title="Khảo sát miễn phí" aria-label="Free Survey {{ (isset($page) && $page == 'inspire')? 'active' : '' }}">Khảo sát miễn phí</a>
                 </li>
             </ul>
             <div class="btnGroup flxc">
