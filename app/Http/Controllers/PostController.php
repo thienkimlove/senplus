@@ -23,7 +23,10 @@ class PostController extends Controller
         $isStyleBlog = true;
         $latestPost = Helpers::getLatestPost();
 
-        $popularPosts = Post::where('status', true)->where('id', '<>', $latestPost->id)->orderBy('updated_at', 'desc')->paginate(9);
+        $popularPosts = Post::where('status', true)
+            ->where('id', '<>', $latestPost->id)
+            ->orderBy('created_at', 'desc')
+            ->paginate(9);
 
         return view('frontend.blog', compact('page', 'isStyleBlog', 'latestPost', 'popularPosts'))->with($meta);
     }
