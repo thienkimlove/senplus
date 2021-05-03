@@ -1,15 +1,27 @@
 <div id="popupProfile" class="px">
+    @if (auth()->check())
     <div class="topInfo bdb">
-        <a href="javascript:void(0)" class="closePopup pa" title="Đóng" aria-label="Close"><img src="/frontend/cas/assets/img/i_x.png" alt="" class="imgFull"></a>
+        <a href="javascript:void(0)" class="closePopup pa" title="Đóng" aria-label="Close">
+            <img src="/frontend/cas/assets/img/i_x.png" alt="" class="imgFull">
+        </a>
         <div class="avatar">
-            <img src="/frontend/cas/assets/img/demo-logo1.jpg" alt="" class="imgFull">
+            <img src="{{ \App\Helpers::getLoginCustomerAvatar() }}" alt="" class="imgFull">
         </div>
-        <div class="userName">Phan Linh Giang</div>
-        <div class="email">email@xxx.com</div>
+
+        <div class="userName">{{ auth()->user()->name }}</div>
+
     </div>
-    <a href="feedback.html" class="link bdb" title="Góp ý cải thiện sản phẩm" aria-label="Suggestions for product improvement">Góp ý cải thiện sản phẩm</a>
-    <a href="thong-tin-tai-khoan.html" class="link" title="Thông tin tài khoản" aria-label="Profile"><strong>Thông tin tài khoản</strong></a>
-    <a href="javascript:void(0)" class="btnLogout" title="Đăng xuất" aria-label="Logout">Đăng xuất</a>
+
+    <a href="{{ route('frontend.contact') }}" class="link bdb" title="Góp ý cải thiện sản phẩm" aria-label="Suggestions for product improvement">
+        Góp ý cải thiện sản phẩm
+    </a>
+    <a href="{{ route('frontend.personal') }}" class="link" title="Thông tin tài khoản" aria-label="Profile">
+        <strong>Thông tin tài khoản</strong>
+    </a>
+    <a href="{{ route('frontend.logout') }}" class="btnLogout" title="Đăng xuất" aria-label="Logout">Đăng xuất</a>
+
+    @endif
+
     <div class="bottomInfo bdt">
         <a href="javascript:void(0)" class="link" title="Chính sách bảo mật" aria-label="Privacy policy">Chính sách bảo mật</a>
         <a href="javascript:void(0)" class="link" title="Điều khoản sử dụng" aria-label="Terms of use">Điều khoản sử dụng</a>
@@ -18,11 +30,15 @@
 <div id="popupCorporateCulture" class="px menuHomePage">
     <a href="javascript:void(0)" class="closePopup pa" title="Đóng" aria-label="Close"><img src="/frontend/cas/assets/img/i_x.png" alt="" class="imgFull"></a>
     <div class="logoSM bdb">
-        <img src="/frontend/cas/assets/img/logo.svg" alt="" class="imgFull">
+        @if (auth()->check())
+            <img src="{{ \App\Helpers::getLoginCompanyLogo() }}" alt="" class="imgFull">
+        @endif
     </div>
-    <a href="javascript:void(0)" class="link" title="Hệ thống đánh giá văn hóa doanh nghiệp" aria-label="CAS"><strong>Hệ thống đánh giá văn hóa doanh nghiệp</strong></a>
+    <a href="{{  route('frontend.home') }}" class="link" title="Hệ thống đánh giá văn hóa doanh nghiệp" aria-label="CAS">
+        <strong>Hệ thống đánh giá văn hóa doanh nghiệp</strong>
+    </a>
     <ul class="showOnMobile">
-        <li><a href="javascript:void(0)" class="link bdt" title="Về chúng tôi" aria-label="About us">Về chúng tôi</a></li>
+        <li><a href="{{ route('frontend.contact') }}" class="link bdt" title="Về chúng tôi" aria-label="About us">Về chúng tôi</a></li>
         <li><a href="javascript:void(0)" class="link bdt" title="Sản phẩm" aria-label="Products">Sản phẩm</a>
             <ol class="subMenu">
                 <li><a href="{{ route('frontend.product') }}" title="Khảo sát mô hình cạnh tranh">Khảo sát mô hình cạnh tranh</a></li>
@@ -42,10 +58,12 @@
             </ul>
         </li>
     </ul>
+    @if (!auth()->check())
     <div class="bottomInfo bdt">
         <div class="txt">Đăng nhập để thực hiện khảo sát</div>
-        <a href="javascript:void(0)" class="btnLogin" title="Đăng nhập" aria-label="Login">Đăng nhập</a>
+        <a href="{{ route('frontend.inspire') }}" class="btnLogin" title="Đăng nhập" aria-label="Login">Đăng nhập</a>
     </div>
+    @endif
 </div>
 
 <div class="popup px" id="popupRegister">

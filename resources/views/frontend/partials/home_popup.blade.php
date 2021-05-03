@@ -160,9 +160,9 @@
         <li><a href="{{ url('/') }}" class="link bdt" title="Về chúng tôi" aria-label="About us">Về chúng tôi</a></li>
         <li><a href="javascript:void(0)" class="link bdt" title="Sản phẩm" aria-label="Products">Sản phẩm</a>
             <ol class="subMenu">
-                <li><a href="{{ url('/') }}/product" title="Khảo sát mô hình cạnh tranh">Khảo sát mô hình cạnh tranh</a></li>
-                <li><a href="{{ url('/') }}/product" title="Đo lường hiệu quả văn hóa doanh nghiệp">Đo lường hiệu quả văn hóa doanh nghiệp</a></li>
-                <li><a href="{{ url('/') }}/product" title="Dịch vụ bổ trợ">Dịch vụ bổ trợ</a></li>
+                <li><a href="{{ route('frontend.product') }}" title="Khảo sát mô hình cạnh tranh">Khảo sát mô hình cạnh tranh</a></li>
+                <li><a href="{{ route('frontend.product') }}" title="Đo lường hiệu quả văn hóa doanh nghiệp">Đo lường hiệu quả văn hóa doanh nghiệp</a></li>
+                <li><a href="{{ route('frontend.product') }}" title="Dịch vụ bổ trợ">Dịch vụ bổ trợ</a></li>
             </ol>
         </li>
         <li><a href="{{ url('/') }}/blog" class="link bdt" title="Blog" aria-label="Blog">Blog</a></li>
