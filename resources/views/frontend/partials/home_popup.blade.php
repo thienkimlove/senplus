@@ -157,23 +157,27 @@
         <strong class="fw500">Hệ thống đánh giá văn hóa doanh nghiệp</strong>
     </a>
     <ul class="showOnMobile">
-        <li><a href="{{ url('/') }}" class="link bdt" title="Về chúng tôi" aria-label="About us">Về chúng tôi</a></li>
-        <li><a href="javascript:void(0)" class="link bdt" title="Sản phẩm" aria-label="Products">Sản phẩm</a>
+        <li>
+            <a href="{{ route('frontend.index')  }}" class="link bdt {{ (isset($page) && $page == 'index')? 'active' : '' }}" title="Về chúng tôi" aria-label="About us">Về chúng tôi</a></li>
+        <li><a href="{{ route('frontend.product') }}" class="link bdt {{ (isset($page) && $page == 'product')? 'active' : '' }}" title="Sản phẩm" aria-label="Products">Sản phẩm</a>
             <ol class="subMenu">
-                <li><a href="{{ route('frontend.product') }}" title="Khảo sát mô hình cạnh tranh">Khảo sát mô hình cạnh tranh</a></li>
-                <li><a href="{{ route('frontend.product') }}" title="Đo lường hiệu quả văn hóa doanh nghiệp">Đo lường hiệu quả văn hóa doanh nghiệp</a></li>
+                <li>
+                    <a href="{{ route('frontend.product') }}" title="Khảo sát mô hình cạnh tranh">Khảo sát mô hình cạnh tranh</a></li>
+                <li>
+                    <a href="{{ route('frontend.product') }}" title="Đo lường hiệu quả văn hóa doanh nghiệp">Đo lường hiệu quả văn hóa doanh nghiệp</a></li>
                 <li><a href="{{ route('frontend.product') }}" title="Dịch vụ bổ trợ">Dịch vụ bổ trợ</a></li>
             </ol>
         </li>
-        <li><a href="{{ url('/') }}/blog" class="link bdt" title="Blog" aria-label="Blog">Blog</a></li>
-        <li><a href="{{ url('/') }}/contact" class="link bdt" title="Liên hệ" aria-label="Contact">Liên hệ</a></li>
+        <li><a href="{{ route('frontend.blog') }}" class="link bdt {{ (isset($page) && $page == 'blog')? 'active' : '' }}" title="Blog" aria-label="Blog">Blog</a></li>
+        <li><a href="{{ route('frontend.contact') }}" class="link bdt {{ (isset($page) && $page == 'contact')? 'active' : '' }}" title="Liên hệ" aria-label="Contact">Liên hệ</a></li>
     </ul>
     <ul>
         <li><a href="javascript:void(0)" class="link hasBg btnHelpCenter bdt bdb" title="Câu hỏi thường gặp" aria-label="Usual Questions">Câu hỏi thường gặp</a></li>
         <li><a href="javascript:void(0)" class="link" title="Hướng dẫn" aria-label="Guiding">Hướng dẫn</a>
             <ul class="subMenu">
                 <li><a href="javascript:void(0)" class="link bdb" title="Hướng dẫn khảo sát">Hướng dẫn khảo sát</a></li>
-                <li><a href="https://casonline.vn/quy-tac-tinh-diem-cua-khao-sat-mo-hinh-canh-tranh.html" class="link" title="Quy tắc tính điểm">Quy tắc tính điểm</a></li>
+                <li>
+                    <a href="https://casonline.vn/quy-tac-tinh-diem-cua-khao-sat-mo-hinh-canh-tranh.html" class="link" title="Quy tắc tính điểm">Quy tắc tính điểm</a></li>
             </ul>
         </li>
     </ul>

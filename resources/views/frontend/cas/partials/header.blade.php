@@ -32,10 +32,10 @@
                         <li><a href="{{ route('frontend.product') }}" title="Dịch vụ bổ trợ">Dịch vụ bổ trợ</a></li>
                     </ol>
                 </li>
-                <li class="hideOnMobile"><a  class="{{ (isset($page) && $page == 'blog')? 'active' : '' }}" href="{{ route('frontend.index') }}/blog" title="Blog" aria-label="Blog">Blog</a></li>
+                <li class="hideOnMobile"><a  class="{{ (isset($page) && $page == 'blog')? 'active' : '' }}" href="{{ route('frontend.blog') }}" title="Blog" aria-label="Blog">Blog</a></li>
                 <li class="hideOnMobile"><a  class="{{ (isset($page) && $page == 'contact')? 'active' : '' }}" href="{{ route('frontend.contact') }}" title="Liên hệ" aria-label="Contact">Liên hệ</a></li>
                 <li>
-                    <a href="{{ route('frontend.inspire')  }}" class="btnSurvey" title="Khảo sát miễn phí" aria-label="Free Survey {{ (isset($page) && $page == 'inspire')? 'active' : '' }}">Khảo sát miễn phí</a>
+                    <a href="{{ route('frontend.inspire')  }}" class="btnSurvey {{ (isset($page) && $page == 'inspire')? 'active' : '' }}" title="Khảo sát miễn phí" aria-label="Free Survey">Khảo sát miễn phí</a>
                 </li>
             </ul>
             <div class="btnGroup flxc">
