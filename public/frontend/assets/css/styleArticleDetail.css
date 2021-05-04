@@ -1743,6 +1743,12 @@ header .fixCen {
   color: #333333;
 }
 
+#topMenu ul a.active {
+  font-weight: 900;
+  color: #333333;
+}
+
+
 #topMenu .userBlock {
   min-width: 170px;
   text-align: right;
