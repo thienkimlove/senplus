@@ -54,7 +54,7 @@
         <li><a href="javascript:void(0)" class="link" title="Hướng dẫn" aria-label="Guiding">Hướng dẫn</a>
             <ul class="subMenu">
                 <li><a href="javascript:void(0)" class="link bdb" title="Hướng dẫn khảo sát">Hướng dẫn khảo sát</a></li>
-                <li><a href="javascript:void(0)" class="link" title="Quy tắc tính điểm">Quy tắc tính điểm</a></li>
+                <li><a href="https://casonline.vn/quy-tac-tinh-diem-cua-khao-sat-mo-hinh-canh-tranh.html" class="link" title="Quy tắc tính điểm">Quy tắc tính điểm</a></li>
             </ul>
         </li>
     </ul>

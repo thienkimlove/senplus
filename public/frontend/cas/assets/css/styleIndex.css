@@ -519,7 +519,7 @@ main {
   }
 }
 
-@media (max-width: 380px) {
+@media (max-width: 520px) {
   main {
     margin-top: 77px;
   }
@@ -1960,7 +1960,7 @@ h2.title.hasBd:after {
           border-radius: 999px;
   height: 57px;
   line-height: 57px;
-  width: 440px;
+  max-width: 440px;
   margin-top: 70px;
   display: block;
   text-align: center;
@@ -1972,8 +1972,9 @@ h2.title.hasBd:after {
 }
 
 #section1.productPage {
-  height: 715px;
-  padding-top: 87px;
+  min-height: 715px;
+  height: 100%;
+  padding: 80px;
 }
 
 #section1.productPage .fixCen {
@@ -2029,15 +2030,23 @@ h2.title.hasBd:after {
 
 #section1.productPage .leftContent {
   width: 690px;
+  max-width: 49%;
 }
 
 #section1.productPage .rightContent {
   width: 550px;
+  max-width: 49%;
   border: 10px solid #69cad3;
   -webkit-border-radius: 35px;
      -moz-border-radius: 35px;
           border-radius: 35px;
   overflow: hidden;
+}
+
+@media (max-width: 1279px) {
+  #section1.productPage {
+    padding: 50px 5%;
+  }
 }
 
 @media (max-width: 1024px) {
@@ -2057,9 +2066,10 @@ h2.title.hasBd:after {
   #section1.productPage .fixCen .leftContent {
     margin-top: 30px;
     width: 100%;
+    max-width: 100%;
   }
   #section1.productPage .fixCen .rightContent {
-    max-width: 550px;
+    max-width: 100%;
   }
 }
 
@@ -2654,6 +2664,7 @@ h2.title.hasBd:after {
 
 #section4 .content2 .banner {
   max-width: 590px;
+  width: 100%;
 }
 
 #section4 .content2 .items {
@@ -2726,6 +2737,10 @@ h2.title.hasBd:after {
   left: 0;
 }
 
+#section4.productPage {
+  min-height: auto;
+}
+
 #section4.productPage .content2 {
   -webkit-box-align: center;
   -webkit-align-items: center;
@@ -2740,7 +2755,8 @@ h2.title.hasBd:after {
 }
 
 #section4.productPage .content2 .banner {
-  width: 570px;
+  max-width: 570px;
+  width: 100%;
 }
 
 #section4.productPage .content2 .items {
@@ -2846,6 +2862,9 @@ h2.title.hasBd:after {
     text-overflow: ellipsis;
     text-align: justify;
   }
+  #section4.productPage {
+    min-height: auto;
+  }
   #section4.productPage .content2 .banner {
     position: relative;
     margin: 50px auto 0;
@@ -2854,7 +2873,7 @@ h2.title.hasBd:after {
   }
   #section4.productPage .content2 .items {
     background: none;
-    width: 70%;
+    width: 90%;
     margin: auto;
     border: none;
     padding-left: 0;
@@ -3818,21 +3837,6 @@ h2.title.hasBd:after {
 }
 
 @media (max-width: 520px) {
-  .logo {
-    margin: 0;
-  }
-  #topMenu {
-    margin-top: -35px;
-  }
-  #topMenu .navi {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    left: initial;
-  }
-}
-
-@media (max-width: 380px) {
   header {
     height: auto;
   }
@@ -3914,6 +3918,9 @@ h2.title.hasBd:after {
         -ms-flex-align: center;
             align-items: center;
   }
+}
+
+@media (max-width: 380px) {
   footer .fixCen .leftSide .logoSm {
     margin: 0 auto;
   }

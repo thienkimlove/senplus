@@ -26,7 +26,6 @@
         <section class="section pr productPage" id="section4">
             <div class="fixCen">
                 <div class="content content2">
-                    <h2 class="title">Năng lực cạnh tranh của mỗi doanh nghiệp</h2>
                     <div class="banner"><img src="/frontend/cas/assets/img/banner4.jpg" alt="" class="imgFull"></div>
                     <div class="items" id="effect2">
                         <div class="item card4">
@@ -57,6 +56,7 @@
                             </div>
                         </div>
                     </div>
+                    <h2 class="title">Năng lực cạnh tranh của mỗi doanh nghiệp</h2>
                 </div>
             </div>
         </section>

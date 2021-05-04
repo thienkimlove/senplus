@@ -187,7 +187,7 @@ main{
   @media (max-width: 1024px) {
     margin-top: 95px;
   }
-  @media (max-width: 380px) {
+  @media (max-width: 520px) {
     margin-top: 77px;
   }
 }
@@ -1214,7 +1214,7 @@ h2.title{
     border-radius: 999px;
     height: 57px;
     line-height: 57px;
-    width: 440px;
+    max-width: 440px;
     margin-top: 70px;
     display: block;
     text-align: center;
@@ -1224,8 +1224,9 @@ h2.title{
     }
   }
   &.productPage{
-    height: 715px;
-    padding-top: 87px;
+    min-height: 715px;
+    height: 100%;
+    padding: 80px;
     .fixCen{
       display: flex;
       justify-content: space-between;
@@ -1258,12 +1259,19 @@ h2.title{
     }
     .leftContent{
       width: 690px;
+      max-width: 49%;
     }
     .rightContent{
       width: 550px;
+      max-width: 49%;
       border: 10px solid $titleColor;
       border-radius: 35px;
       overflow: hidden;
+    }
+  }
+  @media (max-width: 1279px){
+    &.productPage{
+      padding: 50px 5%;
     }
   }
   @media (max-width: 1024px) {
@@ -1275,9 +1283,10 @@ h2.title{
         .leftContent{
           margin-top: 30px;
           width: 100%;
+          max-width: 100%;
         }
         .rightContent{
-          max-width: 550px;
+          max-width: 100%;
         }
       }
     }
@@ -1643,6 +1652,7 @@ h2.title{
     padding-top: 50px;
     .banner{
       max-width: 590px;
+      width: 100%;
     }
     .items{
       margin-top: 50px;
@@ -1701,6 +1711,7 @@ h2.title{
     }
   }
   &.productPage{
+    min-height: auto;
     .content2{
       align-items: center;
       margin-top: 0;
@@ -1708,7 +1719,8 @@ h2.title{
         margin-top: 70px;
       }
       .banner{
-        width: 570px;
+        max-width: 570px;
+        width: 100%;
       }
       .items{
         border-left: thin dotted #666666;
@@ -1802,12 +1814,13 @@ h2.title{
         }
         .items{
           background: none;
-          width: 70%;
+          width: 90%;
           margin: auto;
           border: none;
           padding-left: 0;
         }
       }
+      min-height: auto;
     }
   }
   @media (max-width: 768px) {
@@ -2473,20 +2486,6 @@ h2.title{
   }
 }
 @media (max-width: 520px) {
-  .logo{
-    margin: 0;
-  }
-  #topMenu{
-    margin-top: -35px;
-    .navi{
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      left: initial;
-    }
-  }
-}
-@media (max-width: 380px) {
   header{
     height: auto;
     .fixCen{
@@ -2552,6 +2551,8 @@ h2.title{
       align-items: center;
     }
   }
+}
+@media (max-width: 380px) {
   footer{
     .fixCen{
       .leftSide{
