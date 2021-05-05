@@ -10,6 +10,7 @@
 /* Remove default padding */
 ul,
 ol {
+  padding: 0;
   margin: 0;
 }
 
@@ -1743,12 +1744,6 @@ header .fixCen {
   color: #333333;
 }
 
-#topMenu ul a.active {
-  font-weight: 900;
-  color: #333333;
-}
-
-
 #topMenu .userBlock {
   min-width: 170px;
   text-align: right;
@@ -2417,6 +2412,11 @@ footer .fixCen .rightSide > div {
 }
 
 #topMenu ul a:hover {
+  color: #333333;
+}
+
+#topMenu ul a.active {
+  font-weight: 900;
   color: #333333;
 }
 
@@ -3526,6 +3526,12 @@ footer .fixCen .rightSide > div {
   #popupProfile.showPopProfile {
     right: 0;
   }
+  header {
+    height: 95px;
+  }
+  #topMenu {
+    margin-top: -60px;
+  }
 }
 
 @media (max-width: 780px) {
@@ -3543,6 +3549,21 @@ footer .fixCen .rightSide > div {
        -moz-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
+  }
+}
+
+@media (max-width: 520px) {
+  .logo {
+    margin: 0;
+  }
+  #topMenu {
+    margin-top: -35px;
+  }
+  #topMenu .navi {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    left: initial;
   }
 }
 
@@ -3575,50 +3596,45 @@ footer .fixCen .rightSide > div {
   .editSurveyBlock #surveyObject .cols:last-child {
     width: auto;
   }
-  #topMenu {
-    margin-top: 10px;
-  }
 }
 
 @media (max-width: 380px) {
   header {
     height: auto;
   }
+  header .fixCen {
+    padding: 5px;
+  }
   .logo {
+    width: 90px;
     margin: 0;
   }
-  #topMenu {
-    margin-top: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    padding-right: 20px;
-    height: 100%;
-    left: 0;
+  #btnShowMainMenu {
+    width: 25px;
   }
-  #topMenu .userBlock {
-    height: 100%;
-  }
-  #topMenu .userBlock:after {
-    background-position: 0 center;
-  }
-  #topMenu .navi {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    bottom: -50px;
-    background: #fff;
-    height: 50px;
+  .formSearchTop {
     -webkit-box-align: center;
     -webkit-align-items: center;
        -moz-box-align: center;
         -ms-flex-align: center;
             align-items: center;
+    margin-right: 8px;
+    width: 130px;
   }
-  #topMenu ul li:last-child {
-    margin: 0 auto;
-    width: 80%;
-    text-align: center;
+  .formSearchTop input {
+    width: 25px;
+    height: 25px;
+  }
+  .formSearchTop button {
+    margin-left: -26px;
+    width: 25px;
+    height: 25px;
+  }
+  #topMenu {
+    margin-top: -20px;
+  }
+  #topMenu ul a.btnSurvey {
+    font-size: 14px;
   }
   footer .fixCen .leftSide .logoSm {
     margin: 0 auto;

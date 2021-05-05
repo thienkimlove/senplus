@@ -38,7 +38,7 @@
         <strong>Hệ thống đánh giá văn hóa doanh nghiệp</strong>
     </a>
     <ul class="showOnMobile">
-        <li><a href="{{ route('frontend.contact') }}" class="link bdt" title="Về chúng tôi" aria-label="About us">Về chúng tôi</a></li>
+        <li><a href="{{ route('frontend.index') }}" class="link bdt" title="Về chúng tôi" aria-label="About us">Về chúng tôi</a></li>
         <li><a href="javascript:void(0)" class="link bdt" title="Sản phẩm" aria-label="Products">Sản phẩm</a>
             <ol class="subMenu">
                 <li><a href="{{ route('frontend.product') }}" title="Khảo sát mô hình cạnh tranh">Khảo sát mô hình cạnh tranh</a></li>

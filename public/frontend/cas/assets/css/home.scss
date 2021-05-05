@@ -187,7 +187,7 @@ main{
   @media (max-width: 1024px) {
     margin-top: 95px;
   }
-  @media (max-width: 520px) {
+  @media (max-width: 380px) {
     margin-top: 77px;
   }
 }
@@ -2486,12 +2486,20 @@ h2.title{
   }
 }
 @media (max-width: 520px) {
-  header{
-    height: auto;
-    .fixCen{
-      padding: 5px;
+  .logo{
+    margin: 0;
+  }
+  #topMenu{
+    margin-top: -35px;
+    .navi{
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      left: initial;
     }
   }
+}
+@media (max-width: 380px) {
   .logo{
     width: 90px;
     margin: 0;
@@ -2502,7 +2510,7 @@ h2.title{
   .formSearchTop{
     align-items: center;
     margin-right: 8px;
-    width: 150px;
+    width: 130px;
     input{
       width: 25px;
       height: 25px;
@@ -2514,45 +2522,13 @@ h2.title{
     }
   }
   #topMenu {
-    margin-top: 0;
-    position: absolute;
-    top: 0;
-    width: calc(100% - 10px);
-    padding-right: 5px;
-    height: 100%;
-    .userBlock{
-      height: 100%;
-      padding: 0;
-      margin-left: 5px;
-      width: 23px;
-      &:after{
-        background-position: 0 center;
-      }
-    }
-    .navi {
-      position: fixed;
-      left: 50%;
-      width: 300px;
-      transform: translateX(-50%);
-      top: 85px;
-    }
+    margin-top: -20px;
     ul{
-      li{
-        &:last-child {
-          margin-right: 0;
-          width: 100%;
-          text-align: center;
-        }
+      a.btnSurvey{
+        font-size: 14px;
       }
-    }
-    .btnGroup{
-      width: calc(100% - 30px);
-      justify-content: flex-end;
-      align-items: center;
     }
   }
-}
-@media (max-width: 380px) {
   footer{
     .fixCen{
       .leftSide{

@@ -15,7 +15,7 @@
                         <li>Xác định mô hình cạnh tranh trong tương lai</li>
                         <li>Nền tảng xây dựng chiến lược truyền thông nội bộ</li>
                     </ul>
-                    <a href="https://casonline.vn/" class="btnSurvey" title="Khảo sát miễn phí" aria-label="Free Survey">Khảo sát miễn phí</a>
+                    <a href="https://casonline.vn/inspire" class="btnSurvey" title="Khảo sát miễn phí" aria-label="Free Survey">Khảo sát miễn phí</a>
                     <a href="javascript:void(0)" class="myBtn" title="Đăng ký" data-popup="#popupRegister" onclick="showPopup($(this))">Đăng ký</a>
                 </div>
                 <div class="rightContent">
