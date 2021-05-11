@@ -102,6 +102,9 @@ Route::post('add-manager', 'FrontendController@addManager')->name('frontend.add_
 
 
 Route::get('privacy', 'PostController@privacy')->name('frontend.privacy');
+Route::get('deactivated', 'PostController@deactivated')->name('frontend.deactivated');
+Route::post('deactivated', 'PostController@postDeactivated')->name('frontend.post_deactivated');
+
 Route::get('blog', 'PostController@blog')->name('frontend.blog');
 Route::get('ajax', 'PostController@ajax')->name('frontend.ajax');
 

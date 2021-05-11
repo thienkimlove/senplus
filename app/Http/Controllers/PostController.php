@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers;
+use App\Models\Customer;
 use App\Models\Post;
 use App\Models\Topic;
 use Illuminate\Http\Request;
@@ -25,6 +26,40 @@ class PostController extends Controller
         return view('frontend.privacy', compact('page', 'isStyleBlog'))->with($meta);
 
 
+    }
+
+    public function deactivated()
+    {
+        $page = 'privacy';
+
+        $meta = [];
+        $meta['meta_title'] = Helpers::configGet('meta_index_title');
+        $meta['meta_desc'] = Helpers::configGet('meta_index_desc');
+        $meta['meta_keywords'] = Helpers::configGet('meta_index_keywords');
+        $meta['meta_image'] = url('frontend/assets/img/logo-sm.png');
+        $meta['meta_url'] = route('frontend.deactivated');
+
+
+        return view('frontend.cas.deactivated', compact('page'))->with($meta);
+
+
+    }
+
+
+
+    public function postDeactivated(Request $request)
+    {
+        $email = $request->input('email');
+
+        $customer = Customer::where('email', $email)->first();
+
+        if ($customer) {
+            $customer->delete();
+
+            return response()->json(['success' => 'Your email is removed from our database']);
+        }
+
+        return response()->json(['error' => 'Email của bạn không tồn tại trong hệ thóng']);
     }
 
     public function blog()
