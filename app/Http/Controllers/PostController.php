@@ -9,6 +9,24 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    public function privacy()
+    {
+        $page = 'privacy';
+
+        $meta = [];
+        $meta['meta_title'] = Helpers::configGet('meta_index_title');
+        $meta['meta_desc'] = Helpers::configGet('meta_index_desc');
+        $meta['meta_keywords'] = Helpers::configGet('meta_index_keywords');
+        $meta['meta_image'] = url('frontend/assets/img/logo-sm.png');
+        $meta['meta_url'] = route('frontend.privacy');
+
+        $isStyleBlog = true;
+
+        return view('frontend.blog', compact('page', 'isStyleBlog'))->with($meta);
+
+
+    }
+
     public function blog()
     {
 
