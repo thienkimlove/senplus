@@ -113,7 +113,7 @@
                         <a href="javascript:void(0)" class="myBtn" title="Đăng ký" data-popup="#popupRegister" onclick="showPopup($(this))">Đăng ký</a>
                     </div>
                     <div class="item">
-                        <h3 class="title" title="CAS Preimium">CAS Preimium</h3>
+                        <h3 class="title" title="CAS Premium">CAS Premium</h3>
                         <div class="sum">
                             <ul>
                                 <li>Phù hợp doanh nghiệp > 50 người</li>
