@@ -22,7 +22,7 @@ class PostController extends Controller
 
         $isStyleBlog = true;
 
-        return view('frontend.blog', compact('page', 'isStyleBlog'))->with($meta);
+        return view('frontend.privacy', compact('page', 'isStyleBlog'))->with($meta);
 
 
     }
