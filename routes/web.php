@@ -101,6 +101,7 @@ Route::get('remove-manager', 'FrontendController@removeManager')->name('frontend
 Route::post('add-manager', 'FrontendController@addManager')->name('frontend.add_manager');
 
 
+Route::get('privacy', 'PostController@privacy')->name('frontend.privacy');
 Route::get('blog', 'PostController@blog')->name('frontend.blog');
 Route::get('ajax', 'PostController@ajax')->name('frontend.ajax');
 
