@@ -8,14 +8,15 @@
             {{ csrf_field() }}
             <div id="error" class="warning showWarning" style="display: none">Bạn chưa nhập đủ các thông tin yêu cầu !</div>
 
+            <div class="form-group acception">
+                Nhập vào email bạn muốn xóa khỏi hệ thống của chúng tôi.
+            </div>
+
             <div class="form-group">
                 <input type="email" placeholder="Email *" name="email" id="email">
             </div>
 
-            <div class="form-group acception">
-                Truy cập mục <a href="javascript:void(0)"  class="blue" title="Hướng dẫn" aria-label="Hướng dẫn" target="_blank" rel="noreferrer">Hướng dẫn</a>
-                <br>hoặc liên hệ hotline <a href="tel:0967573573">0967 573 573</a> để biết thêm chi tiết
-            </div>
+
             <div class="form-group">
                 <button id="submitContactForm" type="button">Gửi</button>
             </div>
