@@ -18,9 +18,9 @@
 
 
             <div class="form-group">
-                <button id="submitContactForm" type="button">Gửi</button>
+                <button id="submitContactForm" type="button">Submit</button>
             </div>
-            <p style="text-align: center;">Cảm ơn bạn đã liên hệ với CAS Online! Chúng tôi sẽ phản hồi trong thời gian sớm nhất.</p>
+            <p style="text-align: center;">Sau khi bấm nút "Submit", dữ liệu tương ứng với tài khoản email của bạn sẽ được xóa khỏi hệ thống!</p>
         </form>
     </main>
 @endsection
